@@ -15,7 +15,7 @@ public:
     void setNumberOfCountries(int num);
     void setNumberOfContinents(int num);
     
-    
+    int getId();
     int getNumberOfCountries();
     int getNumberOfContinents();
 };

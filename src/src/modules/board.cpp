@@ -22,6 +22,10 @@ void Board::setNumberOfContinents(int num) {
     _numOfContinents = num;
 }
 
+int Board::getId() {
+    return _id;
+}
+
 int Board::getNumberOfCountries() {
     return _numOfCountries;
 }

@@ -1,15 +1,16 @@
-//
-//  main.cpp
-//  src
-//
-//  Created by Jaihon Qasim on 2020-01-15.
-//  Copyright © 2020 Jaihon Qasim. All rights reserved.
-//
-
 #include <iostream>
+#include "modules/board.hpp"
+
+using namespace std;
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+        
+    Board board1(1, 100, 5);
+    
+    cout << "Board ID: " << board1.getId() << endl;
+    cout << "Number of continents: " << board1.getNumberOfContinents() << endl;
+    cout << "Number of countries: " << board1.getNumberOfCountries() << endl;
+    
+    
     return 0;
 }
