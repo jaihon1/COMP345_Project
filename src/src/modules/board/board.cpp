@@ -2,10 +2,8 @@
 #include "board.hpp"
 
 // Constructor
-Board::Board(int id, int numCountries, int numContinents) {
+Board::Board(int id) {
     _id = id;
-    _numOfCountries = numCountries;
-    _numOfContinents = numContinents;
 }
 
 // Destructor
@@ -14,22 +12,11 @@ Board::~Board(){
 };
 
 // Methods
-void Board::setNumberOfCountries(int num) {
-    _numOfCountries = num;
-}
-
-void Board::setNumberOfContinents(int num) {
-    _numOfContinents = num;
+void Board::setId(int id) {
+    _id = id;
 }
 
 int Board::getId() {
     return _id;
 }
 
-int Board::getNumberOfCountries() {
-    return _numOfCountries;
-}
-
-int Board::getNumberOfContinents() {
-    return _numOfContinents;
-}

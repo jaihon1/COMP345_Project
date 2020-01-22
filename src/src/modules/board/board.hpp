@@ -4,20 +4,16 @@
 class Board {
 private:
     int _id;
-    int _numOfCountries;
-    int _numOfContinents;
+
     
     
 public:
-    Board(int id, int numberOfCountries, int numberOfContinents);
+    Board(int id);
     ~Board();
     
-    void setNumberOfCountries(int num);
-    void setNumberOfContinents(int num);
+    void setId(int id);
     
     int getId();
-    int getNumberOfCountries();
-    int getNumberOfContinents();
 };
 
 #endif /* board_h */
