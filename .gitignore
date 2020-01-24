@@ -37,9 +37,9 @@ src/src.xcodeproj
 
 # Visual Studio Related
 
-src/*.vcxproj
-src/*.vcxproj.filters
-src/*.vcxproj.user
+src/src/*.vcxproj
+src/src/*.vcxproj.filters
+src/src/*.vcxproj.user
 src/Debug/
 
 # Created by https://www.gitignore.io/api/visualstudio
