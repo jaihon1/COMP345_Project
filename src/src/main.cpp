@@ -13,6 +13,6 @@ int main(int argc, const char * argv[]) {
     cout << "Board ID: " << map1.getIdAddress() << endl;
     cout << "Number of Players: " << map1.getNumberOfPlayers() << endl;
     
-    
+	system("pause");
     return 0;
 }
