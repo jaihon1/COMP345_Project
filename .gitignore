@@ -40,7 +40,7 @@ src/src.xcodeproj
 src/src/*.vcxproj
 src/src/*.vcxproj.filters
 src/src/*.vcxproj.user
-src/Debug/
+src/src/Debug/
 
 # Created by https://www.gitignore.io/api/visualstudio
 # Edit at https://www.gitignore.io/?templates=visualstudio
