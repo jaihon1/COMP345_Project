@@ -6,6 +6,8 @@ private:
     int* _id;
     int* _numberOfPlayers;
 
+	int test;
+
     
     
 public:
