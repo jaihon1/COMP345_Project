@@ -1,6 +1,11 @@
 #ifndef board_h
 #define board_h
 
+
+
+//TEMP CLASS UNTIL PART 5.i is done
+class HarvestTile;
+
 //enumerated class to give name to the status that a square could have
 enum class GBSquareStatus {
 	Empty, //associated square holds nothing (empty)
@@ -9,12 +14,17 @@ enum class GBSquareStatus {
 	Unavailable //when playing with four players the corner squares are unavailable
 };
 
-//Game Board is an array of GBSquare objects identified by row and column number
+//GBSquare contains information about a square on the game board
 class GBSquare {
 public:
 	GBSquareStatus status;
+	HarvestTile* harvestTilePtr;
+
+	GBSquare();
+	~GBSquare();
 };
 
+//Game Board is an array of GBSquare objects identified by row and column number
 class GBMaps {
 
 private:
@@ -26,7 +36,7 @@ private:
 	typedef GBSquare* GBSquareArrayPtr;
 
 	//Game Board is a pointer to an array of pointers
-	GBSquareArrayPtr *board;
+	GBSquareArrayPtr* board;
 
 	void initializeBoard();
 
@@ -41,11 +51,14 @@ public:
 	GBSquareStatus getSquareStatus(int row, int column);
 
 	//return int: 1 = tile successfully added, 0 = tile not added (probably because square is unavailable)
-	int addHarvestTile(int row, int column);
+	int addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr);
+
+	HarvestTile* getHarvestTile(int row, int column);
 
 	//return boolean: true = tile successfully added, false = tile not added (probably because square is unavailable)
 	int addPondTile(int row, int column);
 
+	
 };
 
 #endif /* board_h */
