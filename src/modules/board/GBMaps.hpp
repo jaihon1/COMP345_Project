@@ -1,16 +1,14 @@
 #ifndef board_h
 #define board_h
-
-
-
-//TEMP CLASS UNTIL PART 5.i is done
-class HarvestTile;
+#include "..\tile\Tile.hpp"
+#include "..\tile\HarvestTile.hpp"
 
 //enumerated class to give name to the status that a square could have
 enum class GBSquareStatus {
 	Empty, //associated square holds nothing (empty)
 	HarvestTile, //associated square holds a harvest tile
 	PondTile, //associated square holds a pond tile (Side B)
+	BuildingTile, //associated square holds a BuildingTile
 	Unavailable //when playing with four players the corner squares are unavailable
 };
 
@@ -18,7 +16,7 @@ enum class GBSquareStatus {
 class GBSquare {
 public:
 	GBSquareStatus status;
-	HarvestTile* harvestTilePtr;
+	Tile* tilePtr;
 
 	GBSquare();
 	~GBSquare();
@@ -33,12 +31,13 @@ private:
 	int* columns;
 
 	//an array of pointers that point to GBSquare objects
-	typedef GBSquare* GBSquareArrayPtr;
 
 	//Game Board is a pointer to an array of pointers
-	GBSquareArrayPtr* board;
+	GBSquare** board;
 
-	void initializeBoard();
+	void initializeBoardA(int numberOfPlayers);
+
+	void intializeBoardB(int numberOfPlayers);
 
 public:
 	//constructor takes number of players and whether the game is played on Side A or Side B
@@ -51,6 +50,10 @@ public:
 	GBSquareStatus getSquareStatus(int row, int column);
 
 	//return int: 1 = tile successfully added, 0 = tile not added (probably because square is unavailable)
+	int addTile(int row, int column, Tile* inTilePtr);
+
+	Tile* getTile(int row, int column);
+
 	int addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr);
 
 	HarvestTile* getHarvestTile(int row, int column);
