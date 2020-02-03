@@ -61,6 +61,9 @@ public:
 	//return boolean: true = tile successfully added, false = tile not added (probably because square is unavailable)
 	int addPondTile(int row, int column);
 
+	int getRows();
+
+	int getColumns();
 	
 };
 

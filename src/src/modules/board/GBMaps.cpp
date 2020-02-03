@@ -10,6 +10,7 @@ GBSquare::~GBSquare() {
 	delete tilePtr;
 }
 
+//TODO: save board function (using binary file?)
 /*TODO (for Board B):
 -implement helper function to initialize Board B
 -create helper function to randomly distribute pond tiles on designated square
@@ -45,7 +46,7 @@ GBMaps::GBMaps(int numberOfPlayers, char boardSide)
 	
 	//board is a single row of pointers. 
 	//Each index in the row points to another array of objects (this is the column)
-	board = new GBSquare * [*rows];
+	board = new GBSquare* [*rows];
 
 	//loop assigns "column" array (of GBSquare objects) to each index of the row array
 	for (int i = 0; i < *rows; i++) {
@@ -79,18 +80,18 @@ void GBMaps::initializeBoardA(int numberOfPlayers) {
 	switch (numberOfPlayers) {
 	case 2:
 
-		board[0][0].status = GBSquareStatus::HarvestTile;
-		board[0][4].status = GBSquareStatus::HarvestTile;
-		board[4][0].status = GBSquareStatus::HarvestTile;
-		board[4][4].status = GBSquareStatus::HarvestTile;
+		addHarvestTile(0, 0, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
+		addHarvestTile(0, 4, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
+		addHarvestTile(4, 0, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
+		addHarvestTile(4, 4, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
 		break;
 
 	case 3:
 
-		board[0][1].status = GBSquareStatus::HarvestTile;
-		board[0][5].status = GBSquareStatus::HarvestTile;
-		board[4][1].status = GBSquareStatus::HarvestTile;
-		board[4][5].status = GBSquareStatus::HarvestTile;
+		addHarvestTile(1, 0, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
+		addHarvestTile(1, 4, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
+		addHarvestTile(5, 0, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
+		addHarvestTile(5, 4, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
 		break;
 
 	case 4:
@@ -100,10 +101,10 @@ void GBMaps::initializeBoardA(int numberOfPlayers) {
 		board[6][0].status = GBSquareStatus::Unavailable;
 		board[6][6].status = GBSquareStatus::Unavailable;
 
-		board[1][1].status = GBSquareStatus::HarvestTile;
-		board[1][5].status = GBSquareStatus::HarvestTile;
-		board[5][1].status = GBSquareStatus::HarvestTile;
-		board[5][5].status = GBSquareStatus::HarvestTile;
+		addHarvestTile(1, 1, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
+		addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
+		addHarvestTile(5, 1, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
+		addHarvestTile(5, 5, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
 		break;
 	}
 }
@@ -149,6 +150,16 @@ int GBMaps::addPondTile(int row, int column)
 		return 1;
 	}
 	return 0;
+}
+
+int GBMaps::getRows()
+{
+	return *rows;
+}
+
+int GBMaps::getColumns()
+{
+	return *columns;
 }
 
 
