@@ -16,8 +16,13 @@ private:
 
 public:
 	HarvestTile(ResourceName topRight, ResourceName topLeft, ResourceName bottomRight, ResourceName bottomLeft);
+
 	~HarvestTile();
-	void Rotate(int count);
+
+	void RotateRight();
+	
+	void RotateLeft();
+
 	ResourceName getResource(int row, int column);
 };
 
