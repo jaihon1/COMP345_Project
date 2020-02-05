@@ -1,19 +1,29 @@
   
 #include <iostream>
+#include <fstream>
 #include "modules/board/GBMaps.hpp"
+#include "modules/loader/loader.hpp"
+#include "modules/player/player.hpp"
 
 using namespace std;
 
+
+
 int main(int argc, const char * argv[]) {
-    
-    int id = 11;
-    int players = 4;
-    
-    GBMaps map1(&id, &players);
-    
-    cout << "Board ID: " << map1.getIdAddress() << endl;
-    cout << "Number of Players: " << map1.getNumberOfPlayers() << endl;
-    
-	system("pause");
+
+//    Loader myLoader;
+//    
+//    ofstream myfile ("/Users/dzhay/Github/COMP345_Project/src/test.txt");
+//    if (myfile.is_open())
+//    {
+//      myfile << "This is a line.\n";
+//      myfile << "This is another line.\n";
+//      myfile.close();
+//    }
+//    else cout << "Unable to open file";
+//
+//	
+//    myLoader.read("/Users/dzhay/Github/COMP345_Project/src/test.txt");
+
     return 0;
 }
