@@ -9,10 +9,10 @@ HarvestTile::HarvestTile(ResourceName topRight, ResourceName topLeft, ResourceNa
 	resourceArr[0] = new ResourceName[2];
 	resourceArr[1] = new ResourceName[2];
 
-	resourceArr[0][0] = topRight;
-	resourceArr[0][1] = topLeft;
-	resourceArr[1][0] = bottomRight;
-	resourceArr[1][1] = bottomLeft;
+	resourceArr[0][0] = topLeft;
+	resourceArr[0][1] = topRight;
+	resourceArr[1][0] = bottomLeft;
+	resourceArr[1][1] = bottomRight;
 }
 
 HarvestTile::~HarvestTile()

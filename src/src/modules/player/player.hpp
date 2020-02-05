@@ -9,13 +9,21 @@
 #ifndef player_hpp
 #define player_hpp
 
+#include "HarvestTile.hpp"
+#include <iostream>
 #include <stdio.h>
+#include <vector>
+
+using namespace std;
 
 class Player {
 private:
-
-
-
+    // Own a Village Board
+    
+    // Owns Harverst Tiles
+    vector<HarvestTile>* _harvestTiles;
+    
+    
 public:
     Player();
     ~Player();

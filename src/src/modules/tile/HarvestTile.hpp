@@ -1,12 +1,7 @@
 #pragma once
 #include "Tile.hpp"
+#include "Dictionary.hpp"
 
-enum class ResourceName {
-	Lumber,
-	Rock,
-	Sheep,
-	Wheat
-};
 
 class HarvestTile :
 	public Tile
