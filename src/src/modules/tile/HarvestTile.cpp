@@ -1,47 +1,38 @@
 #include "HarvestTile.hpp"
 
-HarvestTile::HarvestTile(ResourceName topRight, ResourceName topLeft, ResourceName bottomRight, ResourceName bottomLeft)
+HarvestTile::HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, ResourceName bottomLeftRes, ResourceName bottomRightRes)
 {
 	//pointer for each row
-	resourceArr = new ResourceName* [2];
+	resourceArr = new ResourceName[]  {topLeftRes, topRightRes, bottomLeftRes, bottomRightRes};
 
-	//pointer to an array for each element of the row index to form columns
-	resourceArr[0] = new ResourceName[2];
-	resourceArr[1] = new ResourceName[2];
-
-	resourceArr[0][0] = topRight;
-	resourceArr[0][1] = topLeft;
-	resourceArr[1][0] = bottomRight;
-	resourceArr[1][1] = bottomLeft;
 }
 
 HarvestTile::~HarvestTile()
 {
-	delete[] resourceArr[0];
-	delete[] resourceArr[1];
+	delete[] resourceArr;
 
 	delete resourceArr;
 }
 
-void HarvestTile::RotateRight()
+void HarvestTile::RotateLeft()
 {
-	ResourceName temp = resourceArr[0][0];
+	ResourceName temp = resourceArr[*topLeft];
 
-	resourceArr[0][0] = resourceArr[1][0];
-	resourceArr[1][0] = resourceArr[1][1];
-	resourceArr[1][1] = resourceArr[0][1];
-	resourceArr[0][1] = temp;
+	resourceArr[*topLeft] = resourceArr[*topRight];
+	resourceArr[*topRight] = resourceArr[*bottomRight];
+	resourceArr[*bottomRight] = resourceArr[*bottomLeft];
+	resourceArr[*bottomLeft] = temp;
 	
 }
 
-void HarvestTile::RotateLeft()
+void HarvestTile::RotateRight()
 {
-	ResourceName temp = resourceArr[0][0];
+	ResourceName temp = resourceArr[*topLeft];
 
-	resourceArr[0][0] = resourceArr[0][1];
-	resourceArr[0][1] = resourceArr[1][1];
-	resourceArr[1][1] = resourceArr[1][0];
-	resourceArr[1][0] = temp;
+	resourceArr[*topLeft] = resourceArr[*bottomLeft];
+	resourceArr[*bottomLeft] = resourceArr[*bottomRight];
+	resourceArr[*bottomRight] = resourceArr[*topRight];
+	resourceArr[*topRight] = temp;
 
 }
 

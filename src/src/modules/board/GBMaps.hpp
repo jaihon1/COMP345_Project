@@ -26,9 +26,9 @@ public:
 class GBMaps {
 
 private:
-	//no length function for arrays in c++
-	int* rows;
-	int* columns;
+	//using const pointers because the assignment says attributes have to be pointers
+	const int* const rows = new int(7);
+	const int* const columns = new int(7);
 
 	//an array of pointers that point to GBSquare objects
 
