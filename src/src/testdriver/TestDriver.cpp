@@ -23,10 +23,10 @@ const char* ResourceNameToString(ResourceName inResourceName) {
 
 void printHarvestTile(HarvestTile* inHarvestTile) {
 	cout << "\n";
-	cout << ResourceNameToString(inHarvestTile->getResource(0, 0)) << " ";
-	cout << ResourceNameToString(inHarvestTile->getResource(0, 1)) << "\n";
-	cout << ResourceNameToString(inHarvestTile->getResource(1, 0)) << " ";
-	cout << ResourceNameToString(inHarvestTile->getResource(1, 1)) << "\n";
+	cout << ResourceNameToString(inHarvestTile->getResource(HarvestTile::topLeft)) << " ";
+	cout << ResourceNameToString(inHarvestTile->getResource(HarvestTile::topRight)) << "\n";
+	cout << ResourceNameToString(inHarvestTile->getResource(HarvestTile::bottomLeft)) << " ";
+	cout << ResourceNameToString(inHarvestTile->getResource(HarvestTile::bottomRight)) << "\n";
 }
 
 const char* SquareStatusToString(GBSquareStatus inSquareStatus) {

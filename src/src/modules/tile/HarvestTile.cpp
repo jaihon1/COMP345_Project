@@ -3,7 +3,7 @@
 HarvestTile::HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, ResourceName bottomLeftRes, ResourceName bottomRightRes)
 {
 	//pointer for each row
-	resourceArr = new ResourceName[]  {topLeftRes, topRightRes, bottomLeftRes, bottomRightRes};
+	resourceArr = new ResourceName[4]  {topLeftRes, topRightRes, bottomLeftRes, bottomRightRes};
 
 }
 
@@ -16,27 +16,27 @@ HarvestTile::~HarvestTile()
 
 void HarvestTile::RotateLeft()
 {
-	ResourceName temp = resourceArr[*topLeft];
+	ResourceName temp = resourceArr[topLeft];
 
-	resourceArr[*topLeft] = resourceArr[*topRight];
-	resourceArr[*topRight] = resourceArr[*bottomRight];
-	resourceArr[*bottomRight] = resourceArr[*bottomLeft];
-	resourceArr[*bottomLeft] = temp;
+	resourceArr[topLeft] = resourceArr[topRight];
+	resourceArr[topRight] = resourceArr[bottomRight];
+	resourceArr[bottomRight] = resourceArr[bottomLeft];
+	resourceArr[bottomLeft] = temp;
 	
 }
 
 void HarvestTile::RotateRight()
 {
-	ResourceName temp = resourceArr[*topLeft];
+	ResourceName temp = resourceArr[topLeft];
 
-	resourceArr[*topLeft] = resourceArr[*bottomLeft];
-	resourceArr[*bottomLeft] = resourceArr[*bottomRight];
-	resourceArr[*bottomRight] = resourceArr[*topRight];
-	resourceArr[*topRight] = temp;
+	resourceArr[topLeft] = resourceArr[bottomLeft];
+	resourceArr[bottomLeft] = resourceArr[bottomRight];
+	resourceArr[bottomRight] = resourceArr[topRight];
+	resourceArr[topRight] = temp;
 
 }
 
-ResourceName HarvestTile::getResource(int row, int column)
+ResourceName HarvestTile::getResource(ResourceLocation inLocation)
 {
-	return resourceArr[row][column];
+	return resourceArr[inLocation];
 }

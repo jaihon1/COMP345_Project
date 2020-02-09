@@ -26,11 +26,11 @@ public:
 class GBMaps {
 
 private:
+	int* numberOfPlayers;
+
 	//using const pointers because the assignment says attributes have to be pointers
 	const int* const rows = new int(7);
 	const int* const columns = new int(7);
-
-	//an array of pointers that point to GBSquare objects
 
 	//Game Board is a pointer to an array of pointers
 	GBSquare** board;
@@ -50,10 +50,6 @@ public:
 	GBSquareStatus getSquareStatus(int row, int column);
 
 	//return int: 1 = tile successfully added, 0 = tile not added (probably because square is unavailable)
-	int addTile(int row, int column, Tile* inTilePtr);
-
-	Tile* getTile(int row, int column);
-
 	int addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr);
 
 	HarvestTile* getHarvestTile(int row, int column);
@@ -64,6 +60,8 @@ public:
 	int getRows();
 
 	int getColumns();
+
+	int getNumberOfPlayers();
 	
 };
 
