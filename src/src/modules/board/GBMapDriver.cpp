@@ -36,9 +36,10 @@ int main(int argc, const char * argv[]) {
 
 
 	VGMap village_test{};
-	village_test.put_building_sim();
+	village_test.put_building_sim();	
+	int score_temp = sc.get_score(village_test);
 	village_test.display_village();
-	sc.get_score(village_test);
+	std::cout << "village score: " << score_temp << std::endl;
 
 
 	/*int numbers[3][3] = { 1, 30, 3,

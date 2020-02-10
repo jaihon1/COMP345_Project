@@ -59,7 +59,6 @@ public:
 	int get_sheep();
 	int get_wheat();
 	int get_stone();
-	//#include "VGMap.h" circular dependency
 	int get_score(VGMap &vil);
 	int get_res(int resv);
 	void display_res();

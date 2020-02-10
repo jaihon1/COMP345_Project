@@ -101,23 +101,47 @@ int Scoring::get_score(VGMap &vil)
 {
 	int score = 0;
 	bool mul = false;
-
-	//std::cout << "test: " << 5 << std::endl;
-
-	/*for (int i = 0; i < VGMap::village_row; i++)
-		for (int j = 0; j < VGMap::village_col; j++) {
-			mul = true;
-			if(vil.test == 0)
-
-			if(mul)
-				score += (6-i)*2;
-			else
-				score += (6 - i);
-		}
-			
+	bool complete = false;
+	//vil.village[3][3].set(-1);
+	//vil.village[1][1].set(-1);
 
 	for (int i = 0; i < VGMap::village_row; i++)
-		for (int j = 0; j < VGMap::village_col; j++)*/
+	{
+		mul = true;
+		complete = true;
+		for (int j = 0; j < VGMap::village_col; j++) {	
+			if (vil.village[i][j].get() == 0)
+				complete = false;
+			if (vil.village[i][j].get() == -1)
+				mul = false;			
+		}
+		if (!complete)
+			continue;
+		if (mul)
+			score += (VGMap::village_row - i) * 2;
+		else 
+			score += (VGMap::village_row - i);
+	}		
+
+	for (int i = 0; i < VGMap::village_col; i++) {
+		mul = true;
+		complete = true;
+		for (int j = 0; j < VGMap::village_row; j++) {
+			if (vil.village[i][j].get() == 0)
+				complete = false;
+			if (vil.village[i][j].get() == -1)
+				mul = false;
+		}
+		if (!complete)
+			continue;
+		if (mul)
+			score += (VGMap::village_col - (2 - abs(i-2))) * 2;
+		else
+			score += (VGMap::village_col - (2 - abs(i - 2)));
+		//std::cout << "test: " << score << std::endl;
+	}
+		
+		
 
 	return score;
 }

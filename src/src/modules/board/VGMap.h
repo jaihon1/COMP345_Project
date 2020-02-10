@@ -1,6 +1,6 @@
 #pragma once
 #include<iostream> 
-class Scoring;
+#include "Scoring.h" 
 
 class VGMap
 {
@@ -36,7 +36,7 @@ public:
 	VGMap();
 	~VGMap();
 
-	const enum bld_type { empty = 0, red = 1, green = 2, yellow = 3, gray = 4, down = 5 };
+	const enum bld_type { down = -1, empty = 0, up = 1 };
 
 	void put_building_sim();
 	void display_village();
