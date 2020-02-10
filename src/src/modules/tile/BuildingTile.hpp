@@ -11,6 +11,7 @@ enum class BuildingColorType {
 
 };
 
+
 enum class WhichSide {
 	Normal, 
 	Flipped 

@@ -3,27 +3,47 @@
 #include "..\tile\BuildingTile.hpp"
 
 
-//not sure if I need 
+enum class Connection
+{
+	Up,
+	Down,
+	Left,
+	Right
+};
+
+
+enum class VGSlotStatus
+{
+	Empty, //int 0
+	BuildingTile //int 1 
+};
+
+class VGSquare{
+	VGSlotStatus VGstatus;
+
+}
 
 class VGMaps {
 private:
 	
-	const int* const row s = new int(6);
-	const int* const colums = new int(7); 
+	const int* const rows = new int(5); //length of the row
+	const int* const colums = new int(6); //length of the column
 
-	bool GreenSheepPlaced;
-	bool GreyRockPlaced; 
-	bool RedLumber; 
-	bool YellowHay; 
-	//pointer to the map
-	VGMaps * Map; 
+	bool GreenSheepPlaced = false; 
+	bool GreyRockPlaced = false; 
+	bool RedLumber = false;
+	bool YellowHay = false; 
 	
 public: 
 	VGMaps(); 
 
 	~VGMaps(); 
 
-	BuildingTile ** village_board; 
+	VGSquare ** village_board; 
+
+	void addNewBuildingTile(int r, int c);
+
+	VGSlotStatus getStatus(int row, int column); 
 
 };
 

@@ -34,10 +34,9 @@ void BuildingTile::Flip()
 {
 	if (this.getSide() == "Normal")
 	{
-		this.Side = Flipped; //is this right? 
+		this->getBuildingNum = -1; 
 	}
-	else if (this.getSide() == "Flipped")
-	{
-		this.Side = Normal;
-	}
+
+		//cannot flip back
+	
 }
