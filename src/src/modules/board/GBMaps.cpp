@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "GBMaps.hpp"
+#include "GBMaps.h"
 
 GBSquare::GBSquare() {
 	status = GBSquareStatus::Empty;
@@ -17,33 +17,9 @@ GBSquare::~GBSquare() {
 -create helper function to randomly distribute harvest tiles on designated squares
 -create helper function to randomly distribute building tiles on designated squares
 */
-GBMaps::GBMaps(int numberOfPlayers, char boardSide)
+GBMaps::GBMaps(int inNumberOfPlayers, char boardSide)
 {
-	switch (numberOfPlayers) {
-	case 2:
-		rows = new int(5);
-		columns = new int(5);
-		break;
-
-	case 3:
-		//hard code 3 player game along vertical axis (as opposed to letting players choose orientation)
-		rows = new int(7);
-		columns = new int(5);
-		break;
-
-	case 4:
-		rows = new int(7);
-		columns = new int(7);
-		break;
-
-	default:
-		//if an invalid number of players are given then a "null" board is created
-		rows = NULL;
-		columns = NULL;
-		board = NULL;
-		return;
-	}
-	
+	numberOfPlayers = new int(inNumberOfPlayers);
 	//board is a single row of pointers. 
 	//Each index in the row points to another array of objects (this is the column)
 	board = new GBSquare* [*rows];
@@ -59,12 +35,11 @@ GBMaps::GBMaps(int numberOfPlayers, char boardSide)
 	}
 
 	if (boardSide == 'b') {
-		intializeBoardB(numberOfPlayers);
+		intializeBoardB(*numberOfPlayers);
 	}
 	else {
-		initializeBoardA(numberOfPlayers);
+		initializeBoardA(*numberOfPlayers);
 	}
-
 
 }
 
@@ -77,34 +52,39 @@ GBMaps::~GBMaps()
 }
 
 void GBMaps::initializeBoardA(int numberOfPlayers) {
+	
+	//default resource tiles
+	addHarvestTile(1, 1, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
+	addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
+	addHarvestTile(5, 1, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
+	addHarvestTile(5, 5, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
+
 	switch (numberOfPlayers) {
 	case 2:
 
-		addHarvestTile(0, 0, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
-		addHarvestTile(0, 4, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
-		addHarvestTile(4, 0, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
-		addHarvestTile(4, 4, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
+		//top and bottom row on a 7x7 map is unavailable for a two person game as well as the first and last columns
+		for (int i = 0; i < 6; i++) {
+			board[0][i].status = GBSquareStatus::Unavailable;
+			board[6][i].status = GBSquareStatus::Unavailable;
+			board[i][0].status = GBSquareStatus::Unavailable;
+			board[i][6].status = GBSquareStatus::Unavailable;
+		}
 		break;
 
 	case 3:
 
-		addHarvestTile(1, 0, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
-		addHarvestTile(1, 4, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
-		addHarvestTile(5, 0, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
-		addHarvestTile(5, 4, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
+		//first and last column are unavailable for a three person game on a 7x7 map
+		for (int i = 0; i < 6; i++) {
+			board[i][0].status = GBSquareStatus::Unavailable;
+			board[i][6].status = GBSquareStatus::Unavailable;
+		}
 		break;
 
 	case 4:
-
 		board[0][0].status = GBSquareStatus::Unavailable;
 		board[0][6].status = GBSquareStatus::Unavailable;
 		board[6][0].status = GBSquareStatus::Unavailable;
 		board[6][6].status = GBSquareStatus::Unavailable;
-
-		addHarvestTile(1, 1, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
-		addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
-		addHarvestTile(5, 1, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
-		addHarvestTile(5, 5, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
 		break;
 	}
 }
@@ -134,6 +114,7 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 		return 1;
 	}
 	return 0;
+
 }
 
 HarvestTile* GBMaps::getHarvestTile(int row, int column)

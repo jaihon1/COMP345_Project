@@ -1,7 +1,7 @@
 #ifndef player_hpp
 #define player_hpp
 
-#include "HarvestTile.hpp"
+#include "HarvestTile.h"
 #include <iostream>
 #include <stdio.h>
 #include <vector>
