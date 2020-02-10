@@ -10,10 +10,10 @@ GBMap::GBMap(int map_player, bool map_type)
 		for (int j = 0; j < board_length; j++)
 			map[i][j] = Tile(i, j, 0);
 
-	/*init_obstacle(0, 0);
-	init_obstacle(0, board_length-1);
-	init_obstacle(board_length - 1, 0);
-	init_obstacle(board_length - 1, board_length - 1);*/
+	//init_obstacle(0, 0);
+	//init_obstacle(0, board_length-1);
+	//init_obstacle(board_length - 1, 0);
+	//init_obstacle(board_length - 1, board_length - 1);
 
 	XY obstacle_coor[4] = { { 0, 0 }, { 0, 6 }, { 6, 0 }, { 6, 6 } };//or XY(0,0), ...
 	for (int i = 0; i < 4; i++)
@@ -91,36 +91,41 @@ void GBMap::init_building(XY &coor)
 	(map[coor.x + 1][coor.y + 1]).set(5);
 }
 
-void GBMap::connect_resource(Tile *pos, bool dub[4], Scoring &sc, Tile *org)
+void GBMap::connect_resource(Tile *pos, Scoring &sc)
 {
-	if (((*pos).get() == (*(pos+1)).get()) && (sc.get_res((*pos).get() > 0)))
-	{
-		ptrdiff_t index = pos - org;
-		vertices.addEdge(index, index + 1);
-		if (dub[0])
-			sc.add_res((*pos).get(), -1);
+	//check array out of bound; adjacent element; duplicate	
+	Tile *org = &map[0][0];
+	ptrdiff_t index = pos - org;
+
+	if ( (index%board_length!=0) && ((*pos).get() == (*(pos-1)).get()) )
+		sc.addEdge(index, index - 1);
+	if ( ((index+1)%board_length!=0) && ((*pos).get() == (*(pos+1)).get()) )
+		sc.addEdge(index, index + 1);
+	if ( (index>=board_length) && ((*pos).get() == (*(pos - board_length)).get()) )
+		sc.addEdge(index, (index - board_length));
+	if ( (index< max_tile-board_length) && ((*pos).get() == (*(pos + board_length)).get()) )
+		sc.addEdge(index, (index + board_length));
+}
+
+void GBMap::put_resource(int xv, int yv, int res[4], Scoring &sc)
+{
+	sc.reset_res();
+	XY coor{ xv, yv };
+	Tile *pos[4] = { &map[coor.x][coor.y],&map[coor.x+1][coor.y],&map[coor.x][coor.y+1],&map[coor.x+1][coor.y+1] };
+	bool dub[4][4]{ { false, false, true, true },{ true, false, false, true },
+					{ false, true, true, false },{ true, true, false, false } };//left, top, right, bot
+	Tile *ptr = &map[0][0];
+	ptrdiff_t index[4] = { pos[0] - ptr, pos[1] - ptr, pos[2] - ptr, pos[3] - ptr };
+	int res_temp[5]{};//int res_temp[5] random number
+	
+	if (check_availibility(xv, yv)==0) {
+		init_resource(coor, res);
+		for (int i = 0; i < 4; i++)
+			res_temp[res[i]]++;
+		for (int i = 0; i < 4; i++)
+			connect_resource(pos[i], sc);
 	}
-	if (((*pos).get() == (*(pos-1)).get()) && (sc.get_res((*pos).get() > 0)))
-	{
-		ptrdiff_t index = pos - org;
-		vertices.addEdge(index, index - 1);
-		if (dub[1])
-			sc.add_res((*pos).get(), -1);
-	}
-	if (((*pos).get() == (*(pos + board_length)).get()) && (sc.get_res((*pos).get() > 0)))
-	{
-		ptrdiff_t index = pos - org;
-		vertices.addEdge(index, (index + board_length));
-		if (dub[2])
-			sc.add_res((*pos).get(), -1);
-	}
-	if (((*pos).get() == (*(pos - board_length)).get()) && (sc.get_res((*pos).get() > 0)))
-	{
-		ptrdiff_t index = pos - org;
-		vertices.addEdge(index, (index - board_length));
-		if (dub[3])
-			sc.add_res((*pos).get(), -1);
-	}
+	sc.update_res(index, res);
 }
 
 int GBMap::check_availibility(int xv, int yv)
@@ -134,33 +139,6 @@ int GBMap::check_availibility(int xv, int yv)
 	else
 		return -1;
 }
-
-void GBMap::put_resource(int xv, int yv, int res[4], Scoring &sc)
-{
-	XY coor{ xv, yv };
-	Tile *pos[4] = { &map[coor.x][coor.y],&map[coor.x+1][coor.y],&map[coor.x][coor.y+1],&map[coor.x+1][coor.y+1] };
-	bool dub[4][4]{ { false, false, true, true },{ true, false, false, true },
-					{ false, true, true, false },{ true, true, false, false } };
-	Tile *ptr1 = &map[coor.x+1][coor.y];
-	Tile *ptr2 = &map[coor.x][coor.y];
-	ptrdiff_t index = pos[0] - &map[0][0];
-	std::cout << "result: " << index << std::endl;
-	
-	if (check_availibility(xv, yv)==0) {
-		init_resource(coor, res);
-		for (int i = 0; i < 4; i++)
-			sc.add_res(res[i], 1);
-
-		for (int i = 0; i < 4; i++)
-			connect_resource(pos[i], dub[i], sc, &map[0][0]);
-	}
-
-	/*resource calculation*/
-	std::cout << "Following are connected components \n" << std::endl;
-	vertices.connectedComponents();
-}
-
-
 
 void GBMap::put_resource_sim()
 {
@@ -213,58 +191,3 @@ void GBMap::Tile::set(int resv)
 	res = resv;
 }
 /*********************Nested Tile******************/
-
-/*********************Nested Graph******************/
-GBMap::Graph::Graph(int V)
-{
-	this->V = V;
-	adj = new std::list<int>[V];
-}
-
-GBMap::Graph::~Graph()
-{
-}
-
-// Method to print connected components in an 
-// undirected graph 
-void GBMap::Graph::connectedComponents()
-{
-	// Mark all the vertices as not visited 
-	bool *visited = new bool[V];
-	for (int v = 0; v < V; v++)
-		visited[v] = false;
-
-	for (int v = 0; v<V; v++)
-	{
-		if (visited[v] == false)
-		{
-			// print all reachable vertices 
-			// from v 
-			DFSUtil(v, visited);
-
-			std::cout << "\n";
-		}
-	}
-}
-
-void GBMap::Graph::DFSUtil(int v, bool visited[])
-{
-	// Mark the current node as visited and print it 
-	visited[v] = true;
-	std::cout << v << " ";
-
-	// Recur for all the vertices 
-	// adjacent to this vertex 
-	std::list<int>::iterator i;
-	for (i = adj[v].begin(); i != adj[v].end(); ++i)
-		if (!visited[*i])
-			DFSUtil(*i, visited);
-}
-
-// method to add an undirected edge 
-void GBMap::Graph::addEdge(int v, int w)
-{
-	adj[v].push_back(w);
-	adj[w].push_back(v);
-}
-/*********************Nested Graph******************/
