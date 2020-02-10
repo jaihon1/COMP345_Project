@@ -1,23 +1,32 @@
 #ifndef player_hpp
 #define player_hpp
 
-#include "HarvestTile.h"
 #include <iostream>
 #include <stdio.h>
 #include <vector>
+#include "HarvestTile.h"
+#include "BuildingTile.h"
 
 using namespace std;
 
 class Player {
 private:
-    // Own a Village Board
+    int* _id;
+    // Own one Village Board
     
     // Owns Harverst Tiles
-    vector<HarvestTile>* _harvestTiles;
+    vector<HarvestTile> *_harvestTiles;
+    
+    // Owns Building Tiles
+    vector<BuildingTile> *_buildingTiles;
+    
+    // Owns/Give up Ressource Markers
+    
+    // Owns resources Gathering and Building Scoring facilities
     
     
 public:
-    Player();
+    Player(int playerId);
     ~Player();
     
     
@@ -25,25 +34,23 @@ public:
     int getVillageBoard();
     int setVillageBoard(int villageBoard);
 
-    // Must be changed to return and input HarvestTile type
-    int getHarvestTiles();
-    int addHarvesTile(int harvestTile);
-    int removeHarvestTile(int harvestTile);
+    // Manage Harvest Tiles
+    vector<HarvestTile> getHarvestTiles();
+    HarvestTile addHarvesTile(HarvestTile tile);
+    HarvestTile removeHarvestTile(HarvestTile tile);
+    HarvestTile placeHarvestTile(HarvestTile tile);
+    HarvestTile drawHarvestTile(int harvestDeck); // Will need the Deck to be implemented
     
-    // Must be changed to return and input Building type
-    int getBuildings();
-    int resetBuildings();
-    int addBuilding(int bulding);
+    // Manage Building Tiles
+    vector<BuildingTile> getBuildings();
+    BuildingTile addBuildingTile(BuildingTile tile);
+    BuildingTile removeBuildingTile(BuildingTile tile);
+    BuildingTile drawBuilding(int buildingDeck); // Will need the Deck to be implemented
     
     // Methods for the driver
-    int placeHarvestTile(int harvestTile);
-    void drawBuilding();
-    void drawHarvestTile();
     void ressourceTracker();
     void buildVillage();
-    void calculateResource();
-    
-    
+    void calculateResources();
     
     
 };

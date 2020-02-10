@@ -18,9 +18,13 @@ int main(int argc, const char * argv[]) {
     ResourceName wheat = ResourceName::Wheat;
     
     HarvestTile harvestTile1(lumber, rock, sheep, wheat);
+    HarvestTile harvestTile2(rock, rock, sheep, wheat);
+    
+    Player bob(7);
     
     
-    if(harvestTile1.getResource(location) == ResourceName::Lumber) {
+    
+    if(bob.addHarvesTile(harvestTile1).getResource(location) == ResourceName::Lumber) {
         cout << "Lumber" << endl;
     }
 

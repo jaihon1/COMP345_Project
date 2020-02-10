@@ -8,9 +8,13 @@ HarvestTile::HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, Reso
 
 }
 
+HarvestTile::HarvestTile() {
+    resourceArr = new ResourceName[4];
+}
+
 HarvestTile::~HarvestTile() {
 	delete[] resourceArr;
-
+    resourceArr = nullptr;
 }
 
 void HarvestTile::RotateLeft()
