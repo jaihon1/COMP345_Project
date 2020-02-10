@@ -1,10 +1,6 @@
 #pragma once
+#include "Dictionary.hpp"
 
-enum class TileStatus {
-	InHand,
-	InDeck,
-	OnBoard
-};
 
 class Tile
 {

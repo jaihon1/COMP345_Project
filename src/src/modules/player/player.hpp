@@ -1,11 +1,3 @@
-//
-//  player.hpp
-//  src
-//
-//  Created by Jaihon Qasim on 2020-01-31.
-//  Copyright © 2020 Jaihon Qasim. All rights reserved.
-//
-
 #ifndef player_hpp
 #define player_hpp
 
