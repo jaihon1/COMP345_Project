@@ -129,10 +129,10 @@
     <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BuildingTile.hpp" />
-    <ClInclude Include="HarvestTile.hpp" />
-    <ClInclude Include="PondTile.hpp" />
-    <ClInclude Include="Tile.hpp" />
+    <ClInclude Include="BuildingTile.h" />
+    <ClInclude Include="HarvestTile.h" />
+    <ClInclude Include="PondTile.h" />
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

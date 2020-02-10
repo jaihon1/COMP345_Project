@@ -158,6 +158,9 @@
     <ProjectReference Include="..\modules\board\GBMaps.vcxproj">
       <Project>{010c92c0-b377-49c9-b77e-8acb2aa08098}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\modules\GBMapLoader\GBMapLoader.vcxproj">
+      <Project>{4806bad0-c1f3-45c0-9cff-fb7e2dacd3c4}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\modules\tile\Tile.vcxproj">
       <Project>{19ba8cad-fb6f-4d1a-9f54-86696319dae5}</Project>
     </ProjectReference>

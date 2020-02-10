@@ -1,4 +1,4 @@
-#include "HarvestTile.hpp"
+#include "HarvestTile.h"
 
 HarvestTile::HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, ResourceName bottomLeftRes, ResourceName bottomRightRes)
 {

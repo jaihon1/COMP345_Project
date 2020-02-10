@@ -1,5 +1,6 @@
 #include <iostream>
-#include "..\modules\board\GBMaps.hpp"
+#include "..\modules\board\GBMaps.h"
+#include "..\modules\GBMapLoader\GBMapLoader.h"
 
 using namespace std;
 
@@ -60,6 +61,7 @@ void printGameBoard(GBMaps* inBoard) {
 				cout << SquareStatusToString(inBoard->getSquareStatus(i, j)) << " ";
 			}
 		}
+		cout << "\n";
 	}
 }
 
@@ -76,11 +78,17 @@ void testFunction1() {
 
 }
 
+void testFunction2() {
+	GBMapLoader* testLoader = new GBMapLoader("C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testMap.json");
+	printGameBoard(testLoader->getBoard());
+}
+
 int main()
 {
 	int hold;
-	testFunction1();
+	testFunction2();
 	cin >> hold;
+
 	return 0;
 
 }
