@@ -1,27 +1,43 @@
 #include "player.h"
 
 Player::Player(int playerId) {
-    _harvestTiles = new vector<HarvestTile>;
-    _buildingTiles = new vector<BuildingTile>;
+    cout << "Creating Player with Main: " << this << endl;
+    _harvestTiles = new vector<HarvestTile*>;
+    _buildingTiles = new vector<BuildingTile*>;
     _id = &playerId;
 }
 
+Player::Player(const Player &player) {
+    cout << "Creating Player with Copy: " << this << endl;
+    _harvestTiles = player._harvestTiles;
+    _buildingTiles = player._buildingTiles;
+    _id = player._id;
+}
+
 Player::~Player() {
+    cout << "Deleting Player with address: " << this << endl;
     delete _harvestTiles;
-    delete _buildingTiles;
-    
+//    delete _buildingTiles;
+//
     _harvestTiles = nullptr;
-    _buildingTiles = nullptr;
+//    _buildingTiles = nullptr;
+    cout << "DONE" << endl;
 }
 
 
-HarvestTile Player::addHarvesTile(HarvestTile tile) {
-    _harvestTiles -> push_back(tile);
-    return tile;
+void Player::addHarvestTile(HarvestTile &tile) {
+    
+    _harvestTiles -> push_back(&tile);
+}
+
+void Player::printHarvestTiles() {
+    for (int i = 0; i < _harvestTiles -> size(); i++) {
+        cout << "HarvestTile address: " << &(*_harvestTiles)[i] << endl;
+    }
 }
 
 BuildingTile Player::addBuildingTile(BuildingTile tile) {
-    _buildingTiles -> push_back(tile);
+    _buildingTiles -> push_back(&tile);
     return tile;
 }
 

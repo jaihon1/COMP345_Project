@@ -15,10 +15,10 @@ private:
     // Own one Village Board
     
     // Owns Harverst Tiles
-    vector<HarvestTile> *_harvestTiles;
+    vector<HarvestTile*> *_harvestTiles;
     
     // Owns Building Tiles
-    vector<BuildingTile> *_buildingTiles;
+    vector<BuildingTile*> *_buildingTiles;
     
     // Owns/Give up Ressource Markers
     
@@ -27,6 +27,8 @@ private:
     
 public:
     Player(int playerId);
+    Player(const Player &player);
+    Player();
     ~Player();
     
     
@@ -36,7 +38,8 @@ public:
 
     // Manage Harvest Tiles
     vector<HarvestTile> getHarvestTiles();
-    HarvestTile addHarvesTile(HarvestTile tile);
+    void addHarvestTile(HarvestTile &tile);
+    void printHarvestTiles();
     HarvestTile removeHarvestTile(HarvestTile tile);
     HarvestTile placeHarvestTile(HarvestTile tile);
     HarvestTile drawHarvestTile(int harvestDeck); // Will need the Deck to be implemented

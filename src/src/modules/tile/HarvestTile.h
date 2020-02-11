@@ -12,6 +12,7 @@ private:
 public:
 	//parameters are the resources intended for the various locations on the tile
 	HarvestTile(ResourceName topRightRes, ResourceName topLeftRes, ResourceName bottomRightRes, ResourceName bottomLeftRes);
+    HarvestTile(const HarvestTile &harvestTile);
     HarvestTile();
 
 	~HarvestTile();
