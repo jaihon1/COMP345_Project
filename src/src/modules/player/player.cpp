@@ -17,27 +17,27 @@ Player::Player(const Player &player) {
 Player::~Player() {
     cout << "Deleting Player with address: " << this << endl;
     delete _harvestTiles;
-//    delete _buildingTiles;
-//
+    delete _buildingTiles;
+
     _harvestTiles = nullptr;
-//    _buildingTiles = nullptr;
+    _buildingTiles = nullptr;
     cout << "DONE" << endl;
 }
 
 
-void Player::addHarvestTile(HarvestTile &tile) {
+HarvestTile* Player::addHarvestTile(HarvestTile &tile) {
     
     _harvestTiles -> push_back(&tile);
+    
+    return &tile;
 }
 
-void Player::printHarvestTiles() {
-    for (int i = 0; i < _harvestTiles -> size(); i++) {
-        cout << "HarvestTile address: " << &(*_harvestTiles)[i] << endl;
-    }
+vector<HarvestTile*>* Player::getHarvestTiles() {
+    return _harvestTiles;
 }
 
-BuildingTile Player::addBuildingTile(BuildingTile tile) {
+BuildingTile* Player::addBuildingTile(BuildingTile &tile) {
     _buildingTiles -> push_back(&tile);
-    return tile;
+    return &tile;
 }
 

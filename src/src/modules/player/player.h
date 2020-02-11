@@ -37,17 +37,16 @@ public:
     int setVillageBoard(int villageBoard);
 
     // Manage Harvest Tiles
-    vector<HarvestTile> getHarvestTiles();
-    void addHarvestTile(HarvestTile &tile);
-    void printHarvestTiles();
-    HarvestTile removeHarvestTile(HarvestTile tile);
+    vector<HarvestTile*>* getHarvestTiles();
+    HarvestTile* addHarvestTile(HarvestTile &tile);
+    HarvestTile* removeHarvestTile(HarvestTile &tile);
     HarvestTile placeHarvestTile(HarvestTile tile);
     HarvestTile drawHarvestTile(int harvestDeck); // Will need the Deck to be implemented
     
     // Manage Building Tiles
     vector<BuildingTile> getBuildings();
-    BuildingTile addBuildingTile(BuildingTile tile);
-    BuildingTile removeBuildingTile(BuildingTile tile);
+    BuildingTile* addBuildingTile(BuildingTile &tile);
+    BuildingTile* removeBuildingTile(BuildingTile &tile);
     BuildingTile drawBuilding(int buildingDeck); // Will need the Deck to be implemented
     
     // Methods for the driver

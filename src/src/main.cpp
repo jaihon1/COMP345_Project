@@ -22,7 +22,7 @@ int main(int argc, const char * argv[]) {
     Player bob(7);
     
     bob.addHarvestTile(harvestTile1);
-//    bob.printHarvestTiles();
+    bob.getHarvestTiles();
     
 //    cout << "Address of new tile main: " << &harvestTile1 << endl;
     
