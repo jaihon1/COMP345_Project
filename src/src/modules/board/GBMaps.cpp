@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "GBMaps.h"
 
-
-
 GBSquare::GBSquare() {
 	status = GBSquareStatus::Empty;
 	tilePtr = NULL;

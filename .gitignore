@@ -36,9 +36,15 @@
 src/src.xcodeproj
 
 # Visual Studio Related
+*.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
-src/Debug/
+src/src/COMP345_Project.sln
+
+
+#Damian's Test Files 
+src/src/testdriver/
+
 
 # Created by https://www.gitignore.io/api/visualstudio
 # Edit at https://www.gitignore.io/?templates=visualstudio

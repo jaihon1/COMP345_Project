@@ -1,7 +1,8 @@
 #ifndef board_h
 #define board_h
-#include "..\tile\Tile.h"
-#include "..\tile\HarvestTile.h"
+
+#include "Tile.h"
+#include "HarvestTile.h"
 
 //enumerated class to give name to the status that a square could have
 enum class GBSquareStatus {

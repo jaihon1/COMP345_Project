@@ -1,6 +1,7 @@
 #include <iostream>
-#include "..\modules\board\GBMaps.h"
-#include "..\modules\GBMapLoader\GBMapLoader.h"
+#include "GBMaps.h"
+#include "GBMapLoader.h"
+#include "Dictionary.h"
 
 using namespace std;
 
@@ -24,10 +25,10 @@ const char* ResourceNameToString(ResourceName inResourceName) {
 
 void printHarvestTile(HarvestTile* inHarvestTile) {
 	cout << "\n";
-	cout << ResourceNameToString(inHarvestTile->getResource(HarvestTile::topLeft)) << " ";
-	cout << ResourceNameToString(inHarvestTile->getResource(HarvestTile::topRight)) << "\n";
-	cout << ResourceNameToString(inHarvestTile->getResource(HarvestTile::bottomLeft)) << " ";
-	cout << ResourceNameToString(inHarvestTile->getResource(HarvestTile::bottomRight)) << "\n";
+	cout << ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topLeft)) << " ";
+	cout << ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topRight)) << "\n";
+	cout << ResourceNameToString(inHarvestTile->getResource(ResourceLocation::bottomLeft)) << " ";
+	cout << ResourceNameToString(inHarvestTile->getResource(ResourceLocation::bottomRight)) << "\n";
 }
 
 const char* SquareStatusToString(GBSquareStatus inSquareStatus) {

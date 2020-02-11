@@ -4,9 +4,10 @@
 
 #include <iostream>
 #include <fstream>
-#include "..\board\GBMaps.h"
+#include "GBMaps.h"
 #include "GBMapLoader.h"
-#include <nlohmann\json.hpp>
+#include <nlohmann/json.hpp>
+
 
 
 using namespace std;
