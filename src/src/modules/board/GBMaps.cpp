@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include "GBMaps.hpp"
-
-
+#include "GBMaps.h"
 
 GBSquare::GBSquare() {
 	status = GBSquareStatus::Empty;
@@ -19,8 +17,9 @@ GBSquare::~GBSquare() {
 -create helper function to randomly distribute harvest tiles on designated squares
 -create helper function to randomly distribute building tiles on designated squares
 */
-GBMaps::GBMaps(int numberOfPlayers, char boardSide)
+GBMaps::GBMaps(int inNumberOfPlayers, char boardSide)
 {
+	numberOfPlayers = new int(inNumberOfPlayers);
 	//board is a single row of pointers. 
 	//Each index in the row points to another array of objects (this is the column)
 	board = new GBSquare* [*rows];
@@ -36,10 +35,10 @@ GBMaps::GBMaps(int numberOfPlayers, char boardSide)
 	}
 
 	if (boardSide == 'b') {
-		intializeBoardB(numberOfPlayers);
+		intializeBoardB(*numberOfPlayers);
 	}
 	else {
-		initializeBoardA(numberOfPlayers);
+		initializeBoardA(*numberOfPlayers);
 	}
 
 }
@@ -115,8 +114,6 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 		return 1;
 	}
 	return 0;
-
-
 
 }
 
