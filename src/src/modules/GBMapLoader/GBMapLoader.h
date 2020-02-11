@@ -14,6 +14,7 @@ class GBMapLoader {
 
 		GBMaps* board;
 
+		//redefining index operator of the struct so that it will return an enum
 		struct statusMap : public map<string, GBSquareStatus> {
 			statusMap() {
 				this->operator[]("Empty") = GBSquareStatus::Empty;

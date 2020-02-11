@@ -1,7 +1,7 @@
 // GBMapLoader.cpp : Defines the functions for the static library.
 //
 
-#include "pch.h"
+
 #include <iostream>
 #include <fstream>
 #include "..\board\GBMaps.h"
@@ -16,12 +16,19 @@ GBMapLoader::GBMapLoader(const char* inFilePath)
 {
 	ifstream inFileStream;
 	inFileStream.open(inFilePath);
+
+	//Document Object Model - human readable model of an instance of a GBMap object
 	json GBMapDoc;
+
+	//can dump the input file stream directly into the DOM
 	inFileStream >> GBMapDoc;
 	
+	//statement initializes the number of players based on the integer associated with the key "Number of players" within the JSON document
 	auto const numberOfPlayers = GBMapDoc.find("NumberOfPlayers");
 	board = new GBMaps((int)numberOfPlayers.value(), 'a');
 
+	//TODO: add more checks that json is valid
+	//if statement checks that a board object is present
 	auto const boardJSON = GBMapDoc.find("board");
 	if (boardJSON == GBMapDoc.end()) {
 		cerr << "board not found";
@@ -29,16 +36,21 @@ GBMapLoader::GBMapLoader(const char* inFilePath)
 	}
 
 	int boardRow = -1;
+	
 	statusMap statusMap;
 	resourceMap resourceMap;
 
+	//for statement loops through each row of the board object
 	for (auto const& row : *boardJSON) {
 		boardRow++;
 		int boardColumn = -1;
 		for (auto const& column : row) {
 			boardColumn++;
+
 			auto const GBSquare = column.find("GBSquare");
+
 			auto const GBSquareStatus = GBSquare->find("status");
+
 			if (statusMap[*GBSquareStatus] == GBSquareStatus::HarvestTile) {
 				auto const harvestTile = GBSquare->find("resources");
 
@@ -52,7 +64,6 @@ GBMapLoader::GBMapLoader(const char* inFilePath)
 			}
 		}
 	}
-
 }
 
 GBMaps* GBMapLoader::getBoard() {
