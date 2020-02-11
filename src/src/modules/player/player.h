@@ -38,14 +38,14 @@ public:
     vector<HarvestTile*>* getHarvestTiles();
     HarvestTile* addHarvestTile(HarvestTile &tile);
     HarvestTile* removeHarvestTile(HarvestTile &tile);
-    HarvestTile placeHarvestTile(HarvestTile tile);
-    HarvestTile drawHarvestTile(int harvestDeck); // Will need the Deck to be implemented
+    HarvestTile* placeHarvestTile(HarvestTile &tile);
+    HarvestTile* drawHarvestTile(int harvestDeck); // Will need the Deck to be implemented
     
     // Manage Building Tiles
     vector<BuildingTile> getBuildings();
     BuildingTile* addBuildingTile(BuildingTile &tile);
     BuildingTile* removeBuildingTile(BuildingTile &tile);
-    BuildingTile drawBuilding(int buildingDeck); // Will need the Deck to be implemented
+    BuildingTile* drawBuilding(int buildingDeck); // Will need the Deck to be implemented
     
     // Methods for the driver
     void ressourceTracker();

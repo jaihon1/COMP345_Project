@@ -1,4 +1,5 @@
 #include "player.h"
+#include <algorithm>
 
 Player::Player() {
     cout << "Creating Player with Main: " << this << endl;
@@ -24,13 +25,19 @@ Player::~Player() {
 
 
 HarvestTile* Player::addHarvestTile(HarvestTile &tile) {
-    
     _harvestTiles -> push_back(&tile);
-    
+    return &tile;
+}
+
+HarvestTile* Player::removeHarvestTile(HarvestTile &tile) {
+    _harvestTiles -> erase(std::remove(_harvestTiles -> begin(), _harvestTiles -> end(), &tile), _harvestTiles -> end());
     return &tile;
 }
 
 vector<HarvestTile*>* Player::getHarvestTiles() {
+    for (int i = 0; i < _harvestTiles->size(); i++) {
+        cout << (*_harvestTiles)[i] << endl;
+    }
     return _harvestTiles;
 }
 
