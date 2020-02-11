@@ -15,6 +15,7 @@ class GBMapLoader {
 		GBMaps* board;
 
 		//redefining index operator of the struct so that it will return an enum
+		//the purpose of this is to convert string to enum
 		struct statusMap : public map<string, GBSquareStatus> {
 			statusMap() {
 				this->operator[]("Empty") = GBSquareStatus::Empty;
@@ -26,6 +27,8 @@ class GBMapLoader {
 			~statusMap() {};
 		};
 
+		//redefining index operator of the struct so that it will return an enum
+		//the purpose of this is to convert string to enum
 		struct resourceMap : public map<string, ResourceName> {
 			resourceMap() {
 				this->operator[]("Lumber") = ResourceName::Lumber;

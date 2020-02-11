@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "GBMaps.h"
+#include "../board/GBMaps.h"
 #include "GBMapLoader.h"
 #include <nlohmann/json.hpp>
 
@@ -50,14 +50,18 @@ GBMapLoader::GBMapLoader(const char* inFilePath)
 
 			auto const GBSquare = column.find("GBSquare");
 
+			//DOM returns a string therefore GBSquareStatus is a string
 			auto const GBSquareStatus = GBSquare->find("status");
 
+			//statusMap converts the GBSquareStatus String to an enum for the comparison
 			if (statusMap[*GBSquareStatus] == GBSquareStatus::HarvestTile) {
 				auto const harvestTile = GBSquare->find("resources");
 
 				ResourceName* resourceArray = new ResourceName[4];
 				int resArrCount=0;
 				for (auto const& resource : *harvestTile) {
+
+					//resourceMap converts the resource string to an enum in order to assign the resource to the resource array which holds enums
 					resourceArray[resArrCount] = resourceMap[resource];
 					resArrCount++;
 				}

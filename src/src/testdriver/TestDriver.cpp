@@ -1,7 +1,7 @@
 #include <iostream>
-#include "GBMaps.h"
-#include "GBMapLoader.h"
-#include "Dictionary.h"
+#include "../modules/board/GBMaps.h"
+#include "../modules/GBMapLoader/GBMapLoader.h"
+#include "../modules/tile/Dictionary.h"
 
 using namespace std;
 
