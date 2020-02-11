@@ -19,7 +19,7 @@ int main(int argc, const char * argv[]) {
     
     HarvestTile harvestTile1(lumber, rock, sheep, wheat);
     
-    Player bob(7);
+    Player bob;
     
     bob.addHarvestTile(harvestTile1);
     bob.getHarvestTiles();

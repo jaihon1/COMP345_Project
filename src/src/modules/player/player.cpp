@@ -1,17 +1,15 @@
 #include "player.h"
 
-Player::Player(int playerId) {
+Player::Player() {
     cout << "Creating Player with Main: " << this << endl;
     _harvestTiles = new vector<HarvestTile*>;
     _buildingTiles = new vector<BuildingTile*>;
-    _id = &playerId;
 }
 
 Player::Player(const Player &player) {
     cout << "Creating Player with Copy: " << this << endl;
     _harvestTiles = player._harvestTiles;
     _buildingTiles = player._buildingTiles;
-    _id = player._id;
 }
 
 Player::~Player() {

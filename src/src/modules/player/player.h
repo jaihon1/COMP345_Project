@@ -11,7 +11,6 @@ using namespace std;
 
 class Player {
 private:
-    int* _id;
     // Own one Village Board
     
     // Owns Harverst Tiles
@@ -26,9 +25,8 @@ private:
     
     
 public:
-    Player(int playerId);
-    Player(const Player &player);
     Player();
+    Player(const Player &player);
     ~Player();
     
     
