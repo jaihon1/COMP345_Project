@@ -89,7 +89,8 @@ VGMaps:VGSlotStatus [] checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		connections[3] = NULL; 
 	}
 	return connections;
-
+	//delete after the return 
+	delete connections; 
 }
 
 VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
