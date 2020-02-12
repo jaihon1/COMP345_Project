@@ -49,7 +49,7 @@ VGMaps:VGSlotStatus [] checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 	if ((r - 1) => 0)
 	{
-		connections[0] = village_board[r - 1][c].getStatus;
+		connections[0] = village_board[r - 1][c].getStatus();
 	}
 	else
 	{
@@ -59,7 +59,7 @@ VGMaps:VGSlotStatus [] checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	//check right
 	if ((c + 1) <= 4)
 	{
-		connections[1] = village_board[r][c + 1].getStatus;
+		connections[1] = village_board[r][c + 1].getStatus();
 	}
 	else
 	{
@@ -70,7 +70,7 @@ VGMaps:VGSlotStatus [] checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	//check bottom
 	if ((r + 1) <= 4)
 	{
-		connections[2] = village_board[r + 1][c].getStatus;
+		connections[2] = village_board[r + 1][c].getStatus();
 	}
 	else
 	{
@@ -81,7 +81,7 @@ VGMaps:VGSlotStatus [] checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	//check left 
 	if ((c - 1) => 0)
 	{
-		connections[3] = village_board[r][c - 1].getStatus;
+		connections[3] = village_board[r][c - 1].getStatus();
 	}
 	else
 	{
