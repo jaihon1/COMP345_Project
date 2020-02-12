@@ -31,6 +31,7 @@ public:
 class VGMaps {
 private:
 	
+
 	const int* const rows = new int(6); //length of the row
 	const int* const columns = new int(5); //length of the column
 
@@ -48,6 +49,7 @@ public:
 
 	VGSquare ** village_board; 
 
+
 	VGSlotStatus getStatus(int row, int column);
 
 	bool getGreenSheepPlaced() { return GreenSheepPlaced; }
@@ -55,11 +57,13 @@ public:
 	bool getRedLumberPlaced() { return RedLumberPlaced;  }
 	bool getYellowHayPlaced() { return YellowHayPlaced;  }
 
+	bool setstate(bool state, bool given); 
+
 	//void flipIndexes(); //function you call to flip the indexes inside the village board -> update: dont need cuz it doesnt affect the game
 
 	VGSlotStatus [] checkConnectionsOfSlot(BuildingTile t, int r, int c); 
 
-	void addNewBuildingTile(int r, int c);
+	void addNewBuildingTile(BuildingTile t, int r, int c); 
 
 };
 
