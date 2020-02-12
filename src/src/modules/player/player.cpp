@@ -14,13 +14,19 @@ Player::Player(const Player &player) {
 }
 
 Player::~Player() {
-    cout << "Deleting Player with address: " << this << endl;
-    delete _harvestTiles;
-    delete _buildingTiles;
+    if (_harvestTiles) {
+        cout << "Deleting _harvestTiles of Player with address: " << this << endl;
+        delete _harvestTiles;
+        _harvestTiles = nullptr;
+        cout << "DONE" << endl;
+    }
 
-    _harvestTiles = nullptr;
-    _buildingTiles = nullptr;
-    cout << "DONE" << endl;
+    if (_buildingTiles) {
+        cout << "Deleting _buildingTiles of Player with address: " << this << endl;
+        delete _buildingTiles;
+        _buildingTiles = nullptr;
+        cout << "DONE" << endl;
+    }
 }
 
 

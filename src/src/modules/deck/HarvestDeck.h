@@ -1,5 +1,5 @@
-#ifndef HarvestDeck_hpp
-#define HarvestDeck_hpp
+#ifndef HarvestDeck_h
+#define HarvestDeck_h
 
 #include <stdio.h>
 #include "HarvestTile.h"

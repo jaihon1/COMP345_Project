@@ -1,5 +1,5 @@
-#ifndef player_hpp
-#define player_hpp
+#ifndef player_h
+#define player_h
 
 #include <iostream>
 #include <stdio.h>
@@ -55,4 +55,4 @@ public:
     
 };
 
-#endif /* player_hpp */
+#endif /* player_h */
