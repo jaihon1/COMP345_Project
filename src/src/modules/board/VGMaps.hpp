@@ -48,8 +48,7 @@ public:
 	~VGMaps();
 
 	VGSlotStatus getStatus(int row, int column);
-	
-	int setstate(bool state, bool given);
+
 
 
 	VGSquare ** village_board; 
@@ -63,7 +62,7 @@ public:
 
 	//void flipIndexes(); //function you call to flip the indexes inside the village board -> update: dont need cuz it doesnt affect the game
 
-	VGSlotStatus [] checkConnectionsOfSlot(BuildingTile t, int r, int c); 
+	VGSlotStatus[] checkConnectionsOfSlot(BuildingTile t, int r, int c); 
 
 	void addNewBuildingTile(BuildingTile t, int r, int c); 
 

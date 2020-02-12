@@ -19,7 +19,7 @@ VGMaps::VGMaps()
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
 		}
 	}
-}; 
+}
 
 //I do not think we need
 VGMaps::~VGMaps()
@@ -29,10 +29,10 @@ VGMaps::~VGMaps()
 		delete[] village_board[i]; 
 	}
 	delete village_board;
-};
+}
 
 
-VGMaps::getStatus(int row, int column)
+VGSlotStatus VGMaps::getStatus(int row, int column)
 {
 	return village_board[row][column].VGstatus; 
 }
@@ -43,7 +43,7 @@ void VGMaps::setstate(bool state, bool given)
 	state = given; 
 }
 
-VGMaps::VGSlotStatus[] checkConnectionsOfSlot(BuildingTile t, int r, int c)
+VGSlotStatus [] VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 {
 	VGSlotStatus connections[4];
 
@@ -51,7 +51,7 @@ VGMaps::VGSlotStatus[] checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 	//check top
 
-	if ((r - 1) => 0)
+	if((r - 1) => 0)
 	{
 		connections[0] = village_board[r - 1][c].getStatus();
 	}
@@ -72,7 +72,7 @@ VGMaps::VGSlotStatus[] checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	}
 	
 	//check bottom
-	if ((r + 1) <= 4)
+	if((r + 1) <= 4)
 	{
 		connections[2] = village_board[r + 1][c].getStatus();
 	}
@@ -83,7 +83,7 @@ VGMaps::VGSlotStatus[] checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	}
 
 	//check left 
-	if ((c - 1) => 0)
+	if((c - 1) => 0)
 	{
 		connections[3] = village_board[r][c - 1].getStatus();
 	}
@@ -93,7 +93,6 @@ VGMaps::VGSlotStatus[] checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		connections[3] = NULL; 
 	}
 	return connections;
-	//delete after the return 
 
 }
 

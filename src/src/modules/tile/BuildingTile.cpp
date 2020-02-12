@@ -1,4 +1,5 @@
 #include "BuildingTile.hpp"
+#include <cstdlib>
 
 //<<<<<<< Updated upstream
 //randomized

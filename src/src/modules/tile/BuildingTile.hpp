@@ -26,7 +26,8 @@ enum class Connection {
 };
 **/
 
-class BuildingTile : public Tile {
+class BuildingTile
+{
 private:
 
 	BuildingColorType _buildingColorType;
@@ -46,25 +47,6 @@ public:
 	int generateBuildingNumber();
 	void flip();
 
-}; {
-private:
+}; 
 
-	BuildingColorType _buildingColorType;
-	int _buildingNum;
-	BuildingStatus _buildingStatus;
-
-public:
-
-	BuildingTile();
-	BuildingTile(BuildingColorType type, BuildingStatus status);
-	~BuildingTile();
-
-	BuildingColorType getBuildingColorType();
-	BuildingStatus getSide();
-	int getBuildingNum();
-	void setBuildingNum(int num);
-	int generateBuildingNumber();
-	void flip();
-
-};
 
