@@ -7,11 +7,11 @@ using namespace std;
 
 VGMaps::VGMaps()
 {
-	village_board = new VGSquare*[*rows];
+	village_board[*rows];
 
-	for (int i = 0, i < *rows; i++)
+	for (int i = 0; i < *rows; i++)
 	{
-		village_board[i] = new VGSquare*[*columns];
+		village_board[*columns];  
 
 		//initialized the current 2D array
 		for (int j = 0; j < *columns; j++)
@@ -19,7 +19,9 @@ VGMaps::VGMaps()
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
 		}
 	}
-}
+}; 
+
+//I do not think we need
 VGMaps::~VGMaps()
 {
 	for (int i = 0; i < *rows; i++)
@@ -27,21 +29,23 @@ VGMaps::~VGMaps()
 		delete[] village_board[i]; 
 	}
 	delete village_board;
-}
+};
+
 
 VGMaps::getStatus(int row, int column)
 {
 	return village_board[row][column].VGstatus; 
 }
 
-VGMaps::setstate(bool state, bool given)
+
+void VGMaps::setstate(bool state, bool given)
 {
 	state = given; 
 }
 
-VGMaps:VGSlotStatus [] checkConnectionsOfSlot(BuildingTile t, int r, int c)
+VGMaps::VGSlotStatus[] checkConnectionsOfSlot(BuildingTile t, int r, int c)
 {
-	VGSlotStatus [] connections = new VGSlotStatus[4]; 
+	VGSlotStatus connections[4];
 
 	// 0 -> top, 2 -> right, 3 -> bot, 4 -> left
 
@@ -90,7 +94,7 @@ VGMaps:VGSlotStatus [] checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	}
 	return connections;
 	//delete after the return 
-	delete connections; 
+
 }
 
 VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)

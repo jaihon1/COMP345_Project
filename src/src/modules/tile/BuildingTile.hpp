@@ -1,5 +1,5 @@
 #pragma once
-#include "Tile.hpp"
+
 
 
 enum class BuildingColorType {
@@ -10,7 +10,7 @@ enum class BuildingColorType {
 };
 
 
-enum class WhichSide {
+enum class BuildingStatus {
 	Normal, 
 	Flipped 
 };
@@ -26,29 +26,45 @@ enum class Connection {
 };
 **/
 
-class BuildingTile :
-	//public Tile
-{
-private: 
-	BuildingColorType BuildingType; 
-	int BuildingNum; 
-	WhichSide BuildingStatus; 
+class BuildingTile : public Tile {
+private:
+
+	BuildingColorType _buildingColorType;
+	int _buildingNum;
+	BuildingStatus _buildingStatus;
 
 public:
 
-	BuildingTile(); 
+	BuildingTile();
+	BuildingTile(BuildingColorType type, BuildingStatus status);
+	~BuildingTile();
 
-	BuildingTile(BuildingColorType t, WhichSide s, int n);
-	
-	~BuildingTile(); 
+	BuildingColorType getBuildingColorType();
+	BuildingStatus getSide();
+	int getBuildingNum();
+	void setBuildingNum(int num);
+	int generateBuildingNumber();
+	void flip();
 
-	BuildingColorType getBuildingColorType() { return BuildingType;  }
+}; {
+private:
 
-	WhichSide getSide() { return BuildingStatus;  }
+	BuildingColorType _buildingColorType;
+	int _buildingNum;
+	BuildingStatus _buildingStatus;
 
-	int getBuildingNum() { return BuildingNum;  }
+public:
 
-	void Flip(); 
+	BuildingTile();
+	BuildingTile(BuildingColorType type, BuildingStatus status);
+	~BuildingTile();
+
+	BuildingColorType getBuildingColorType();
+	BuildingStatus getSide();
+	int getBuildingNum();
+	void setBuildingNum(int num);
+	int generateBuildingNumber();
+	void flip();
 
 };
 

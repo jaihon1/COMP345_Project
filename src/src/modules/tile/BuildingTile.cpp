@@ -1,41 +1,46 @@
 #include "BuildingTile.hpp"
 
+//<<<<<<< Updated upstream
 //randomized
 // int random = rand() % 6 + 1; //generate a random number from 1 to 6 
+//=======
 
-
-
-BuildingTile::BuildingTile()
-{
-	//?? 
+BuildingTile::BuildingTile(BuildingColorType type, BuildingStatus status) {
+	_buildingColorType = type;
+	_buildingStatus = status;
+	_buildingNum = generateBuildingNumber();
 }
 
+BuildingTile::~BuildingTile() {
 
-BuildingTile::BuildingTile(BuildingColorType t, WhichSide s, int n)
-{
-	this.getBuildingColorType() = t;
-	this.getSide() = s;
-	int random = rand() % 6 + 1; //generate a random number from 1 to 6 
-	n = random;
-	this.getBuildingNum() = n;
 }
 
-
-BuildingTile::~BuildingTile()
-{
-	delete this.getBuildingColorType();
-	delete this.getSide();
-	delete this.getBuildingNum();
+BuildingColorType BuildingTile::getBuildingColorType() {
+	return _buildingColorType;
 }
 
+BuildingStatus BuildingTile::getSide() {
+	return _buildingStatus;
+}
 
-//someone check this... 
-void BuildingTile::Flip()
-{
-	if (this.getSide() == WhichSide::"Normal") 
-	{
-		this->getBuildingNum = -1; 
+int BuildingTile::getBuildingNum() {
+	return _buildingNum;
+}
+
+int BuildingTile::generateBuildingNumber() {
+	int random = rand() % 6 + 1; //generate a random number from 1 to 6
+	return random;
+}
+
+void BuildingTile::setBuildingNum(int num) {
+	_buildingNum = num;
+}
+
+void BuildingTile::flip() {
+	if (getSide() == BuildingStatus::Normal) {
+		setBuildingNum(-1);
 	}
-	//cannot flip back 
+	//cannot flip back
+
 	
 }

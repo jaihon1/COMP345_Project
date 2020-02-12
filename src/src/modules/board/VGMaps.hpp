@@ -26,9 +26,9 @@ public:
 	Connection left;
 	Connection right;
 	**/
-}
+}; 
 
-class VGMaps {
+class VGMaps{
 private:
 	
 
@@ -45,17 +45,21 @@ private:
 public: 
 	VGMaps(); 
 
-	~VGMaps(); 
+	~VGMaps();
+
+	VGSlotStatus getStatus(int row, int column);
+	
+	int setstate(bool state, bool given);
+
 
 	VGSquare ** village_board; 
-	VGSlotStatus getStatus(int row, int column);
 
 	bool getGreenSheepPlaced() { return GreenSheepPlaced; }
 	bool getGreyRockPlaced() { return GreyRockPlaced;  }
 	bool getRedLumberPlaced() { return RedLumberPlaced;  }
 	bool getYellowHayPlaced() { return YellowHayPlaced;  }
 
-	bool setstate(bool state, bool given); 
+	void setstate(bool state, bool given); 
 
 	//void flipIndexes(); //function you call to flip the indexes inside the village board -> update: dont need cuz it doesnt affect the game
 
