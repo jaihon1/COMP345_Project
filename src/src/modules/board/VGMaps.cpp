@@ -7,11 +7,11 @@ using namespace std;
 
 VGMaps::VGMaps()
 {
-	village_board = new VGSquare*[*rows]; 
+	village_board = new VGSquare*[*rows];
 
 	for (int i = 0, i < *rows; i++)
 	{
-		village_board[i] = new VGSquare*[*columns]; 
+		village_board[i] = new VGSquare*[*columns];
 
 		//initialized the current 2D array
 		for (int j = 0; j < *columns; j++)
@@ -19,9 +19,7 @@ VGMaps::VGMaps()
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
 		}
 	}
-
 }
-
 VGMaps::~VGMaps()
 {
 	for (int i = 0; i < *rows; i++)

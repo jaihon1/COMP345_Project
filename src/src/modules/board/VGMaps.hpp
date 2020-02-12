@@ -2,12 +2,12 @@
 
 #include "..\tile\BuildingTile.hpp"
 
-
+/*
 enum class Connection
 {
 	BuildingColorType
 };
-
+*/
 
 enum class VGSlotStatus
 {
@@ -20,18 +20,19 @@ public:
 	VGSlotStatus VGstatus;
 	BuildingTile *building_ptr; 
 
+	/**
 	Connection up;
 	Connection down;
 	Connection left;
 	Connection right;
-
+	**/
 }
 
 class VGMaps {
 private:
 	
 	const int* const rows = new int(6); //length of the row
-	const int* const colums = new int(5); //length of the column
+	const int* const columns = new int(5); //length of the column
 
 	//start off with flags that indicate false, meaning that no tile of that type has been placed yet. 
 	bool GreenSheepPlaced = false; 
