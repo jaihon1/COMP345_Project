@@ -1,0 +1,69 @@
+{
+	"NumberOfPlayers": 2,
+	"board":
+		[
+			[
+			 {"GBSquare": {"status": "Empty"}}, 
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}}
+			],
+			[
+			 {"GBSquare": {"status": "Empty"}}, 
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}}
+			],
+			[
+			 {"GBSquare": {"status": "Empty"}}, 
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}}
+			],
+			[
+			 {"GBSquare": {"status": "Empty"}}, 
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "HarvestTile", "resources": ["Wheat", "Rock", "Sheep", "Sheep"]}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}}
+			],
+			[
+			 {"GBSquare": {"status": "Empty"}}, 
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}}
+			],
+			[
+			 {"GBSquare": {"status": "Empty"}}, 
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}}
+			],
+			[
+			 {"GBSquare": {"status": "Empty"}}, 
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}},
+			 {"GBSquare": {"status": "Empty"}}
+			]
+		]
+}	
