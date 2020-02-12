@@ -16,6 +16,7 @@ int main(int argc, const char * argv[]) {
     cout << "Number of Players: " << map1.getNumberOfPlayers() << endl;
 	**/
 
+	VGMaps bmap1 = new VGMaps(); 
 
 
 

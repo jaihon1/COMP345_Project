@@ -25,7 +25,7 @@ BuildingTile::~BuildingTile()
 {
 	delete this.getBuildingColorType();
 	delete this.getSide();
-	delete this.this.getBuildingNum();
+	delete this.getBuildingNum();
 }
 
 

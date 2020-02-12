@@ -117,7 +117,7 @@ VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			if (village_board[r][c].VGSlotStatus == VGSlotStatus::Empty)
 			{
 				//failed to 
-				cout << "Error in placing tile: existing type (GREEN SHEEP) is already on village board, player has to place it next to it"; 
+				cout << "Error in placing tile: existing type (GREEN SHEEP) is already on village board, player has to place it next to it" << endl; 
 
 			}
 		}
@@ -149,7 +149,7 @@ VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			if (village_board[r][c].VGSlotStatus == VGSlotStatus::Empty)
 			{
 				//failed to 
-				cout << "Error in placing tile: existing type (GREY ROCK) is already on village board, player has to place it next to it";
+				cout << "Error in placing tile: existing type (GREY ROCK) is already on village board, player has to place it next to it" << endl;
 
 			}
 		}
@@ -180,7 +180,7 @@ VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			if (village_board[r][c].VGSlotStatus == VGSlotStatus::Empty)
 			{
 				//failed to 
-				cout << "Error in placing tile: existing type (RED LUMBER) is already on village board, player has to place it next to it";
+				cout << "Error in placing tile: existing type (RED LUMBER) is already on village board, player has to place it next to it" << endl;
 			}
 		}
 		else
@@ -210,7 +210,7 @@ VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			if (village_board[r][c].VGSlotStatus == VGSlotStatus::Empty)
 			{
 				//failed to 
-				cout << "Error in placing tile: existing type (RED LUMBER) is already on village board, player has to place it next to it";
+				cout << "Error in placing tile: existing type (RED LUMBER) is already on village board, player has to place it next to it" << endl;
 			}
 		}
 		else

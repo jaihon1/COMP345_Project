@@ -26,15 +26,13 @@ enum class Connection {
 };
 **/
 
-
-
 class BuildingTile :
 	//public Tile
 {
 private: 
-	BuildingColorType type; 
+	BuildingColorType BuildingType; 
 	int BuildingNum; 
-	WhichSide status; 
+	WhichSide Buildingstatus; 
 
 public:
 
@@ -44,9 +42,9 @@ public:
 	
 	~BuildingTile(); 
 
-	BuildingColorType getBuildingColorType() { return type;  }
+	BuildingColorType getBuildingColorType() { return BuildingType;  }
 
-	WhichSide getSide() { return status;  }
+	WhichSide getSide() { return BuildingStatus;  }
 
 	int getBuildingNum() { return BuildingNum;  }
 
