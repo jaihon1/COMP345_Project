@@ -7,8 +7,6 @@ enum class BuildingColorType {
 	GreyRock,
 	RedLumber, 
 	YellowHay
-
-
 };
 
 

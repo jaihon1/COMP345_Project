@@ -1,5 +1,6 @@
 #include <iostream>
 #include "modules/board/GBMaps.hpp"
+#include "modules/board/VGMaps.hpp"
 
 using namespace std;
 

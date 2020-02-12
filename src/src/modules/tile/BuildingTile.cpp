@@ -32,11 +32,10 @@ BuildingTile::~BuildingTile()
 //someone check this... 
 void BuildingTile::Flip()
 {
-	if (this.getSide() == "Normal")
+	if (this.getSide() == WhichSide::"Normal") 
 	{
 		this->getBuildingNum = -1; 
 	}
-
-		//cannot flip back
+	//cannot flip back 
 	
 }
