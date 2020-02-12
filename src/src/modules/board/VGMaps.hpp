@@ -48,8 +48,6 @@ public:
 	~VGMaps(); 
 
 	VGSquare ** village_board; 
-
-
 	VGSlotStatus getStatus(int row, int column);
 
 	bool getGreenSheepPlaced() { return GreenSheepPlaced; }
