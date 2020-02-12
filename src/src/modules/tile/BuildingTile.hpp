@@ -32,7 +32,7 @@ class BuildingTile :
 private: 
 	BuildingColorType BuildingType; 
 	int BuildingNum; 
-	WhichSide Buildingstatus; 
+	WhichSide BuildingStatus; 
 
 public:
 

@@ -107,7 +107,7 @@ VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			VGSlotStatus [] find_green = checkConnectionOfSlot(t, r, c); 
 
-			for (int i = 0; i < find_green.length; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				if (find_green[i] == "GreenSheep")
 				{
@@ -141,7 +141,7 @@ VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			VGSlotStatus[] find_grey = checkConnectionOfSlot(t, r, c);
 
-			for (int i = 0; i < find_grey.length; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				if (find_grey[i] == BuildingColorType::"GreyRock")
 				{
@@ -174,7 +174,7 @@ VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			VGSlotStatus[] find_red = checkConnectionOfSlot(t, r, c);
 
-			for (int i = 0; i < find_red.length; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				if (find_red[i] == BuildingColorType::"GreyRock")
 				{
@@ -205,7 +205,7 @@ VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			VGSlotStatus[] find_yellow = checkConnectionOfSlot(t, r, c);
 
-			for (int i = 0; i < find_yellow.length; i++)
+			for (int i = 0; i < 4; i++)
 			{
 				if (find_yellow[i] == BuildingColorType::"YellowHay")
 				{
