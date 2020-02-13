@@ -12,13 +12,16 @@ enum class Connection
 enum class VGSlotStatus
 {
 	Empty, //int 0
-	BuildingColorType //int 1 
+	BuildingColorType, //int 1 
+	Unavailable
 };
 
-class VGSquare{
-public: 
+
+struct VGSquare{
 	VGSlotStatus VGstatus;
 	BuildingTile *building_ptr; 
+
+
 
 	/**
 	Connection up;
@@ -49,8 +52,6 @@ public:
 
 	VGSlotStatus getStatus(int row, int column);
 
-
-
 	VGSquare ** village_board; 
 
 	bool getGreenSheepPlaced() { return GreenSheepPlaced; }
@@ -62,7 +63,7 @@ public:
 
 	//void flipIndexes(); //function you call to flip the indexes inside the village board -> update: dont need cuz it doesnt affect the game
 
-	VGSlotStatus[] checkConnectionsOfSlot(BuildingTile t, int r, int c); 
+	VGSlotStatus* checkConnectionsOfSlot(BuildingTile t, int r, int c); 
 
 	void addNewBuildingTile(BuildingTile t, int r, int c); 
 
