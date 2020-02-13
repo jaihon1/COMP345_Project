@@ -100,6 +100,8 @@ VGSlotStatus* VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 }
 
+//use vectors...
+
 void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 {
 	BuildingColorType t_type = t.getBuildingColorType(); 
