@@ -12,6 +12,13 @@ BuildingTile::BuildingTile(BuildingColorType type, BuildingStatus status) {
 	_buildingNum = generateBuildingNumber();
 }
 
+BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
+{
+	_buildingColorType = t; 
+	_buildingNum = n;
+	_buildingStatus = s; 
+}
+
 BuildingTile::~BuildingTile() {
 
 }

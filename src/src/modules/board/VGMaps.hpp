@@ -2,18 +2,12 @@
 
 #include "..\tile\BuildingTile.hpp"
 
-/*
-enum class Connection
-{
-	BuildingColorType
-};
-*/
 
 enum class VGSlotStatus
 {
 	Empty, //int 0
 	BuildingColorType, //int 1 
-	Unavailable
+	Unavailable //int 2 - any invalid slot (outside the actual map)
 };
 
 
@@ -21,14 +15,6 @@ struct VGSquare{
 	VGSlotStatus VGstatus;
 	BuildingTile *building_ptr; 
 
-
-
-	/**
-	Connection up;
-	Connection down;
-	Connection left;
-	Connection right;
-	**/
 }; 
 
 class VGMaps{
