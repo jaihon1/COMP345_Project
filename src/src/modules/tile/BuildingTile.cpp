@@ -20,7 +20,7 @@ BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
 }
 
 BuildingTile::~BuildingTile() {
-
+	//do I need to code? 
 }
 
 BuildingColorType BuildingTile::getBuildingColorType() {

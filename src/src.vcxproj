@@ -103,11 +103,13 @@
     <ClCompile Include="src\modules\board\GBMaps.cpp" />
     <ClCompile Include="src\modules\board\VGMaps.cpp" />
     <ClCompile Include="src\modules\tile\BuildingTile.cpp" />
+    <ClCompile Include="src\modules\VGMapLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\modules\board\GBMaps.hpp" />
     <ClInclude Include="src\modules\board\VGMaps.hpp" />
     <ClInclude Include="src\modules\tile\BuildingTile.hpp" />
+    <ClInclude Include="src\modules\VGMapLoader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

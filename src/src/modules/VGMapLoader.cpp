@@ -71,6 +71,7 @@ VGMapLoader::VGMapLoader(const char * inFile)
 
 VGMapLoader::~VGMapLoader()
 {
+
 }
 
 VGMaps * VGMapLoader::getBoard()

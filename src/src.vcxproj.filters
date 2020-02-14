@@ -27,6 +27,9 @@
     <ClCompile Include="src\modules\tile\BuildingTile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\modules\VGMapLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\modules\board\GBMaps.hpp">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\modules\tile\BuildingTile.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\VGMapLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
