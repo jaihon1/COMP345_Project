@@ -79,7 +79,7 @@ void testFunction1() {
 }
 
 void testFunction2() {
-	GBMapLoader* testLoader = new GBMapLoader("C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testMap.json");
+	GBMapLoader* testLoader = new GBMapLoader("C:\\Users\\Admin\\Documents\\COMP345_Project\\data\\testMap.json");
 	printGameBoard(testLoader->getBoard());
 }
 
