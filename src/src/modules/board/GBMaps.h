@@ -1,5 +1,6 @@
 #ifndef board_h
 #define board_h
+#include<iostream> 
 #include "..\tile\Tile.h"
 #include "..\tile\HarvestTile.h"
 
@@ -35,9 +36,9 @@ private:
 	//Game Board is a pointer to an array of pointers
 	GBSquare** board;
 
-	void initializeBoardA(int numberOfPlayers);
+	void initializeBoardA();
 
-	void intializeBoardB(int numberOfPlayers);
+	void intializeBoardB();
 
 public:
 	//constructor takes number of players and whether the game is played on Side A or Side B

@@ -19,6 +19,7 @@ public:
 
 	//parameters are the resources intended for the various locations on the tile
 	HarvestTile(ResourceName topRightRes, ResourceName topLeftRes, ResourceName bottomRightRes, ResourceName bottomLeftRes);
+	HarvestTile(int topRightRes, int topLeftRes, int bottomRightRes, int bottomLeftRes);
 
 	~HarvestTile();
 

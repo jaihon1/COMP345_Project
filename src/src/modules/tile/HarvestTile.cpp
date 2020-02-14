@@ -7,6 +7,14 @@ HarvestTile::HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, Reso
 
 }
 
+HarvestTile::HarvestTile(int topLeftRes, int topRightRes, int bottomLeftRes, int bottomRightRes)
+{
+	//pointer for each row
+	resourceArr = new ResourceName[4]{ static_cast<ResourceName>(topLeftRes), static_cast<ResourceName>(topRightRes), 
+		static_cast<ResourceName>(bottomLeftRes), static_cast<ResourceName>(bottomRightRes) };
+
+}
+
 HarvestTile::~HarvestTile()
 {
 	delete[] resourceArr;
