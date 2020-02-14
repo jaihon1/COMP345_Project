@@ -20,17 +20,19 @@ int main(int argc, const char * argv[]) {
 
 	GBMap map_test(players, true);
 	int res_test[] = { 3, 1, 1, 3 };
-	int res_test0[] = { 3, 3, 3, 3 };
+	int res_test0[] = { 3, 2, 3, 3 };
 	int res_test1[] = { 1, 1, 1, 1 };
 	int res_test2[] = { 3, 3, 3, 3 };
 	int res_test3[] = { 3, 3, 3, 3 };
 	Scoring sc{};
-	map_test.put_resource(3, 2, res_test0, sc);
-	map_test.put_resource(2, 3, res_test1, sc);
-	map_test.put_resource(3, 4, res_test2, sc);
-	map_test.put_resource(4, 3, res_test3, sc);
-	map_test.put_resource(3, 3, res_test, sc);
+	map_test.add_tile(3, 2, res_test0, sc);
+	map_test.add_tile(2, 3, res_test1, sc);
+	map_test.add_tile(3, 4, res_test2, sc);
+	map_test.add_tile(4, 3, res_test3, sc);
+	map_test.add_tile(3, 3, res_test, sc);
 	sc.display_res();
+	std::cout << "connected: " << sc.connected(87) << std::endl;
+	std::cout << "connected: " << sc.connected(88) << std::endl;
 	std::cout << "connected: " << sc.connected(89) << std::endl;
 	map_test.display_map();
 

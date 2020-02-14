@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream> 
 #include <list> 
+//#include "GBMap.h"
 class VGMap;
 
 class Scoring
@@ -43,10 +44,10 @@ private:
 	void reset_res();
 	void add_res(int resv, int numv);
 	void update_help(int v, int w, int res);
-	void update_res(int pos[4], int res[4]);
+	void update_res(ptrdiff_t pos[4], int res[4]);
 	
 	friend class GBMap;
-
+	//friend void GBMap::put_resource(int xv, int yv, int res[4], Scoring &sc);
 public:
 	Scoring();
 	~Scoring();		

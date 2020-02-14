@@ -62,18 +62,21 @@ private:
 	Tile map[board_length][board_length];
 
 	void init_obstacle(XY &coor);
-	void init_resource(XY &coor, int res[4]);
-	void init_building(XY &coor);
-	void GBMap::connect_resource(Tile *pos, Scoring &sc);
+	void init_tile(int &xv, int &yv, int val[4]);
+	bool init_obstacle(int &xv, int &yv);
+	bool init_resource(int &xv, int &yv);	
+	bool init_building(int &xv, int &yv);
+	bool put_resource(int &xv, int &yv, int res[4]);
+	void connect_resource(Tile *pos, Scoring &sc);
 
 public:
 	GBMap(int map_player, bool map_type);
 	~GBMap();
 
-	const enum tile_type { black = -1, white = 0, red = 1, green = 2, yellow = 3, gray = 4, building = 5 };
+	const enum tile_type { obstacle = -1, white = 0, red = 1, green = 2, yellow = 3, gray = 4, building = 5 };
 
-	void put_resource(int xv, int yv, int res[4], Scoring &sc);
-	int check_availibility(int xv, int yv);
+	void add_tile(int xv, int yv, int res[4], Scoring &sc);
+	int check_availibility(int &xv, int &yv);
 	void put_resource_sim();
 
 	void display_map();	

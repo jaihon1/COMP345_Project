@@ -38,7 +38,7 @@ void Scoring::update_help(int v, int w, int res) {
 	}
 }
 
-void Scoring::update_res(int pos[4], int res[4])
+void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 {
 	//std::cout << "Test" << vertices.connected(90) << std::endl;
 	//update_help(pos[0], pos[3], res[0]);

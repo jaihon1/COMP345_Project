@@ -1,6 +1,6 @@
 #include "GBMap.h"
 
-
+//current system use row(x) and column(y)
 
 GBMap::GBMap(int map_player, bool map_type)
 {
@@ -9,11 +9,6 @@ GBMap::GBMap(int map_player, bool map_type)
 	for (int i = 0; i < board_length; i++)
 		for (int j = 0; j < board_length; j++)
 			map[i][j] = Tile(i, j, 0);
-
-	//init_obstacle(0, 0);
-	//init_obstacle(0, board_length-1);
-	//init_obstacle(board_length - 1, 0);
-	//init_obstacle(board_length - 1, board_length - 1);
 
 	XY obstacle_coor[4] = { { 0, 0 }, { 0, 6 }, { 6, 0 }, { 6, 6 } };//or XY(0,0), ...
 	for (int i = 0; i < 4; i++)
@@ -44,21 +39,25 @@ GBMap::GBMap(int map_player, bool map_type)
 
 	if (map_type == true)
 	{
-		XY init_resource_coor[4] = { { 1, 1 },{ 1, 5 },{ 5, 1 },{ 5, 5 } };
-		int res_temp[] = { 1, 2, 3, 4 };
+		int init_res_coor[4][2] = { { 1, 1 },{ 1, 5 },{ 5, 1 },{ 5, 5 } };//int res_temp[] = { 1, 2, 3, 4 };
 		for (int i = 0; i < 4; i++)
-			init_resource(init_resource_coor[i], res_temp);
+			init_resource(init_res_coor[i][0], init_res_coor[i][1]);
 	}
 	else
 	{
-		XY settlement_coor[8] = {	{ 1,1 },{ 1,3 },{ 1,5 },{ 3,1 },{ 3,5 },{ 5,1 },{ 5,3 },{ 5,5 } };
+		int settlement_coor[8][2] = {	{ 1,1 },{ 1,3 },{ 1,5 },{ 3,1 },{ 3,5 },{ 5,1 },{ 5,3 },{ 5,5 } };
+		int building_coor[13][2] = {	{ 0,2 },{ 0,4 },{ 2,0 },{ 2,2 },{ 2,4 },{ 2,6 },{ 3,3 },
+										{ 4,0 },{ 4,2 },{ 4,4 },{ 4,6 },{ 6,2 },{ 6,4 } };
+		for (int i = 0; i < 4; i++)
+		{
+			int temp = rand() % 8;
+			if (!init_obstacle(settlement_coor[temp][0], settlement_coor[temp][1]))
+				i--;
+		}			
 		for (int i = 0; i < 8; i++)
-			init_obstacle(settlement_coor[i]);
-		XY building_coor[13] = {	{ 0,2 },{ 0,4 },{ 2,0 },{ 2,2 },{ 2,4 },{ 2,6 },{ 3,3 },
-									{ 4,0 },{ 4,2 },{ 4,4 },{ 4,6 },{ 0,2 },{ 0,4 } };
+			init_resource(settlement_coor[i][0], settlement_coor[i][1]);		
 		for (int i = 0; i < 13; i++)
-			init_building(building_coor[i]);
-
+				init_building(building_coor[i][0], building_coor[i][1]);
 	}
 }
 
@@ -69,26 +68,62 @@ GBMap::~GBMap()
 
 void GBMap::init_obstacle(XY &coor)
 {
-	(map[coor.x][coor.y]).set(tile_type::black);
-	(map[coor.x + 1][coor.y]).set(tile_type::black);
-	(map[coor.x][coor.y + 1]).set(tile_type::black);
-	(map[coor.x + 1][coor.y + 1]).set(tile_type::black);
+	(map[coor.x][coor.y]).set(tile_type::obstacle);
+	(map[coor.x][coor.y + 1]).set(tile_type::obstacle);
+	(map[coor.x + 1][coor.y]).set(tile_type::obstacle);
+	(map[coor.x + 1][coor.y + 1]).set(tile_type::obstacle);
 }
 
-void GBMap::init_resource(XY &coor, int res[4])
+void GBMap::init_tile(int &xv, int &yv, int val[4])
 {
-	(map[coor.x][coor.y]).set(res[0]);
-	(map[coor.x + 1][coor.y]).set(res[1]);
-	(map[coor.x][coor.y + 1]).set(res[2]);
-	(map[coor.x + 1][coor.y + 1]).set(res[3]);
+	XY coor{ xv, yv };
+	(map[coor.x][coor.y]).set(val[0]);
+	(map[coor.x][coor.y + 1]).set(val[1]);
+	(map[coor.x + 1][coor.y]).set(val[2]);
+	(map[coor.x + 1][coor.y + 1]).set(val[3]);
 }
 
-void GBMap::init_building(XY &coor)
+bool GBMap::init_obstacle(int &xv, int &yv)
 {
-	(map[coor.x][coor.y]).set(5);
-	(map[coor.x + 1][coor.y]).set(5);
-	(map[coor.x][coor.y + 1]).set(5);
-	(map[coor.x + 1][coor.y + 1]).set(5);
+	if (check_availibility(xv, yv) == 0)
+	{
+		int temp[4] = { -1, -1, -1, -1 };
+		init_tile(xv, yv, temp);
+		return true;
+	}
+	return false;
+}
+
+bool GBMap::init_resource(int &xv, int &yv)
+{
+	if (check_availibility(xv, yv) == 0)
+	{
+		int temp[4] = { rand() % 4 + 1, rand() % 4 + 1, rand() % 4 + 1, rand() % 4 + 1 };
+		init_tile(xv, yv, temp);
+		return true;
+	}
+	return false;
+}
+
+bool GBMap::init_building(int &xv, int &yv)
+{
+	if (check_availibility(xv, yv) == 0)
+	{
+		int temp[4] = { 5, 5, 5, 5 };
+		init_tile(xv, yv, temp);
+		return true;
+	}
+	return false;
+}
+
+bool GBMap::put_resource(int &xv, int &yv, int res[4])
+{
+	if (check_availibility(xv, yv) == 0)
+	{
+		init_tile(xv, yv, res);
+		return true;
+	}
+	return false;
 }
 
 void GBMap::connect_resource(Tile *pos, Scoring &sc)
@@ -107,19 +142,19 @@ void GBMap::connect_resource(Tile *pos, Scoring &sc)
 		sc.addEdge(index, (index + board_length));
 }
 
-void GBMap::put_resource(int xv, int yv, int res[4], Scoring &sc)
+void GBMap::add_tile(int xv, int yv, int res[4], Scoring &sc)
 {
+	//prevent circular dependency slit into composite object with friend part independent
 	sc.reset_res();
 	XY coor{ xv, yv };
-	Tile *pos[4] = { &map[coor.x][coor.y],&map[coor.x+1][coor.y],&map[coor.x][coor.y+1],&map[coor.x+1][coor.y+1] };
+	Tile *pos[4] = { &map[coor.x][coor.y],&map[coor.x][coor.y+1],&map[coor.x+1][coor.y],&map[coor.x+1][coor.y+1] };
 	bool dub[4][4]{ { false, false, true, true },{ true, false, false, true },
 					{ false, true, true, false },{ true, true, false, false } };//left, top, right, bot
 	Tile *ptr = &map[0][0];
 	ptrdiff_t index[4] = { pos[0] - ptr, pos[1] - ptr, pos[2] - ptr, pos[3] - ptr };
 	int res_temp[5]{};//int res_temp[5] random number
 	
-	if (check_availibility(xv, yv)==0) {
-		init_resource(coor, res);
+	if (put_resource(xv, yv, res)) {
 		for (int i = 0; i < 4; i++)
 			res_temp[res[i]]++;
 		for (int i = 0; i < 4; i++)
@@ -128,7 +163,7 @@ void GBMap::put_resource(int xv, int yv, int res[4], Scoring &sc)
 	sc.update_res(index, res);
 }
 
-int GBMap::check_availibility(int xv, int yv)
+int GBMap::check_availibility(int &xv, int &yv)
 {
 	XY coor{ xv, yv };
 	int temp = (map[coor.x][coor.y]).get();
@@ -147,7 +182,7 @@ void GBMap::put_resource_sim()
 		{
 			if (check_availibility(i, j)==0) {
 				int res_temp[] = { rand() % 4 + 1, rand() % 4 + 1, rand() % 4 + 1, rand() % 4 + 1 };
-				init_resource(XY{ i, j }, res_temp);
+				put_resource(i, j, res_temp);
 			}			
 		}	
 }
@@ -158,7 +193,7 @@ void GBMap::display_map()
 	for (int i = 0; i < board_length; i++) {
 		std::cout << " ";
 		for (int j = 0; j < board_length; j++)
-			std::cout << (map[j][i]).get() << "\t";// swap as j is row - Ox 
+			std::cout << (map[i][j]).get() << "\t";// if use x and y swap i and j
 		std::cout << std::endl << std::endl;
 	}
 		
