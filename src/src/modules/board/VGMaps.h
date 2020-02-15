@@ -4,15 +4,25 @@
 #include "Dictionary.h"
 
 
+<<<<<<< HEAD:src/src/modules/board/VGMaps.h
 //enum class Connection
 //{
 //	BuildingColorType
 //};
 
+=======
+enum class VGSlotStatus
+{
+	Empty, //int 0
+	BuildingColorType, //int 1 
+	Unavailable //int 2 - any invalid slot (outside the actual map)
+};
+>>>>>>> 229802b06425541d64ddb51b7b2ca7e5b6d0ebd2:src/src/modules/board/VGMaps.hpp
 
-class VGSquare{
-public: 
+
+struct VGSquare{
 	VGSlotStatus VGstatus;
+<<<<<<< HEAD:src/src/modules/board/VGMaps.h
 	BuildingTile *building_ptr;
     
 	/**
@@ -22,8 +32,13 @@ public:
 	Connection right;
 	**/
 };
+=======
+	BuildingTile *building_ptr; 
 
-class VGMaps {
+}; 
+>>>>>>> 229802b06425541d64ddb51b7b2ca7e5b6d0ebd2:src/src/modules/board/VGMaps.hpp
+
+class VGMaps{
 private:
 	
 
@@ -40,21 +55,22 @@ private:
 public: 
 	VGMaps(); 
 
-	~VGMaps(); 
+	~VGMaps();
+
+	VGSlotStatus getStatus(int row, int column);
 
 	VGSquare ** village_board; 
-	VGSlotStatus getStatus(int row, int column);
 
 	bool getGreenSheepPlaced() { return GreenSheepPlaced; }
 	bool getGreyRockPlaced() { return GreyRockPlaced;  }
 	bool getRedLumberPlaced() { return RedLumberPlaced;  }
 	bool getYellowHayPlaced() { return YellowHayPlaced;  }
 
-	bool setstate(bool state, bool given); 
+	void setstate(bool state, bool given); 
 
 	//void flipIndexes(); //function you call to flip the indexes inside the village board -> update: dont need cuz it doesnt affect the game
 
-	VGSlotStatus [] checkConnectionsOfSlot(BuildingTile t, int r, int c); 
+	VGSlotStatus* checkConnectionsOfSlot(BuildingTile t, int r, int c); 
 
 	void addNewBuildingTile(BuildingTile t, int r, int c); 
 

@@ -1,7 +1,11 @@
 #include "BuildingTile.h"
 #include <stdlib.h>
+#include <iostream>
+
+using namespace std;
 
 BuildingTile::BuildingTile(BuildingColorType type, BuildingStatus status) {
+    cout << "Creating Building Tile with Main: " << this << endl;
 	_buildingColorType = type;
     _buildingStatus = status;
     _buildingNum = generateBuildingNumber();
@@ -9,6 +13,12 @@ BuildingTile::BuildingTile(BuildingColorType type, BuildingStatus status) {
 
 BuildingTile::~BuildingTile() {
 
+}
+
+BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s) {
+    _buildingColorType = t;
+    _buildingNum = n;
+    _buildingStatus = s;
 }
 
 BuildingColorType BuildingTile::getBuildingColorType() {

@@ -21,19 +21,22 @@ int main(int argc, const char * argv[]) {
     ResourceName sheep = ResourceName::Sheep;
     ResourceName wheat = ResourceName::Wheat;
     
-    HarvestTile harvestTile1(lumber, rock, sheep, wheat);
-    HarvestTile harvestTile2(rock, rock, sheep, wheat);
-	
-	int id = 11;
-    int players = 4;
-
+//    HarvestTile harvestTile1(lumber, rock, sheep, wheat);
+//    HarvestTile harvestTile2(rock, rock, sheep, wheat);
     
-    Player bob;
-    
-    bob.addHarvestTile(harvestTile1);
+//    Player bob;
+//    bob.addHarvestTile(harvestTile1);
     
     BuildingDeck buildingDeck;
-    
+    cout << "Deck size: " << buildingDeck.getSize() << endl;
+    cout << "Draw from BuildingDeck: " << buildingDeck.drawBuilding() << endl;
+    cout << "Draw from BuildingDeck: " << buildingDeck.drawBuilding() << endl;
+    cout << "Draw from BuildingDeck: " << buildingDeck.drawBuilding() << endl;
+    cout << "Draw from BuildingDeck: " << buildingDeck.drawBuilding() << endl;
+
+//    buildingDeck.add(buildingTile2);
+//    buildingDeck.add(buildingTile3);
+//    buildingDeck.add(buildingTile4);
     
     
     
@@ -63,11 +66,6 @@ int main(int argc, const char * argv[]) {
 //
 //	bmap1.addNewBuildingTile(t1, 1, 1);
 
-
-
-
-    
-	system("pause"); 
 
     return 0;
 }

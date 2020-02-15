@@ -14,6 +14,7 @@ public:
 
 	BuildingTile();
 	BuildingTile(BuildingColorType type, BuildingStatus status);
+	BuildingTile(BuildingColorType t, int n, BuildingStatus s);
 	~BuildingTile(); 
 
     BuildingColorType getBuildingColorType();

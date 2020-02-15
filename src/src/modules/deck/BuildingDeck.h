@@ -8,6 +8,7 @@
 
 using namespace std;
 
+
 class BuildingDeck {
 private:
     vector<BuildingTile*> *_deck;
@@ -18,6 +19,7 @@ public:
     ~BuildingDeck();
     
     vector<BuildingTile*>* getDeck();
+    BuildingTile* drawBuilding();
     unsigned long getSize();
     void add(BuildingTile &tile);
 
