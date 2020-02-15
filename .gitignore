@@ -39,6 +39,7 @@ src/src.xcodeproj
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
+*.sln
 src/src/COMP345_Project.sln
 
 
