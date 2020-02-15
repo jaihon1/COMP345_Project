@@ -6,8 +6,8 @@
 #include "Dictionary.h"
 
 #include "GBMaps.h"
-#include "VGMaps.h"
 #include "BuildingTile.h"
+#include "BuildingDeck.h"
 
 using namespace std;
 
@@ -31,6 +31,12 @@ int main(int argc, const char * argv[]) {
     Player bob;
     
     bob.addHarvestTile(harvestTile1);
+    
+    BuildingDeck buildingDeck;
+    
+    
+    
+    
     
 //    bob.addHarvestTile(harvestTile2);
 //    cout << "Before:" << endl;

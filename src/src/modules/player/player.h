@@ -42,7 +42,7 @@ public:
     HarvestTile* drawHarvestTile(int harvestDeck); // Will need the Deck to be implemented
     
     // Manage Building Tiles
-    vector<BuildingTile> getBuildings();
+    vector<BuildingTile*>* getBuildings();
     BuildingTile* addBuildingTile(BuildingTile &tile);
     BuildingTile* removeBuildingTile(BuildingTile &tile);
     BuildingTile* drawBuilding(int buildingDeck); // Will need the Deck to be implemented
