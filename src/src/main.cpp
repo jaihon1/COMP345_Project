@@ -14,12 +14,12 @@ using namespace std;
 
 int main(int argc, const char * argv[]) {
 
-    ResourceLocation location = ResourceLocation::topLeft;
-
-    ResourceName lumber = ResourceName::Lumber;
-    ResourceName rock = ResourceName::Rock;
-    ResourceName sheep = ResourceName::Sheep;
-    ResourceName wheat = ResourceName::Wheat;
+//    ResourceLocation location = ResourceLocation::topLeft;
+//
+//    ResourceName lumber = ResourceName::Lumber;
+//    ResourceName rock = ResourceName::Rock;
+//    ResourceName sheep = ResourceName::Sheep;
+//    ResourceName wheat = ResourceName::Wheat;
     
 //    HarvestTile harvestTile1(lumber, rock, sheep, wheat);
 //    HarvestTile harvestTile2(rock, rock, sheep, wheat);
@@ -38,15 +38,6 @@ int main(int argc, const char * argv[]) {
     cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
     cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
     cout << "Deck size: " << buildingDeck.getSize() << endl;
-//    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
-//    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
-
-//    buildingDeck.add(buildingTile2);
-//    buildingDeck.add(buildingTile3);
-//    buildingDeck.add(buildingTile4);
-    
-    
-    
     
 //    bob.addHarvestTile(harvestTile2);
 //    cout << "Before:" << endl;

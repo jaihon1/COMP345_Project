@@ -68,7 +68,6 @@ BuildingTile* BuildingDeck::draw() {
     else {
         return nullptr;
     }
-
 }
 
 unsigned long BuildingDeck::getSize() {

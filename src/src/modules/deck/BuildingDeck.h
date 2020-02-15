@@ -1,7 +1,6 @@
 #ifndef BuildingDeck_h
 #define BuildingDeck_h
 
-#include <stdio.h>
 #include <vector>
 #include "BuildingTile.h"
 #include "BuildingDeck.h"
@@ -26,6 +25,5 @@ public:
 
 };
 
-    
 
 #endif /* BuildingDeck_h */
