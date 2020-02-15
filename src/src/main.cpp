@@ -29,10 +29,17 @@ int main(int argc, const char * argv[]) {
     
     BuildingDeck buildingDeck;
     cout << "Deck size: " << buildingDeck.getSize() << endl;
-    cout << "Draw from BuildingDeck: " << buildingDeck.drawBuilding() << endl;
-    cout << "Draw from BuildingDeck: " << buildingDeck.drawBuilding() << endl;
-    cout << "Draw from BuildingDeck: " << buildingDeck.drawBuilding() << endl;
-    cout << "Draw from BuildingDeck: " << buildingDeck.drawBuilding() << endl;
+    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+    cout << "Deck size: " << buildingDeck.getSize() << endl;
+    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+    cout << "Deck size: " << buildingDeck.getSize() << endl;
+    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+    cout << "Deck size: " << buildingDeck.getSize() << endl;
+//    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+//    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
 
 //    buildingDeck.add(buildingTile2);
 //    buildingDeck.add(buildingTile3);

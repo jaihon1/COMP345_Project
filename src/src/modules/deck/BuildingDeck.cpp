@@ -8,6 +8,7 @@ BuildingDeck::BuildingDeck() {
     cout << "Creating BuildingDeck with Main: " << this << endl;
     _deck = new vector<BuildingTile*>;
     
+    // Initialize deck with what is specified in assignment1!!
     BuildingColorType greenSheep = BuildingColorType::GreenSheep;
     BuildingColorType greyRock = BuildingColorType::GreyRock;
     BuildingColorType redLumber = BuildingColorType::RedLumber;
@@ -53,10 +54,21 @@ void BuildingDeck::add(BuildingTile &tile) {
     _deck -> push_back(&tile);
 }
 
-BuildingTile* BuildingDeck::drawBuilding() {
-    int randomIndex = rand() % _deck -> size();
-    
-    return _deck -> at(randomIndex);
+void BuildingDeck::remove(BuildingTile &tile) {
+    _deck -> erase(std::remove(_deck -> begin(), _deck -> end(), &tile), _deck -> end());
+}
+
+BuildingTile* BuildingDeck::draw() {
+    if (_deck -> size() > 0) {
+        int randomIndex = rand() % _deck -> size();
+        BuildingTile *tile = _deck -> at(randomIndex);
+        remove(*tile);
+        return tile;
+    }
+    else {
+        return nullptr;
+    }
+
 }
 
 unsigned long BuildingDeck::getSize() {
