@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "GBMaps.h"
+
 
 GBSquare::GBSquare() {
 	status = GBSquareStatus::Empty;
@@ -95,18 +97,21 @@ void GBMaps::intializeBoardB() {
 	int settlement_coor[8][2] = {	{ 1,1 },{ 1,3 },{ 1,5 },{ 3,1 },{ 3,5 },{ 5,1 },{ 5,3 },{ 5,5 } };
 	int building_coor[13][2] = {	{ 0,2 },{ 0,4 },{ 2,0 },{ 2,2 },{ 2,4 },{ 2,6 },{ 3,3 },
 									{ 4,0 },{ 4,2 },{ 4,4 },{ 4,6 },{ 6,2 },{ 6,4 } };
+	//hardcode seed for random number?  will create same random numbers everytime.
 	srand(0);
 	for (int i = 0; i < 4; i++)
 	{
 		int temp = rand() % 8;
 		if (board[settlement_coor[i][0]][settlement_coor[i][1]].status == GBSquareStatus::Empty)
-			board[settlement_coor[i][0]][settlement_coor[i][1]].status == GBSquareStatus::Unavailable;
+			board[settlement_coor[i][0]][settlement_coor[i][1]].status = GBSquareStatus::Unavailable;
 		else
 			i--;
 	}
 	for (int i = 0; i < 8; i++)
 		if(board[settlement_coor[i][0]][settlement_coor[i][1]].status == GBSquareStatus::Empty)
-			addHarvestTile(settlement_coor[i][0], settlement_coor[i][1], new HarvestTile(rand() % 4, rand() % 4, rand() % 4, rand() % 4));
+
+			//will draw harvest tile from deck
+			//addHarvestTile(settlement_coor[i][0], settlement_coor[i][1], new HarvestTile(rand() % 4, rand() % 4, rand() % 4, rand() % 4));
 	for (int i = 0; i < 13; i++)
 		board[0][0].status = GBSquareStatus::BuildingTile;
 }

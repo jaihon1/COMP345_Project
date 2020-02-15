@@ -4,8 +4,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
-#include "../tile/HarvestTile.h"
-#include "../tile/BuildingTile.h"
+#include "../tile/Resources.h"
 
 using namespace std;
 
