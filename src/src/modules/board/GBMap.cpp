@@ -77,10 +77,10 @@ void GBMap::init_obstacle(XY &coor)
 void GBMap::init_tile(int &xv, int &yv, int val[4])
 {
 	XY coor{ xv, yv };
-	(map[coor.x][coor.y]).set(val[0]);
-	(map[coor.x][coor.y + 1]).set(val[1]);
-	(map[coor.x + 1][coor.y]).set(val[2]);
-	(map[coor.x + 1][coor.y + 1]).set(val[3]);
+	(map[coor.x][coor.y]).set(static_cast<tile_type>(val[0]));
+	(map[coor.x][coor.y + 1]).set(static_cast<tile_type>(val[1]));
+	(map[coor.x + 1][coor.y]).set(static_cast<tile_type>(val[2]));
+	(map[coor.x + 1][coor.y + 1]).set(static_cast<tile_type>(val[3]));
 }
 
 bool GBMap::init_obstacle(int &xv, int &yv)
@@ -126,11 +126,9 @@ bool GBMap::put_resource(int &xv, int &yv, int res[4])
 	return false;
 }
 
-void GBMap::connect_resource(Tile *pos, Scoring &sc)
+void GBMap::connect_resource(ptrdiff_t &index, Tile *pos, Scoring &sc)
 {
 	//check array out of bound; adjacent element; duplicate	
-	Tile *org = &map[0][0];
-	ptrdiff_t index = pos - org;
 
 	if ( (index%board_length!=0) && ((*pos).get() == (*(pos-1)).get()) )
 		sc.addEdge(index, index - 1);
@@ -145,21 +143,17 @@ void GBMap::connect_resource(Tile *pos, Scoring &sc)
 void GBMap::add_tile(int xv, int yv, int res[4], Scoring &sc)
 {
 	//prevent circular dependency slit into composite object with friend part independent
+	//int res_temp[5]{};//int res_temp[5] random number
+	
 	sc.reset_res();
 	XY coor{ xv, yv };
 	Tile *pos[4] = { &map[coor.x][coor.y],&map[coor.x][coor.y+1],&map[coor.x+1][coor.y],&map[coor.x+1][coor.y+1] };
-	bool dub[4][4]{ { false, false, true, true },{ true, false, false, true },
-					{ false, true, true, false },{ true, true, false, false } };//left, top, right, bot
-	Tile *ptr = &map[0][0];
-	ptrdiff_t index[4] = { pos[0] - ptr, pos[1] - ptr, pos[2] - ptr, pos[3] - ptr };
-	int res_temp[5]{};//int res_temp[5] random number
+	Tile *org = &map[0][0];
+	ptrdiff_t index[4] = { pos[0] - org, pos[1] - org, pos[2] - org, pos[3] - org };	
 	
-	if (put_resource(xv, yv, res)) {
+	if (put_resource(xv, yv, res))
 		for (int i = 0; i < 4; i++)
-			res_temp[res[i]]++;
-		for (int i = 0; i < 4; i++)
-			connect_resource(pos[i], sc);
-	}
+			connect_resource(index[i], pos[i], sc);
 	sc.update_res(index, res);
 }
 
@@ -221,7 +215,7 @@ int GBMap::Tile::get()
 	return res;
 }
 
-void GBMap::Tile::set(int resv)
+void GBMap::Tile::set(tile_type resv)
 {
 	res = resv;
 }

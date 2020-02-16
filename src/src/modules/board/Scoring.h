@@ -2,7 +2,9 @@
 #include<iostream> 
 #include <list> 
 //#include "GBMap.h"
+//#include "Test.h"
 class VGMap;
+
 
 class Scoring
 {
@@ -38,16 +40,15 @@ private:
 	};
 
 	Graph vertices{ 196 };
-	int res_score[5] = { 0 , 0, 0, 0, 0 };//1st field for building
-
-	void addEdge(int v, int w);
-	void reset_res();
+	int res_score[5] = { 0 , 0, 0, 0, 0 };//1st field for building	
+	
 	void add_res(int resv, int numv);
 	void update_help(int v, int w, int res);
-	void update_res(ptrdiff_t pos[4], int res[4]);
 	
-	friend class GBMap;
-	//friend void GBMap::put_resource(int xv, int yv, int res[4], Scoring &sc);
+	
+	//friend class GBMap;
+	//friend void GBMap::add_tile(int xv, int yv, int res[4], Scoring &sc);
+	//friend void Test::sum();
 public:
 	Scoring();
 	~Scoring();		
@@ -55,6 +56,9 @@ public:
 	void connectedComponents();
 	int adjacency(int v);
 	int connected(int v);
+	void reset_res();
+	void addEdge(int v, int w);	
+	void update_res(ptrdiff_t pos[4], int res[4]);
 
 	int get_lumber();
 	int get_sheep();

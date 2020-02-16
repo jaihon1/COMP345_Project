@@ -8,6 +8,7 @@ public:
 	static const int board_size = 7;
 	static const int board_length = board_size * 2;
 	static const int max_tile = board_size * 2 * board_size * 2;
+	const enum tile_type { obstacle = -1, white = 0, red = 1, green = 2, yellow = 3, gray = 4, building = 5 };
 
 private:
 	class Tile
@@ -23,7 +24,7 @@ private:
 		~Tile();
 
 		int get();
-		void set(int resv);
+		void set(tile_type resv);
 	};
 
 	class Building
@@ -67,13 +68,11 @@ private:
 	bool init_resource(int &xv, int &yv);	
 	bool init_building(int &xv, int &yv);
 	bool put_resource(int &xv, int &yv, int res[4]);
-	void connect_resource(Tile *pos, Scoring &sc);
+	void connect_resource(ptrdiff_t &index, Tile *pos, Scoring &sc);
 
 public:
 	GBMap(int map_player, bool map_type);
 	~GBMap();
-
-	const enum tile_type { obstacle = -1, white = 0, red = 1, green = 2, yellow = 3, gray = 4, building = 5 };
 
 	void add_tile(int xv, int yv, int res[4], Scoring &sc);
 	int check_availibility(int &xv, int &yv);

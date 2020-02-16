@@ -8,5 +8,6 @@ class GBMapDriver
 public:
 	GBMapDriver();
 	~GBMapDriver();
+
 };
 
