@@ -50,9 +50,9 @@ VGMapLoader::VGMapLoader(const char * inFile)
 			auto const BuildingColorType = VGSquare->find("VGSquare_type"); 
 		
 			//to recheck!!! 
-			if (sMap[*BuildingColorType] == BuildingColorType)
+			if (sMap[*BuildingColorType] == BuildingColorType) //is this line good? 
 			{
-				auto const b_type = VGSlotStatus->find("_buildingColorType"); //not sure? 
+				auto const b_type = VGSlotStatus->find("_buildingColorType"); 
 				auto const b_int = VGSlotStatus->find("_buildingNum"); 
 				auto const b_side = VGSlotStatus->find("_buildingStatus");
 
@@ -60,17 +60,19 @@ VGMapLoader::VGMapLoader(const char * inFile)
 				BuildingTile *temp = new BuildingTile(b_type, b_int, b_side); 
 				board->addNewBuildingTile(*temp , row, column); //dereference temp 
 			}
+			else
+			{
+				//make this area empty
+				board[row][column].VGStatus == VGSlotStatus::Empty; 
+			}
 
-			//what if its empty??? 
 		}
 
+		//Make the remaining of the board empty in status
+
+
 	}
-
-
-
 }
-
-
 
 VGMapLoader::~VGMapLoader()
 {
