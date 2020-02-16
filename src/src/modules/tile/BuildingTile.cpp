@@ -7,16 +7,16 @@
 //=======
 
 BuildingTile::BuildingTile(BuildingColorType type, BuildingStatus status) {
-	_buildingColorType = type;
-	_buildingStatus = status;
-	_buildingNum = generateBuildingNumber();
+	*_buildingColorType = type;
+	*_buildingStatus = status;
+	*_buildingNum = generateBuildingNumber();
 }
 
 BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
 {
-	_buildingColorType = t; 
-	_buildingNum = n;
-	_buildingStatus = s; 
+	*_buildingColorType = t; 
+	*_buildingNum = n;
+	*_buildingStatus = s; 
 }
 
 BuildingTile::~BuildingTile() {
@@ -24,15 +24,15 @@ BuildingTile::~BuildingTile() {
 }
 
 BuildingColorType BuildingTile::getBuildingColorType() {
-	return _buildingColorType;
+	return *_buildingColorType;
 }
 
 BuildingStatus BuildingTile::getSide() {
-	return _buildingStatus;
+	return *_buildingStatus;
 }
 
 int BuildingTile::getBuildingNum() {
-	return _buildingNum;
+	return *_buildingNum;
 }
 
 int BuildingTile::generateBuildingNumber() {
@@ -41,7 +41,7 @@ int BuildingTile::generateBuildingNumber() {
 }
 
 void BuildingTile::setBuildingNum(int num) {
-	_buildingNum = num;
+	*_buildingNum = num;
 }
 
 void BuildingTile::flip() {

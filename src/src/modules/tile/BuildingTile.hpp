@@ -30,9 +30,9 @@ class BuildingTile
 {
 private:
 
-	BuildingColorType _buildingColorType;
-	int _buildingNum;
-	BuildingStatus _buildingStatus;
+	BuildingColorType *_buildingColorType;
+	int *_buildingNum;
+	BuildingStatus *_buildingStatus;
 
 public:
 
