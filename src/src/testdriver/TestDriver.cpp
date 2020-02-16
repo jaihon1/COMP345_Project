@@ -70,12 +70,13 @@ void printGameBoard(GBMaps* inBoard) {
 void testFunction1() {
 	GBMaps* gameBoard = new GBMaps(2, 'a');
 	Scoring scobj;
+	scobj.reset_res();
 
 	HarvestTile* testHarvestTile = new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat); 
 	testHarvestTile -> RotateRight();
 	gameBoard->addHarvestTile(0, 3, testHarvestTile);
 
-	//gameBoard->addHarvestTile(3, 3, testHarvestTile, scobj);
+	gameBoard->addHarvestTile(3, 3, testHarvestTile, scobj);
 
 	printGameBoard(gameBoard);
 
