@@ -119,7 +119,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 
 			for (int i = 0; i < 4; i++)
 			{
-				if ((*find_green)[i].BuildingColorType == BuildingColorType::GreenSheep) //?
+				if (*(find_green + i).BuildingColorType == BuildingColorType::GreenSheep) //?
 				{
 					//place tile right there 
 					village_board[r][c].building_ptr = &t; //is this right?
@@ -139,7 +139,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			//placing new tile
 			if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 			{
-				village_board[r][c].VGstatus.BuildingColorType == BuildingColorType::GreenSheep; //help 
+				village_board[r][c].VGstatus = VGSlotStatus::GreenSheep; //help 
 				village_board[r][c].building_ptr = &t; 
 				setstate(getGreenSheepPlaced(), true); 
 			}

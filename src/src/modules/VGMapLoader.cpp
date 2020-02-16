@@ -27,10 +27,10 @@ VGMapLoader::VGMapLoader(const char * inFile)
 	if (boardJson == VGMapDoc.end())
 	{
 		cerr << "board not found"; 
-		return;  //what is it returning?
+		return;  //return back to where you were
 	}
 
-	int VG_row = -1;  //why -1 rather than 0? is it because you want to consatntly iterate through?
+	int VG_row = -1;  //why -1 rather than 0? is it because you want to consatntly iterate through? yes 
 
 	statusVGMap sMap; 
 	buildingMap bMap; 
@@ -58,7 +58,7 @@ VGMapLoader::VGMapLoader(const char * inFile)
 				board->addNewBuildingTile(*temp , row, column); //dereference temp 
 			}
 
-			//what if its empty?? 
+			//what if its empty??? 
 		}
 
 	}
