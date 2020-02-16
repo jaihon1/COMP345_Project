@@ -114,8 +114,54 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 		return 1;
 	}
 	return 0;
-
 }
+
+ResourceName GBMaps::map(int index)
+{
+	int row = index/28;
+	int column = (index%28)/2;
+	HarvestTile temp = *getHarvestTile(row, column);
+
+	return temp.getResource(static_cast<ResourceLocation>((index+2)%4));
+}
+
+/*int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr, Scoring &sc)
+{
+	//check if game board square is empty to add tile
+	if (board[row][column].status == GBSquareStatus::Empty) {
+		board[row][column].status = GBSquareStatus::HarvestTile;
+		board[row][column].tilePtr = inHarvestTilePtr;
+
+		int board_length = 14;
+		int max_tile = 196;
+
+		sc.reset_res();
+		int topleft = row * 28 + column * 2;
+		ptrdiff_t index[4] = { topleft, topleft+1, topleft+28, topleft+29 };
+
+		for (int i = 0; i < 4; i++)
+		{
+			//connect_resource(index[i], pos[i], sc);
+			if ((index[i] %board_length != 0) && (map(index[i]) == map(index[i] - 1)))
+				sc.addEdge(index[i], index[i] - 1);
+			if (((index[i] + 1) % board_length != 0) && (map(index[i]) == map(index[i] + 1)))
+				sc.addEdge(index[i], index[i] + 1);
+			if ((index[i] >= board_length) && (map(index[i]) == map(index[i] - board_length)))
+				sc.addEdge(index[i], (index[i] - board_length));
+			if ((index[i]< max_tile - board_length) && (map(index[i]) == map(index[i] - board_length)))
+				sc.addEdge(index[i], (index[i] + board_length));
+		}		
+		static int res[4] = { 
+			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topLeft)),
+			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topRight)),
+			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomLeft)),
+			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomRight)) };
+		sc.update_res(index, res);
+
+		return 1;
+	}
+	return 0;
+}*/
 
 HarvestTile* GBMaps::getHarvestTile(int row, int column)
 {
