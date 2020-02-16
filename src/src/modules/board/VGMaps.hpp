@@ -1,7 +1,8 @@
 #include <stdio.h>
 
 #include "..\tile\BuildingTile.hpp"
-
+#include <vector>
+using std::vector; 
 
 enum class VGSlotStatus
 {
@@ -10,18 +11,14 @@ enum class VGSlotStatus
 };
 
 
-struct VGSquare{
+struct VGSquare{ //why struct? 
 	VGSlotStatus VGstatus;
 	BuildingTile *building_ptr; 
-	BuildingColorType VGSquare_type; 
-
-
+	BuildingColorType VGSquare_type;  //same as buildingtype 
 }; 
 
 class VGMaps{
 private:
-	
-
 	const int* const rows = new int(6); //length of the row
 	const int* const columns = new int(5); //length of the column
 
@@ -31,7 +28,6 @@ private:
 	bool RedLumberPlaced = false;
 	bool YellowHayPlaced = false; 
 
-	
 public: 
 	VGMaps(); 
 
@@ -50,7 +46,7 @@ public:
 
 	//void flipIndexes(); //function you call to flip the indexes inside the village board -> update: dont need cuz it doesnt affect the game
 
-	VGSlotStatus* checkConnectionsOfSlot(BuildingTile t, int r, int c); 
+	vector <VGSquare> checkConnectionsOfSlot(BuildingTile t, int r, int c); 
 
 	void addNewBuildingTile(BuildingTile t, int r, int c); 
 

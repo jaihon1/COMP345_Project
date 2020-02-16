@@ -46,10 +46,13 @@ VGMapLoader::VGMapLoader(const char * inFile)
 			auto const VGSquare = column.find("VGSquare"); 
 
 			auto const VGSlotStatus = VGSquare->find("VGstatus"); 
+
+			auto const BuildingColorType = VGSquare->find("VGSquare_type"); 
 		
-			if (sMap[*VGSlotStatus] == VGSlotStatus::BuildingColorType)
+			//to recheck!!! 
+			if (sMap[*BuildingColorType] == BuildingColorType)
 			{
-				auto const b_type = VGSlotStatus->find("_buildingColorTypee"); //not sure? 
+				auto const b_type = VGSlotStatus->find("_buildingColorType"); //not sure? 
 				auto const b_int = VGSlotStatus->find("_buildingNum"); 
 				auto const b_side = VGSlotStatus->find("_buildingStatus");
 
