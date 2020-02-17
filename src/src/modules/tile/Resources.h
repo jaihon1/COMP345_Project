@@ -85,7 +85,7 @@ public:
 
 class HarvestDeck : public Deck {
 private:
-	HarvestTile* harvestDeck;
+	HarvestTile** harvestDeck;
 public:
 	HarvestDeck();
 };
