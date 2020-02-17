@@ -52,6 +52,8 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	//get the square where you are currently at
 
 	VGSquare current = village_board[r][c]; 
+	VGSquare unavailable; //declaration of a default constructor for VGSquare empty
+	//to print to check if it actually works 
 
 	//create iterator for insertion
 	vector <VGSquare>::iterator it; 
@@ -70,7 +72,7 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	else
 	{
 		//this means that you are at the top row
-		connections.insert(it, NULL); //throwing an error? 
+		connections.insert(it, unavailable); //throwing an error? 
 
 	}
 
@@ -83,7 +85,7 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	else
 	{
 		//this means that there are no slots at the right -> you are at the most right column
-		connections.insert(it + 1, NULL); 
+		connections.insert(it + 1, unavailable);
 	}
 	
 	int bottom = r + 1; 
@@ -95,7 +97,7 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	else
 	{
 		//this means there are no slots at the bottom -> you are at the bottom row
-		connections.insert(it + 2, NULL);
+		connections.insert(it + 2, unavailable);
 	}
 
 	//check left 
@@ -107,7 +109,7 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	else
 	{
 		//this means there are no slots at the left -> you are at the most left column
-		connections.insert(it + 3, NULL);
+		connections.insert(it + 3, unavailable);
 	}
 	return connections;
 
