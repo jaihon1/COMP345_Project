@@ -1,12 +1,13 @@
 // GBMapLoader.cpp : Defines the functions for the static library.
 //
 
-
+#include "pch.h"
 #include <iostream>
 #include <fstream>
 #include "../board/GBMaps.h"
 #include "GBMapLoader.h"
 #include <nlohmann/json.hpp>
+
 
 
 

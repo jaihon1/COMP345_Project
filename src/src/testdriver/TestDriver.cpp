@@ -2,6 +2,7 @@
 #include "../modules/board/GBMaps.h"
 #include "../modules/GBMapLoader/GBMapLoader.h"
 #include "../modules/tile/Dictionary.h"
+#include "../modules/scoring/Scoring.h"
 
 using namespace std;
 
@@ -68,10 +69,14 @@ void printGameBoard(GBMaps* inBoard) {
 
 void testFunction1() {
 	GBMaps* gameBoard = new GBMaps(2, 'a');
+	Scoring scobj;
+	scobj.reset_res();
 
 	HarvestTile* testHarvestTile = new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat); 
 	testHarvestTile -> RotateRight();
 	gameBoard->addHarvestTile(0, 3, testHarvestTile);
+
+	gameBoard->addHarvestTile(3, 3, testHarvestTile, scobj);
 
 	printGameBoard(gameBoard);
 
@@ -80,14 +85,14 @@ void testFunction1() {
 }
 
 void testFunction2() {
-	GBMapLoader* testLoader = new GBMapLoader("C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testMap.json");
+	GBMapLoader* testLoader = new GBMapLoader("..\\..\\..\\data\\testMap.json");
 	printGameBoard(testLoader->getBoard());
 }
 
 int main()
 {
 	int hold;
-	testFunction2();
+	testFunction1();
 	cin >> hold;
 
 	return 0;
