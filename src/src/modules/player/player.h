@@ -6,6 +6,7 @@
 #include <vector>
 #include "HarvestTile.h"
 #include "BuildingTile.h"
+#include "BuildingDeck.h"
 
 using namespace std;
 
@@ -40,12 +41,14 @@ public:
     HarvestTile* removeHarvestTile(HarvestTile &tile);
     HarvestTile* placeHarvestTile(HarvestTile &tile);
     HarvestTile* drawHarvestTile(int harvestDeck); // Will need the Deck to be implemented
+    unsigned long getNumberOfHarvestTiles();
     
     // Manage Building Tiles
     vector<BuildingTile*>* getBuildings();
     BuildingTile* addBuildingTile(BuildingTile &tile);
     BuildingTile* removeBuildingTile(BuildingTile &tile);
-    BuildingTile* drawBuilding(int buildingDeck); // Will need the Deck to be implemented
+    BuildingTile* drawBuilding(BuildingDeck &deck);
+    unsigned long getNumberOfBuildingTiles();
     
     // Methods for the driver
     void ressourceTracker();

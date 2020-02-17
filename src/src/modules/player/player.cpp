@@ -47,8 +47,28 @@ vector<HarvestTile*>* Player::getHarvestTiles() {
     return _harvestTiles;
 }
 
+unsigned long Player::getNumberOfHarvestTiles() {
+    return _harvestTiles -> size();
+}
+
+
+
 BuildingTile* Player::addBuildingTile(BuildingTile &tile) {
     _buildingTiles -> push_back(&tile);
     return &tile;
 }
 
+BuildingTile* Player::removeBuildingTile(BuildingTile &tile) {
+    _buildingTiles -> erase(std::remove(_buildingTiles -> begin(), _buildingTiles -> end(), &tile), _buildingTiles -> end());
+    return &tile;
+}
+
+BuildingTile* Player::drawBuilding(BuildingDeck &deck) {
+    BuildingTile *drawn_card = deck.draw();
+    addBuildingTile(*drawn_card);
+    return drawn_card;
+}
+
+unsigned long Player::getNumberOfBuildingTiles() {
+    return _buildingTiles -> size();
+}

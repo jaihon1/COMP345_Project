@@ -10,6 +10,7 @@ using namespace std;
 
 class BuildingDeck {
 private:
+    int *_sizeMax;
     vector<BuildingTile*> *_deck;
         
 public:

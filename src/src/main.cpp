@@ -23,21 +23,27 @@ int main(int argc, const char * argv[]) {
     
 //    HarvestTile harvestTile1(lumber, rock, sheep, wheat);
 //    HarvestTile harvestTile2(rock, rock, sheep, wheat);
-    
-//    Player bob;
-//    bob.addHarvestTile(harvestTile1);
-    
+        
     BuildingDeck buildingDeck;
+//    cout << "Deck size: " << buildingDeck.getSize() << endl;
+//    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+//    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+//    cout << "Deck size: " << buildingDeck.getSize() << endl;
+//    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+//    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+//    cout << "Deck size: " << buildingDeck.getSize() << endl;
+//    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+//    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+//    cout << "Deck size: " << buildingDeck.getSize() << endl;
+    
+    Player bob;
+   
     cout << "Deck size: " << buildingDeck.getSize() << endl;
-    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
-    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
+    cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
+    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl;
     cout << "Deck size: " << buildingDeck.getSize() << endl;
-    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
-    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
-    cout << "Deck size: " << buildingDeck.getSize() << endl;
-    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
-    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
-    cout << "Deck size: " << buildingDeck.getSize() << endl;
+    cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
+    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl;
     
 //    bob.addHarvestTile(harvestTile2);
 //    cout << "Before:" << endl;

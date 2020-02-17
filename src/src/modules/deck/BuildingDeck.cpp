@@ -6,9 +6,12 @@ using namespace std;
 
 BuildingDeck::BuildingDeck() {
     cout << "Creating BuildingDeck with Main: " << this << endl;
-    _deck = new vector<BuildingTile*>;
     
-    // Initialize deck with what is specified in assignment1!!
+    // Initializing deck size
+    int size = 9;
+    _sizeMax = &size;
+    
+    // Initialize deck resources
     BuildingColorType greenSheep = BuildingColorType::GreenSheep;
     BuildingColorType greyRock = BuildingColorType::GreyRock;
     BuildingColorType redLumber = BuildingColorType::RedLumber;
@@ -16,20 +19,26 @@ BuildingDeck::BuildingDeck() {
     
     BuildingStatus normal = BuildingStatus::Normal;
     
-    BuildingTile buildingTile1(greenSheep, normal);
-    BuildingTile buildingTile2(greyRock, normal);
-    BuildingTile buildingTile3(redLumber, normal);
-    BuildingTile buildingTile4(yellowHay, normal);
+    BuildingTile tiles[9] = {
+        BuildingTile(greenSheep, normal),
+        BuildingTile(greyRock, normal),
+        BuildingTile(redLumber, normal),
+        BuildingTile(yellowHay, normal),
+        BuildingTile(greenSheep, normal),
+        BuildingTile(greenSheep, normal),
+        BuildingTile(greyRock, normal),
+        BuildingTile(redLumber, normal),
+        BuildingTile(yellowHay, normal)
+    };
     
-    cout << "Adding tile: " << &buildingTile1 << endl;
-    _deck -> push_back(&buildingTile1);
-    cout << "Adding tile: " << &buildingTile2 << endl;
-    _deck -> push_back(&buildingTile2);
-    cout << "Adding tile: " << &buildingTile3 << endl;
-    _deck -> push_back(&buildingTile3);
-    cout << "Adding tile: " << &buildingTile4 << endl;
-    _deck -> push_back(&buildingTile4);
-
+    // Initializing _deck vector
+    _deck = new vector<BuildingTile*>;
+    
+    for (int i = 0; i < *_sizeMax; i++) {
+        cout << "Adding tile: " << &tiles[i] << endl;
+        _deck -> push_back(&tiles[i]);
+    }
+    
 }
 
 BuildingDeck::BuildingDeck(const BuildingDeck &deck) {
