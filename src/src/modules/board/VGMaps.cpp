@@ -191,7 +191,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 			{
-				village_board[r][c].VGSquare_type == BuildingColorType::GreyRock; //help 
+				village_board[r][c].VGSquare_type = BuildingColorType::GreyRock; //help 
 				village_board[r][c].building_ptr = &t;
 				setstate(getGreenSheepPlaced(), true);
 			}
@@ -209,7 +209,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				if ((*(it + i)).VGSquare_type == BuildingColorType::RedLumber)
 				{
 					//place tile right there 
-					village_board[r][c].building_ptr == &t;
+					village_board[r][c].building_ptr = &t;
 					break;
 				}
 			}
@@ -223,7 +223,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 			{
-				village_board[r][c].VGSquare_type == BuildingColorType::RedLumber; //help 
+				village_board[r][c].VGSquare_type = BuildingColorType::RedLumber; //help 
 				village_board[r][c].building_ptr = &t;
 				setstate(getGreenSheepPlaced(), true);
 			}
@@ -241,7 +241,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				if ((*(it + i)).VGSquare_type == BuildingColorType::YellowHay)
 				{
 					//place tile right there 
-					village_board[r][c].building_ptr == &t;
+					village_board[r][c].building_ptr = &t;
 					break;
 				}
 			}
@@ -256,7 +256,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			//empty slot
 			if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 			{
-				village_board[r][c].VGSquare_type == BuildingColorType::YellowHay; //help 
+				village_board[r][c].VGSquare_type = BuildingColorType::YellowHay; //help 
 				village_board[r][c].building_ptr = &t;
 				setstate(getGreenSheepPlaced(), true);
 			}

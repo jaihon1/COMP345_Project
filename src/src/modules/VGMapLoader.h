@@ -16,7 +16,6 @@ private:
 		statusVGMap()
 		{
 			this->operator[]("Empty") = VGSlotStatus::Empty;
-			this->operator[]("BuildingColorType") = VGSlotStatus::BuildingColorType;
 			this->operator[]("Unavailable") = VGSlotStatus::Unavailable;
 		}
 
