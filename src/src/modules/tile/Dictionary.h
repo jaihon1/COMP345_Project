@@ -39,7 +39,8 @@ enum class Connection {
 
 enum class VGSlotStatus {
     Empty, //int 0
-    BuildingColorType //int 1
+    BuildingColorType, //int 1
+    Unavailable //int 2 - any invalid slot (outside the actual map)
 };
 
 
