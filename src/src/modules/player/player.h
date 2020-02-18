@@ -40,7 +40,7 @@ public:
     vector<HarvestTile*>* getHarvestTiles();
     HarvestTile* addHarvestTile(HarvestTile &tile);
     HarvestTile* removeHarvestTile(HarvestTile &tile);
-    void placeHarvestTile(HarvestTile &tile, GBMaps *gameBoard);
+    void placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard);
 //    HarvestTile* drawHarvestTile(HarvestDeck &deck;
     unsigned long getNumberOfHarvestTiles();
     

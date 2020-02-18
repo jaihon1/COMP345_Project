@@ -47,6 +47,10 @@ vector<HarvestTile*>* Player::getHarvestTiles() {
     return _harvestTiles;
 }
 
+void Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard) {
+    gameBoard.addHarvestTile(row, col, &tile);
+}
+
 //HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
 //    HarvestTile *drawn_card = deck.draw();
 //    addHarvestTile(*drawn_card);
