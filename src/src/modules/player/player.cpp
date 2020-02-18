@@ -47,6 +47,12 @@ vector<HarvestTile*>* Player::getHarvestTiles() {
     return _harvestTiles;
 }
 
+//HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
+//    HarvestTile *drawn_card = deck.draw();
+//    addHarvestTile(*drawn_card);
+//    return drawn_card;
+//}
+
 unsigned long Player::getNumberOfHarvestTiles() {
     return _harvestTiles -> size();
 }

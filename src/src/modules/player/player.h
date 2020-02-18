@@ -7,12 +7,14 @@
 #include "HarvestTile.h"
 #include "BuildingTile.h"
 #include "BuildingDeck.h"
+#include "GBMaps.h"
 
 using namespace std;
 
 class Player {
 private:
     // Own one Village Board
+    // VGMaps *_villageBoard;
     
     // Owns Harverst Tiles
     vector<HarvestTile*> *_harvestTiles;
@@ -30,17 +32,16 @@ public:
     Player(const Player &player);
     ~Player();
     
-    
-    // Must be changed to return a Village Board type
-    int getVillageBoard();
-    int setVillageBoard(int villageBoard);
+//    Must be changed to return a Village Board type
+//    VGMaps* getVillageBoard();
+//    VGMaps* setVillageBoard(VGMaps *villageBoard);
 
     // Manage Harvest Tiles
     vector<HarvestTile*>* getHarvestTiles();
     HarvestTile* addHarvestTile(HarvestTile &tile);
     HarvestTile* removeHarvestTile(HarvestTile &tile);
-    HarvestTile* placeHarvestTile(HarvestTile &tile);
-    HarvestTile* drawHarvestTile(int harvestDeck); // Will need the Deck to be implemented
+    void placeHarvestTile(HarvestTile &tile, GBMaps *gameBoard);
+//    HarvestTile* drawHarvestTile(HarvestDeck &deck;
     unsigned long getNumberOfHarvestTiles();
     
     // Manage Building Tiles
