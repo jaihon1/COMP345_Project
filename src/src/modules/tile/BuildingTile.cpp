@@ -6,6 +6,11 @@
 // int random = rand() % 6 + 1; //generate a random number from 1 to 6 
 //=======
 
+BuildingTile::BuildingTile()
+{
+	//
+}
+
 BuildingTile::BuildingTile(BuildingColorType type, BuildingStatus status) {
 	*_buildingColorType = type;
 	*_buildingStatus = status;

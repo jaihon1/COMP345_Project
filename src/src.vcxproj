@@ -99,7 +99,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\modules\board\GBMaps.cpp" />
     <ClCompile Include="src\modules\board\VGMaps.cpp" />
     <ClCompile Include="src\modules\tile\BuildingTile.cpp" />

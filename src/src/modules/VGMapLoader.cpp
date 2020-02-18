@@ -1,3 +1,4 @@
+/*
 #include "VGMapLoader.h"
 #include <iostream>
 #include <fstream>
@@ -83,4 +84,4 @@ VGMaps * VGMapLoader::getBoard()
 {
 	return board; 
 }
-
+**/
