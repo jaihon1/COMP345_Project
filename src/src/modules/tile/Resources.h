@@ -1,6 +1,7 @@
 #pragma once
 #include "Dictionary.h"
 
+
 enum class BuildingColorType {
 	GreenSheep,
 	GreyRock,
@@ -13,7 +14,6 @@ enum class BuildingStatus {
 	Normal,
 	Flipped
 };
-
 
 /**
 enum class Connection {
@@ -71,15 +71,35 @@ public:
 	void RotateLeft();
 
 	ResourceName getResource(ResourceLocation inLocation);
+
+	static const char* ResourceNameToString(ResourceName inResourceName) {
+		switch (inResourceName) {
+		case ResourceName::Lumber:
+			return "Lumber";
+
+		case ResourceName::Rock:
+			return "Rock";
+
+		case ResourceName::Sheep:
+			return "Sheep";
+
+		case ResourceName::Wheat:
+			return "Wheat";
+		}
+
+		return "Error from ResourceNameToString";
+	}
 };
 
 class HarvestDeck{
 private:
 	HarvestTile** harvestDeck;
 	int deckLength = 60;
+
 public:
 	HarvestDeck();
 	HarvestTile* draw();
+
 };
 
 

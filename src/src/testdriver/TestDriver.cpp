@@ -9,24 +9,6 @@ using namespace std;
 
 HarvestDeck* testDeck = new HarvestDeck();
 
-const char* ResourceNameToString(ResourceName inResourceName) {
-	switch (inResourceName) {
-	case ResourceName::Lumber:
-		return "lumber";
-	
-	case ResourceName::Rock:
-		return "rock";
-
-	case ResourceName::Sheep:
-		return "sheep";
-
-	case ResourceName::Wheat:
-		return "wheat";
-	}
-
-	return "Error from ResourceNameToString";
-}
-
 void printHarvestTile(HarvestTile* inHarvestTile) {
 	cout << "\n";
 	
@@ -61,12 +43,12 @@ void printGameBoard(GBMaps* inBoard) {
 				if (inBoard->getSquareStatus(i, j) == GBSquareStatus::HarvestTile) {
 					HarvestTile* tileTemp = inBoard->getHarvestTile(i, j);
 					if (k == 0) {
-						cout << setw(8) << ResourceNameToString(tileTemp->getResource(ResourceLocation::topLeft));
-						cout << setw(8) << ResourceNameToString(tileTemp->getResource(ResourceLocation::topRight));
+						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::topLeft));
+						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::topRight));
 					}
 					else {
-						cout << setw(8) << ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomLeft));
-						cout << setw(8) << ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomRight));
+						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomLeft));
+						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomRight));
 					}		
 				}
 				else {
@@ -94,13 +76,13 @@ void testFunction1() {
 }
 
 void testFunction2() {
-	GBMapLoader* testLoader = new GBMapLoader("C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testMap.json");
+	GBMapLoader* testLoader = new GBMapLoader("C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testSave.json");
 
-	//GBMapSaver* testSaver = new GBMapSaver();
+	GBMapSaver* testSaver = new GBMapSaver();
 
-	//testSaver->save(testLoader->getBoard(), "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testSave.json");
+	//testSaver->save(testLoader->getBoard(), "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testSave2.json");
 
-	//printGameBoard(testLoader->getBoard());
+	printGameBoard(testLoader->getBoard());
 }
 
 int main()
