@@ -40,7 +40,7 @@ GBMaps::GBMaps(int inNumberOfPlayers, char boardSide)
 	case 2:
 
 		//top and bottom row on a 7x7 map is unavailable for a two person game as well as the first and last columns
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 7; i++) {
 			board[0][i].status = GBSquareStatus::Unavailable;
 			board[6][i].status = GBSquareStatus::Unavailable;
 			board[i][0].status = GBSquareStatus::Unavailable;
@@ -51,7 +51,7 @@ GBMaps::GBMaps(int inNumberOfPlayers, char boardSide)
 	case 3:
 
 		//first and last column are unavailable for a three person game on a 7x7 map
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 7; i++) {
 			board[i][0].status = GBSquareStatus::Unavailable;
 			board[i][6].status = GBSquareStatus::Unavailable;
 		}
@@ -133,7 +133,8 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 	//check if game board square is empty to add tile
 	if (board[row][column].status == GBSquareStatus::Empty) {
 		board[row][column].status = GBSquareStatus::HarvestTile;
-		board[row][column].tilePtr = inHarvestTilePtr;
+		board[row][column].tilePtr = inHarvestTilePtr;   
+
 		return 1;
 	}
 	return 0;
@@ -164,6 +165,11 @@ int GBMaps::getRows()
 int GBMaps::getColumns()
 {
 	return *columns;
+}
+
+int GBMaps::getNumberOfPlayers()
+{
+	return *numberOfPlayers;
 }
 
 

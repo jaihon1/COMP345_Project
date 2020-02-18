@@ -1,4 +1,4 @@
-#include <cstdlib>
+#include <cstdlib>    
 #include "Resources.h"
 #include "Dictionary.h"
 #include <iostream>
@@ -104,7 +104,7 @@ void BuildingTile::flip() {
 
 HarvestDeck::HarvestDeck()
 {
-	harvestDeck = new HarvestTile*[60]{
+	harvestDeck = new HarvestTile*[deckLength]{
 		//IMG-1
 		new HarvestTile(ResourceName::Wheat, ResourceName::Lumber, ResourceName::Wheat, ResourceName::Sheep),
 		new HarvestTile(ResourceName::Sheep, ResourceName::Sheep, ResourceName::Sheep, ResourceName::Rock),
@@ -183,4 +183,25 @@ HarvestDeck::HarvestDeck()
 		new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Lumber, ResourceName::Sheep),
 		new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Lumber, ResourceName::Rock)
 	};
+}
+
+HarvestTile* HarvestDeck::draw() {
+	//use random numbers each draw rather than "shuffling" the deck at the beginning of the game and putting it into a stack
+	srand(0); //TODO: hardcoded the seed, need to change to seeding with time from clock
+	int randomNumber = rand() % deckLength;
+
+	HarvestTile* temp = harvestDeck[randomNumber];
+	
+	//deckLength decreases by one as a card is drawn out of the deck
+	deckLength--;
+
+	//loop shuffles pointers down to keep remaining HarvestTiles together at the "top" of the deck
+	//subtract one again from deckLength to prevent index out of bounds errors
+	for (int i = randomNumber; i < deckLength-1; i++) {
+		harvestDeck[i] = harvestDeck[i+1];
+	}
+
+	harvestDeck[deckLength] = NULL;
+
+	return temp;
 }

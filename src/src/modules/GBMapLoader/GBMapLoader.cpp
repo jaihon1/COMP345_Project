@@ -74,3 +74,4 @@ GBMapLoader::GBMapLoader(const char* inFilePath)
 GBMaps* GBMapLoader::getBoard() {
 	return board;
 }
+

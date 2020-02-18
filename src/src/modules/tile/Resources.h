@@ -73,21 +73,13 @@ public:
 	ResourceName getResource(ResourceLocation inLocation);
 };
 
-class PondTile :
-	public Tile
-{
-};
-
-class Deck {
-public:
-	Tile* draw();
-};
-
-class HarvestDeck : public Deck {
+class HarvestDeck{
 private:
 	HarvestTile** harvestDeck;
+	int deckLength = 60;
 public:
 	HarvestDeck();
+	HarvestTile* draw();
 };
 
 

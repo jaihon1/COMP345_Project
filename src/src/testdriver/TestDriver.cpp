@@ -1,9 +1,13 @@
 #include <iostream>
+#include <iomanip>
 #include "../modules/board/GBMaps.h"
 #include "../modules/GBMapLoader/GBMapLoader.h"
 #include "../modules/tile/Dictionary.h"
+#include "../modules/tile/Resources.h"
 
 using namespace std;
+
+HarvestDeck* testDeck = new HarvestDeck();
 
 const char* ResourceNameToString(ResourceName inResourceName) {
 	switch (inResourceName) {
@@ -25,10 +29,8 @@ const char* ResourceNameToString(ResourceName inResourceName) {
 
 void printHarvestTile(HarvestTile* inHarvestTile) {
 	cout << "\n";
-	cout << ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topLeft)) << " ";
-	cout << ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topRight)) << "\n";
-	cout << ResourceNameToString(inHarvestTile->getResource(ResourceLocation::bottomLeft)) << " ";
-	cout << ResourceNameToString(inHarvestTile->getResource(ResourceLocation::bottomRight)) << "\n";
+	
+	
 }
 
 const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
@@ -36,16 +38,16 @@ const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
 	case GBSquareStatus::Empty:
 		return "Empty";
 	case GBSquareStatus::HarvestTile:
-		return "Harvest Tile";
+		return "Harvest";
 
 	case GBSquareStatus::BuildingTile:
-		return "Building Tile";
+		return "Buildin";
 
 	case GBSquareStatus::PondTile:
-		return "Pond Tile";
+		return "Pond";
 
 	case GBSquareStatus::Unavailable:
-		return "Unavailable";
+		return "Unavail";
 
 	}
 
@@ -53,26 +55,38 @@ const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
 }
 
 void printGameBoard(GBMaps* inBoard) {
-	for (int i = 0; i < inBoard->getRows(); i++) {
-		for (int j = 0; j < inBoard->getColumns(); j++) {
-			if (inBoard->getSquareStatus(i, j) == GBSquareStatus::HarvestTile) {
-				printHarvestTile(inBoard->getHarvestTile(i, j));
+	for (int i = 0; i < 7; i++) {
+		for (int k = 0; k < 2; k++) {
+			for (int j = 0; j < 7; j++) {
+				if (inBoard->getSquareStatus(i, j) == GBSquareStatus::HarvestTile) {
+					HarvestTile* tileTemp = inBoard->getHarvestTile(i, j);
+					if (k == 0) {
+						cout << setw(8) << ResourceNameToString(tileTemp->getResource(ResourceLocation::topLeft));
+						cout << setw(8) << ResourceNameToString(tileTemp->getResource(ResourceLocation::topRight));
+					}
+					else {
+						cout << setw(8) << ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomLeft));
+						cout << setw(8) << ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomRight));
+					}		
+				}
+				else {
+					cout << setw(8) << SquareStatusToString(inBoard->getSquareStatus(i, j)) << setw(8) <<" ";
+				}
 			}
-			else {
-				cout << SquareStatusToString(inBoard->getSquareStatus(i, j)) << " ";
-			}
+			cout << endl;
 		}
-		cout << "\n";
 	}
 }
 
 void testFunction1() {
 	GBMaps* gameBoard = new GBMaps(2, 'a');
 
-	HarvestTile* testHarvestTile = new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat); 
-	testHarvestTile -> RotateRight();
-	gameBoard->addHarvestTile(0, 3, testHarvestTile);
-
+	for (int i = 0; i < 5; i++) {
+		HarvestTile* testHarvestTile = testDeck->draw();
+		//ROTATE METHODS TEST
+		//testHarvestTile -> RotateRight();
+		gameBoard->addHarvestTile(3, i+1, testHarvestTile);
+	}
 	printGameBoard(gameBoard);
 
 	
@@ -80,13 +94,20 @@ void testFunction1() {
 }
 
 void testFunction2() {
-	GBMapLoader* testLoader = new GBMapLoader("C:\\Users\\Admin\\Documents\\COMP345_Project\\data\\testMap.json");
-	printGameBoard(testLoader->getBoard());
+	GBMapLoader* testLoader = new GBMapLoader("C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testMap.json");
+
+	//GBMapSaver* testSaver = new GBMapSaver();
+
+	//testSaver->save(testLoader->getBoard(), "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testSave.json");
+
+	//printGameBoard(testLoader->getBoard());
 }
 
 int main()
 {
 	int hold;
+
+	//testFunction1();
 	testFunction2();
 	cin >> hold;
 
