@@ -1,8 +1,6 @@
 #include <stdio.h>
-
-#include "BuildingTile.h"
 #include "Dictionary.h"
-
+#include "Resources.h"
 
 struct VGSquare{
 	VGSlotStatus VGstatus;

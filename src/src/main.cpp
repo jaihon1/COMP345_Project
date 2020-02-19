@@ -1,16 +1,14 @@
 #include <iostream>
+
 #include <fstream>
 
-#include "HarvestTile.h"
+
 #include "player.h"
 #include "Dictionary.h"
-
 #include "GBMaps.h"
-#include "BuildingTile.h"
-#include "BuildingDeck.h"
+
 
 using namespace std;
-
 
 int main(int argc, const char * argv[]) {
 
@@ -25,6 +23,7 @@ int main(int argc, const char * argv[]) {
 //    HarvestTile harvestTile2(rock, rock, sheep, wheat);
         
     BuildingDeck buildingDeck;
+    HarvestDeck harvestDeck;
 //    cout << "Deck size: " << buildingDeck.getSize() << endl;
 //    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
 //    cout << "Draw from BuildingDeck: " << buildingDeck.draw() << endl;
@@ -45,6 +44,13 @@ int main(int argc, const char * argv[]) {
     cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
     cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl;
     
+    cout << "H Deck size: " << harvestDeck.getSize() << endl;
+    cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
+    cout << "Draw from HarvestDeck: " <<  bob.drawHarvestTile(harvestDeck) << endl;
+    cout << "H Deck size: " << harvestDeck.getSize() << endl;
+    cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
+    cout << "Draw from HarvestDeck: " <<  bob.drawHarvestTile(harvestDeck) << endl;
+    
 //    bob.addHarvestTile(harvestTile2);
 //    cout << "Before:" << endl;
 //    bob.getHarvestTiles();
@@ -64,12 +70,29 @@ int main(int argc, const char * argv[]) {
 //    cout << "Number of Players: " << map1.getNumberOfPlayers() << endl;
 
 
+    
+	//Damian's test code
+	/**
+	int id = 11;
+    int players = 4;
+    
+    GBMaps map1(&id, &players);
+    
+    cout << "Board ID: " << map1.getIdAddress() << endl;
+    cout << "Number of Players: " << map1.getNumberOfPlayers() << endl;
+	**/
+
+//	VGMaps bmap1 = new VGMaps();
+
+
 //	VGMaps bmap1 = new VGMaps();
 //
 //	BuildingTile t1 = new BuildingTile();
 //
 //	bmap1.addNewBuildingTile(t1, 1, 1);
 
+    
+//	system("pause");
 
     return 0;
 }

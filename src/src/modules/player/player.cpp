@@ -51,11 +51,11 @@ void Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameB
     gameBoard.addHarvestTile(row, col, &tile);
 }
 
-//HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
-//    HarvestTile *drawn_card = deck.draw();
-//    addHarvestTile(*drawn_card);
-//    return drawn_card;
-//}
+HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
+    HarvestTile *drawn_card = deck.draw();
+    addHarvestTile(*drawn_card);
+    return drawn_card;
+}
 
 unsigned long Player::getNumberOfHarvestTiles() {
     return _harvestTiles -> size();

@@ -2,6 +2,8 @@
 
 #include <map>
 #include <string>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -38,4 +40,12 @@ class GBMapLoader {
 			}
 			~resourceMap() {};
 		};
+};
+
+class GBMapSaver {
+public:
+	void save(GBMaps* inBoard, const char* inFilePath);
+
+private:
+	ofstream outFile;
 };

@@ -8,14 +8,24 @@ enum class ResourceName {
     Wheat = 3
 };
 
+enum class ResourceName1 {
+    Lumber,
+    Rock,
+    Sheep,
+    Wheat
+};
+
 enum class TileStatus {
-    InHand,
-    InDeck,
-    OnBoard
+	InHand,
+	InDeck,
+	OnBoard
 };
 
 enum ResourceLocation {
-    topLeft = 0, topRight = 1, bottomLeft = 2, bottomRight = 3
+	topLeft = 0,
+    topRight = 1,
+    bottomLeft = 2,
+    bottomRight = 3
 };
 
 enum class BuildingColorType {

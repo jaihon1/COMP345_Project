@@ -4,9 +4,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
-#include "HarvestTile.h"
-#include "BuildingTile.h"
-#include "BuildingDeck.h"
+#include "Resources.h"
 #include "GBMaps.h"
 
 using namespace std;
@@ -41,7 +39,7 @@ public:
     HarvestTile* addHarvestTile(HarvestTile &tile);
     HarvestTile* removeHarvestTile(HarvestTile &tile);
     void placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard);
-//    HarvestTile* drawHarvestTile(HarvestDeck &deck;
+    HarvestTile* drawHarvestTile(HarvestDeck &deck);
     unsigned long getNumberOfHarvestTiles();
     
     // Manage Building Tiles
