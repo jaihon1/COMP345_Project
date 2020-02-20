@@ -1,5 +1,8 @@
 #pragma once
-
+#include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 
 enum class BuildingColorType {
@@ -33,18 +36,19 @@ private:
 	BuildingColorType* _buildingColorType;
 	int* _buildingNum;
 	BuildingStatus* _buildingStatus;
-
+	 
 public:
-
+	
 	BuildingTile();
 	BuildingTile(BuildingColorType* type, BuildingStatus* status);
-	BuildingTile(BuildingColorType t, int n, BuildingStatus s);
+	BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s);
 	~BuildingTile();
 
 	BuildingColorType getBuildingColorType();
 	BuildingStatus getSide();
 	int getBuildingNum();
 	void setBuildingNum(int num);
+
 	int* generateBuildingNumber();
 	void flip();
 
