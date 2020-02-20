@@ -1,9 +1,10 @@
 #ifndef board_h
 #define board_h
 
-#include "../tile/Tile.h"
-#include "../tile/HarvestTile.h"
-#include "../scoring/Scoring.h"
+#include<iostream>
+#include "Scoring.h"
+#include "Resources.h"
+
 
 //enumerated class to give name to the status that a square could have
 enum class GBSquareStatus {
@@ -37,9 +38,9 @@ private:
 	//Game Board is a pointer to an array of pointers
 	GBSquare** board;
 
-	void initializeBoardA(int numberOfPlayers);
+	void initializeBoardA();
 
-	void intializeBoardB(int numberOfPlayers);
+	void intializeBoardB();
 
 public:
 	//constructor takes number of players and whether the game is played on Side A or Side B

@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "GBMaps.h"
+
 
 GBSquare::GBSquare() {
 	status = GBSquareStatus::Empty;
@@ -34,36 +36,11 @@ GBMaps::GBMaps(int inNumberOfPlayers, char boardSide)
 		}
 	}
 
-	if (boardSide == 'b') {
-		intializeBoardB(*numberOfPlayers);
-	}
-	else {
-		initializeBoardA(*numberOfPlayers);
-	}
-
-}
-
-GBMaps::~GBMaps()
-{
-	for (int i = 0; i < *rows; i++) {
-		delete[] board[i];
-	}
-	delete board;
-}
-
-void GBMaps::initializeBoardA(int numberOfPlayers) {
-	
-	//default resource tiles
-	addHarvestTile(1, 1, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
-	addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
-	addHarvestTile(5, 1, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
-	addHarvestTile(5, 5, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
-
-	switch (numberOfPlayers) {
+	switch (*numberOfPlayers) {
 	case 2:
 
 		//top and bottom row on a 7x7 map is unavailable for a two person game as well as the first and last columns
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 7; i++) {
 			board[0][i].status = GBSquareStatus::Unavailable;
 			board[6][i].status = GBSquareStatus::Unavailable;
 			board[i][0].status = GBSquareStatus::Unavailable;
@@ -74,7 +51,7 @@ void GBMaps::initializeBoardA(int numberOfPlayers) {
 	case 3:
 
 		//first and last column are unavailable for a three person game on a 7x7 map
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 7; i++) {
 			board[i][0].status = GBSquareStatus::Unavailable;
 			board[i][6].status = GBSquareStatus::Unavailable;
 		}
@@ -87,10 +64,56 @@ void GBMaps::initializeBoardA(int numberOfPlayers) {
 		board[6][6].status = GBSquareStatus::Unavailable;
 		break;
 	}
+
+	if (boardSide == 'b') {
+		intializeBoardB();
+	}
+	else {
+		initializeBoardA();
+	}
+
 }
 
-void GBMaps::intializeBoardB(int numberOfPlayers) {
+GBMaps::~GBMaps()
+{
+	for (int i = 0; i < *rows; i++) {
+		delete[] board[i];
+	}
+	delete board;
+}
 
+void GBMaps::initializeBoardA() {
+	
+	//default resource tiles
+	addHarvestTile(1, 1, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
+	addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
+	addHarvestTile(5, 1, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
+	addHarvestTile(5, 5, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
+
+}
+
+void GBMaps::intializeBoardB() {
+
+	int settlement_coor[8][2] = {	{ 1,1 },{ 1,3 },{ 1,5 },{ 3,1 },{ 3,5 },{ 5,1 },{ 5,3 },{ 5,5 } };
+	int building_coor[13][2] = {	{ 0,2 },{ 0,4 },{ 2,0 },{ 2,2 },{ 2,4 },{ 2,6 },{ 3,3 },
+									{ 4,0 },{ 4,2 },{ 4,4 },{ 4,6 },{ 6,2 },{ 6,4 } };
+	//hardcode seed for random number?  will create same random numbers everytime.
+	srand(0);
+	for (int i = 0; i < 4; i++)
+	{
+		int temp = rand() % 8;
+		if (board[settlement_coor[i][0]][settlement_coor[i][1]].status == GBSquareStatus::Empty)
+			board[settlement_coor[i][0]][settlement_coor[i][1]].status = GBSquareStatus::Unavailable;
+		else
+			i--;
+	}
+	for (int i = 0; i < 8; i++)
+		if(board[settlement_coor[i][0]][settlement_coor[i][1]].status == GBSquareStatus::Empty)
+
+			//will draw harvest tile from deck
+			//addHarvestTile(settlement_coor[i][0], settlement_coor[i][1], new HarvestTile(rand() % 4, rand() % 4, rand() % 4, rand() % 4));
+	for (int i = 0; i < 13; i++)
+		board[0][0].status = GBSquareStatus::BuildingTile;
 }
 
 
@@ -110,7 +133,8 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 	//check if game board square is empty to add tile
 	if (board[row][column].status == GBSquareStatus::Empty) {
 		board[row][column].status = GBSquareStatus::HarvestTile;
-		board[row][column].tilePtr = inHarvestTilePtr;
+		board[row][column].tilePtr = inHarvestTilePtr;   
+
 		return 1;
 	}
 	return 0;
@@ -199,6 +223,11 @@ int GBMaps::getRows()
 int GBMaps::getColumns()
 {
 	return *columns;
+}
+
+int GBMaps::getNumberOfPlayers()
+{
+	return *numberOfPlayers;
 }
 
 
