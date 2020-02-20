@@ -30,6 +30,17 @@ BuildingTile::~BuildingTile() {
 	//if the member variables dont go on the stack, make them dynamic objects and delete every 
 	//random to delete 
 	//delete _int
+
+	delete _buildingColorType; 
+	_buildingColorType = NULL; 
+	delete _buildingStatus;
+	_buildingStatus = NULL; 
+
+	//delete _buildingNum; 
+	//_buildingNum = NULL; 
+
+
+
 }
 
 BuildingColorType BuildingTile::getBuildingColorType() {
