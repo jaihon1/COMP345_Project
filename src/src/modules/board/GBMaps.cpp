@@ -129,18 +129,6 @@ GBSquareStatus GBMaps::getSquareStatus(int row, int column)
 	return board[row][column].status;
 }
 
-int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
-{
-	//check if game board square is empty to add tile
-	if (board[row][column].status == GBSquareStatus::Empty) {
-		board[row][column].status = GBSquareStatus::HarvestTile;
-		board[row][column].tilePtr = inHarvestTilePtr;   
-
-		return 1;
-	}
-	return 0;
-}
-
 int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr, Scoring* sc)
 {
 	//check if game board square is empty to add tile

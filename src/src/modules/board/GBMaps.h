@@ -52,8 +52,6 @@ public:
 	GBSquareStatus getSquareStatus(int row, int column);
 
 	//return int: 1 = tile successfully added, 0 = tile not added (probably because square is unavailable)
-	int addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr);
-
 	int addHarvestTile(int row, int column, HarvestTile * inHarvestTilePtr, Scoring* sc);
 
 	HarvestTile* getHarvestTile(int row, int column);
