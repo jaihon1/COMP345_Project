@@ -1,5 +1,6 @@
 
 #include "..\tile\Resources.h"
+#include "..\board\GBMaps.h"
 #include "Scoring.h"
 
 Scoring::Scoring()

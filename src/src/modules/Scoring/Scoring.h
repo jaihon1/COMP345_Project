@@ -1,8 +1,9 @@
 #pragma once
 #include<iostream> 
 #include <list>
-#include "..\board\GBMaps.h"
-
+//#include "..\board\GBMaps.h"
+class GBMaps;
+class HarvestTile;
 
 class Scoring
 {

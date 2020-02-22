@@ -61,7 +61,7 @@ void testFunction1() {
 		HarvestTile* testHarvestTile = testDeck->draw();
 		//ROTATE METHODS TEST
 		//testHarvestTile -> RotateRight();
-		gameBoard->addHarvestTile(3, i+1, testHarvestTile);
+		gameBoard->addHarvestTile(3, i+1, testHarvestTile, NULL);
 	}
 	printGameBoard(gameBoard);
 

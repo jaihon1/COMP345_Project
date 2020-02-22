@@ -85,11 +85,13 @@ GBMaps::~GBMaps()
 
 void GBMaps::initializeBoardA() {
 	
+	//TODO: NEED TO GET A SCORING OBJECT vvvvvv
+
 	//default resource tiles
-	addHarvestTile(1, 1, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
-	addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
-	addHarvestTile(5, 1, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
-	addHarvestTile(5, 5, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
+	addHarvestTile(1, 1, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber), NULL);
+	addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber), NULL);
+	addHarvestTile(5, 1, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat), NULL);
+	addHarvestTile(5, 5, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat), NULL);
 
 }
 
@@ -136,7 +138,9 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr, S
 		board[row][column].status = GBSquareStatus::HarvestTile;
 		board[row][column].tilePtr = inHarvestTilePtr;
 
-		sc->computeResources(row, column, inHarvestTilePtr, this);
+		if (sc != NULL) {
+			sc->computeResources(row, column, inHarvestTilePtr, this);
+		}
 
 		return 1;
 	}

@@ -67,7 +67,7 @@ GBMapLoader::GBMapLoader(const char* inFilePath)
 					resourceArray[resArrCount] = resourceMap[resource];
 					resArrCount++;
 				}
-				board->addHarvestTile(boardRow, boardColumn, new HarvestTile(resourceArray[0], resourceArray[1], resourceArray[2], resourceArray[3]));
+				board->addHarvestTile(boardRow, boardColumn, new HarvestTile(resourceArray[0], resourceArray[1], resourceArray[2], resourceArray[3]), NULL);
 			}
 		}
 	}
