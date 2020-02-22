@@ -156,11 +156,6 @@
   <ItemGroup>
     <ClInclude Include="GBMaps.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\scoring\scoring.vcxproj">
-      <Project>{60b124bd-7fc5-4fe3-bb6a-7d7cdae29fb4}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

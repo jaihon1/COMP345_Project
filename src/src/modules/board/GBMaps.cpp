@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "../scoring/Scoring.h"
 #include "GBMaps.h"
 
 
@@ -140,59 +141,14 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 	return 0;
 }
 
-int GBMaps::map(int index)
-{
-	int row = index/28;
-	int column = (index%14)/2;
-	int test;
-	//HarvestTile temp = *getHarvestTile(row, column);
-
-	int pos = index % 28;
-	if (pos > 14)
-		pos = pos % 2 + 2;
-	else
-		pos = pos % 2;
-	//std::cout << row << " " << column << " " << index << " " <<pos << std::endl;
-	//std::cin >> test;
-	int result = static_cast<int>((*getHarvestTile(row, column)).getResource(static_cast<ResourceLocation>(pos)));
-	return result;
-}
-
-int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr, Scoring &sc)
+int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr, Scoring* sc)
 {
 	//check if game board square is empty to add tile
 	if (board[row][column].status == GBSquareStatus::Empty) {
 		board[row][column].status = GBSquareStatus::HarvestTile;
 		board[row][column].tilePtr = inHarvestTilePtr;
 
-		int board_length = 14;
-		int max_tile = 196;
-
-		sc.reset_res();
-		int topleft = row * 28 + column * 2;
-		ptrdiff_t index[4] = { topleft, topleft+1, topleft+14, topleft+15 };
-
-		for (int i = 0; i < 4; i++)
-		{
-			int next = index[i] - 1;
-			if ((index[i] %board_length != 0) && (board[next/28][(next%14) / 2].status != GBSquareStatus::Empty) && (map(index[i]) == map(next)))
-				sc.addEdge(index[i], next);
-			next = index[i] + 1;
-			if (((index[i] + 1) % board_length != 0) && (board[next/28][(next%14) / 2].status != GBSquareStatus::Empty) && (map(index[i]) == map(next)))
-				sc.addEdge(index[i], next);
-			next = index[i] - board_length;
-			if ((index[i] >= board_length) && (board[next/28][(next%14) / 2].status != GBSquareStatus::Empty)&& (map(index[i]) == map(next)))
-				sc.addEdge(index[i], next);
-			next = index[i] + board_length;
-			if ((index[i]< max_tile - board_length) && (board[next/28][(next%14) / 2].status != GBSquareStatus::Empty) && (map(index[i]) == map(next)))
-				sc.addEdge(index[i], next);
-		}		
-		static int res[4] = { 
-			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topLeft)),
-			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topRight)),
-			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomLeft)),
-			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomRight)) };
-		sc.update_res(index, res);
+		sc->computeResources(row, column, inHarvestTilePtr, this);
 
 		return 1;
 	}

@@ -9,12 +9,6 @@ using namespace std;
 
 HarvestDeck* testDeck = new HarvestDeck();
 
-void printHarvestTile(HarvestTile* inHarvestTile) {
-	cout << "\n";
-	
-	
-}
-
 const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
 	switch (inSquareStatus) {
 	case GBSquareStatus::Empty:

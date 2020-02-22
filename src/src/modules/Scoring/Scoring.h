@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream> 
-#include <list> 
-//#include "GBMaps.h"
+#include <list>
+#include "..\board\GBMaps.h"
 
 
 class Scoring
@@ -63,5 +63,8 @@ public:
 	//int get_score(VGMap &vil);
 	int get_res(int resv);
 	void display_res();
+
+	int map(int index, GBMaps* inHarvestBoard);
+	void computeResources(int row, int column, HarvestTile* inHarvestTilePtr, GBMaps* inHarvestBoard);
 };
 
