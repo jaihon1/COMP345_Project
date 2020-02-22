@@ -121,7 +121,8 @@ int GBMaps::map(int index)
 	int row = index/28;
 	int column = (index%14)/2;
 	int test;
-	//HarvestTile temp = *getHarvestTile(row, column);
+	HarvestTile temp = *getHarvestTile(row, column);
+	//HarvestTile *temp = getHarvestTile(row, column);
 
 	int pos = index % 28;
 	if (pos > 14)
@@ -130,7 +131,7 @@ int GBMaps::map(int index)
 		pos = pos % 2;
 	//std::cout << row << " " << column << " " << index << " " <<pos << std::endl;
 	//std::cin >> test;
-	int result = static_cast<int>((*getHarvestTile(row, column)).getResource(static_cast<ResourceLocation>(pos)));
+	int result = static_cast<int>((temp).getResource(static_cast<ResourceLocation>(pos)));
 	return result;
 }
 
