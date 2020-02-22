@@ -1,6 +1,7 @@
 #ifndef board_h
 #define board_h
 #include<iostream> 
+#include "../scoring/Scoring.h"
 #include "..\tile\Resources.h"
 
 //enumerated class to give name to the status that a square could have
@@ -51,6 +52,10 @@ public:
 
 	//return int: 1 = tile successfully added, 0 = tile not added (probably because square is unavailable)
 	int addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr);
+
+	int map(int index);
+
+	int addHarvestTile(int row, int column, HarvestTile * inHarvestTilePtr, Scoring & sc);
 
 	HarvestTile* getHarvestTile(int row, int column);
 
