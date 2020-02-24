@@ -10,6 +10,17 @@ enum class VGSlotStatus
 	Unavailable //int 1 - any invalid slot (outside the actual map)
 };
 
+/*
+const char* convertStatus(enum VGSlotStatus v)
+{
+	switch (v)
+	{
+	case VGSlotStatus::Empty: return "Empty";
+	case VGSlotStatus::Unavailable: return "Unavailable"; 
+	}
+	
+}
+*/
 
 struct VGSquare{ //why struct? 
 	VGSlotStatus VGstatus;
@@ -19,9 +30,8 @@ struct VGSquare{ //why struct?
 
 class VGMaps{
 private:
-	const int* const rows = new int(6); //length of the row
-	const int* const columns = new int(5); //length of the column
-
+	//const int* const rows = new int(6); //length of the row
+	//const int* const columns = new int(5); //length of the column
 	//start off with flags that indicate false, meaning that no tile of that type has been placed yet. 
 	bool GreenSheepPlaced = false; 
 	bool GreyRockPlaced = false; 
@@ -29,9 +39,16 @@ private:
 	bool YellowHayPlaced = false; 
 
 public: 
+
+	//is it the end of the world 
+	int* rows = new int(6); //length of the row
+	int* columns = new int(5); //length of the column
+
+
 	VGMaps(); 
 
 	~VGMaps();
+
 
 	VGSlotStatus getStatus(int row, int column);
 

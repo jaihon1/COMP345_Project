@@ -10,13 +10,14 @@ using std::vector;
 
 VGMaps::VGMaps()
 {
-	village_board[*rows];
+
+	village_board = new VGSquare*[*rows];
 
 	for (int i = 0; i < *rows; i++)
 	{
-		village_board[*columns];  
+		village_board[i] = new VGSquare[*columns];  
 
-		//initialized the current 2D array
+		//initialized the current 2D array, might have to do outside 
 		for (int j = 0; j < *columns; j++)
 		{
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
@@ -24,7 +25,7 @@ VGMaps::VGMaps()
 	}
 }
 
-//I do not think we need
+//I do not think we need, 
 VGMaps::~VGMaps()
 {
 	for (int i = 0; i < *rows; i++)
@@ -39,6 +40,7 @@ VGSlotStatus VGMaps::getStatus(int row, int column)
 {
 	return village_board[row][column].VGstatus; 
 }
+
 
 
 void VGMaps::setstate(bool state, bool given)
