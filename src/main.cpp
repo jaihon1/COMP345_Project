@@ -78,7 +78,7 @@ int main()
 	{
 		for (int j = 0; j < co; j++)
 		{
-			//BuildingColorType e = *v[i][j].VGSquare_type; 
+			//BuildingColorType e =
 			
 		}
 		cout << "\n";
