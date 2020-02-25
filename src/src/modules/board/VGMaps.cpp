@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "VGMaps.h"
+#include "VGMaps.hpp"
 
 #include <iostream>
 using namespace std; 
@@ -21,6 +21,9 @@ VGMaps::VGMaps()
 		for (int j = 0; j < *columns; j++)
 		{
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
+			//for now for testing
+			village_board[i][j].VGSquare_type = BuildingColorType::None; 
+			
 		}
 	}
 }
@@ -41,8 +44,6 @@ VGSlotStatus VGMaps::getStatus(int row, int column)
 	return village_board[row][column].VGstatus; 
 }
 
-
-
 void VGMaps::setstate(bool state, bool given)
 {
 	state = given; 
@@ -60,8 +61,6 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	//create iterator for insertion
 	vector <VGSquare>::iterator it; 
 	it = connections.begin(); 
-
-
 
 	// 0 -> top, 2 -> right, 3 -> bot, 4 -> left
 
@@ -137,12 +136,16 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			vector <VGSquare> find_green = checkConnectionsOfSlot(t, r, c); 
 			it = find_green.begin(); 
 
+			//go through the iterations to check if one of its surroundings is of type GreenSheep
 			for (int i = 0; i < 4; i++)
 			{
 				if ((*(it + i)).VGSquare_type == BuildingColorType::GreenSheep) //derefference the iterator 
 				{
 					//place tile right there 
 					village_board[r][c].building_ptr = &t; //is this right?
+					village_board[r][c].VGSquare_type = BuildingColorType::GreenSheep; 
+					village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+
 					break; 
 				}
 			}
@@ -161,6 +164,8 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			{
 				village_board[r][c].VGSquare_type = BuildingColorType::GreenSheep; //help 
 				village_board[r][c].building_ptr = &t; 
+				village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+
 				setstate(getGreenSheepPlaced(), true); 
 			}
 		}
@@ -178,6 +183,9 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//place tile right there 
 					village_board[r][c].building_ptr = &t;
+					village_board[r][c].VGSquare_type = BuildingColorType::GreyRock; 
+					village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+
 					break;
 				}
 			}
@@ -195,7 +203,8 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			{
 				village_board[r][c].VGSquare_type = BuildingColorType::GreyRock; //help 
 				village_board[r][c].building_ptr = &t;
-				setstate(getGreenSheepPlaced(), true);
+				village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+				setstate(getGreyRockPlaced(), true);
 			}
 		}
 	}
@@ -212,6 +221,8 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//place tile right there 
 					village_board[r][c].building_ptr = &t;
+					village_board[r][c].VGSquare_type = BuildingColorType::RedLumber; 
+					village_board[r][c].VGstatus = VGSlotStatus::Taken; 
 					break;
 				}
 			}
@@ -227,7 +238,8 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			{
 				village_board[r][c].VGSquare_type = BuildingColorType::RedLumber; //help 
 				village_board[r][c].building_ptr = &t;
-				setstate(getGreenSheepPlaced(), true);
+				village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+				setstate(getRedLumberPlaced(), true);
 			}
 		}
 	}
@@ -244,6 +256,9 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//place tile right there 
 					village_board[r][c].building_ptr = &t;
+					village_board[r][c].VGSquare_type = BuildingColorType::YellowHay; 
+					village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+
 					break;
 				}
 			}
@@ -260,7 +275,8 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			{
 				village_board[r][c].VGSquare_type = BuildingColorType::YellowHay; //help 
 				village_board[r][c].building_ptr = &t;
-				setstate(getGreenSheepPlaced(), true);
+				village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+				setstate(getYellowHayPlaced(), true);
 			}
 		}
 	}

@@ -1,15 +1,14 @@
 #include <stdio.h>
-#include "Dictionary.h"
-#include "Resources.h"
-#include "src/src/modules/board/VGMaps.h"
+
 #include "..\tile\BuildingTile.hpp"
 #include <vector>
 using std::vector; 
 
 enum class VGSlotStatus
 {
-	Empty, //int 0
-	Unavailable //int 1 - any invalid slot (outside the actual map)
+	Empty, //int 0 - associated with NONE type of BuildingColorType
+	Taken, //int 1 - associated wtih one of the 4 BuildingColorType
+	Unavailable //int 2 - any invalid slot (outside the actual map)
 };
 
 
@@ -17,17 +16,13 @@ struct VGSquare{ //why struct?
 	VGSlotStatus VGstatus;
 	BuildingTile *building_ptr; 
 	BuildingColorType VGSquare_type;  //same as buildingtype 
+
 }; 
 
 class VGMaps{
 private:
-
 	//const int* const rows = new int(6); //length of the row
 	//const int* const columns = new int(5); //length of the column
-
-	const int* const rows = new int(6); //length of the row
-	const int* const columns = new int(5); //length of the column
-
 	//start off with flags that indicate false, meaning that no tile of that type has been placed yet. 
 	bool GreenSheepPlaced = false; 
 	bool GreyRockPlaced = false; 
@@ -39,6 +34,7 @@ public:
 	//is it the end of the world 
 	int* rows = new int(6); //length of the row
 	int* columns = new int(5); //length of the column
+
 
 	VGMaps(); 
 
