@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "VGMaps.hpp"
+#include "VGMaps.h"
 
 #include <iostream>
 using namespace std; 
