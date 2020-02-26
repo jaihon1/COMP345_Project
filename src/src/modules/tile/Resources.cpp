@@ -5,6 +5,8 @@
 
 using namespace std;
 
+static bool _firstBuilding = true;
+
 
 HarvestTile::HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, ResourceName bottomLeftRes, ResourceName bottomRightRes)
 {
@@ -51,49 +53,89 @@ ResourceName HarvestTile::getResource(ResourceLocation inLocation)
 	return resourceArr[inLocation];
 }
 
-BuildingTile::BuildingTile(BuildingColorType type, BuildingStatus status) {
-	_buildingColorType = type;
-	_buildingStatus = status;
-	_buildingNum = generateBuildingNumber();
+BuildingTile::BuildingTile()
+{
+    //
+    _firstBuilding = false;
 }
 
-BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
+BuildingTile::BuildingTile(BuildingColorType *type, BuildingStatus *status) : _buildingColorType(type), _buildingStatus(status), _buildingNum(generateBuildingNumber())
 {
-	_buildingColorType = t;
-	_buildingNum = n;
-	_buildingStatus = s;
+    //*_buildingColorType = type;
+    //*_buildingStatus = status;
+    //_buildingNum = generateBuildingNumber();
+
+    _firstBuilding = false;
+}
+
+BuildingTile::BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s): _buildingColorType(t), _buildingNum(n), _buildingStatus(s)
+{
+    /*
+    _buildingColorType = t;
+    _buildingNum = n;
+    _buildingStatus = s;
+    */
+    _firstBuilding = false;
 }
 
 BuildingTile::~BuildingTile() {
-	//do I need to code? 
+    //do I need to code?
+    //if the member variables dont go on the stack, make them dynamic objects and delete every
+    //random to delete
+    //delete _int
+
+//    cout << "in destr" << endl;
+//    delete _buildingColorType;
+//    _buildingColorType = NULL;
+//    delete _buildingStatus;
+//    _buildingStatus = NULL;
+
+    //delete _buildingNum;
+    //_buildingNum = NULL;
+
 }
 
 BuildingColorType BuildingTile::getBuildingColorType() {
-	return _buildingColorType;
+    return *_buildingColorType;
 }
 
 BuildingStatus BuildingTile::getSide() {
-	return _buildingStatus;
+    return *_buildingStatus;
 }
 
 int BuildingTile::getBuildingNum() {
-	return _buildingNum;
+    return *_buildingNum;
 }
 
-int BuildingTile::generateBuildingNumber() {
-	int random = rand() % 6 + 1; //generate a random number from 1 to 6
-	return random;
+
+int *BuildingTile::generateBuildingNumber() {
+    if (_firstBuilding)
+    {
+        srand(time(NULL));  //set the seed first
+    }
+    cout << "Randomizing" << endl;
+    int* random = new int(rand() % 6 + 1); //generate a random number from 1 to 6                                                                              //srand and seed it...
+    //int rando = rand() % 6 + 1; //generate a random number from 1 to 6
+    //int* random = &rando; //generate a random number from 1 to 6
+    return random;
 }
 
 void BuildingTile::setBuildingNum(int num) {
-	_buildingNum = num;
+    *_buildingNum = num;
+}
+
+void BuildingTile::setBuildingStatus(BuildingStatus s)
+{
+    *_buildingStatus = s;
 }
 
 void BuildingTile::flip() {
-	if (getSide() == BuildingStatus::Normal) {
-		setBuildingNum(-1);
-	}
-	//cannot flip back
+    if (getSide() == BuildingStatus::Normal) {
+        setBuildingNum(-1);
+        setBuildingStatus(BuildingStatus::Flipped);
+    }
+    //cannot flip back
+
 }
 
 HarvestDeck::HarvestDeck()
@@ -220,15 +262,15 @@ BuildingDeck::BuildingDeck() {
     BuildingStatus normal = BuildingStatus::Normal;
     
     BuildingTile tiles[9] = {
-        BuildingTile(greenSheep, normal),
-        BuildingTile(greyRock, normal),
-        BuildingTile(redLumber, normal),
-        BuildingTile(yellowHay, normal),
-        BuildingTile(greenSheep, normal),
-        BuildingTile(greenSheep, normal),
-        BuildingTile(greyRock, normal),
-        BuildingTile(redLumber, normal),
-        BuildingTile(yellowHay, normal)
+        BuildingTile(&greenSheep, &normal),
+        BuildingTile(&greyRock, &normal),
+        BuildingTile(&redLumber, &normal),
+        BuildingTile(&yellowHay, &normal),
+        BuildingTile(&greenSheep, &normal),
+        BuildingTile(&greenSheep, &normal),
+        BuildingTile(&greyRock, &normal),
+        BuildingTile(&redLumber, &normal),
+        BuildingTile(&yellowHay, &normal)
     };
     
     // Initializing _deck vector
