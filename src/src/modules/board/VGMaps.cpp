@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
-#include "Resources.h"
-#include "VGMaps.hpp"
 
+#include "VGMaps.hpp"
 using namespace std;
 using std::vector;
 

@@ -1,4 +1,6 @@
 #include <cstdlib>
+#include <stdlib.h>
+#include <time.h>
 #include <iostream>
 #include "Resources.h"
 #include "Dictionary.h"
@@ -138,6 +140,7 @@ void BuildingTile::flip() {
 
 }
 
+/*
 HarvestDeck::HarvestDeck()
 {
 	harvestDeck = new HarvestTile*[deckLength]{
@@ -305,9 +308,11 @@ void BuildingDeck::add(BuildingTile &tile) {
     _deck -> push_back(&tile);
 }
 
+
 void BuildingDeck::remove(BuildingTile &tile) {
     _deck -> erase(std::remove(_deck -> begin(), _deck -> end(), &tile), _deck -> end());
 }
+
 
 BuildingTile* BuildingDeck::draw() {
     if (_deck -> size() > 0) {
@@ -324,3 +329,4 @@ BuildingTile* BuildingDeck::draw() {
 unsigned long BuildingDeck::getSize() {
     return _deck -> size();
 }
+*/

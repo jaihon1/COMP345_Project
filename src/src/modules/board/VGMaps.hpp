@@ -1,6 +1,7 @@
+#pragma once 
 #include <stdio.h>
 
-#include "Resources.h"
+#include "../tile/Resources.h"
 #include <vector>
 using std::vector; 
 

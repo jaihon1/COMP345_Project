@@ -1,6 +1,6 @@
 
 #include "modules/board/VGMaps.hpp"
-#include "modules/tile/BuildingTile.hpp"
+#include "modules/tile/Resources.h"
 #include <string>
 #include <ostream>
 #include <iostream>

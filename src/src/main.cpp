@@ -2,14 +2,15 @@
 
 #include <fstream>
 
-
+/*
 #include "player.h"
 #include "Dictionary.h"
 #include "GBMaps.h"
-
+*/
 
 using namespace std;
 
+/*
 int main(int argc, const char * argv[]) {
 
 //    ResourceLocation location = ResourceLocation::topLeft;
@@ -94,8 +95,8 @@ int main(int argc, const char * argv[]) {
     
 //	system("pause");
 
-    return 0;
-}
+   // return 0;
+// }
 
 
 

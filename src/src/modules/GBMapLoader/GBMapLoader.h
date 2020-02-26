@@ -1,3 +1,4 @@
+/*
 #pragma once
 
 #include <map>
@@ -49,3 +50,4 @@ public:
 private:
 	ofstream outFile;
 };
+*/ 
