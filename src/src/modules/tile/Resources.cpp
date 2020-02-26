@@ -140,7 +140,7 @@ void BuildingTile::flip() {
 
 }
 
-/*
+
 HarvestDeck::HarvestDeck()
 {
 	harvestDeck = new HarvestTile*[deckLength]{
@@ -329,4 +329,4 @@ BuildingTile* BuildingDeck::draw() {
 unsigned long BuildingDeck::getSize() {
     return _deck -> size();
 }
-*/
+
