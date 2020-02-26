@@ -1,16 +1,8 @@
 #include <stdio.h>
 
-#include "..\tile\BuildingTile.hpp"
+#include "Resources.h"
 #include <vector>
 using std::vector; 
-
-enum class VGSlotStatus
-{
-	Empty, //int 0 - associated with NONE type of BuildingColorType
-	Taken, //int 1 - associated wtih one of the 4 BuildingColorType
-	Unavailable //int 2 - any invalid slot (outside the actual map)
-};
-
 
 struct VGSquare{ //why struct? 
 	VGSlotStatus VGstatus;

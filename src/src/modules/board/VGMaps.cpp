@@ -1,16 +1,15 @@
 #include <stdio.h>
+#include <iostream>
+#include <vector>
+#include "Resources.h"
 #include "VGMaps.hpp"
 
-#include <iostream>
-using namespace std; 
-
-#include <vector>
+using namespace std;
 using std::vector;
 
 
 VGMaps::VGMaps()
 {
-
 	village_board = new VGSquare*[*rows];
 
 	for (int i = 0; i < *rows; i++)
