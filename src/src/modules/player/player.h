@@ -1,16 +1,18 @@
-#ifndef player_hpp
-#define player_hpp
+#ifndef player_h
+#define player_h
 
 #include <iostream>
 #include <stdio.h>
 #include <vector>
 #include "../tile/Resources.h"
+#include "../board/GBMaps.h"
 
 using namespace std;
 
 class Player {
 private:
     // Own one Village Board
+    // VGMaps *_villageBoard;
     
     // Owns Harverst Tiles
     vector<HarvestTile*> *_harvestTiles;
@@ -28,23 +30,24 @@ public:
     Player(const Player &player);
     ~Player();
     
-    
-    // Must be changed to return a Village Board type
-    int getVillageBoard();
-    int setVillageBoard(int villageBoard);
+//    Must be changed to return a Village Board type
+//    VGMaps* getVillageBoard();
+//    VGMaps* setVillageBoard(VGMaps *villageBoard);
 
     // Manage Harvest Tiles
     vector<HarvestTile*>* getHarvestTiles();
     HarvestTile* addHarvestTile(HarvestTile &tile);
     HarvestTile* removeHarvestTile(HarvestTile &tile);
-    HarvestTile* placeHarvestTile(HarvestTile &tile);
-    HarvestTile* drawHarvestTile(int harvestDeck); // Will need the Deck to be implemented
+    void placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard);
+    HarvestTile* drawHarvestTile(HarvestDeck &deck);
+    unsigned long getNumberOfHarvestTiles();
     
     // Manage Building Tiles
-    vector<BuildingTile> getBuildings();
+    vector<BuildingTile*>* getBuildings();
     BuildingTile* addBuildingTile(BuildingTile &tile);
     BuildingTile* removeBuildingTile(BuildingTile &tile);
-    BuildingTile* drawBuilding(int buildingDeck); // Will need the Deck to be implemented
+    BuildingTile* drawBuilding(BuildingDeck &deck);
+    unsigned long getNumberOfBuildingTiles();
     
     // Methods for the driver
     void ressourceTracker();
@@ -54,4 +57,5 @@ public:
     
 };
 
-#endif /* player_hpp */
+#endif /* player_h */
+

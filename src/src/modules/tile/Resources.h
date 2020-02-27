@@ -1,54 +1,36 @@
 #pragma once
+
+#include <vector>
 #include "Dictionary.h"
 
-
-enum class BuildingColorType {
-	GreenSheep,
-	GreyRock,
-	RedLumber,
-	YellowHay
-};
-
-
-enum class BuildingStatus {
-	Normal,
-	Flipped
-};
-
-/**
-enum class Connection {
-	Up,
-	Down,
-	Right,
-	Left
-};
-**/
+using namespace std;
 
 class Tile {
 
 };
 
-class BuildingTile
-{
+class BuildingTile {
 private:
-
-	BuildingColorType _buildingColorType;
-	int _buildingNum;
-	BuildingStatus _buildingStatus;
-
+    BuildingColorType* _buildingColorType;
+    int* _buildingNum;
+    BuildingStatus* _buildingStatus;
+     
 public:
+    
+    BuildingTile();
+    BuildingTile(BuildingColorType* type, BuildingStatus* status);
+    BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s);
+    ~BuildingTile();
 
-	BuildingTile();
-	BuildingTile(BuildingColorType type, BuildingStatus status);
-	BuildingTile(BuildingColorType t, int n, BuildingStatus s);
-	~BuildingTile();
+    BuildingColorType getBuildingColorType();
+    BuildingStatus getSide();
+    int getBuildingNum();
+    void setBuildingNum(int num);
 
-	BuildingColorType getBuildingColorType();
-	BuildingStatus getSide();
-	int getBuildingNum();
-	void setBuildingNum(int num);
-	int generateBuildingNumber();
-	void flip();
+    void setBuildingStatus(BuildingStatus s);
+
+    int* generateBuildingNumber();
+    void flip();
 
 };
 
@@ -99,7 +81,27 @@ private:
 public:
 	HarvestDeck();
 	HarvestTile* draw();
+    int getSize();
 
 };
+
+class BuildingDeck {
+private:
+    int *_sizeMax;
+    vector<BuildingTile*> *_deck;
+        
+public:
+    BuildingDeck();
+    BuildingDeck(const BuildingDeck &deck);
+    ~BuildingDeck();
+    
+    vector<BuildingTile*>* getDeck();
+    BuildingTile* draw();
+    unsigned long getSize();
+    void add(BuildingTile &tile);
+    void remove(BuildingTile &tile);
+
+};
+
 
 

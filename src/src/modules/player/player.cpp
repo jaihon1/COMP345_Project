@@ -14,13 +14,19 @@ Player::Player(const Player &player) {
 }
 
 Player::~Player() {
-    cout << "Deleting Player with address: " << this << endl;
-    delete _harvestTiles;
-    delete _buildingTiles;
+    if (_harvestTiles) {
+        cout << "Deleting _harvestTiles of Player with address: " << this << endl;
+        delete _harvestTiles;
+        _harvestTiles = nullptr;
+        cout << "DONE" << endl;
+    }
 
-    _harvestTiles = nullptr;
-    _buildingTiles = nullptr;
-    cout << "DONE" << endl;
+    if (_buildingTiles) {
+        cout << "Deleting _buildingTiles of Player with address: " << this << endl;
+        delete _buildingTiles;
+        _buildingTiles = nullptr;
+        cout << "DONE" << endl;
+    }
 }
 
 
@@ -41,8 +47,38 @@ vector<HarvestTile*>* Player::getHarvestTiles() {
     return _harvestTiles;
 }
 
+void Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard) {
+    gameBoard.addHarvestTile(row, col, &tile);
+}
+
+HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
+    HarvestTile *drawn_card = deck.draw();
+    addHarvestTile(*drawn_card);
+    return drawn_card;
+}
+
+unsigned long Player::getNumberOfHarvestTiles() {
+    return _harvestTiles -> size();
+}
+
+
+
 BuildingTile* Player::addBuildingTile(BuildingTile &tile) {
     _buildingTiles -> push_back(&tile);
     return &tile;
 }
 
+BuildingTile* Player::removeBuildingTile(BuildingTile &tile) {
+    _buildingTiles -> erase(std::remove(_buildingTiles -> begin(), _buildingTiles -> end(), &tile), _buildingTiles -> end());
+    return &tile;
+}
+
+BuildingTile* Player::drawBuilding(BuildingDeck &deck) {
+    BuildingTile *drawn_card = deck.draw();
+    addBuildingTile(*drawn_card);
+    return drawn_card;
+}
+
+unsigned long Player::getNumberOfBuildingTiles() {
+    return _buildingTiles -> size();
+}

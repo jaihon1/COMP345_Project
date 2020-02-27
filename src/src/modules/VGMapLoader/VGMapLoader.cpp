@@ -1,3 +1,4 @@
+/*
 #include "VGMapLoader.h"
 #include <iostream>
 #include <fstream>
@@ -27,10 +28,10 @@ VGMapLoader::VGMapLoader(const char * inFile)
 	if (boardJson == VGMapDoc.end())
 	{
 		cerr << "board not found"; 
-		return;  //what is it returning?
+		return;  //return back to where you were
 	}
 
-	int VG_row = -1;  //why -1 rather than 0? is it because you want to consatntly iterate through?
+	int VG_row = -1;  //why -1 rather than 0? is it because you want to consatntly iterate through? yes 
 
 	statusVGMap sMap; 
 	buildingMap bMap; 
@@ -46,10 +47,13 @@ VGMapLoader::VGMapLoader(const char * inFile)
 			auto const VGSquare = column.find("VGSquare"); 
 
 			auto const VGSlotStatus = VGSquare->find("VGstatus"); 
+
+			auto const BuildingColorType = VGSquare->find("VGSquare_type"); 
 		
-			if (sMap[*VGSlotStatus] == VGSlotStatus::BuildingColorType)
+			//to recheck!!! 
+			if (sMap[*BuildingColorType] == BuildingColorType) //is this line good? 
 			{
-				auto const b_type = VGSlotStatus->find("_buildingColorTypee"); //not sure? 
+				auto const b_type = VGSlotStatus->find("_buildingColorType"); 
 				auto const b_int = VGSlotStatus->find("_buildingNum"); 
 				auto const b_side = VGSlotStatus->find("_buildingStatus");
 
@@ -57,17 +61,19 @@ VGMapLoader::VGMapLoader(const char * inFile)
 				BuildingTile *temp = new BuildingTile(b_type, b_int, b_side); 
 				board->addNewBuildingTile(*temp , row, column); //dereference temp 
 			}
+			else
+			{
+				//make this area empty
+				board[row][column].VGStatus == VGSlotStatus::Empty; 
+			}
 
-			//what if its empty?? 
 		}
 
+		//Make the remaining of the board empty in status
+
+
 	}
-
-
-
 }
-
-
 
 VGMapLoader::~VGMapLoader()
 {
@@ -78,4 +84,4 @@ VGMaps * VGMapLoader::getBoard()
 {
 	return board; 
 }
-
+**/

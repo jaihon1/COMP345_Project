@@ -1,6 +1,7 @@
 // GBMapLoader.cpp : Defines the functions for the static library.
 //
 
+
 #include "pch.h"
 #include <iostream>
 #include <fstream>
@@ -28,7 +29,7 @@ GBMapLoader::GBMapLoader(const char* inFilePath)
 	
 	//statement initializes the number of players based on the integer associated with the key "Number of players" within the JSON document
 	auto const numberOfPlayers = GBMapDoc.find("NumberOfPlayers");
-	board = new GBMaps((int)numberOfPlayers.value(), 'a');
+	board = new GBMaps((int)numberOfPlayers.value(), 'a', NULL);
 
 	//TODO: add more checks that json is valid
 	//if statement checks that a board object is present
@@ -67,7 +68,7 @@ GBMapLoader::GBMapLoader(const char* inFilePath)
 					resourceArray[resArrCount] = resourceMap[resource];
 					resArrCount++;
 				}
-				board->addHarvestTile(boardRow, boardColumn, new HarvestTile(resourceArray[0], resourceArray[1], resourceArray[2], resourceArray[3]), NULL);
+				board->addHarvestTile(boardRow, boardColumn, new HarvestTile(resourceArray[0], resourceArray[1], resourceArray[2], resourceArray[3]));
 			}
 		}
 	}

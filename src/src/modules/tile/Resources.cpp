@@ -1,9 +1,14 @@
-#include <cstdlib>    
+#include <cstdlib>
+#include <stdlib.h>
+#include <time.h>
+#include <iostream>
 #include "Resources.h"
 #include "Dictionary.h"
-#include <iostream>
 
 using namespace std;
+
+static bool _firstBuilding = true;
+
 
 HarvestTile::HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, ResourceName bottomLeftRes, ResourceName bottomRightRes)
 {
@@ -50,57 +55,91 @@ ResourceName HarvestTile::getResource(ResourceLocation inLocation)
 	return resourceArr[inLocation];
 }
 
-//<<<<<<< Updated upstream
-//randomized
-// int random = rand() % 6 + 1; //generate a random number from 1 to 6 
-//=======
-
-BuildingTile::BuildingTile(BuildingColorType type, BuildingStatus status) {
-	_buildingColorType = type;
-	_buildingStatus = status;
-	_buildingNum = generateBuildingNumber();
+BuildingTile::BuildingTile()
+{
+    //
+    _firstBuilding = false;
 }
 
-BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
+BuildingTile::BuildingTile(BuildingColorType *type, BuildingStatus *status) : _buildingColorType(type), _buildingStatus(status), _buildingNum(generateBuildingNumber())
 {
-	_buildingColorType = t;
-	_buildingNum = n;
-	_buildingStatus = s;
+    //*_buildingColorType = type;
+    //*_buildingStatus = status;
+    //_buildingNum = generateBuildingNumber();
+
+    _firstBuilding = false;
+}
+
+BuildingTile::BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s): _buildingColorType(t), _buildingNum(n), _buildingStatus(s)
+{
+    /*
+    _buildingColorType = t;
+    _buildingNum = n;
+    _buildingStatus = s;
+    */
+    _firstBuilding = false;
 }
 
 BuildingTile::~BuildingTile() {
-	//do I need to code? 
+    //do I need to code?
+    //if the member variables dont go on the stack, make them dynamic objects and delete every
+    //random to delete
+    //delete _int
+
+//    cout << "in destr" << endl;
+//    delete _buildingColorType;
+//    _buildingColorType = NULL;
+//    delete _buildingStatus;
+//    _buildingStatus = NULL;
+
+    //delete _buildingNum;
+    //_buildingNum = NULL;
+
 }
 
 BuildingColorType BuildingTile::getBuildingColorType() {
-	return _buildingColorType;
+    return *_buildingColorType;
 }
 
 BuildingStatus BuildingTile::getSide() {
-	return _buildingStatus;
+    return *_buildingStatus;
 }
 
 int BuildingTile::getBuildingNum() {
-	return _buildingNum;
+    return *_buildingNum;
 }
 
-int BuildingTile::generateBuildingNumber() {
-	int random = rand() % 6 + 1; //generate a random number from 1 to 6
-	return random;
+
+int *BuildingTile::generateBuildingNumber() {
+    if (_firstBuilding)
+    {
+        srand(time(NULL));  //set the seed first
+    }
+    cout << "Randomizing" << endl;
+    int* random = new int(rand() % 6 + 1); //generate a random number from 1 to 6                                                                              //srand and seed it...
+    //int rando = rand() % 6 + 1; //generate a random number from 1 to 6
+    //int* random = &rando; //generate a random number from 1 to 6
+    return random;
 }
 
 void BuildingTile::setBuildingNum(int num) {
-	_buildingNum = num;
+    *_buildingNum = num;
+}
+
+void BuildingTile::setBuildingStatus(BuildingStatus s)
+{
+    *_buildingStatus = s;
 }
 
 void BuildingTile::flip() {
-	if (getSide() == BuildingStatus::Normal) {
-		setBuildingNum(-1);
-	}
-	//cannot flip back
-
+    if (getSide() == BuildingStatus::Normal) {
+        setBuildingNum(-1);
+        setBuildingStatus(BuildingStatus::Flipped);
+    }
+    //cannot flip back
 
 }
+
 
 HarvestDeck::HarvestDeck()
 {
@@ -185,6 +224,10 @@ HarvestDeck::HarvestDeck()
 	};
 }
 
+int HarvestDeck::getSize() {
+    return deckLength;
+}
+
 HarvestTile* HarvestDeck::draw() {
 	//use random numbers each draw rather than "shuffling" the deck at the beginning of the game and putting it into a stack
 	srand(0); //TODO: hardcoded the seed, need to change to seeding with time from clock
@@ -205,3 +248,85 @@ HarvestTile* HarvestDeck::draw() {
 
 	return temp;
 }
+
+BuildingDeck::BuildingDeck() {
+    cout << "Creating BuildingDeck with Main: " << this << endl;
+    
+    // Initializing deck size
+    int size = 9;
+    _sizeMax = &size;
+    
+    // Initialize deck resources
+    BuildingColorType greenSheep = BuildingColorType::GreenSheep;
+    BuildingColorType greyRock = BuildingColorType::GreyRock;
+    BuildingColorType redLumber = BuildingColorType::RedLumber;
+    BuildingColorType yellowHay = BuildingColorType::YellowHay;
+    
+    BuildingStatus normal = BuildingStatus::Normal;
+    
+    BuildingTile tiles[9] = {
+        BuildingTile(&greenSheep, &normal),
+        BuildingTile(&greyRock, &normal),
+        BuildingTile(&redLumber, &normal),
+        BuildingTile(&yellowHay, &normal),
+        BuildingTile(&greenSheep, &normal),
+        BuildingTile(&greenSheep, &normal),
+        BuildingTile(&greyRock, &normal),
+        BuildingTile(&redLumber, &normal),
+        BuildingTile(&yellowHay, &normal)
+    };
+    
+    // Initializing _deck vector
+    _deck = new vector<BuildingTile*>;
+    
+    for (int i = 0; i < *_sizeMax; i++) {
+        cout << "Adding tile: " << &tiles[i] << endl;
+        _deck -> push_back(&tiles[i]);
+    }
+    
+}
+
+BuildingDeck::BuildingDeck(const BuildingDeck &deck) {
+    
+}
+
+BuildingDeck::~BuildingDeck() {
+    if (_deck) {
+        cout << "Deleting _deck of BuildingTile with address: " << this << endl;
+        delete _deck;
+        _deck = nullptr;
+        cout << "DONE" << endl;
+    }
+}
+
+vector<BuildingTile*>* BuildingDeck::getDeck() {
+    return _deck;
+}
+
+void BuildingDeck::add(BuildingTile &tile) {
+    cout << "Adding: " << &tile << endl;
+    _deck -> push_back(&tile);
+}
+
+
+void BuildingDeck::remove(BuildingTile &tile) {
+   // _deck -> erase(std::remove(_deck -> begin(), _deck -> end(), &tile), _deck -> end());
+}
+
+
+BuildingTile* BuildingDeck::draw() {
+    if (_deck -> size() > 0) {
+        int randomIndex = rand() % _deck -> size();
+        BuildingTile *tile = _deck -> at(randomIndex);
+        remove(*tile);
+        return tile;
+    }
+    else {
+        return nullptr;
+    }
+}
+
+unsigned long BuildingDeck::getSize() {
+    return _deck -> size();
+}
+

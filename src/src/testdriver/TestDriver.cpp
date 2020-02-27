@@ -55,13 +55,13 @@ void printGameBoard(GBMaps* inBoard) {
 }
 
 void testFunction1() {
-	GBMaps* gameBoard = new GBMaps(2, 'a');
+	GBMaps* gameBoard = new GBMaps(2, 'a', NULL);
 
 	for (int i = 0; i < 5; i++) {
 		HarvestTile* testHarvestTile = testDeck->draw();
 		//ROTATE METHODS TEST
 		//testHarvestTile -> RotateRight();
-		gameBoard->addHarvestTile(3, i+1, testHarvestTile, NULL);
+		gameBoard->addHarvestTile(3, i+1, testHarvestTile);
 	}
 	printGameBoard(gameBoard);
 
