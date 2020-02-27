@@ -4,8 +4,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
-#include "Resources.h"
-#include "GBMaps.h"
+#include "../tile/Resources.h"
+#include "../board/GBMaps.h"
 
 using namespace std;
 
@@ -58,3 +58,4 @@ public:
 };
 
 #endif /* player_h */
+

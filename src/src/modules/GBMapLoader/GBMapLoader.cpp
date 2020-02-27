@@ -1,6 +1,7 @@
 // GBMapLoader.cpp : Defines the functions for the static library.
 //
 
+/*
 #include "pch.h"
 #include <iostream>
 #include <fstream>
@@ -126,3 +127,4 @@ void GBMapSaver::save(GBMaps* inBoard, const char* inFilePath) {
 	outFile << dom.dump(2);
 	outFile.close();
 }
+*/

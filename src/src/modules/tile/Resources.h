@@ -9,27 +9,28 @@ class Tile {
 
 };
 
-class BuildingTile
-{
+class BuildingTile {
 private:
-
-	BuildingColorType _buildingColorType;
-	int _buildingNum;
-	BuildingStatus _buildingStatus;
-
+    BuildingColorType* _buildingColorType;
+    int* _buildingNum;
+    BuildingStatus* _buildingStatus;
+     
 public:
+    
+    BuildingTile();
+    BuildingTile(BuildingColorType* type, BuildingStatus* status);
+    BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s);
+    ~BuildingTile();
 
-	BuildingTile();
-	BuildingTile(BuildingColorType type, BuildingStatus status);
-	BuildingTile(BuildingColorType t, int n, BuildingStatus s);
-	~BuildingTile();
+    BuildingColorType getBuildingColorType();
+    BuildingStatus getSide();
+    int getBuildingNum();
+    void setBuildingNum(int num);
 
-	BuildingColorType getBuildingColorType();
-	BuildingStatus getSide();
-	int getBuildingNum();
-	void setBuildingNum(int num);
-	int generateBuildingNumber();
-	void flip();
+    void setBuildingStatus(BuildingStatus s);
+
+    int* generateBuildingNumber();
+    void flip();
 
 };
 

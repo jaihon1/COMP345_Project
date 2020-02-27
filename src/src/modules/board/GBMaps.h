@@ -2,8 +2,8 @@
 #define board_h
 
 #include<iostream>
-#include "Scoring.h"
-#include "Resources.h"
+#include "../Scoring/Scoring.h"
+#include "../tile/Resources.h"
 
 
 //enumerated class to give name to the status that a square could have
