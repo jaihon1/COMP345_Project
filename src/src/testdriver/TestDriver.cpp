@@ -64,9 +64,6 @@ void testFunction1() {
 		gameBoard->addHarvestTile(3, i+1, testHarvestTile);
 	}
 	printGameBoard(gameBoard);
-
-	
-
 }
 
 void testFunction2() {

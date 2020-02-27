@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <iostream>
+#include <vector>
 #include "Resources.h"
 #include "Dictionary.h"
+#include "../Scoring/Scoring.h"
 
 using namespace std;
 
@@ -310,7 +312,7 @@ void BuildingDeck::add(BuildingTile &tile) {
 
 
 void BuildingDeck::remove(BuildingTile &tile) {
-    //_deck -> erase(std::remove(_deck -> begin(), _deck -> end(), &tile), _deck -> end());
+   // _deck -> erase(std::remove(_deck -> begin(), _deck -> end(), &tile), _deck -> end());
 }
 
 
@@ -330,3 +332,24 @@ unsigned long BuildingDeck::getSize() {
     return _deck -> size();
 }
 
+Hand::Hand(Scoring* inSc) {
+	sc = inSc;
+	resourceScoreArr = new int[4] { 0, 0, 0, 0};
+}
+
+int* Hand::exchange()
+{
+	resourceScoreArr[static_cast<int>(ResourceName::Rock)] = sc->get_stone();
+	resourceScoreArr[static_cast<int>(ResourceName::Lumber)] = sc->get_lumber();
+	resourceScoreArr[static_cast<int>(ResourceName::Wheat)] = sc->get_wheat();
+	resourceScoreArr[static_cast<int>(ResourceName::Sheep)] = sc->get_sheep();
+
+	return resourceScoreArr;
+}
+
+void Hand::displayHand() {
+
+	for (int i = 0; i < 4; i++) {
+		cout << HarvestTile::ResourceNameToString(static_cast<ResourceName>(i)) << ": " << resourceScoreArr[i];
+	}
+}

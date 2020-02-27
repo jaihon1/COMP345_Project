@@ -8,13 +8,6 @@ enum class ResourceName {
     Wheat = 3
 };
 
-enum class ResourceName1 {
-    Lumber,
-    Rock,
-    Sheep,
-    Wheat
-};
-
 enum class TileStatus {
 	InHand,
 	InDeck,
