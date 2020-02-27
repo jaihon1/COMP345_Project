@@ -310,7 +310,7 @@ void BuildingDeck::add(BuildingTile &tile) {
 
 
 void BuildingDeck::remove(BuildingTile &tile) {
-   // _deck -> erase(std::remove(_deck -> begin(), _deck -> end(), &tile), _deck -> end());
+    //_deck -> erase(std::remove(_deck -> begin(), _deck -> end(), &tile), _deck -> end());
 }
 
 
