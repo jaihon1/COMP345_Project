@@ -1,8 +1,8 @@
 #include <cstdlib>
 #include <stdlib.h>
 #include <time.h>
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include "Resources.h"
 #include "Dictionary.h"
 #include "../Scoring/Scoring.h"
