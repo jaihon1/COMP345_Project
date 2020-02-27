@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <iostream>
-#include <vector>
+#include <algorithm>
 #include "Resources.h"
 #include "Dictionary.h"
 #include "../Scoring/Scoring.h"
@@ -312,7 +312,7 @@ void BuildingDeck::add(BuildingTile &tile) {
 
 
 void BuildingDeck::remove(BuildingTile &tile) {
-   // _deck -> erase(std::remove(_deck -> begin(), _deck -> end(), &tile), _deck -> end());
+    _deck -> erase(std::remove(_deck -> begin(), _deck -> end(), &tile), _deck -> end());
 }
 
 
