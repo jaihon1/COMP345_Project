@@ -2,6 +2,7 @@
 #include <iostream> 
 #include <list> 
 //#include "GBMaps.h"
+#include "../board/VGMaps.h"
 
 
 class Scoring
@@ -60,7 +61,7 @@ public:
 	int get_sheep();
 	int get_wheat();
 	int get_stone();
-	//int get_score(VGMap &vil);
+	int get_score(VGMaps &vil);
 	int get_res(int resv);
 	void display_res();
 };

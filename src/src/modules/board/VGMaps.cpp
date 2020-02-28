@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-#include "VGMaps.hpp"
+#include "VGMaps.h"
 using namespace std;
 using std::vector;
 
@@ -40,6 +40,16 @@ VGMaps::~VGMaps()
 VGSlotStatus VGMaps::getStatus(int row, int column)
 {
 	return village_board[row][column].VGstatus; 
+}
+
+bool VGMaps::isEmpty(int row, int column)
+{
+	return (village_board[row][column].VGstatus == VGSlotStatus::Empty);
+}
+
+bool VGMaps::isFlipped(int row, int column)
+{
+	return ((*village_board[row][column].building_ptr).getSide() == BuildingStatus::Flipped);
 }
 
 void VGMaps::setstate(bool state, bool given)

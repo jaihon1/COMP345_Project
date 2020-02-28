@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include "../modules/board/GBMaps.h"
+#include "../modules/board/VGMaps.h"
 #include "../modules/GBMapLoader/GBMapLoader.h"
 #include "../modules/tile/Dictionary.h"
 #include "../modules/scoring/Scoring.h"
@@ -77,7 +78,7 @@ void testFunction1() {
 	printGameBoard(gameBoard);
 }
 
-void testFunction2() {
+/*void testFunction2() {
 	GBMapLoader* testLoader = new GBMapLoader("C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testSave.json");
 
 	GBMapSaver* testSaver = new GBMapSaver();
@@ -85,6 +86,23 @@ void testFunction2() {
 	//testSaver->save(testLoader->getBoard(), "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testSave2.json");
 
 	printGameBoard(testLoader->getBoard());
+}*/
+
+void testFunction3() {
+	VGMaps* villageBoard = new VGMaps();
+	Scoring scobj;
+	scobj.reset_res();
+
+	for (int i = 0; i < 6; i++)
+		for (int j = 0; j < 5; j++)
+		{			
+			BuildingTile temp = BuildingTile(static_cast<BuildingColorType>(rand()%4), rand() % 6 + 1, static_cast<BuildingStatus>(0));
+			(*villageBoard).addNewBuildingTile(temp, i, j);
+		}
+
+	int score_temp = scobj.get_score(*villageBoard);
+	//villageBoard.display_village();
+	std::cout << "village score: " << score_temp << std::endl;
 }
 
 int main()
@@ -92,9 +110,12 @@ int main()
 	int hold;
 
 	//testFunction1();
-	testFunction2();
+	//testFunction2();
+	testFunction3();
 
-	cin >> hold;
+	system("pause");
+
+	//cin >> hold;
 
 	return 0;
 

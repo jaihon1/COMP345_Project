@@ -11,15 +11,18 @@ class Tile {
 
 class BuildingTile {
 private:
-    BuildingColorType* _buildingColorType;
-    int* _buildingNum;
-    BuildingStatus* _buildingStatus;
+	BuildingColorType buildingColorType;
+	int buildingNum;
+	BuildingStatus buildingStatus;
+    BuildingColorType* _buildingColorType = &buildingColorType;
+    int* _buildingNum = &buildingNum;
+    BuildingStatus* _buildingStatus = &buildingStatus;
      
-public:
-    
+public:    
     BuildingTile();
     BuildingTile(BuildingColorType* type, BuildingStatus* status);
     BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s);
+	BuildingTile(BuildingColorType t, int n, BuildingStatus s);
     ~BuildingTile();
 
     BuildingColorType getBuildingColorType();
