@@ -42,6 +42,10 @@ VGSlotStatus VGMaps::getStatus(int row, int column)
 	return village_board[row][column].VGstatus; 
 }
 
+void VGMaps::setStatus(int row, int column, VGSlotStatus inStatus) {
+	 village_board[row][column].VGstatus = inStatus;
+}
+
 void VGMaps::setstate(bool state, bool given)
 {
 	state = given; 

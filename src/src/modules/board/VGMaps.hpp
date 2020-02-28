@@ -35,6 +35,7 @@ public:
 
 
 	VGSlotStatus getStatus(int row, int column);
+	void setStatus(int row, int column, VGSlotStatus status);
 
 	VGSquare ** village_board; 
 
