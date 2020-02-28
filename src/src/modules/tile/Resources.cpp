@@ -1,11 +1,9 @@
 #include <cstdlib>
 #include <stdlib.h>
 #include <time.h>
-#include <algorithm>
 #include <iostream>
 #include "Resources.h"
 #include "Dictionary.h"
-#include "../Scoring/Scoring.h"
 
 using namespace std;
 
@@ -59,7 +57,10 @@ ResourceName HarvestTile::getResource(ResourceLocation inLocation)
 
 BuildingTile::BuildingTile()
 {
-    //
+	*_buildingColorType = BuildingColorType::None; 
+	*_buildingStatus = BuildingStatus::Normal; 
+	*_buildingNum = 0; 
+
     _firstBuilding = false;
 }
 
@@ -82,20 +83,28 @@ BuildingTile::BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s): _bu
     _firstBuilding = false;
 }
 
+BuildingTile::BuildingTile(const BuildingColorType t, const int n, const BuildingStatus s)
+{
+	*_buildingColorType = t; 
+	*_buildingNum = n; 
+	*_buildingStatus = s; 
+	_firstBuilding = false;
+}
+
 BuildingTile::~BuildingTile() {
     //do I need to code?
     //if the member variables dont go on the stack, make them dynamic objects and delete every
     //random to delete
     //delete _int
 
-//    cout << "in destr" << endl;
-//    delete _buildingColorType;
-//    _buildingColorType = NULL;
-//    delete _buildingStatus;
-//    _buildingStatus = NULL;
+    cout << "in destr" << endl;
+    delete _buildingColorType;
+    _buildingColorType = NULL;
+    delete _buildingStatus;
+    _buildingStatus = NULL;
 
-    //delete _buildingNum;
-    //_buildingNum = NULL;
+    delete _buildingNum;
+    _buildingNum = NULL;
 
 }
 
@@ -133,6 +142,11 @@ void BuildingTile::setBuildingStatus(BuildingStatus s)
     *_buildingStatus = s;
 }
 
+void BuildingTile::setBuildingColorType(BuildingColorType c)
+{
+	*_buildingColorType = c; 
+}
+
 void BuildingTile::flip() {
     if (getSide() == BuildingStatus::Normal) {
         setBuildingNum(-1);
@@ -142,7 +156,7 @@ void BuildingTile::flip() {
 
 }
 
-
+/*
 HarvestDeck::HarvestDeck()
 {
 	harvestDeck = new HarvestTile*[deckLength]{
@@ -331,25 +345,4 @@ BuildingTile* BuildingDeck::draw() {
 unsigned long BuildingDeck::getSize() {
     return _deck -> size();
 }
-
-Hand::Hand(Scoring* inSc) {
-	sc = inSc;
-	resourceScoreArr = new int[4] { 0, 0, 0, 0};
-}
-
-int* Hand::exchange()
-{
-	resourceScoreArr[static_cast<int>(ResourceName::Rock)] = sc->get_stone();
-	resourceScoreArr[static_cast<int>(ResourceName::Lumber)] = sc->get_lumber();
-	resourceScoreArr[static_cast<int>(ResourceName::Wheat)] = sc->get_wheat();
-	resourceScoreArr[static_cast<int>(ResourceName::Sheep)] = sc->get_sheep();
-
-	return resourceScoreArr;
-}
-
-void Hand::displayHand() {
-
-	for (int i = 0; i < 4; i++) {
-		cout << HarvestTile::ResourceNameToString(static_cast<ResourceName>(i)) << ": " << resourceScoreArr[i];
-	}
-}
+*/

@@ -1,3 +1,4 @@
+/*
 #include "player.h"
 #include <algorithm>
 
@@ -82,3 +83,4 @@ BuildingTile* Player::drawBuilding(BuildingDeck &deck) {
 unsigned long Player::getNumberOfBuildingTiles() {
     return _buildingTiles -> size();
 }
+*/ 

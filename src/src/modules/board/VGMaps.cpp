@@ -42,13 +42,13 @@ VGSlotStatus VGMaps::getStatus(int row, int column)
 	return village_board[row][column].VGstatus; 
 }
 
-void VGMaps::setStatus(int row, int column, VGSlotStatus inStatus) {
-	 village_board[row][column].VGstatus = inStatus;
-}
-
 void VGMaps::setstate(bool state, bool given)
 {
 	state = given; 
+}
+
+void VGMaps::setStatus(int row, int column, VGSlotStatus inStatus) {
+	village_board[row][column].VGstatus = inStatus;
 }
 
 vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
@@ -57,8 +57,14 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	//get the square where you are currently at
 
 	VGSquare current = village_board[r][c]; 
-	VGSquare unavailable; //declaration of a default constructor for VGSquare empty
+	VGSquare unavailable; 
+	//declaration of a default constructor for VGSquare empty
 	//to print to check if it actually works 
+
+	//initialization of an empty building tile 
+	unavailable.VGSquare_type = BuildingColorType::None; 
+	unavailable.VGstatus = VGSlotStatus::Unavailable; 
+	unavailable.building_ptr = NULL; //points to nothing cuz no building tile
 
 	//create iterator for insertion
 	vector <VGSquare>::iterator it; 
@@ -284,5 +290,10 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 	}
 
 
+}
+
+BuildingTile VGMaps::getBuildingTile(int r, int c)
+{
+	return *(village_board[r][c].building_ptr); 
 }
 

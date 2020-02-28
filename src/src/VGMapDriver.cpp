@@ -1,4 +1,4 @@
-
+/*
 #include "modules/board/VGMaps.hpp"
 #include "modules/tile/Resources.h"
 #include <string>
@@ -64,7 +64,7 @@ int main()
 
 //main for VGMaps
 
-/**/
+/*
 int main()
 {
 	//test 
@@ -118,8 +118,9 @@ int main()
 			{
 				string color = colortype_to_string(check2); 
 				cout << color; 
-			}	
-			*/
+			}
+		
+			
 		}
 		cout << "\n";
 		cout << "=====================================" << endl;
@@ -169,7 +170,7 @@ int main()
 				string color = colortype_to_string(check2);
 				cout << color;
 			}
-			*/
+			
 		}
 		cout << "\n";
 		cout << "=============================================" << endl;
@@ -178,4 +179,4 @@ int main()
 
 	return 0; 
 }
-
+*/

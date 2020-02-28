@@ -3,11 +3,19 @@
 #include "../modules/board/GBMaps.h"
 #include "../modules/GBMapLoader/GBMapLoader.h"
 #include "../modules/tile/Dictionary.h"
+#include "../modules/scoring/Scoring.h"
 #include "../modules/tile/Resources.h"
+
 
 using namespace std;
 
 HarvestDeck* testDeck = new HarvestDeck();
+
+void printHarvestTile(HarvestTile* inHarvestTile) {
+	cout << "\n";
+	
+	
+}
 
 const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
 	switch (inSquareStatus) {
@@ -55,7 +63,9 @@ void printGameBoard(GBMaps* inBoard) {
 }
 
 void testFunction1() {
-	GBMaps* gameBoard = new GBMaps(2, 'a', NULL);
+	GBMaps* gameBoard = new GBMaps(2, 'a');
+	Scoring scobj;
+	scobj.reset_res();
 
 	for (int i = 0; i < 5; i++) {
 		HarvestTile* testHarvestTile = testDeck->draw();
@@ -63,6 +73,7 @@ void testFunction1() {
 		//testHarvestTile -> RotateRight();
 		gameBoard->addHarvestTile(3, i+1, testHarvestTile);
 	}
+
 	printGameBoard(gameBoard);
 }
 
@@ -82,6 +93,7 @@ int main()
 
 	//testFunction1();
 	testFunction2();
+
 	cin >> hold;
 
 	return 0;

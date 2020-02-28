@@ -6,7 +6,7 @@
 using std::vector; 
 
 struct VGSquare{ //why struct? 
-	VGSlotStatus VGstatus;
+	VGSlotStatus VGstatus; 
 	BuildingTile *building_ptr; 
 	BuildingColorType VGSquare_type;  //same as buildingtype 
 
@@ -35,7 +35,6 @@ public:
 
 
 	VGSlotStatus getStatus(int row, int column);
-	void setStatus(int row, int column, VGSlotStatus status);
 
 	VGSquare ** village_board; 
 
@@ -44,13 +43,17 @@ public:
 	bool getRedLumberPlaced() { return RedLumberPlaced;  }
 	bool getYellowHayPlaced() { return YellowHayPlaced;  }
 
-	void setstate(bool state, bool given); 
+	void setstate(bool state, bool given);
+	void setStatus(int row, int column, VGSlotStatus inStatus);
+
 
 	//void flipIndexes(); //function you call to flip the indexes inside the village board -> update: dont need cuz it doesnt affect the game
 
 	vector <VGSquare> checkConnectionsOfSlot(BuildingTile t, int r, int c); 
 
 	void addNewBuildingTile(BuildingTile t, int r, int c); 
+
+	BuildingTile getBuildingTile(int r, int c); 
 
 };
 

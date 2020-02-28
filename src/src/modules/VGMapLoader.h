@@ -1,6 +1,7 @@
 
 #pragma once
-#include "../board/VGMaps.hpp"
+#include "board/VGMaps.hpp"
+
 #include <map>
 #include <string>
 using namespace std;
@@ -19,8 +20,7 @@ private:
 			this->operator[]("Unavailable") = VGSlotStatus::Unavailable;
 		}
 
-		//Damian: forgot the tilde symbol in front of the destructor
-		~statusVGMap() {}; 
+		statusVGMap() {}; 
 	};
 
 	struct buildingMap : public map<string, BuildingColorType>
@@ -30,26 +30,10 @@ private:
 			this->operator[]("GreyRock") = BuildingColorType::GreyRock;
 			this->operator[]("RedLumber") = BuildingColorType::RedLumber;
 			this->operator[]("YellowHay") = BuildingColorType::YellowHay;
-			/* 
-			Damian:
-			I looked in your VGMaps and saw that you had a none type which wasn't included in your map
-			*/
 			this->operator[]("None") = BuildingColorType::None;
 		}
-
-		~buildingMap() {}; 
-	};
-
-	//Had to define a map for building status
-	struct buildingStatusMap : public map<string, BuildingStatus>
-	{
-		buildingStatusMap() {
-			this->operator[]("Normal") = BuildingStatus::Normal;
-			this->operator[]("Flipped") = BuildingStatus::Flipped;
-		}
-
-		//Damian: forgot the tilde symbol in front of the destructor
-		~buildingStatusMap();
+	
+		buildingMap() {}; 
 	};
 
 public:
@@ -59,6 +43,15 @@ public:
 
 	~VGMapLoader();
 
-	VGMaps * getBoard(); 
+	VGMaps * getBoard();
+
+};
+
+class VGMapSaver {
+public: 
+	void save(VGMaps * inGame, const char * inFilePath);
+
+private: 
+	ofstream outFile; 
 };
 
