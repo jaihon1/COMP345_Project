@@ -55,7 +55,11 @@ public:
 
 	void addNewBuildingTile(BuildingTile t, int r, int c); 
 
-	BuildingTile getBuildingTile(int r, int c); 
+	BuildingTile getBuildingTile(int r, int c);
+	
+	
+	void printVGMap();
+
 
 };
 

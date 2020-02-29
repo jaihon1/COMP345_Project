@@ -7,6 +7,7 @@
 #include <stdlib.h>
 using namespace std; 
 
+/*
 string status_to_string(VGSlotStatus s)
 {
 	switch (s)
@@ -37,6 +38,8 @@ string colortype_to_string(BuildingColorType c)
 		return "None"; 
 	}
 }
+*/ 
+
 /* building Tile test
 int main()
 {
@@ -63,10 +66,17 @@ int main()
 */
 
 //main for VGMaps
-
-
 int main()
 {
+
+	/*
+	int i = 99; 
+	int* p = &i; 
+	cout << &i << endl; 
+	cout << *p << endl; 
+	cout << &p << endl; 
+	*/
+
 	//test 
 	VGMaps *v = new VGMaps();
 	//VGMaps* v =  &VGMaps();
@@ -98,7 +108,7 @@ int main()
 	//give an example of VGMaps filled 
 	*/
 	
-
+	/*
 	for (int i = 0; i < ro; i++)
 	{
 		for (int j = 0; j < co; j++)
@@ -115,6 +125,11 @@ int main()
 		cout << "=====================================" << endl;
 	}
 	cout << "created VGMap" << endl;
+
+	*/ 
+
+	v->printVGMap(); 
+
 
 	cout << "\n"; 
 	cout << "Adding Building Tile" << endl; 
@@ -149,6 +164,7 @@ int main()
 	cout << "\n"; 
 	cout << "Current MAP" << endl; 
 	
+	/*
 	for (int i = 0; i < ro; i++)
 	{
 		for (int j = 0; j < co; j++)
@@ -165,6 +181,9 @@ int main()
 		cout << "\n";
 		cout << "=============================================" << endl;
 	}
+	*/ 
+
+	v->printVGMap(); 
 
 	BuildingColorType * type2 = new BuildingColorType(BuildingColorType::GreenSheep);
 	BuildingStatus *status2 = new BuildingStatus(BuildingStatus::Normal);

@@ -1,11 +1,42 @@
 #include <stdio.h>
 #include <iostream>
-#include <vector>
-
+#include <string>
+#include <ostream>
+#include <stdlib.h>
 #include "VGMaps.hpp"
 using namespace std;
 using std::vector;
 
+string status_to_string(VGSlotStatus s)
+{
+	switch (s)
+	{
+	case VGSlotStatus::Empty:
+		return "Empty";
+	case VGSlotStatus::Taken:
+		return "Taken";
+	case VGSlotStatus::Unavailable:
+		return "Unavailable";
+	}
+
+}
+
+string colortype_to_string(BuildingColorType c)
+{
+	switch (c)
+	{
+	case BuildingColorType::GreenSheep:
+		return "GreenSheep";
+	case BuildingColorType::GreyRock:
+		return "GreyRock";
+	case BuildingColorType::RedLumber:
+		return "RedLumber";
+	case BuildingColorType::YellowHay:
+		return "YellowHay";
+	case BuildingColorType::None:
+		return "None";
+	}
+}
 
 VGMaps::VGMaps()
 {
@@ -386,6 +417,29 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 BuildingTile VGMaps::getBuildingTile(int r, int c)
 {
 	return *(village_board[r][c].building_ptr); 
+}
+
+void VGMaps::printVGMap()
+{
+	int ro = *rows;
+	int co = *columns; 
+
+	for (int i = 0; i < ro; i++)
+	{
+		for (int j = 0; j < co; j++)
+		{
+			//VGSquare *s = v->village_board[i]; 
+			//VGSlotStatus check = v->village_board[i][j].VGstatus; 
+			//cout << status_to_string(check); 
+
+			BuildingColorType check2 = this->village_board[i][j].VGSquare_type;
+			cout << colortype_to_string(check2) << "   ";
+
+		}
+		cout << "\n";
+		cout << "=====================================" << endl;
+	}
+
 }
 
 
