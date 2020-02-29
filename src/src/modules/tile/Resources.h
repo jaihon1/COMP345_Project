@@ -11,12 +11,24 @@ class Tile {
 
 class BuildingTile {
 private:
+	/*
 	BuildingColorType* _buildingColorType;
 	int* _buildingNum;
 	BuildingStatus* _buildingStatus;
+	*/ 
+
+	//constructor for the attributes to allocate memory slot
+	BuildingColorType buildingColorType;
+	int buildingNum;
+	BuildingStatus buildingStatus;
+
+	//allocate memory
+	BuildingColorType* _buildingColorType = &buildingColorType;
+	int* _buildingNum = &buildingNum;
+	BuildingStatus *_buildingStatus = &buildingStatus;
+	
 
 public:
-
 	BuildingTile();
 	BuildingTile(BuildingColorType* type, BuildingStatus* status);
 	BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s);
@@ -35,6 +47,11 @@ public:
 
 	int* generateBuildingNumber();
 	void flip();
+
+	void deepCopy(const BuildingTile &t); 
+
+	//Deep copy constructor 
+	BuildingTile(const BuildingTile &t);
 
 	//methods for map Loader 
 	static const char* Building_typeToChar(BuildingColorType b)

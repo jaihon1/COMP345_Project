@@ -10,6 +10,7 @@ struct VGSquare{ //why struct?
 	BuildingTile *building_ptr; 
 	BuildingColorType VGSquare_type;  //same as buildingtype 
 
+	//void deepCopy_square(const VGSquare & v); 
 }; 
 
 class VGMaps{
@@ -38,12 +39,13 @@ public:
 
 	VGSquare ** village_board; 
 
+	//useless?
 	bool getGreenSheepPlaced() { return GreenSheepPlaced; }
 	bool getGreyRockPlaced() { return GreyRockPlaced;  }
 	bool getRedLumberPlaced() { return RedLumberPlaced;  }
 	bool getYellowHayPlaced() { return YellowHayPlaced;  }
 
-	void setstate(bool state, bool given);
+
 	void setStatus(int row, int column, VGSlotStatus inStatus);
 
 

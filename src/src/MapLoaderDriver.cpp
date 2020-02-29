@@ -1,3 +1,4 @@
+/*
 #include "modules/VGMapLoader.h"
 #include "modules/board/VGMaps.hpp"
 #include "modules/tile/Resources.h"
@@ -75,7 +76,7 @@ int main()
 				cout << color;
 			}
 			*/
-
+/**
 		}
 		cout << "\n";
 		cout << "=====================================" << endl;
@@ -88,3 +89,4 @@ int main()
 
 	return 0; 
 }
+*/

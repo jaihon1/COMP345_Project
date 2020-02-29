@@ -1,4 +1,4 @@
-
+/*
 #include "VGMapLoader.h"
 #include <iostream>
 #include <fstream>
@@ -61,7 +61,7 @@ VGMapLoader::VGMapLoader(const char * inFile)
 				auto const b_side = &bMap[*b_ptr->find("side")];
 				auto const b_num = &bMap[*b_ptr->find("num")]; 
 				*/ 
-
+/*
 				BuildingColorType c = b_ptr[0].get<BuildingColorType>(); 
 				BuildingStatus s = b_ptr[1].get<BuildingStatus>(); 
 				int  n = b_ptr[2].get<int>(); 
@@ -98,7 +98,7 @@ VGMapLoader::VGMapLoader(const char * inFile)
 				*/
 				// board->setStatus(row, column, VGSlotStatus::Empty);
 
-
+/*
 				//make this area empty
 				board->village_board[row][column].VGstatus == VGSlotStatus::Empty; 
 				board->village_board[row][column].VGSquare_type == BuildingColorType::None; 
@@ -199,3 +199,4 @@ void VGMapSaver::save(VGMaps * inGame, const char * inFilePath)
 	}
 }
 
+*/

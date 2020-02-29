@@ -57,9 +57,9 @@ ResourceName HarvestTile::getResource(ResourceLocation inLocation)
 
 BuildingTile::BuildingTile()
 {
-	*_buildingColorType = BuildingColorType::None; 
-	*_buildingStatus = BuildingStatus::Normal; 
-	*_buildingNum = 0; 
+	//*_buildingColorType = BuildingColorType::None; 
+	//*_buildingStatus = BuildingStatus::Normal; 
+	//*_buildingNum = 0; 
 
     _firstBuilding = false;
 }
@@ -153,6 +153,49 @@ void BuildingTile::flip() {
         setBuildingStatus(BuildingStatus::Flipped);
     }
     //cannot flip back
+
+}
+
+void BuildingTile::deepCopy(const BuildingTile & t)
+{
+	delete _buildingColorType; 
+
+	if (t._buildingColorType)
+	{
+		_buildingColorType = new BuildingColorType(*t._buildingColorType); 
+	}
+	else
+	{
+		_buildingColorType = nullptr; 
+	}
+
+	delete _buildingNum; 
+
+	if (t._buildingNum)
+	{
+		_buildingNum = new int(*t._buildingNum);
+	}
+	else
+	{
+		_buildingNum = nullptr; 
+	}
+
+	delete _buildingStatus; 
+
+	if (t._buildingStatus)
+	{
+		_buildingStatus = new BuildingStatus(*t._buildingStatus); 
+
+	}
+	else
+	{
+		_buildingStatus = nullptr; 
+	}
+}
+
+BuildingTile::BuildingTile(const BuildingTile & t) : _buildingColorType{ nullptr }, _buildingNum{ nullptr }, _buildingStatus{nullptr}
+{
+	deepCopy(t); 
 
 }
 

@@ -1,4 +1,4 @@
-
+/*
 #pragma once
 #include "board/VGMaps.hpp"
 
@@ -54,4 +54,4 @@ public:
 private: 
 	ofstream outFile; 
 };
-
+*/
