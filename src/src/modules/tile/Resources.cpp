@@ -3,6 +3,7 @@
 #include <time.h>
 #include <algorithm>
 #include <iostream>
+#include <algorithm>
 #include "Resources.h"
 #include "Dictionary.h"
 #include "../Scoring/Scoring.h"
@@ -80,6 +81,13 @@ BuildingTile::BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s): _bu
     _buildingStatus = s;
     */
     _firstBuilding = false;
+}
+
+BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
+{
+	*_buildingColorType = t;
+	*_buildingNum = n;
+	*_buildingStatus = s;
 }
 
 BuildingTile::~BuildingTile() {
