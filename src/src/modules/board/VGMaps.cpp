@@ -44,6 +44,7 @@ VGSlotStatus VGMaps::getStatus(int row, int column)
 
 bool VGMaps::isEmpty(int row, int column)
 {
+	//std::cout << row << column << " " << static_cast<int>(village_board[row][column].VGstatus) << std::endl;
 	return (village_board[row][column].VGstatus == VGSlotStatus::Empty);
 }
 
@@ -290,5 +291,16 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 	}
 
 
+}
+
+void VGMaps::print()
+{
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 5; j++)
+		{
+			std::cout << static_cast<int>(village_board[i][j].VGSquare_type) << " ";
+		}
+		std::cout << std::endl;
+	}
 }
 

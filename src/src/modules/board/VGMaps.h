@@ -52,6 +52,6 @@ public:
 	vector <VGSquare> checkConnectionsOfSlot(BuildingTile t, int r, int c); 
 
 	void addNewBuildingTile(BuildingTile t, int r, int c); 
-
+	void print();
 };
 

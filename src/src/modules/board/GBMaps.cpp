@@ -143,9 +143,7 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 int GBMaps::map(int index)
 {
 	int row = index/28;
-	int column = (index%14)/2;
-	int test;
-	//HarvestTile temp = *getHarvestTile(row, column);
+	int column = (index%14)/2;	
 
 	int pos = index % 28;
 	if (pos > 14)
@@ -153,7 +151,7 @@ int GBMaps::map(int index)
 	else
 		pos = pos % 2;
 	//std::cout << row << " " << column << " " << index << " " <<pos << std::endl;
-	//std::cin >> test;
+	//HarvestTile *temp = getHarvestTile(row, column);
 	int result = static_cast<int>((*getHarvestTile(row, column)).getResource(static_cast<ResourceLocation>(pos)));
 	return result;
 }
@@ -175,23 +173,25 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr, S
 		for (int i = 0; i < 4; i++)
 		{
 			int next = index[i] - 1;
-			if ((index[i] %board_length != 0) && (board[next/28][(next%14) / 2].status != GBSquareStatus::Empty) && (map(index[i]) == map(next)))
+			if ((index[i] %board_length != 0) && (board[next/28][(next%14) / 2].status == GBSquareStatus::HarvestTile) && (map(index[i]) == map(next)))
 				sc.addEdge(index[i], next);
 			next = index[i] + 1;
-			if (((index[i] + 1) % board_length != 0) && (board[next/28][(next%14) / 2].status != GBSquareStatus::Empty) && (map(index[i]) == map(next)))
+			if (((index[i] + 1) % board_length != 0) && (board[next/28][(next%14) / 2].status == GBSquareStatus::HarvestTile) && (map(index[i]) == map(next)))
 				sc.addEdge(index[i], next);
 			next = index[i] - board_length;
-			if ((index[i] >= board_length) && (board[next/28][(next%14) / 2].status != GBSquareStatus::Empty)&& (map(index[i]) == map(next)))
+			if ((index[i] >= board_length) && (board[next/28][(next%14) / 2].status == GBSquareStatus::HarvestTile)&& (map(index[i]) == map(next)))
 				sc.addEdge(index[i], next);
 			next = index[i] + board_length;
-			if ((index[i]< max_tile - board_length) && (board[next/28][(next%14) / 2].status != GBSquareStatus::Empty) && (map(index[i]) == map(next)))
+			if ((index[i]< max_tile - board_length) && (board[next/28][(next%14) / 2].status == GBSquareStatus::HarvestTile) && (map(index[i]) == map(next)))
 				sc.addEdge(index[i], next);
 		}		
-		static int res[4] = { 
+		int res[4] = { 
 			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topLeft)),
 			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topRight)),
 			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomLeft)),
 			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomRight)) };
+		for (int i = 0; i < 4; i++)
+			std::cout << res[i] << std::endl;
 		sc.update_res(index, res);
 
 		return 1;

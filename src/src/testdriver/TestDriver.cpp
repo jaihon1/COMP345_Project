@@ -72,7 +72,8 @@ void testFunction1() {
 		HarvestTile* testHarvestTile = testDeck->draw();
 		//ROTATE METHODS TEST
 		//testHarvestTile -> RotateRight();
-		gameBoard->addHarvestTile(3, i+1, testHarvestTile);
+		gameBoard->addHarvestTile(3, i+1, testHarvestTile, scobj);
+		scobj.display_res();
 	}
 
 	printGameBoard(gameBoard);
@@ -96,10 +97,11 @@ void testFunction3() {
 	for (int i = 0; i < 6; i++)
 		for (int j = 0; j < 5; j++)
 		{			
-			BuildingTile temp = BuildingTile(static_cast<BuildingColorType>(rand()%4), rand() % 6 + 1, static_cast<BuildingStatus>(0));
+			BuildingTile temp = BuildingTile(static_cast<BuildingColorType>(rand()%4+1), rand() % 6 + 1, static_cast<BuildingStatus>(0));
 			(*villageBoard).addNewBuildingTile(temp, i, j);
 		}
 
+	(*villageBoard).print();
 	int score_temp = scobj.get_score(*villageBoard);
 	//villageBoard.display_village();
 	std::cout << "village score: " << score_temp << std::endl;
