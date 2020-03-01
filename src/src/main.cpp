@@ -1,31 +1,38 @@
 #include <iostream>
-#include <fstream>
 #include "player.h"
 #include "Dictionary.h"
 #include "GBMaps.h"
 
 using namespace std;
 
-
 int main(int argc, const char * argv[]) {
         
+    // Initializing variables
+    Player bob;
+    GBMaps map(4, 'b');
     BuildingDeck buildingDeck;
     HarvestDeck harvestDeck;
-    Player bob;
-   
-    cout << "Deck size: " << buildingDeck.getSize() << endl;
-    cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
-    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl;
-    cout << "Deck size: " << buildingDeck.getSize() << endl;
-    cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
-    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl;
     
+    cout << "--- TESTING DRAW FUNCTIONS --- " << endl << endl;
+    bob.ressourceTracker();
+    
+    // Drawing items from Building Deck
+    cout << "Deck size: " << buildingDeck.getSize() << endl;
+    cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
+    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl;
+    cout << "Deck size: " << buildingDeck.getSize() << endl;
+    cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
+    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl << endl;
+    
+    // Drawing items from Harvest Deck
     cout << "H Deck size: " << harvestDeck.getSize() << endl;
     cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
     cout << "Draw from HarvestDeck: " <<  bob.drawHarvestTile(harvestDeck) << endl;
     cout << "H Deck size: " << harvestDeck.getSize() << endl;
     cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
-    cout << "Draw from HarvestDeck: " <<  bob.drawHarvestTile(harvestDeck) << endl;
+    cout << "Draw from HarvestDeck: " <<  bob.drawHarvestTile(harvestDeck) << endl << endl;
+    
+    bob.ressourceTracker();
     
 
 }
