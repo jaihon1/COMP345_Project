@@ -85,18 +85,14 @@ public:
 	}
 
 	//methods for map Loader 
-	static char * Building_intToChar(int i)
+	static string Building_intToChar(int i) 
 	{
-		char digits[] = { '1', '2', '3', '4', '5', '6' };
-		char aChar = digits[i];
+		string digits[] = { "1", "2", "3", "4", "5", "6" };
+		//char *aChar = new char(); 
 
-		return &aChar; 
-
+		string aChar = digits[--i];
+		return aChar; //returning the value assigned to the pointer 
 	}
-
-
-
-
 };
 
 	class HarvestTile :

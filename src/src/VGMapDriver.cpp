@@ -105,7 +105,7 @@ int main()
 		}
 	}
 	
-	//Testing Scoring 
+	//Testing Scoring -> to come back to 
 	/*
 	VGMaps* villageBoard = new VGMaps();
 	Scoring scobj;
@@ -126,7 +126,7 @@ int main()
 	std::cout << "village score: " << score_temp << std::endl;
 	*/ 
 
-	/* TESTING WITHOUT BUILDINGTILE ON HEAP
+	/* TESTING WITHOUT BUILDING TILE ON HEAP
 	for (int i = 0; i < 6; i++)
 	{
 		for (int j = 0; j < 5; j++)
