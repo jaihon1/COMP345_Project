@@ -5,6 +5,7 @@
 #include "../modules/tile/Dictionary.h"
 #include "../modules/tile/Resources.h"
 #include "../modules/Scoring/Scoring.h"
+#include "../modules/player/player.h"
 
 using namespace std;
 
@@ -159,6 +160,42 @@ void gbMapsTest() {
 		}
 }
 
+void playerTest() {
+    // Initializing variables
+    Player bob;
+//    GBMaps map(4, 'b');
+    BuildingDeck buildingDeck;
+    HarvestDeck harvestDeck;
+    HarvestTile harvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber);
+    
+    // Get status of resources
+    bob.ressourceTracker();
+    
+    // Drawing items from Building Deck
+    cout << "BuildingDeck size: " << buildingDeck.getSize() << endl;
+    cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
+    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl;
+    cout << "Deck size: " << buildingDeck.getSize() << endl;
+    cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
+    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl << endl;
+    
+    // Drawing items from Harvest Deck
+    cout << "HarvestDeck size: " << harvestDeck.getSize() << endl;
+    cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
+    cout << "Draw from HarvestDeck: " <<  bob.drawHarvestTile(harvestDeck) << endl;
+    cout << "H Deck size: " << harvestDeck.getSize() << endl;
+    cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
+    cout << "Draw from HarvestDeck: " <<  bob.drawHarvestTile(harvestDeck) << endl << endl;
+    
+    // Get status of resources
+    bob.ressourceTracker();
+    
+    // Placing a Harvest Tile
+//    cout << "Placing Harvest Tile: " << endl;
+//    bob.placeHarvestTile(0, 0, harvestTile, map);
+
+}
+
 void runGame(GBMaps* gameBoard) {
 
 	printGameBoard(gameBoard);
@@ -262,7 +299,11 @@ int main()
 		case 3:
 			playGBMaps();
 			break;
+		case 4:
+			playerTest();
+			break;
 		}
+		
 		menuOptions();
 		cin >> quit;
 	}
