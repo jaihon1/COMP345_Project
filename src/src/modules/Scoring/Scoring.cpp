@@ -1,5 +1,7 @@
-#include "Scoring.h"
 
+#include "../tile/Resources.h"
+#include "../board/GBMaps.h"
+#include "Scoring.h"
 
 Scoring::Scoring()
 {
@@ -252,3 +254,55 @@ void Scoring::Graph::addEdge(int v, int w)
 	adj[w].push_back(v);
 }
 /*********************Nested Graph******************/
+
+
+int Scoring::map(int index, GBMaps* inHarvestBoard)
+{
+	int row = index / 28;
+	int column = (index % 14) / 2;
+	//HarvestTile temp = *getHarvestTile(row, column);
+
+	int pos = index % 28;
+	if (pos > 14)
+		pos = pos % 2 + 2;
+	else
+		pos = pos % 2;
+	//std::cout << row << " " << column << " " << index << " " <<pos << std::endl;
+	//std::cin >> test;
+	int result = -1;
+	if (inHarvestBoard->getSquareStatus(row, column) == GBSquareStatus::HarvestTile) {
+		result = static_cast<int>((inHarvestBoard->getHarvestTile(row, column))->getResource(static_cast<ResourceLocation>(pos)));
+	}
+	return result;
+}
+
+void Scoring::computeResources(int row, int column, HarvestTile* inHarvestTilePtr, GBMaps* inHarvestBoard) {
+	int board_length = 14;
+	int max_tile = 196;
+
+	reset_res();
+	int topleft = row * 28 + column * 2;
+	ptrdiff_t index[4] = { topleft, topleft + 1, topleft + 14, topleft + 15 };
+
+	for (int i = 0; i < 4; i++)
+	{
+		int next = index[i] - 1;
+		if ((index[i] % board_length != 0) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) == GBSquareStatus::HarvestTile) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
+			addEdge(index[i], next);
+		next = index[i] + 1;
+		if (((index[i] + 1) % board_length != 0) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) == GBSquareStatus::HarvestTile) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
+			addEdge(index[i], next);
+		next = index[i] - board_length;
+		if ((index[i] >= board_length) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) == GBSquareStatus::HarvestTile) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
+			addEdge(index[i], next);
+		next = index[i] + board_length;
+		if ((index[i] < max_tile - board_length) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) == GBSquareStatus::HarvestTile) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
+			addEdge(index[i], next);
+	}
+	int res[4] = {
+		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topLeft)),
+		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topRight)),
+		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomLeft)),
+		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomRight)) };
+	update_res(index, res);
+}

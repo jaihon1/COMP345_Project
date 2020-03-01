@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "Dictionary.h"
+class Scoring;
 
 using namespace std;
 
@@ -104,6 +105,17 @@ public:
     void add(BuildingTile &tile);
     void remove(BuildingTile &tile);
 
+};
+
+class Hand {
+private:
+	Scoring* sc;
+	int* resourceScoreArr;
+
+public:
+	Hand(Scoring* sc);
+	int* exchange();
+	void displayHand();
 };
 
 

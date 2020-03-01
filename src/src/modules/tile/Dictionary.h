@@ -2,17 +2,10 @@
 #define Dictionary_h
 
 enum class ResourceName {
-    Lumber = 0,
-    Rock = 1,
-    Sheep = 2,
-    Wheat = 3
-};
-
-enum class ResourceName1 {
-    Lumber,
-    Rock,
-    Sheep,
-    Wheat
+    Lumber = 1,
+    Rock = 2,
+    Sheep = 3,
+    Wheat = 4
 };
 
 enum class TileStatus {
