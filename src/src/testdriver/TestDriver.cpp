@@ -120,30 +120,37 @@ void gbMapsTest() {
 		printGameBoard(gameBoard);
 		cout << endl;
 
-		int quit ;
+		int quit;
 		int row;
 		int column;
 
 		cout << "Would you like to add a harvest tile? Press 1 to continue. To quit, press 0. ";
 		cin >> quit;
+		HarvestTile* testHarvestTile;
 		while (quit != 0) {
-
-			HarvestTile* testHarvestTile = testDeck->draw();
-			cout << "Where would you like to place the tile?\n" << "row: ";
-			cin >> row;
-			cout << "column: ";
-			cin >> column;
-			cout << endl;
-			gameBoard->addHarvestTile(row, column, testHarvestTile);
-			printGameBoard(gameBoard);
-			cout << endl;
+			
+			switch (quit) {
+			case 1:
+				testHarvestTile = testDeck->draw();
+				cout << "Where would you like to place the tile?\n" << "row: ";
+				cin >> row;
+				cout << "column: ";
+				cin >> column;
+				cout << endl;
+				gameBoard->addHarvestTile(row, column, testHarvestTile);
+				printGameBoard(gameBoard);
+				cout << endl;
+				break;
+			case 2:
+				sc->display_res();
+				break;
+			default:
+				cout << "Sorry invalid input." << endl;
+				break;
+			}
 			cout << "To place another tile, Press 1.  To see resource list press 2. Otherwise to quit press 0. ";
 			cin >> quit;
-			if (quit == 2) {
-				sc->display_res();
-				cout << "To place another tile, Press 1.  To see resource list press 2. Otherwise to quit press 0. ";
-			}
-
+			cout << endl;
 		}
 }
 
