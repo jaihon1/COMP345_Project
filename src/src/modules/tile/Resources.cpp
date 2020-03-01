@@ -15,20 +15,20 @@ static bool _firstBuilding = true;
 
 HarvestTile::HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, ResourceName bottomLeftRes, ResourceName bottomRightRes)
 {
-	cout << "Creating HarvestTile with Main: " << this << endl;
+	
 	resourceArr = new ResourceName[4] {topLeftRes, topRightRes, bottomLeftRes, bottomRightRes};
 }
 
 HarvestTile::HarvestTile(const HarvestTile &harvestTile) {
-    cout << "Creating HarvestTile with copy: " << this << endl;
+    
     resourceArr = harvestTile.resourceArr;
 }
 
 HarvestTile::~HarvestTile() {
-    cout << "Deleting HarvestTile with address: " << this << endl;
+   
 	delete[] resourceArr;
     resourceArr = nullptr;
-    cout << "DONE" << endl;
+    
 }
 
 void HarvestTile::RotateLeft()

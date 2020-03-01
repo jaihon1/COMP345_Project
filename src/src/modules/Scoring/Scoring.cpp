@@ -269,7 +269,10 @@ int Scoring::map(int index, GBMaps* inHarvestBoard)
 		pos = pos % 2;
 	//std::cout << row << " " << column << " " << index << " " <<pos << std::endl;
 	//std::cin >> test;
-	int result = static_cast<int>((inHarvestBoard->getHarvestTile(row, column))->getResource(static_cast<ResourceLocation>(pos)));
+	int result = -1;
+	if (inHarvestBoard->getSquareStatus(row, column) == GBSquareStatus::HarvestTile) {
+		result = static_cast<int>((inHarvestBoard->getHarvestTile(row, column))->getResource(static_cast<ResourceLocation>(pos)));
+	}
 	return result;
 }
 
