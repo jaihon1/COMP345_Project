@@ -80,14 +80,16 @@ void harvestTileTest() {
 	
 		HarvestTile* testHarvestTile = testDeck->draw();
 		printHarvestTile(testHarvestTile);
+		cout << endl;
 		char yesNo;
 		char rotate;
-		cout << "Would you like to rotate the tile? y/n "<<endl;
+		cout << "Would you like to rotate the tile? y/n ";
 		cin >> yesNo;
 		//ROTATE METHODS TEST
 		while (yesNo == 'y') {
 			cout << "Right = r, Left = l: ";
 			cin >> rotate;
+			cout << endl;
 			switch (rotate) {
 			case 'r':
 				testHarvestTile->RotateRight();
@@ -100,7 +102,7 @@ void harvestTileTest() {
 				break;
 			}
 			printHarvestTile(testHarvestTile);
-			cout << "Again? y/n ";
+			cout << endl << "Again? y/n ";
 			cin >> yesNo;
 		}
 	
@@ -278,17 +280,18 @@ void playGBMaps() {
 
 
 void menuOptions() {
-	cout << "1 - GBMaps Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "Which test would you like to run? ";
+	cout << "1 - GBMaps Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "0 - Exit" << endl << endl <<"Which test would you like to run? ";
 }
 
 int main()
 {
 	int menuOption;
-	int quit = 1;
 	menuOptions();
 	cin >> menuOption;
+	
 
-	while (quit != 0) {
+	while (menuOption != 0) {
+		cout << endl;
 		switch (menuOption) {
 		case 1:
 			gbMapsTest();
@@ -303,9 +306,9 @@ int main()
 			playerTest();
 			break;
 		}
-		
+		cout << endl;
 		menuOptions();
-		cin >> quit;
+		cin >> menuOption;
 	}
 }
 
