@@ -1,27 +1,32 @@
 #include <stdio.h>
-#include "VGMaps.hpp"
-
 #include <iostream>
-using namespace std; 
+#include <vector>
+
+#include "VGMaps.h"
+using namespace std;
+using std::vector;
 
 
 VGMaps::VGMaps()
 {
-	village_board[*rows];
+	village_board = new VGSquare*[*rows];
 
 	for (int i = 0; i < *rows; i++)
 	{
-		village_board[*columns];  
+		village_board[i] = new VGSquare[*columns];  
 
-		//initialized the current 2D array
+		//initialized the current 2D array, might have to do outside 
 		for (int j = 0; j < *columns; j++)
 		{
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
+			//for now for testing
+			village_board[i][j].VGSquare_type = BuildingColorType::None; 
+			
 		}
 	}
 }
 
-//I do not think we need
+//I do not think we need, 
 VGMaps::~VGMaps()
 {
 	for (int i = 0; i < *rows; i++)
@@ -37,64 +42,83 @@ VGSlotStatus VGMaps::getStatus(int row, int column)
 	return village_board[row][column].VGstatus; 
 }
 
+bool VGMaps::isEmpty(int row, int column)
+{
+	return (village_board[row][column].VGstatus == VGSlotStatus::Empty);
+}
+
+bool VGMaps::isFlipped(int row, int column)
+{
+	return ((*village_board[row][column].building_ptr).getSide() == BuildingStatus::Flipped);
+}
 
 void VGMaps::setstate(bool state, bool given)
 {
 	state = given; 
 }
 
-VGSlotStatus* VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
+vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 {
-	VGSlotStatus connections[4];
+	vector <VGSquare> connections(4);
+	//get the square where you are currently at
+
+	VGSquare current = village_board[r][c]; 
+	VGSquare unavailable; //declaration of a default constructor for VGSquare empty
+	//to print to check if it actually works 
+
+	//create iterator for insertion
+	vector <VGSquare>::iterator it; 
+	it = connections.begin(); 
 
 	// 0 -> top, 2 -> right, 3 -> bot, 4 -> left
 
 	//check top
 	int top = r - 1;
-	if(top >= 0) //ensure that top is greater or equal to 0 (not above the 
+	if(top >= 0) //ensure that top is greater or equal to 0 (not above the first row) 
 	{
-		connections[0] = village_board[r - 1][c].VGstatus;
+		connections.insert(it, village_board[r - 1][c]); //insert at position 1 , dpes the iterator moves?
 	}
 	else
 	{
 		//this means that you are at the top row
-		connections[0] = VGSlotStatus::Unavailable; 
+		connections.insert(it, unavailable); //throwing an error? 
+
 	}
 
 	//check right
 	int right = c + 1; 
 	if (right <= 4)
 	{
-		connections[1] = village_board[r][c + 1].VGstatus;
+		connections.insert(it + 1, village_board[r][c + 1]); 
 	}
 	else
 	{
 		//this means that there are no slots at the right -> you are at the most right column
-		connections[1] = VGSlotStatus::Unavailable;
+		connections.insert(it + 1, unavailable);
 	}
 	
 	int bottom = r + 1; 
 	//check bottom
 	if (bottom <= 4)
 	{
-		connections[2] = village_board[r + 1][c].VGstatus;
+		connections.insert(it + 2, village_board[r+1][c]);
 	}
 	else
 	{
 		//this means there are no slots at the bottom -> you are at the bottom row
-		connections[2] = VGSlotStatus::Unavailable;
+		connections.insert(it + 2, unavailable);
 	}
 
 	//check left 
 	int left = c - 1; 
 	if(left >= 0)
 	{
-		connections[3] = village_board[r][c - 1].VGstatus;
+		connections.insert(it + 3, village_board[r][c-1]);
 	}
 	else
 	{
 		//this means there are no slots at the left -> you are at the most left column
-		connections[3] = VGSlotStatus::Unavailable;
+		connections.insert(it + 3, unavailable);
 	}
 	return connections;
 
@@ -107,7 +131,9 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 	BuildingColorType t_type = t.getBuildingColorType(); 
 	int t_num = t.getBuildingNum(); 
 
-	//check everytype
+	//create local iterator
+	vector <VGSquare>::iterator it;
+	
 
 	if (t_type == BuildingColorType::GreenSheep)
 	{
@@ -115,14 +141,19 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		if (getGreenSheepPlaced()) //is this code right
 								  // true, this means that there already exist a tile of that type on the board, check connections!
 		{
-			VGSlotStatus * find_green = checkConnectionsOfSlot(t, r, c); 
+			vector <VGSquare> find_green = checkConnectionsOfSlot(t, r, c); 
+			it = find_green.begin(); 
 
+			//go through the iterations to check if one of its surroundings is of type GreenSheep
 			for (int i = 0; i < 4; i++)
 			{
-				if ((*find_green)[i].BuildingColorType == BuildingColorType::GreenSheep) //?
+				if ((*(it + i)).VGSquare_type == BuildingColorType::GreenSheep) //derefference the iterator 
 				{
 					//place tile right there 
 					village_board[r][c].building_ptr = &t; //is this right?
+					village_board[r][c].VGSquare_type = BuildingColorType::GreenSheep; 
+					village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+
 					break; 
 				}
 			}
@@ -139,8 +170,10 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			//placing new tile
 			if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 			{
-				village_board[r][c].VGstatus.BuildingColorType == BuildingColorType::GreenSheep; //help 
+				village_board[r][c].VGSquare_type = BuildingColorType::GreenSheep; //help 
 				village_board[r][c].building_ptr = &t; 
+				village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+
 				setstate(getGreenSheepPlaced(), true); 
 			}
 		}
@@ -149,14 +182,18 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 	{
 		if (getGreyRockPlaced()) // true, this means that there already exist a tile of that type on the board, check connections!
 		{
-			VGSlotStatus * find_grey = checkConnectionsOfSlot(t, r, c);
+			vector <VGSquare> find_grey = checkConnectionsOfSlot(t, r, c);
+			it = find_grey.begin();
 
 			for (int i = 0; i < 4; i++)
 			{
-				if (find_grey[i].BuildingColorType == BuildingColorType::GreyRock)
+				if ((*(it + i)).VGSquare_type == BuildingColorType::GreyRock)
 				{
 					//place tile right there 
 					village_board[r][c].building_ptr = &t;
+					village_board[r][c].VGSquare_type = BuildingColorType::GreyRock; 
+					village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+
 					break;
 				}
 			}
@@ -172,9 +209,10 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 			{
-				village_board[r][c].VGstatus.BuildingColorType == BuildingColorType::GreyRock; //help 
+				village_board[r][c].VGSquare_type = BuildingColorType::GreyRock; //help 
 				village_board[r][c].building_ptr = &t;
-				setstate(getGreenSheepPlaced(), true);
+				village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+				setstate(getGreyRockPlaced(), true);
 			}
 		}
 	}
@@ -182,14 +220,17 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 	{
 		if (getRedLumberPlaced()) // true, this means that there already exist a tile of that type on the board, check connections!
 		{
-			VGSlotStatus [] find_red = checkConnectionOfSlot(t, r, c);
+			vector <VGSquare> find_red = checkConnectionsOfSlot(t, r, c);
+			it = find_red.begin();
 
 			for (int i = 0; i < 4; i++)
 			{
-				if (find_red[i] == BuildingColorType::RedLumber)
+				if ((*(it + i)).VGSquare_type == BuildingColorType::RedLumber)
 				{
 					//place tile right there 
-					village_board[r][c].building_ptr == &t;
+					village_board[r][c].building_ptr = &t;
+					village_board[r][c].VGSquare_type = BuildingColorType::RedLumber; 
+					village_board[r][c].VGstatus = VGSlotStatus::Taken; 
 					break;
 				}
 			}
@@ -203,9 +244,10 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 			{
-				village_board[r][c].VGstatus.BuildingColorType == BuildingColorType::RedLumber; //help 
+				village_board[r][c].VGSquare_type = BuildingColorType::RedLumber; //help 
 				village_board[r][c].building_ptr = &t;
-				setstate(getGreenSheepPlaced(), true);
+				village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+				setstate(getRedLumberPlaced(), true);
 			}
 		}
 	}
@@ -213,14 +255,18 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 	{
 		if (getYellowHayPlaced()) // true, this means that there already exist a tile of that type on the board, check connections!
 		{
-			VGSlotStatus[] find_yellow = checkConnectionOfSlot(t, r, c);
+			vector <VGSquare> find_yellow = checkConnectionsOfSlot(t, r, c);
+			it = find_yellow.begin();
 
 			for (int i = 0; i < 4; i++)
 			{
-				if (find_yellow[i] == BuildingColorType::YellowHay)
+				if ((*(it + i)).VGSquare_type == BuildingColorType::YellowHay)
 				{
 					//place tile right there 
-					village_board[r][c].building_ptr == &t;
+					village_board[r][c].building_ptr = &t;
+					village_board[r][c].VGSquare_type = BuildingColorType::YellowHay; 
+					village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+
 					break;
 				}
 			}
@@ -232,11 +278,13 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		}
 		else
 		{
+			//empty slot
 			if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 			{
-				village_board[r][c].VGstatus.BuildingColorType == BuildingColorType::YellowHay; //help 
+				village_board[r][c].VGSquare_type = BuildingColorType::YellowHay; //help 
 				village_board[r][c].building_ptr = &t;
-				setstate(getGreenSheepPlaced(), true);
+				village_board[r][c].VGstatus = VGSlotStatus::Taken; 
+				setstate(getYellowHayPlaced(), true);
 			}
 		}
 	}

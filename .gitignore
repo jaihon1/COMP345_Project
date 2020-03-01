@@ -36,7 +36,7 @@
 src/src.xcodeproj
 
 # Visual Studio Related
-*.vcxproj
+# *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
 *.sln

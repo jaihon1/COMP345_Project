@@ -20,8 +20,10 @@ GBSquare::~GBSquare() {
 -create helper function to randomly distribute harvest tiles on designated squares
 -create helper function to randomly distribute building tiles on designated squares
 */
-GBMaps::GBMaps(int inNumberOfPlayers, char boardSide)
+GBMaps::GBMaps(int inNumberOfPlayers, char boardSide, Scoring* sc)
 {
+	scoringObj = sc;
+
 	numberOfPlayers = new int(inNumberOfPlayers);
 	//board is a single row of pointers. 
 	//Each index in the row points to another array of objects (this is the column)
@@ -85,8 +87,11 @@ GBMaps::~GBMaps()
 
 void GBMaps::initializeBoardA() {
 	
+	//TODO: NEED TO GET A SCORING OBJECT vvvvvv
+
 	//default resource tiles
-	addHarvestTile(1, 1, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
+	HarvestTile* firstDefaultTile = new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber);
+	addHarvestTile(1, 1, firstDefaultTile);
 	addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
 	addHarvestTile(5, 1, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
 	addHarvestTile(5, 5, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
@@ -129,14 +134,16 @@ GBSquareStatus GBMaps::getSquareStatus(int row, int column)
 	return board[row][column].status;
 }
 
-int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr, Scoring* sc)
+int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 {
 	//check if game board square is empty to add tile
 	if (board[row][column].status == GBSquareStatus::Empty) {
 		board[row][column].status = GBSquareStatus::HarvestTile;
 		board[row][column].tilePtr = inHarvestTilePtr;
 
-		sc->computeResources(row, column, inHarvestTilePtr, this);
+		if (scoringObj != NULL) {
+			scoringObj->computeResources(row, column, inHarvestTilePtr, this);
+		}
 
 		return 1;
 	}

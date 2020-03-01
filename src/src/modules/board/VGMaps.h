@@ -1,42 +1,41 @@
+#pragma once 
 #include <stdio.h>
 
-#include "..\tile\BuildingTile.hpp"
+#include "../tile/Resources.h"
+#include <vector>
+using std::vector; 
 
-
-enum class VGSlotStatus
-{
-	Empty, //int 0
-	BuildingColorType, //int 1 
-	Unavailable //int 2 - any invalid slot (outside the actual map)
-};
-
-
-struct VGSquare{
+struct VGSquare{ //why struct? 
 	VGSlotStatus VGstatus;
 	BuildingTile *building_ptr; 
+	BuildingColorType VGSquare_type;  //same as buildingtype 
 
 }; 
 
 class VGMaps{
 private:
-	
-
-	const int* const rows = new int(6); //length of the row
-	const int* const columns = new int(5); //length of the column
-
+	//const int* const rows = new int(6); //length of the row
+	//const int* const columns = new int(5); //length of the column
 	//start off with flags that indicate false, meaning that no tile of that type has been placed yet. 
 	bool GreenSheepPlaced = false; 
 	bool GreyRockPlaced = false; 
 	bool RedLumberPlaced = false;
 	bool YellowHayPlaced = false; 
 
-	
 public: 
+
+	//is it the end of the world 
+	int* rows = new int(6); //length of the row
+	int* columns = new int(5); //length of the column
+
+
 	VGMaps(); 
 
 	~VGMaps();
 
+
 	VGSlotStatus getStatus(int row, int column);
+	void setStatus(int row, int column, VGSlotStatus status);
 
 	VGSquare ** village_board; 
 
@@ -44,12 +43,14 @@ public:
 	bool getGreyRockPlaced() { return GreyRockPlaced;  }
 	bool getRedLumberPlaced() { return RedLumberPlaced;  }
 	bool getYellowHayPlaced() { return YellowHayPlaced;  }
+	bool isEmpty(int row, int column);
+	bool isFlipped(int row, int column);
 
 	void setstate(bool state, bool given); 
 
 	//void flipIndexes(); //function you call to flip the indexes inside the village board -> update: dont need cuz it doesnt affect the game
 
-	VGSlotStatus* checkConnectionsOfSlot(BuildingTile t, int r, int c); 
+	vector <VGSquare> checkConnectionsOfSlot(BuildingTile t, int r, int c); 
 
 	void addNewBuildingTile(BuildingTile t, int r, int c); 
 
