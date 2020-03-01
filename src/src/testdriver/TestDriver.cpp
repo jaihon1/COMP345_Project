@@ -31,6 +31,15 @@ const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
 	return "Error from SquareStatusToString";
 }
 
+void printHarvestTile(HarvestTile* inHarvestTile) {
+
+	cout << setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topLeft)) 
+		<< setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topRight))<<endl
+		<< setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::bottomLeft))
+		<< setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::bottomRight))<<endl;
+	
+}
+
 void printGameBoard(GBMaps* inBoard) {
 	cout << "  ";
 	for (int columnNUM = 0; columnNUM < 7; columnNUM++) {
@@ -67,25 +76,33 @@ void printGameBoard(GBMaps* inBoard) {
 }
 
 void harvestTileTest() {
-	GBMaps* gameBoard = new GBMaps(2, 'a', NULL);
-
-	for (int i = 0; i < 5; i++) {
+	
 		HarvestTile* testHarvestTile = testDeck->draw();
+		printHarvestTile(testHarvestTile);
+		char yesNo;
+		char rotate;
+		cout << "Would you like to rotate the tile? y/n ";
+		cin >> yesNo;
 		//ROTATE METHODS TEST
-		//testHarvestTile -> RotateRight();
-		gameBoard->addHarvestTile(3, i+1, testHarvestTile);
-	}
-	printGameBoard(gameBoard);
-}
-
-void gbMapLoaderTest() {
-	GBMapLoader* testLoader = new GBMapLoader("C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testSave.json");
-
-	GBMapSaver* testSaver = new GBMapSaver();
-
-	//testSaver->save(testLoader->getBoard(), "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\testSave2.json");
-
-	printGameBoard(testLoader->getBoard());
+		while (yesNo == 'y') {
+			cout << "Right = r, Left = l: ";
+			cin >> rotate;
+			switch (rotate) {
+			case 'r':
+				testHarvestTile->RotateRight();
+				break;
+			case 'l':
+				testHarvestTile->RotateLeft();
+				break;
+			default:
+				cout << "Invalid selection." << endl;
+				break;
+			}
+			printHarvestTile(testHarvestTile);
+			cout << "Again? y/n ";
+			cin >> yesNo;
+		}
+	
 }
 
 void gbMapsTest() {
@@ -103,21 +120,21 @@ void gbMapsTest() {
 		printGameBoard(gameBoard);
 		cout << endl;
 
-		int quit = 1;
-		int xcoord = 0;
-		int ycoord = 0;
+		int quit ;
+		int row;
+		int column;
 
 		cout << "Would you like to add a harvest tile? Press 1 to continue. To quit, press 0. ";
 		cin >> quit;
 		while (quit != 0) {
 
 			HarvestTile* testHarvestTile = testDeck->draw();
-			cout << "Where would you like to place the tile?\n" << "x-coordinate: ";
-			cin >> xcoord;
-			cout << "y-coordinate: ";
-			cin >> ycoord;
+			cout << "Where would you like to place the tile?\n" << "row: ";
+			cin >> row;
+			cout << "column: ";
+			cin >> column;
 			cout << endl;
-			gameBoard->addHarvestTile(xcoord, ycoord, testHarvestTile);
+			gameBoard->addHarvestTile(row, column, testHarvestTile);
 			printGameBoard(gameBoard);
 			cout << endl;
 			cout << "To place another tile, Press 1.  To see resource list press 2. Otherwise to quit press 0. ";
@@ -130,11 +147,96 @@ void gbMapsTest() {
 		}
 }
 
+void runGame(GBMaps* gameBoard) {
+
+	printGameBoard(gameBoard);
+
+	//SAVER CONTSTRUCTION
+	GBMapSaver* testSaver = new GBMapSaver();
+
+	int quit;
+	int row;
+	int column;
+
+	cout << "Would you like to add a harvest tile? Press 1 to continue. To quit, press 0. ";
+	cin >> quit;
+	while (quit != 0) {
+
+		HarvestTile* testHarvestTile = testDeck->draw();
+		cout << "Where would you like to place the tile?\n" << "row: ";
+		cin >> row;
+		cout << "column: ";
+		cin >> column;
+		cout << endl;
+		gameBoard->addHarvestTile(row, column, testHarvestTile);
+		printGameBoard(gameBoard);
+		cout << endl;
+		cout << "To place another tile, Press 1.  To save game press 2. Otherwise to quit press 0. ";
+		cin >> quit;
+		if (quit == 2) {
+			string filePath;
+			cout << "Please enter the file path: " << endl;
+			cin >> filePath;
+
+			testSaver->save(gameBoard, &filePath[0]);
+			quit = 0;
+		}
+
+	}
+
+}
+
+void playGBMaps() {
+	bool flag = true;
+	while (flag) {
+		int oldOrNew;
+		cout << "Welcome to New Haven" << endl << "1 - Start a new game" << endl << "2 - Load game" << endl<< "0 - return to previous menu" << endl << "Which would you like to do: ";
+		cin >> oldOrNew;
+
+		// SCORING OBJECT CONSTRUCTION
+		Scoring* sc = new Scoring();
+
+		switch (oldOrNew) {
+		case 0:
+			flag = false;
+			break;
+
+		case 1: {
+			int players;
+			cout << "How many players? Select 2, 3, or 4: ";
+			cin >> players;
+
+			//GAMEBOARD CONSTRUCTION
+			GBMaps* gameBoard = new GBMaps(players, 'a', sc);
+			runGame(gameBoard);
+			break;
+		}
+		case 2: {
+			string filePath;
+			cout << "Please enter the file path of the game you wish to load: " << endl;
+			cin >> filePath;
+			// LOADER CONSTRUCTION
+			GBMapLoader* testLoader = new GBMapLoader(&filePath[0], sc);
+			runGame(testLoader->getBoard());
+			break;
+		}
+		default:
+			cout << "Sorry invalid input, please choose again" << endl;
+			break;
+		}
+	}
+}
+
+
+void menuOptions() {
+	cout << "1 - GBMaps Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "Which test would you like to run? ";
+}
+
 int main()
 {
 	int menuOption;
 	int quit = 1;
-	cout << endl << "1 - GBMaps Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "Which test would you like to run? ";
+	menuOptions();
 	cin >> menuOption;
 
 	while (quit != 0) {
@@ -146,10 +248,10 @@ int main()
 			harvestTileTest();
 			break;
 		case 3:
-			gbMapLoaderTest();
+			playGBMaps();
 			break;
 		}
-		cout << "1 - GBMaps Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "Which test would you like to run? Press 0 to quit. ";
+		menuOptions();
 		cin >> quit;
 		return 0;
 
