@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iostream>
 #include <algorithm>
+#include <time.h>
 #include "Resources.h"
 #include "Dictionary.h"
 #include "../Scoring/Scoring.h"
@@ -240,7 +241,8 @@ int HarvestDeck::getSize() {
 
 HarvestTile* HarvestDeck::draw() {
 	//use random numbers each draw rather than "shuffling" the deck at the beginning of the game and putting it into a stack
-	srand(0); //TODO: hardcoded the seed, need to change to seeding with time from clock
+	//srand(0); //hardcoded the seed, for test purposes
+	srand((unsigned)time(NULL));
 	int randomNumber = rand() % deckLength;
 
 	HarvestTile* temp = harvestDeck[randomNumber];

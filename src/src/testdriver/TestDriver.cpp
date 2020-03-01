@@ -81,7 +81,7 @@ void harvestTileTest() {
 		printHarvestTile(testHarvestTile);
 		char yesNo;
 		char rotate;
-		cout << "Would you like to rotate the tile? y/n ";
+		cout << "Would you like to rotate the tile? y/n "<<endl;
 		cin >> yesNo;
 		//ROTATE METHODS TEST
 		while (yesNo == 'y') {
@@ -142,7 +142,12 @@ void gbMapsTest() {
 				cout << endl;
 				break;
 			case 2:
-				sc->display_res();
+				//sc->display_res();
+				cout << "Rock:   " << sc->get_stone() << endl;
+				cout << "Lumber: " << sc->get_lumber() << endl;
+				cout << "Wheat:  " << sc->get_wheat() << endl;
+				cout << "Sheep:  " << sc->get_sheep() << endl;
+			
 				break;
 			default:
 				cout << "Sorry invalid input." << endl;
@@ -260,8 +265,6 @@ int main()
 		}
 		menuOptions();
 		cin >> quit;
-		return 0;
-
 	}
 }
 
