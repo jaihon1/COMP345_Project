@@ -27,10 +27,14 @@ int main()
 	va->printVGMap(); 
 
 	cout << "created VGMap" << endl;
-
 	cout << "Loading VGMAP out" << endl; 
 
-	VGMapSaver *s = new VGMapSaver(); 
+	VGMapSaver *s = new VGMapSaver();
+
+	s->save(va, "C:\json_test\VGMaptest.json"); 
+
+	cout << "Saved va map" << endl; 
+
 	//VGMapLoader * m = new VGMapLoader(); 
 
 	return 0; 

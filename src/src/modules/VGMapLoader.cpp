@@ -19,7 +19,7 @@ VGMapLoader::VGMapLoader(const char * inFile)
 	cout << "Inside in File VGMAPLoader constructor" << endl; 
 	ifstream inFileStream; 
 	inFileStream.open(inFile); 
-
+	
 	json VGMapDoc; 
 	inFileStream >> VGMapDoc; //dump inpute file strea into the DOM
 
@@ -116,6 +116,7 @@ VGMaps * VGMapLoader::getBoard()
 void VGMapSaver::save(VGMaps * inGame, const char * inFilePath)
 {
 	outFile.open(inFilePath); 
+	cout << "Opening file path " << endl; 
 	json d; 
 	
 	nlohmann::basic_json<> jsonRows = json::array(); 
@@ -157,7 +158,6 @@ void VGMapSaver::save(VGMaps * inGame, const char * inFilePath)
 
 				json b = json::object({ "*building_ptr", building_attributes });
 				
-
 				jsonColumns.push_back({ { "VGSquare" , b} });
 
 				switch (inGame->village_board[i][j].VGSquare_type)
@@ -178,14 +178,19 @@ void VGMapSaver::save(VGMaps * inGame, const char * inFilePath)
 					jsonColumns.push_back({ { "VGSquare", {{"VGSquare_type", "None"}}} });
 					break; 
 				}
-
-	
 			}
-			jsonRows.push_back(jsonColumns); 
+			
 		}
-		d["VGboard"] = jsonRows; 
-		outFile << d.dump(2); 
-		outFile.close(); 
+		jsonRows.push_back(jsonColumns);
+
 	}
+	d["VGboard"] = jsonRows;
+
+	cout << "printing out d test" << endl;
+	cout << d << endl;
+
+	outFile << d.dump(2);
+	outFile.close();
+
 }
 

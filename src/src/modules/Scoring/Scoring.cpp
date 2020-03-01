@@ -96,6 +96,7 @@ int Scoring::get_stone()
 	return res_score[4];
 }
 
+
 /*int Scoring::get_score(VGMaps &vil)
 {
 	int score = 0;
