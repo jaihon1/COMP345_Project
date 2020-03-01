@@ -50,6 +50,7 @@ vector<HarvestTile*>* Player::getHarvestTiles() {
 
 void Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard) {
     gameBoard.addHarvestTile(row, col, &tile);
+    removeHarvestTile(tile);
 }
 
 HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
