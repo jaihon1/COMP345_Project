@@ -92,7 +92,7 @@ BuildingTile::BuildingTile(const BuildingColorType t, const int n, const Buildin
 }
 
 BuildingTile::~BuildingTile() {
-    //do I need to code?
+
     //if the member variables dont go on the stack, make them dynamic objects and delete every
     //random to delete
     //delete _int
@@ -105,7 +105,6 @@ BuildingTile::~BuildingTile() {
 
     delete _buildingNum;
     _buildingNum = NULL;
-
 }
 
 BuildingColorType BuildingTile::getBuildingColorType() {
@@ -193,7 +192,7 @@ void BuildingTile::deepCopy(const BuildingTile & t)
 	}
 }
 
-BuildingTile::BuildingTile(const BuildingTile & t) : _buildingColorType{ nullptr }, _buildingNum{ nullptr }, _buildingStatus{nullptr}
+BuildingTile::BuildingTile(const BuildingTile &t) : _buildingColorType{ nullptr }, _buildingNum{ nullptr }, _buildingStatus{nullptr}
 {
 	deepCopy(t); 
 

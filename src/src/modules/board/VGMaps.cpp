@@ -34,7 +34,7 @@ string colortype_to_string(BuildingColorType c)
 	case BuildingColorType::YellowHay:
 		return "YellowHay";
 	case BuildingColorType::None:
-		return "None";
+		return "  None   ";
 	}
 }
 
@@ -220,7 +220,8 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		cout << "Adding building Tile" << endl;
 		cout << "Copy constructor Tile" << endl;
 
-		BuildingTile *to_add = &BuildingTile(t); //deep copy constructor, preapre to add tile 
+
+		BuildingTile *to_add = new BuildingTile(t); //deep copy constructor, preapre to add tile 
 
 		BuildingColorType t_type = t.getBuildingColorType();
 		//int t_num = t.getBuildingNum(); 

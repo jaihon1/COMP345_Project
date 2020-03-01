@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream> 
 #include <list> 
+#include "../board/VGMaps.hpp"
 //#include "GBMaps.h"
 
 
@@ -60,7 +61,9 @@ public:
 	int get_sheep();
 	int get_wheat();
 	int get_stone();
-	//int get_score(VGMap &vil);
+
+	int get_score(VGMaps & vil);
+	
 	int get_res(int resv);
 	void display_res();
 };

@@ -1,6 +1,7 @@
-
+/*
 #include "modules/board/VGMaps.hpp"
 #include "modules/tile/Resources.h"
+#include "modules/Scoring/Scoring.h"
 #include <string>
 #include <ostream>
 #include <iostream>
@@ -65,7 +66,8 @@ int main()
 }
 */
 
-//main for VGMaps
+/*
+//main for VGMaps 
 int main()
 {
 
@@ -76,7 +78,7 @@ int main()
 	cout << *p << endl; 
 	cout << &p << endl; 
 	*/
-
+/*
 	//test 
 	VGMaps *v = new VGMaps();
 	//VGMaps* v =  &VGMaps();
@@ -90,6 +92,63 @@ int main()
 	
 	int ro = *(v->rows); 
 	int co = *(v->columns); 
+
+	//RANDOMIZING TEST FOR FILLING UP VGMAP
+	for (int i = 0; i < 6; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			BuildingTile *temp = new BuildingTile(static_cast <BuildingColorType>(rand() % 4), rand() % 6 + 1, static_cast<BuildingStatus>(0));
+
+			v->addNewBuildingTile(*temp, i, j); 
+
+		}
+	}
+	
+	//Testing Scoring 
+	/*
+	VGMaps* villageBoard = new VGMaps();
+	Scoring scobj;
+	scobj.reset_res();
+
+	for (int i = 0; i < 6; i++)
+		for (int j = 0; j < 5; j++)
+		{
+			BuildingTile *temp = new BuildingTile(static_cast<BuildingColorType>(rand() % 4 + 1), rand() % 6 + 1, static_cast<BuildingStatus>(0));
+			(*villageBoard).addNewBuildingTile(*temp, i, j);
+			//std::cout << static_cast<int>(temp.getSide());
+		}
+
+	cout << "Current MAP " << endl;
+	v->printVGMap();
+	int score_temp = scobj.get_score(*villageBoard);
+	//villageBoard.display_village();
+	std::cout << "village score: " << score_temp << std::endl;
+	*/ 
+
+	/* TESTING WITHOUT BUILDINGTILE ON HEAP
+	for (int i = 0; i < 6; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			BuildingTile temp = BuildingTile(static_cast<BuildingColorType>(rand() % 4 + 1), rand() % 6 + 1, static_cast<BuildingStatus>(0));
+			//(*villageBoard).addNewBuildingTile(temp, i, j);
+			std::cout << static_cast<int>(temp.getSide());
+		}
+	}
+
+	*/ 
+
+	/* TEST PRINTING STATIC TO CHECK IF DEFAULT OR COPY CONSTRUCTOR HAS ISSUES
+		int temp = static_cast<int>(BuildingTile(static_cast<BuildingColorType>(rand() % 4), rand() % 6 + 1, static_cast<BuildingStatus>(0)).getSide());
+		std::cout << "test " << temp << std::endl;
+	*/ 
+/*
+	cout << "Current MAP " << endl; 
+	v->printVGMap(); 
+*/
+		
+
 
 	/*
 	for (int i = 0; i < ro; i++)
@@ -128,9 +187,10 @@ int main()
 
 	*/ 
 
-	v->printVGMap(); 
+	//v->printVGMap(); 
 
 
+	/* == BEFORE TESTING NGUYEN'S CODE 
 	cout << "\n"; 
 	cout << "Adding Building Tile" << endl; 
 
@@ -161,8 +221,8 @@ int main()
 	*/
 
 	
-	cout << "\n"; 
-	cout << "Current MAP" << endl; 
+	//cout << "\n"; 
+	//cout << "Current MAP" << endl; 
 	
 	/*
 	for (int i = 0; i < ro; i++)
@@ -183,20 +243,39 @@ int main()
 	}
 	*/ 
 
-	v->printVGMap(); 
+	//v->printVGMap(); 
 
-	BuildingColorType * type2 = new BuildingColorType(BuildingColorType::GreenSheep);
+	/*
+	BuildingColorType * type2 = new BuildingColorType(BuildingColorType::RedLumber);
 	BuildingStatus *status2 = new BuildingStatus(BuildingStatus::Normal);
 
 	BuildingTile *t2 = new BuildingTile(type2, status2);
 
 	//v->addNewBuildingTile(*t2, 2, 2); //adding greensheep at another location but it has been previously placed - throws the right errors
-	v->addNewBuildingTile(*t2, 0, 1); //GIVES two unavailable and does not add any element OR doesn't bypass and places the tile again (
+	v->addNewBuildingTile(*t2, 1, 0); //GIVES two unavailable and does not add any element OR doesn't bypass and places the tile again (
 	//v->addNewBuildingTile(*t2, 2, 3);
 
-
+	v->printVGMap();
 	
+	BuildingColorType * type3 = new BuildingColorType(BuildingColorType::RedLumber);
+	BuildingStatus *status3 = new BuildingStatus(BuildingStatus::Normal);
 
+	BuildingTile *t3 = new BuildingTile(type3, status3);
+
+	v->addNewBuildingTile(*t3, 1, 1);
+	v->printVGMap();
+
+	BuildingColorType * type4 = new BuildingColorType(BuildingColorType::GreenSheep);
+	BuildingStatus *status4 = new BuildingStatus(BuildingStatus::Normal);
+
+	BuildingTile *t4 = new BuildingTile(type4, status4);
+
+	v->addNewBuildingTile(*t4, 1, 2);
+
+	cout << "Final map" << endl; 
+	v->printVGMap();
+	*/
+/*
 	return 0; 
 }
-
+*/ 

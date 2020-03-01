@@ -1,7 +1,8 @@
-/*
+
 #pragma once
 #include "board/VGMaps.hpp"
-
+#include <iostream>
+#include <fstream>
 #include <map>
 #include <string>
 using namespace std;
@@ -20,7 +21,7 @@ private:
 			this->operator[]("Unavailable") = VGSlotStatus::Unavailable;
 		}
 
-		statusVGMap() {}; 
+		~statusVGMap() {}; 
 	};
 
 	struct buildingMap : public map<string, BuildingColorType>
@@ -33,7 +34,7 @@ private:
 			this->operator[]("None") = BuildingColorType::None;
 		}
 	
-		buildingMap() {}; 
+		~buildingMap() {}; 
 	};
 
 public:
@@ -54,4 +55,4 @@ public:
 private: 
 	ofstream outFile; 
 };
-*/
+

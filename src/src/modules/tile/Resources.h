@@ -22,7 +22,7 @@ private:
 	int buildingNum;
 	BuildingStatus buildingStatus;
 
-	//allocate memory
+	//allocate memorys
 	BuildingColorType* _buildingColorType = &buildingColorType;
 	int* _buildingNum = &buildingNum;
 	BuildingStatus *_buildingStatus = &buildingStatus;

@@ -96,7 +96,7 @@ int Scoring::get_stone()
 	return res_score[4];
 }
 
-/*int Scoring::get_score(VGMap &vil)
+/*int Scoring::get_score(VGMaps &vil)
 {
 	int score = 0;
 	bool mul = false;
@@ -104,46 +104,45 @@ int Scoring::get_stone()
 	//vil.village[3][3].set(-1);
 	//vil.village[1][1].set(-1);
 
-	for (int i = 0; i < VGMap::village_row; i++)
+	for (int i = 0; i < *(vil.rows); i++)
 	{
 		mul = true;
 		complete = true;
-		for (int j = 0; j < VGMap::village_col; j++) {	
-			if (vil.village[i][j].get() == 0)
+		for (int j = 0; j < *(vil.columns); j++) {
+			if (vil.village_board[i][j].get() == 0)
 				complete = false;
-			if (vil.village[i][j].get() == -1)
+			if (vil.village_board[i][j].get() == -1)
 				mul = false;			
 		}
 		if (!complete)
 			continue;
 		if (mul)
-			score += (VGMap::village_row - i) * 2;
+			score += (*(vil.rows) - i) * 2;
 		else 
-			score += (VGMap::village_row - i);
+			score += (*(vil.rows) - i);
 	}		
 
-	for (int i = 0; i < VGMap::village_col; i++) {
+	for (int i = 0; i < *(vil.columns); i++) {
 		mul = true;
 		complete = true;
-		for (int j = 0; j < VGMap::village_row; j++) {
-			if (vil.village[i][j].get() == 0)
+		for (int j = 0; j < *(vil.rows); j++) {
+			if (vil.village_board[i][j].get() == 0)
 				complete = false;
-			if (vil.village[i][j].get() == -1)
+			if (vil.village_board[i][j].get() == -1)
 				mul = false;
 		}
 		if (!complete)
 			continue;
 		if (mul)
-			score += (VGMap::village_col - (2 - abs(i-2))) * 2;
+			score += (*(vil.columns) - (2 - abs(i-2))) * 2;
 		else
-			score += (VGMap::village_col - (2 - abs(i - 2)));
+			score += (*(vil.columns) - (2 - abs(i - 2)));
 		//std::cout << "test: " << score << std::endl;
 	}
-		
-		
 
 	return score;
-}*/
+}
+*/ 
 
 int Scoring::get_res(int resv)
 {

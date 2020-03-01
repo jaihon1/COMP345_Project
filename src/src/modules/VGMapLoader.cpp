@@ -1,4 +1,4 @@
-/*
+
 #include "VGMapLoader.h"
 #include <iostream>
 #include <fstream>
@@ -16,6 +16,7 @@ VGMapLoader::VGMapLoader()
 
 VGMapLoader::VGMapLoader(const char * inFile)
 {
+	cout << "Inside in File VGMAPLoader constructor" << endl; 
 	ifstream inFileStream; 
 	inFileStream.open(inFile); 
 
@@ -71,23 +72,17 @@ VGMapLoader::VGMapLoader(const char * inFile)
 				BuildingColorType *c_ptr = &c; 
 				BuildingStatus *s_ptr = &s; 
 				int *n_ptr = &n; 
-				
-		
-				
-				
+			
 				//auto const b_int = VGSquare->find("VGstatus");  //find status of building
 				//auto const b_side = VGSlotStatus->find("VGSquare_type"); //same as building type 
 				//int buildingNum = b_int[0].get<int>();
 
-
 				BuildingTile *temp = new BuildingTile(c_ptr, n_ptr, s_ptr);
-		
-			
+	
 				board->addNewBuildingTile(*temp, row, column); //dereference temp  
 			
 				delete temp; 
 				temp = NULL; //good practice 
-
 			}
 			else
 			{
@@ -97,17 +92,12 @@ VGMapLoader::VGMapLoader(const char * inFile)
 				so I created a setStatus method in your VGmaps to set the slot status to empty
 				*/
 				// board->setStatus(row, column, VGSlotStatus::Empty);
-
-/*
 				//make this area empty
 				board->village_board[row][column].VGstatus == VGSlotStatus::Empty; 
 				board->village_board[row][column].VGSquare_type == BuildingColorType::None; 
 			}
 
 		}
-
-		//Make the remaining of the board empty in status - dont need
-
 
 	}
 }
@@ -158,10 +148,10 @@ void VGMapSaver::save(VGMaps * inGame, const char * inFilePath)
 				
 				nlohmann::basic_json<> building_attributes =
 				{
-					BuildingTile::Building_statusToChar(t->getBuildingColorType),
-					BuildingTile::Building_typeToChar(t->getSide),
+					BuildingTile::Building_typeToChar(t->getBuildingColorType()),
+					BuildingTile::Building_statusToChar(t->getSide()),
 					//should I do this? 
-					BuildingTile::Building_intToChar(t->getBuildingNum)
+					BuildingTile::Building_intToChar(t->getBuildingNum())
 				}; 
 				 
 
@@ -199,4 +189,3 @@ void VGMapSaver::save(VGMaps * inGame, const char * inFilePath)
 	}
 }
 
-*/
