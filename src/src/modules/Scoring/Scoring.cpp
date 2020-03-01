@@ -287,19 +287,19 @@ void Scoring::computeResources(int row, int column, HarvestTile* inHarvestTilePt
 	for (int i = 0; i < 4; i++)
 	{
 		int next = index[i] - 1;
-		if ((index[i] % board_length != 0) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) != GBSquareStatus::Empty) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
-			addEdge(index[i], next);
+		if ((index[i] %board_length != 0) && (board[next/28][(next%14) / 2].status == GBSquareStatus::HarvestTile) && (map(index[i]) == map(next)))
+			sc.addEdge(index[i], next);
 		next = index[i] + 1;
-		if (((index[i] + 1) % board_length != 0) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) != GBSquareStatus::Empty) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
-			addEdge(index[i], next);
+		if (((index[i] + 1) % board_length != 0) && (board[next/28][(next%14) / 2].status == GBSquareStatus::HarvestTile) && (map(index[i]) == map(next)))
+			sc.addEdge(index[i], next);
 		next = index[i] - board_length;
-		if ((index[i] >= board_length) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) != GBSquareStatus::Empty) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
-			addEdge(index[i], next);
+		if ((index[i] >= board_length) && (board[next/28][(next%14) / 2].status == GBSquareStatus::HarvestTile)&& (map(index[i]) == map(next)))
+			sc.addEdge(index[i], next);
 		next = index[i] + board_length;
-		if ((index[i] < max_tile - board_length) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) != GBSquareStatus::Empty) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
-			addEdge(index[i], next);
+		if ((index[i]< max_tile - board_length) && (board[next/28][(next%14) / 2].status == GBSquareStatus::HarvestTile) && (map(index[i]) == map(next)))
+			sc.addEdge(index[i], next);
 	}
-	static int res[4] = {
+	int res[4] = {
 		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topLeft)),
 		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topRight)),
 		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomLeft)),
