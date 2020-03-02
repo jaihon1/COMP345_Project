@@ -44,6 +44,8 @@ public:
 	bool getGreyRockPlaced() { return GreyRockPlaced;  }
 	bool getRedLumberPlaced() { return RedLumberPlaced;  }
 	bool getYellowHayPlaced() { return YellowHayPlaced;  }
+	bool isEmpty(int row, int column);
+	bool isFlipped(int row, int column);
 
 
 	void setStatus(int row, int column, VGSlotStatus inStatus);

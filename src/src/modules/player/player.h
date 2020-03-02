@@ -5,6 +5,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
+#include "../board/VGMaps.h"
 #include "../tile/Resources.h"
 #include "../board/GBMaps.h"
 
@@ -13,7 +14,7 @@ using namespace std;
 class Player {
 private:
     // Own one Village Board
-    // VGMaps *_villageBoard;
+    VGMaps *_villageBoard;
     
     // Owns Harverst Tiles
     vector<HarvestTile*> *_harvestTiles;
@@ -30,11 +31,7 @@ public:
     Player();
     Player(const Player &player);
     ~Player();
-    
-//    Must be changed to return a Village Board type
-//    VGMaps* getVillageBoard();
-//    VGMaps* setVillageBoard(VGMaps *villageBoard);
-
+        
     // Manage Harvest Tiles
     vector<HarvestTile*>* getHarvestTiles();
     HarvestTile* addHarvestTile(HarvestTile &tile);

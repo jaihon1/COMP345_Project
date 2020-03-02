@@ -85,7 +85,8 @@ GBMaps::~GBMaps()
 void GBMaps::initializeBoardA() {
 	
 	//default resource tiles
-	addHarvestTile(1, 1, new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber));
+	HarvestTile* firstDefaultTile = new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber);
+	addHarvestTile(1, 1, firstDefaultTile);
 	addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
 	addHarvestTile(5, 1, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
 	addHarvestTile(5, 5, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));

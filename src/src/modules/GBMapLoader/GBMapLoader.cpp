@@ -13,7 +13,7 @@
 using namespace std;
 using json = nlohmann::json;
 
-GBMapLoader::GBMapLoader(const char* inFilePath)
+GBMapLoader::GBMapLoader(const char* inFilePath, Scoring* sc)
 {
 	ifstream inFileStream;
 	inFileStream.open(inFilePath);
@@ -26,7 +26,9 @@ GBMapLoader::GBMapLoader(const char* inFilePath)
 	
 	//statement initializes the number of players based on the integer associated with the key "Number of players" within the JSON document
 	auto const numberOfPlayers = GBMapDoc.find("NumberOfPlayers");
-	board = new GBMaps((int)numberOfPlayers.value(), 'a');
+
+	board = new GBMaps((int)numberOfPlayers.value(), 'a', sc);
+
 
 	//TODO: add more checks that json is valid
 	//if statement checks that a board object is present

@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream> 
 #include <list> 
-#include "../board/VGMaps.hpp"
-//#include "GBMaps.h"
+#include "../board/VGMaps.h"
 
+class GBMaps;
 
 class Scoring
 {
@@ -62,8 +62,8 @@ public:
 	int get_wheat();
 	int get_stone();
 
-	int get_score(VGMaps & vil);
-	
+	int get_score(VGMaps &vil);
+
 	int get_res(int resv);
 	void display_res();
 };

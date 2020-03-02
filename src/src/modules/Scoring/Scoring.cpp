@@ -1,3 +1,7 @@
+
+
+#include "../tile/Resources.h"
+#include "../board/GBMaps.h"
 #include "Scoring.h"
 
 
@@ -97,53 +101,58 @@ int Scoring::get_stone()
 }
 
 
-/*int Scoring::get_score(VGMaps &vil)
+
+int Scoring::get_score(VGMaps &vil)
 {
 	int score = 0;
 	bool mul = false;
 	bool complete = false;
-	//vil.village[3][3].set(-1);
-	//vil.village[1][1].set(-1);
+	int village_row = 6;
+	int village_col = 5;
 
-	for (int i = 0; i < *(vil.rows); i++)
+		
+	for (int i = 0; i < village_row; i++)
 	{
 		mul = true;
 		complete = true;
-		for (int j = 0; j < *(vil.columns); j++) {
-			if (vil.village_board[i][j].get() == 0)
+		for (int j = 0; j < village_col; j++) {			
+			if (vil.isEmpty(i, j))
 				complete = false;
-			if (vil.village_board[i][j].get() == -1)
-				mul = false;			
+			else
+				if (vil.isFlipped(i, j))
+					mul = false;			
 		}
 		if (!complete)
 			continue;
 		if (mul)
-			score += (*(vil.rows) - i) * 2;
+			score += (village_row - i) * 2;
 		else 
-			score += (*(vil.rows) - i);
+			score += (village_row - i);
 	}		
 
-	for (int i = 0; i < *(vil.columns); i++) {
+	for (int i = 0; i < village_col; i++) {
 		mul = true;
 		complete = true;
-		for (int j = 0; j < *(vil.rows); j++) {
-			if (vil.village_board[i][j].get() == 0)
+		for (int j = 0; j < village_row; j++) {
+			//cout << i << "****************************" << j << endl;
+			if (vil.isEmpty(j, i))
 				complete = false;
-			if (vil.village_board[i][j].get() == -1)
-				mul = false;
+			else
+				if (vil.isFlipped(j, i))
+					mul = false;
 		}
 		if (!complete)
 			continue;
 		if (mul)
-			score += (*(vil.columns) - (2 - abs(i-2))) * 2;
+			score += (village_col - (2 - abs(i-2))) * 2;
 		else
-			score += (*(vil.columns) - (2 - abs(i - 2)));
+			score += (village_col - (2 - abs(i-2)));
 		//std::cout << "test: " << score << std::endl;
 	}
 
 	return score;
 }
-*/ 
+
 
 int Scoring::get_res(int resv)
 {
@@ -248,4 +257,58 @@ void Scoring::Graph::addEdge(int v, int w)
 	adj[v].push_back(w);
 	adj[w].push_back(v);
 }
+
 /*********************Nested Graph******************/
+
+
+int Scoring::map(int index, GBMaps* inHarvestBoard)
+{
+	int row = index / 28;
+	int column = (index % 14) / 2;
+	//HarvestTile temp = *getHarvestTile(row, column);
+
+	int pos = index % 28;
+	if (pos > 14)
+		pos = pos % 2 + 2;
+	else
+		pos = pos % 2;
+	//std::cout << row << " " << column << " " << index << " " <<pos << std::endl;
+	//std::cin >> test;
+	int result = -1;
+	if (inHarvestBoard->getSquareStatus(row, column) == GBSquareStatus::HarvestTile) {
+		result = static_cast<int>((inHarvestBoard->getHarvestTile(row, column))->getResource(static_cast<ResourceLocation>(pos)));
+	}
+	return result;
+}
+
+void Scoring::computeResources(int row, int column, HarvestTile* inHarvestTilePtr, GBMaps* inHarvestBoard) {
+	int board_length = 14;
+	int max_tile = 196;
+
+	reset_res();
+	int topleft = row * 28 + column * 2;
+	ptrdiff_t index[4] = { topleft, topleft + 1, topleft + 14, topleft + 15 };
+
+	for (int i = 0; i < 4; i++)
+	{
+		int next = index[i] - 1;
+		if ((index[i] % board_length != 0) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) == GBSquareStatus::HarvestTile) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
+			addEdge(index[i], next);
+		next = index[i] + 1;
+		if (((index[i] + 1) % board_length != 0) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) == GBSquareStatus::HarvestTile) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
+			addEdge(index[i], next);
+		next = index[i] - board_length;
+		if ((index[i] >= board_length) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) == GBSquareStatus::HarvestTile) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
+			addEdge(index[i], next);
+		next = index[i] + board_length;
+		if ((index[i] < max_tile - board_length) && (inHarvestBoard->getSquareStatus(next / 28, (next % 14) / 2) == GBSquareStatus::HarvestTile) && (map(index[i], inHarvestBoard) == map(next, inHarvestBoard)))
+			addEdge(index[i], next);
+	}
+	int res[4] = {
+		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topLeft)),
+		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topRight)),
+		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomLeft)),
+		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomRight)) };
+	update_res(index, res);
+}
+

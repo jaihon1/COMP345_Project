@@ -10,7 +10,7 @@ using namespace std;
 
 class GBMapLoader {
 	public:
-		GBMapLoader(const char* inFilePath);
+		GBMapLoader(const char* inFilePath, Scoring* sc);
 		GBMaps* getBoard();
 
 	private:

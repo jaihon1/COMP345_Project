@@ -1,10 +1,10 @@
 #ifndef board_h
 #define board_h
-
-#include<iostream>
 #include "../Scoring/Scoring.h"
-#include "../tile/Resources.h"
 
+#include<iostream> 
+#include "../tile/Resources.h"
+class Scoring;
 
 //enumerated class to give name to the status that a square could have
 enum class GBSquareStatus {
