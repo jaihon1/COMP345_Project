@@ -1,5 +1,5 @@
 /*
-#include "modules/board/VGMaps.hpp"
+#include "modules/board/VGMaps.h"
 #include "modules/tile/Resources.h"
 #include "modules/Scoring/Scoring.h"
 #include <string>

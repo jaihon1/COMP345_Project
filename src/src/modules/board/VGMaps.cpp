@@ -3,7 +3,7 @@
 #include <string>
 #include <ostream>
 #include <stdlib.h>
-#include "VGMaps.hpp"
+#include "VGMaps.h"
 
 
 using namespace std;

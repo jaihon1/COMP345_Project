@@ -1,6 +1,6 @@
 
 #pragma once
-#include "board/VGMaps.hpp"
+#include "board/VGMaps.h"
 #include <iostream>
 #include <fstream>
 #include <map>

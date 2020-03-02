@@ -1,6 +1,6 @@
 
 #include "modules/VGMapLoader.h"
-#include "modules/board/VGMaps.hpp"
+#include "modules/board/VGMaps.h"
 #include "modules/tile/Resources.h"
 #include "nlohmann/json.hpp"
 #include <fstream>

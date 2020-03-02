@@ -2,7 +2,7 @@
 #include "VGMapLoader.h"
 #include <iostream>
 #include <fstream>
-#include "board/VGMaps.hpp"
+#include "board/VGMaps.h"
 #include "tile/Resources.h"
 #include "../nlohmann/json.hpp"
 using namespace std; 
