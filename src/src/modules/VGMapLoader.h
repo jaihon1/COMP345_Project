@@ -13,20 +13,21 @@ class VGMapLoader
 private: 
 	VGMaps * board;
 
-	struct statusVGMap : public map<string, VGSlotStatus>
+	struct statusVGMap : public map<string, VGSlotStatus> //Status of the VGSquare
 	{
 		statusVGMap()
 		{
 			this->operator[]("Empty") = VGSlotStatus::Empty;
+			this->operator[]("Taken") = VGSlotStatus::Taken; 
 			this->operator[]("Unavailable") = VGSlotStatus::Unavailable;
 		}
 
 		~statusVGMap() {}; 
 	};
 
-	struct buildingMap : public map<string, BuildingColorType>
+	struct buildingColorTypeMap : public map<string, BuildingColorType> //use for both VGMap and BuildingTile
 	{
-		buildingMap() {
+		buildingColorTypeMap() {
 			this->operator[]("GreenSheep") = BuildingColorType::GreenSheep;
 			this->operator[]("GreyRock") = BuildingColorType::GreyRock;
 			this->operator[]("RedLumber") = BuildingColorType::RedLumber;
@@ -34,7 +35,33 @@ private:
 			this->operator[]("None") = BuildingColorType::None;
 		}
 	
-		~buildingMap() {}; 
+		~buildingColorTypeMap() {}; 
+	};
+
+	struct buildingStatusMap : public map <string, BuildingStatus> //Status of the BuildingTile
+	{
+		buildingStatusMap()
+		{
+			this->operator[]("Normal") = BuildingStatus::Normal; 
+			this->operator[]("Flipped") = BuildingStatus::Flipped; 
+		}
+
+		~buildingStatusMap() {};
+	};
+
+	struct buildingInt : public map <string, int>
+	{
+		buildingInt()
+		{
+			this->operator[]("1") = 1;  //does this work?
+			this->operator[]("2") = 2;
+			this->operator[]("3") = 3;
+			this->operator[]("4") = 4;
+			this->operator[]("5") = 5;
+			this->operator[]("6") = 6;
+		}
+
+		~buildingInt() {} ;
 	};
 
 public:

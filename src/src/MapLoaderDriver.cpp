@@ -50,6 +50,7 @@ int main()
 	//cout << "Current map" << endl;
 	//va->printVGMap();
 
+	/*
 	cout << "Saving VGMAP out" << endl; 
 	
 	VGMapSaver *s = new VGMapSaver();
@@ -58,13 +59,14 @@ int main()
 	s->save(va, "C:\\json_test\\VGMaptest.json");
 
 	cout << "Saved va map" << endl; 
+	*/ 
 
 	VGMapLoader * m = new VGMapLoader(); 
 
 	cout << "\n"; 
 	cout << "Loading VGMap in " << endl; 
 
-	VGMapLoader *l = new VGMapLoader("C:\\json_test\\VGMaptest.json");
+	VGMapLoader *l = new VGMapLoader("C:\\json_test\\VGMaptest2(loader).json");
 
 	cout << "Sucess in reading" << endl; 
 
