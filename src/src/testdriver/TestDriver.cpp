@@ -1,11 +1,16 @@
 #include <iostream>
 #include <iomanip>
+#include <vector>
+#include <string>
 #include "../modules/board/GBMaps.h"
 #include "../modules/GBMapLoader/GBMapLoader.h"
 #include "../modules/tile/Dictionary.h"
 #include "../modules/tile/Resources.h"
 #include "../modules/Scoring/Scoring.h"
 #include "../modules/player/player.h"
+#include "../modules/board/VGMaps.h"
+#include "../modules/VGMapLoader/VGMapLoader.h"
+
 
 using namespace std;
 
@@ -278,9 +283,78 @@ void playGBMaps() {
 	}
 }
 
+void VGMapLoaderTest()
+{
+	//create a new VGBoard
+	VGMaps* va = new VGMaps();
+
+	int ro = *(va->rows);
+	int co = *(va->columns);
+
+	va->printVGMap();
+	cout << "created VGMap" << endl;
+
+
+
+	cout << "Add building" << endl;
+
+
+
+	BuildingColorType* type1 = new BuildingColorType(BuildingColorType::GreenSheep);
+	BuildingStatus* status1 = new BuildingStatus(BuildingStatus::Normal);
+
+	BuildingTile* t1 = new BuildingTile(type1, status1);
+
+	/*
+	cout << BuildingTile::Building_typeToChar(t1->getBuildingColorType()) << endl;
+	cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
+	*/
+	cout << BuildingTile::Building_intToChar(t1->getBuildingNum()) << endl;
+
+
+	va->addNewBuildingTile(*t1, 0, 0);
+
+
+	cout << "Current map" << endl;
+	va->printVGMap();
+
+
+	cout << "Saving VGMAP out" << endl;
+
+	VGMapSaver* s = new VGMapSaver();
+	/*************************************************
+	**************************************************
+					CHECK FILE PATH!
+	**************************************************
+	**************************************************
+	vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+	*/
+	//s->save(va, "C:\json_test\VGMaptest.json");  -> BAD 
+	s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
+
+	cout << "Saved va map" << endl;
+
+
+
+	VGMapLoader* m = new VGMapLoader();
+
+	cout << "\n";
+	cout << "Loading VGMap in " << endl;
+
+	VGMapLoader* l = new VGMapLoader("C:\\json_test\\VGMaptest5.json");
+
+	cout << "\n";
+	cout << "\n";
+	cout << "Sucess in reading" << endl;
+
+	cout << "Current MAP" << endl;
+
+	va->printVGMap();
+}
+
 
 void menuOptions() {
-	cout << "1 - GBMaps Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "0 - Exit" << endl << endl <<"Which test would you like to run? ";
+	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - To Be Annouced" << endl << "0 - Exit" << endl << endl <<"Which test would you like to run? ";
 }
 
 int main()
@@ -304,6 +378,9 @@ int main()
 			break;
 		case 4:
 			playerTest();
+			break;
+		case 5:
+			cout << "unavailable"<<endl;
 			break;
 		}
 		cout << endl;
