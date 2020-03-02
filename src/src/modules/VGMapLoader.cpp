@@ -52,16 +52,17 @@ VGMapLoader::VGMapLoader(const char * inFile)
 		{
 			VG_col++;
 
-			auto const VGSquare = column.find("VGSquare");  
-
-			auto const VGstat = VGSquare->find("VGstatus"); //get value attached to VGStatus 
+			auto const VGS = column.find("VGSquare");  
+			cout << "Found VGSquare" << endl; 
+			
+			auto const VGstat = VGS->find("VGstatus"); //get value attached to VGStatus 
 
 			if (sMap[*VGstat] == VGSlotStatus::Taken)
 			{
 			
 				cout << "inside taken" << endl; 
 
-				auto const b_ptr = VGSquare->find("*building_ptr");
+				auto const b_ptr = VGS->find("*building_ptr");
 
 				auto const b_type = b_ptr->find("BuildingColorType");
 				auto const b_side = b_ptr->find("BuildingSide");
@@ -70,7 +71,15 @@ VGMapLoader::VGMapLoader(const char * inFile)
 
 
 				BuildingColorType c = bCTMap[*b_type];
+
+				cout << "Found color type" << endl; 
+				cout << BuildingTile::Building_typeToChar(c) << endl; 
+
 				BuildingStatus s = bSMap[*b_side];
+				cout << "Found side" << endl;
+				cout << BuildingTile::Building_statusToChar(s) << endl;
+
+				cout << "suspected crash" << endl; 
 				int n = bIMap[*b_num];
 
 				BuildingTile *temp = new BuildingTile(c, n, s);
@@ -81,11 +90,12 @@ VGMapLoader::VGMapLoader(const char * inFile)
 				cout << BuildingTile::Building_statusToChar(temp->getSide()) << endl;
 				cout << BuildingTile::Building_intToChar(temp->getBuildingNum()) << endl;
 
-				board->addNewBuildingTile(*temp, row, column); //dereference temp
+
+				board->addNewBuildingTile(*temp, VG_row, VG_col); //dereference temp
 				cout << "Added new building sucess" << endl;
 
 
-				auto const VGSquare_type = VGSquare->find("VGSquare_type");
+				auto const VGSquare_type = VGS->find("VGSquare_type");
 
 				//delete temp;
 				//temp = NULL; //good practice
@@ -102,9 +112,9 @@ VGMapLoader::VGMapLoader(const char * inFile)
 				//board->setStatus(row, column, VGSlotStatus::Empty);
 				//make this area empty
 
-				board->village_board[row][column].VGstatus = VGSlotStatus::Empty;
-				board->village_board[row][column].VGSquare_type = BuildingColorType::None;
-				board->village_board[row][column].building_ptr = NULL; 
+				board->village_board[VG_row][VG_col].VGstatus = VGSlotStatus::Empty;
+				board->village_board[VG_row][VG_col].VGSquare_type = BuildingColorType::None;
+				board->village_board[VG_row][VG_col].building_ptr = NULL; 
 
 				cout << "Set status to empty and color type to none" << endl; 
 			}
@@ -150,7 +160,7 @@ void VGMapSaver::save(VGMaps * inGame, const char * inFilePath)
 					{"*building_ptr", NULL}
 				}; 
 
-				jsonColumns.push_back({"VGSquare", stats });
+				jsonColumns.push_back({{ "VGSquare",  stats }});
 
 				/*
 				jsonColumns.push_back({ { "VGSquare" ,{{"VGstatus", "Empty"}}} });
@@ -187,7 +197,7 @@ void VGMapSaver::save(VGMaps * inGame, const char * inFilePath)
 
 				//jsonColumns.push_back({ { "VGSquare" , b} });
 
-				jsonColumns.push_back({ "VGSquare", building_stats });
+				jsonColumns.push_back({ { "VGSquare", building_stats } });
 				cout << "Pushed json object back" << endl; 
 				
 			}

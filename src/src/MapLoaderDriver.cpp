@@ -41,14 +41,15 @@ int main()
 	/*
 	cout << BuildingTile::Building_typeToChar(t1->getBuildingColorType()) << endl; 
 	cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
+	*/
 	cout << BuildingTile::Building_intToChar(t1->getBuildingNum()) << endl;
-	*/ 
+	
 
 	va->addNewBuildingTile(*t1, 0, 0);
 	
 
-	//cout << "Current map" << endl;
-	//va->printVGMap();
+	cout << "Current map" << endl;
+	va->printVGMap();
 
 	
 	cout << "Saving VGMAP out" << endl; 
@@ -56,7 +57,7 @@ int main()
 	VGMapSaver *s = new VGMapSaver();
 
 	//s->save(va, "C:\json_test\VGMaptest.json");  -> BAD 
-	s->save(va, "C:\\json_test\\VGMaptest4.json");
+	s->save(va, "C:\\json_test\\VGMaptest5.json");
 
 	cout << "Saved va map" << endl; 
 	
@@ -67,11 +68,17 @@ int main()
 	cout << "\n"; 
 	cout << "Loading VGMap in " << endl; 
 
-	VGMapLoader *l = new VGMapLoader("C:\\json_test\\VGMaptest4.json");
-
+	VGMapLoader *l = new VGMapLoader("C:\\json_test\\VGMaptest5.json");
+	
+	cout << "\n";
+	cout << "\n";
 	cout << "Sucess in reading" << endl; 
+
+	cout << "Current MAP" << endl;
 	
-	
+	va->printVGMap(); 
+
+
 
 	return 0; 
 }
