@@ -5,6 +5,11 @@
 #include <vector>
 using std::vector; 
 
+#define _DEBUG
+#ifdef _DEBUG
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#endif
+
 struct VGSquare{ //why struct? 
 	VGSlotStatus VGstatus;
 	BuildingTile *building_ptr; 
