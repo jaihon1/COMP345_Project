@@ -99,6 +99,7 @@ void testFunction3() {
 		{			
 			BuildingTile temp = BuildingTile(static_cast<BuildingColorType>(rand()%4+1), rand() % 6 + 1, static_cast<BuildingStatus>(0));
 			(*villageBoard).addNewBuildingTile(temp, i, j);
+			//std::cout << static_cast<int>(temp.getSide());
 		}
 
 	(*villageBoard).print();
@@ -111,9 +112,9 @@ int main()
 {
 	int hold;
 
-	//testFunction1();
+	testFunction1();
 	//testFunction2();
-	testFunction3();
+	//testFunction3();
 
 	system("pause");
 

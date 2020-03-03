@@ -190,8 +190,10 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr, S
 			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::topRight)),
 			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomLeft)),
 			static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomRight)) };
+		//static int res[4] = { 1,2,3,4 };
 		for (int i = 0; i < 4; i++)
-			std::cout << res[i] << std::endl;
+			std::cout << res[i] << "\t";
+		std::cout << std::endl;
 		sc.update_res(index, res);
 
 		return 1;
