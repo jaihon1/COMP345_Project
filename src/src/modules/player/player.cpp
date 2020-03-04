@@ -28,6 +28,11 @@ Player::~Player() {
         _buildingTiles = nullptr;
 //        cout << "DONE" << endl;
     }
+    
+    if (_buildingTiles) {
+        delete _villageBoard;
+        _villageBoard = nullptr;
+    }
 }
 
 

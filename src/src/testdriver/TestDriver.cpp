@@ -12,6 +12,10 @@
 #include "../modules/VGMapLoader/VGMapLoader.h"
 
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 using namespace std;
 
 HarvestDeck* testDeck = new HarvestDeck();
@@ -359,6 +363,9 @@ void menuOptions() {
 
 int main()
 {
+	/*MemoryLeak*/
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	int menuOption;
 	menuOptions();
 	cin >> menuOption;
