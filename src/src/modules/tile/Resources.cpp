@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <iostream>
 #include <algorithm>
-#include <time.h>
+
 #include "Resources.h"
 #include "Dictionary.h"
 #include "../Scoring/Scoring.h"
@@ -57,95 +57,156 @@ ResourceName HarvestTile::getResource(ResourceLocation inLocation)
 
 BuildingTile::BuildingTile()
 {
-    //
-    _firstBuilding = false;
+	//*_buildingColorType = BuildingColorType::None; 
+	//*_buildingStatus = BuildingStatus::Normal; 
+	//*_buildingNum = 0; 
+
+	_firstBuilding = false;
 }
 
-BuildingTile::BuildingTile(BuildingColorType *type, BuildingStatus *status) : _buildingColorType(type), _buildingStatus(status), _buildingNum(generateBuildingNumber())
+BuildingTile::BuildingTile(BuildingColorType* type, BuildingStatus* status) : _buildingColorType(type), _buildingStatus(status), _buildingNum(generateBuildingNumber())
 {
-    //*_buildingColorType = type;
-    //*_buildingStatus = status;
-    //_buildingNum = generateBuildingNumber();
+	//*_buildingColorType = type;
+	//*_buildingStatus = status;
+	//_buildingNum = generateBuildingNumber();
 
-    _firstBuilding = false;
+	_firstBuilding = false;
 }
 
-BuildingTile::BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s): _buildingColorType(t), _buildingNum(n), _buildingStatus(s)
+BuildingTile::BuildingTile(BuildingColorType* t, int* n, BuildingStatus* s) : _buildingColorType(t), _buildingNum(n), _buildingStatus(s)
 {
-    /*
-    _buildingColorType = t;
-    _buildingNum = n;
-    _buildingStatus = s;
-    */
-    _firstBuilding = false;
+	/*
+	_buildingColorType = t;
+	_buildingNum = n;
+	_buildingStatus = s;
+	*/
+	_firstBuilding = false;
 }
+
+/*
+BuildingTile::BuildingTile(const BuildingColorType t, const int n, const BuildingStatus s)
+{
+	*_buildingColorType = t;
+	*_buildingNum = n;
+	*_buildingStatus = s;
+	_firstBuilding = false;
+*/
 
 BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
 {
 	*_buildingColorType = t;
 	*_buildingNum = n;
 	*_buildingStatus = s;
+
 }
 
 BuildingTile::~BuildingTile() {
-    //do I need to code?
-    //if the member variables dont go on the stack, make them dynamic objects and delete every
-    //random to delete
-    //delete _int
 
-//    cout << "in destr" << endl;
-//    delete _buildingColorType;
-//    _buildingColorType = NULL;
-//    delete _buildingStatus;
-//    _buildingStatus = NULL;
+	//if the member variables dont go on the stack, make them dynamic objects and delete every
+	//random to delete
+	//delete _int
 
-    //delete _buildingNum;
-    //_buildingNum = NULL;
+	cout << "in destr" << endl;
+	delete _buildingColorType;
+	_buildingColorType = NULL;
+	delete _buildingStatus;
+	_buildingStatus = NULL;
 
+	delete _buildingNum;
+	_buildingNum = NULL;
 }
 
 BuildingColorType BuildingTile::getBuildingColorType() {
-    return *_buildingColorType;
+	return *_buildingColorType;
 }
 
 BuildingStatus BuildingTile::getSide() {
-    return *_buildingStatus;
+	return *_buildingStatus;
 }
 
 int BuildingTile::getBuildingNum() {
-    return *_buildingNum;
+	return *_buildingNum;
 }
 
 
-int *BuildingTile::generateBuildingNumber() {
-    if (_firstBuilding)
-    {
-        srand(time(NULL));  //set the seed first
-    }
-//    cout << "Randomizing" << endl;
-    int* random = new int(rand() % 6 + 1); //generate a random number from 1 to 6                                                                              //srand and seed it...
-    //int rando = rand() % 6 + 1; //generate a random number from 1 to 6
-    //int* random = &rando; //generate a random number from 1 to 6
-    return random;
+int* BuildingTile::generateBuildingNumber() {
+	if (_firstBuilding)
+	{
+		srand(time(NULL));  //set the seed first
+	}
+	//    cout << "Randomizing" << endl;
+	int* random = new int(rand() % 6 + 1); //generate a random number from 1 to 6                                                                              //srand and seed it...
+	//int rando = rand() % 6 + 1; //generate a random number from 1 to 6
+	//int* random = &rando; //generate a random number from 1 to 6
+	return random;
 }
 
 void BuildingTile::setBuildingNum(int num) {
-    *_buildingNum = num;
+	*_buildingNum = num;
 }
 
 void BuildingTile::setBuildingStatus(BuildingStatus s)
 {
-    *_buildingStatus = s;
+	*_buildingStatus = s;
+}
+
+void BuildingTile::setBuildingColorType(BuildingColorType c)
+{
+	*_buildingColorType = c;
 }
 
 void BuildingTile::flip() {
-    if (getSide() == BuildingStatus::Normal) {
-        setBuildingNum(-1);
-        setBuildingStatus(BuildingStatus::Flipped);
-    }
-    //cannot flip back
+	if (getSide() == BuildingStatus::Normal) {
+		setBuildingNum(-1);
+		setBuildingStatus(BuildingStatus::Flipped);
+	}
+	//cannot flip back
 
 }
+
+void BuildingTile::deepCopy(const BuildingTile& t)
+{
+	delete _buildingColorType;
+
+	if (t._buildingColorType)
+	{
+		_buildingColorType = new BuildingColorType(*t._buildingColorType);
+	}
+	else
+	{
+		_buildingColorType = nullptr;
+	}
+
+	delete _buildingNum;
+
+	if (t._buildingNum)
+	{
+		_buildingNum = new int(*t._buildingNum);
+	}
+	else
+	{
+		_buildingNum = nullptr;
+	}
+
+	delete _buildingStatus;
+
+	if (t._buildingStatus)
+	{
+		_buildingStatus = new BuildingStatus(*t._buildingStatus);
+
+	}
+	else
+	{
+		_buildingStatus = nullptr;
+	}
+}
+
+BuildingTile::BuildingTile(const BuildingTile& t) : _buildingColorType{ nullptr }, _buildingNum{ nullptr }, _buildingStatus{ nullptr }
+{
+	deepCopy(t);
+
+}
+
 
 
 HarvestDeck::HarvestDeck()
