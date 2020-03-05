@@ -82,7 +82,7 @@ GBMaps::~GBMaps()
 	for (int i = 0; i < *rows; i++) {
 		delete[] board[i];
 	}
-	delete board;
+	delete[] board;
 }
 
 void GBMaps::initializeBoardA() {

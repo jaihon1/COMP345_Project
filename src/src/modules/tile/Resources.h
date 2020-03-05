@@ -178,6 +178,7 @@ private:
 
 public:
 	HarvestDeck();
+	~HarvestDeck();
 	HarvestTile* draw();
     int getSize();
 

@@ -18,7 +18,7 @@
 
 using namespace std;
 
-HarvestDeck* testDeck = new HarvestDeck();
+
 
 const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
 	switch (inSquareStatus) {
@@ -87,6 +87,7 @@ void printGameBoard(GBMaps* inBoard) {
 
 void harvestTileTest() {
 	
+		HarvestDeck* testDeck = new HarvestDeck();
 		HarvestTile* testHarvestTile = testDeck->draw();
 		printHarvestTile(testHarvestTile);
 		cout << endl;
@@ -114,6 +115,7 @@ void harvestTileTest() {
 			cout << endl << "Again? y/n ";
 			cin >> yesNo;
 		}
+		delete testDeck;
 	
 }
 
@@ -126,6 +128,9 @@ void gbMapsTest() {
 
 		//SCORING OBJECT CONSTRUCTION
 		Scoring* sc = new Scoring();
+
+		//HARVEST DECK OBJECT CONSTRUCTION
+		HarvestDeck* testDeck = new HarvestDeck();
 
 		//GAMEBOARD CONSTRUCTION
 		GBMaps* gameBoard = new GBMaps(players, 'a', sc);
@@ -169,6 +174,10 @@ void gbMapsTest() {
 			cin >> quit;
 			cout << endl;
 		}
+
+		delete sc;
+		delete testDeck;
+		delete gameBoard;
 }
 
 void playerTest() {
@@ -207,7 +216,7 @@ void playerTest() {
 
 }
 
-void runGame(GBMaps* gameBoard) {
+void runGame(GBMaps* gameBoard, HarvestDeck* testDeck) {
 
 	printGameBoard(gameBoard);
 
@@ -256,6 +265,11 @@ void playGBMaps() {
 		// SCORING OBJECT CONSTRUCTION
 		Scoring* sc = new Scoring();
 
+		// HARVEST DECK OBJECT CONSTRUCTION
+		HarvestDeck* testDeck = new HarvestDeck();
+
+		GBMaps* gameBoard = NULL;
+
 		switch (oldOrNew) {
 		case 0:
 			flag = false;
@@ -267,8 +281,8 @@ void playGBMaps() {
 			cin >> players;
 
 			//GAMEBOARD CONSTRUCTION
-			GBMaps* gameBoard = new GBMaps(players, 'a', sc);
-			runGame(gameBoard);
+			gameBoard = new GBMaps(players, 'a', sc);
+			runGame(gameBoard, testDeck);
 			break;
 		}
 		case 2: {
@@ -277,13 +291,20 @@ void playGBMaps() {
 			cin >> filePath;
 			// LOADER CONSTRUCTION
 			GBMapLoader* testLoader = new GBMapLoader(&filePath[0], sc);
-			runGame(testLoader->getBoard());
+			gameBoard = testLoader->getBoard();
+			if (gameBoard != NULL) {
+				runGame(gameBoard, testDeck);
+			}
 			break;
 		}
 		default:
 			cout << "Sorry invalid input, please choose again" << endl;
 			break;
 		}
+		delete sc;
+		delete testDeck;
+		delete gameBoard;
+		
 	}
 }
 

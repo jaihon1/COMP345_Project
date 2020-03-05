@@ -292,6 +292,16 @@ HarvestDeck::HarvestDeck()
 	};
 }
 
+HarvestDeck::~HarvestDeck()
+{
+	
+	for (int i = 0; i < deckLength; i++) {
+		delete harvestDeck[i];
+	}
+	delete[] harvestDeck;
+
+}
+
 int HarvestDeck::getSize() {
     return deckLength;
 }
@@ -303,13 +313,13 @@ HarvestTile* HarvestDeck::draw() {
 	int randomNumber = rand() % deckLength;
 
 	HarvestTile* temp = harvestDeck[randomNumber];
-	
+
 	//deckLength decreases by one as a card is drawn out of the deck
 	deckLength--;
 
 	//loop shuffles pointers down to keep remaining HarvestTiles together at the "top" of the deck
 	//subtract one again from deckLength to prevent index out of bounds errors
-	for (int i = randomNumber; i < deckLength-1; i++) {
+	for (int i = randomNumber; i < deckLength; i++) {
 		harvestDeck[i] = harvestDeck[i+1];
 	}
 
