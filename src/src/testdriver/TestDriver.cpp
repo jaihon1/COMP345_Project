@@ -308,7 +308,7 @@ void playGBMaps() {
 	}
 }
 
-/*void VGMapLoaderTest()
+void VGMapLoaderTest()
 {
 	//create a new VGBoard
 	VGMaps* va = new VGMaps();
@@ -355,7 +355,7 @@ void playGBMaps() {
 	vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	*/
 	//s->save(va, "C:\json_test\VGMaptest.json");  -> BAD 
-	/*s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
+	s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
 
 	cout << "Saved va map" << endl;
 
@@ -375,11 +375,46 @@ void playGBMaps() {
 	cout << "Current MAP" << endl;
 
 	va->printVGMap();
-}*/
+}
+
+void testFunction6() {
+	VGMaps* villageBoard = new VGMaps();
+	Scoring scobj;
+	scobj.reset_res();
+
+	for (int i = 0; i < 6; i++)
+		for (int j = 0; j < 5; j++)
+		{
+			BuildingTile temp = BuildingTile(static_cast<BuildingColorType>(rand() % 4 + 1), rand() % 6 + 1, static_cast<BuildingStatus>(0));
+			//(*villageBoard).addNewBuildingTile(temp, i, j);
+			//std::cout << static_cast<int>(temp.getSide());
+		}
+
+	(*villageBoard).printVGMap();
+	int score_temp = scobj.get_score(*villageBoard);
+	//villageBoard.display_village();
+	std::cout << "village score: " << score_temp << std::endl;
+}
+
+void testFunction7() {
+	/*GBMaps* gameBoard = new GBMaps(2, 'a');
+	Scoring scobj;
+	scobj.reset_res();
+
+	for (int i = 0; i < 5; i++) {
+		HarvestTile* testHarvestTile = testDeck->draw();
+		//ROTATE METHODS TEST
+		//testHarvestTile -> RotateRight();
+		gameBoard->addHarvestTile(3, i + 1, testHarvestTile, scobj);
+		scobj.display_res();
+	}
+
+	printGameBoard(gameBoard);*/
+}
 
 
 void menuOptions() {
-	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - To Be Annouced" << endl << "0 - Exit" << endl << endl <<"Which test would you like to run? ";
+	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - VGMapLoaderTest" << endl << "0 - Exit" << endl << endl <<"Which test would you like to run? ";
 }
 
 int main()
@@ -408,7 +443,13 @@ int main()
 			playerTest();
 			break;
 		case 5:
-			cout << "unavailable"<<endl;
+			VGMapLoaderTest();
+			break;
+		case 6:
+			testFunction6();
+			break;
+		case 7:
+			cout << "unavailable" << endl;
 			break;
 		}
 		cout << endl;
