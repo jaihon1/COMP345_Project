@@ -57,13 +57,7 @@
       },
       {
         "GBSquare": {
-          "resources": [
-            "Lumber",
-            "Rock",
-            "Lumber",
-            "Wheat"
-          ],
-          "status": "HarvestTile"
+          "status": "Empty"
         }
       },
       {
@@ -102,60 +96,7 @@
       {
         "GBSquare": {
           "resources": [
-            "Rock",
-            "Sheep",
-            "Lumber",
-            "Rock"
-          ],
-          "status": "HarvestTile"
-        }
-      },
-      {
-        "GBSquare": {
-          "status": "Empty"
-        }
-      },
-      {
-        "GBSquare": {
-          "status": "Empty"
-        }
-      },
-      {
-        "GBSquare": {
-          "status": "Empty"
-        }
-      },
-      {
-        "GBSquare": {
-          "status": "Empty"
-        }
-      },
-      {
-        "GBSquare": {
-          "status": "Unavailable"
-        }
-      }
-    ],
-    [
-      {
-        "GBSquare": {
-          "status": "Unavailable"
-        }
-      },
-      {
-        "GBSquare": {
-          "status": "Empty"
-        }
-      },
-      {
-        "GBSquare": {
-          "status": "Empty"
-        }
-      },
-      {
-        "GBSquare": {
-          "resources": [
-            "Lumber",
+            "Wheat",
             "Rock",
             "Lumber",
             "Wheat"
@@ -175,6 +116,16 @@
       },
       {
         "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
           "status": "Unavailable"
         }
       }
@@ -208,6 +159,49 @@
       {
         "GBSquare": {
           "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Unavailable"
+        }
+      }
+    ],
+    [
+      {
+        "GBSquare": {
+          "status": "Unavailable"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "resources": [
+            "Lumber",
+            "Rock",
+            "Wheat",
+            "Lumber"
+          ],
+          "status": "HarvestTile"
         }
       },
       {

@@ -5,6 +5,12 @@
 
 class GBMaps;
 
+
+#define _DEBUG
+#ifdef _DEBUG
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#endif
+
 class Scoring
 {
 private:

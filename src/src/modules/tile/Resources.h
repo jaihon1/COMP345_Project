@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include <vector>
 #include "Dictionary.h"
 
@@ -72,23 +73,79 @@ public:
 		}
 	}
 
+
+	BuildingColorType buildingColorType;
+	int buildingNum;
+	BuildingStatus buildingStatus;
+
+	//allocate memorys
+	BuildingColorType* _buildingColorType = &buildingColorType;
+	int* _buildingNum = &buildingNum;
+	BuildingStatus* _buildingStatus = &buildingStatus;
+
+
+public:
+	BuildingTile();
+	BuildingTile(BuildingColorType* type, BuildingStatus* status);
+	BuildingTile(BuildingColorType* t, int* n, BuildingStatus* s);
+	//buildingTile for map loader
+	BuildingTile(const BuildingColorType t, const int n, const BuildingStatus s);
+
+	~BuildingTile();
+
+	BuildingColorType getBuildingColorType();
+	BuildingStatus getSide();
+	int getBuildingNum();
+
+	void setBuildingNum(int num);
+	void setBuildingStatus(BuildingStatus s);
+	void setBuildingColorType(BuildingColorType c);
+
+	int* generateBuildingNumber();
+	void flip();
+
+	void deepCopy(const BuildingTile& t);
+
+	//Deep copy constructor 
+	BuildingTile(const BuildingTile& t);
+
+	//methods for map Loader 
+	static const char* Building_typeToChar(BuildingColorType b)
+	{
+		switch (b)
+		{
+		case BuildingColorType::GreenSheep:
+			return "GreenSheep";
+		case BuildingColorType::GreyRock:
+			return "GreyRock";
+		case BuildingColorType::None:
+			return "None";
+		case BuildingColorType::RedLumber:
+			return "RedLumber";
+		case BuildingColorType::YellowHay:
+			return "YellowHay";
+		}
+	}
+
 	/*
 	BuildingColorType buildingColorType;
 	int buildingNum;
 	BuildingStatus buildingStatus;
-    BuildingColorType* _buildingColorType = &buildingColorType;
-    int* _buildingNum = &buildingNum;
-    BuildingStatus* _buildingStatus = &buildingStatus;
-     
-public:    
-    BuildingTile();
-    BuildingTile(BuildingColorType* type, BuildingStatus* status);
-    BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s);
+	BuildingColorType* _buildingColorType = &buildingColorType;
+	int* _buildingNum = &buildingNum;
+	BuildingStatus* _buildingStatus = &buildingStatus;
+
+public:
+	BuildingTile();
+	BuildingTile(BuildingColorType* type, BuildingStatus* status);
+	BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s);
 	BuildingTile(BuildingColorType t, int n, BuildingStatus s);
+
     ~BuildingTile();
 */
 
 	//methods for map Loader 
+
 	static const char* Building_statusToChar(BuildingStatus t)
 	{
 		switch (t)
@@ -106,7 +163,6 @@ public:
 	{
 		string digits[] = { "1", "2", "3", "4", "5", "6" };
 		//char *aChar = new char(); 
-
 		string aChar = digits[--i];
 		return aChar; //returning the value assigned to the pointer 
 	}
@@ -147,9 +203,11 @@ public:
 				return "Wheat";
 			}
 
+
 			return "Error from ResourceNameToString";
 		}
 	};
+
 
 	class HarvestDeck {
 	private:
@@ -160,7 +218,6 @@ public:
 		HarvestDeck();
 		HarvestTile* draw();
 		int getSize();
-
 	};
 
 	class BuildingDeck {

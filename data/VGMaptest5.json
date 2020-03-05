@@ -1,0 +1,230 @@
+{
+  "VGboard": [
+    [
+      {
+        "VGSquare": {
+          "*building_ptr": {
+            "BuildingColorType": "GreenSheep",
+            "BuildingNumber": "3",
+            "BuildingSide": "Normal"
+          },
+          "VGSquare_type": "GreenSheep",
+          "VGstatus": "Taken"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      }
+    ],
+    [
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      }
+    ],
+    [
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      }
+    ],
+    [
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      }
+    ],
+    [
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      }
+    ],
+    [
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      },
+      {
+        "VGSquare": {
+          "*building_ptr": 0,
+          "VGSquare_type": "None",
+          "VGstatus": "Empty"
+        }
+      }
+    ]
+  ]
+}

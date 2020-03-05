@@ -23,6 +23,7 @@ string status_to_string(VGSlotStatus s)
 
 }
 
+
 string colortype_to_string(BuildingColorType c)
 {
 	switch (c)
@@ -61,6 +62,7 @@ int main()
 	//A a(); stack
 	//A* aPtr = &a; 
 
+
 	//driver?
 	return 0; 
 }
@@ -83,9 +85,11 @@ int main()
 	VGMaps *v = new VGMaps();
 	//VGMaps* v =  &VGMaps();
 
+
 	//VGMaps* gg(); //most vexing part annoying error 
 	//int r = *(v.rows);
 	//int c = *(v.columns); 
+
 
 	//int *r = map->rows; 
 	//int *c = map->columns; 
@@ -193,7 +197,6 @@ int main()
 	/* == BEFORE TESTING NGUYEN'S CODE 
 	cout << "\n"; 
 	cout << "Adding Building Tile" << endl; 
-
 	
 	BuildingColorType * type1 = new BuildingColorType(BuildingColorType::GreenSheep);
 	BuildingStatus *status1 = new BuildingStatus(BuildingStatus::Normal);
@@ -204,6 +207,7 @@ int main()
 
 	/*
 	cout << "creating 6 types of each 4 types" << endl; 
+
 
 	vector <BuildingTile> *greens = new vector<BuildingTile>(6); 
 	for (int i = 0; i < 6; i++)
@@ -216,6 +220,7 @@ int main()
 
 		greens->insert(greens->begin() + i, *temp); 
 		cout << "created 6 green building tiles" << endl; 
+
 
 	}
 	*/
@@ -255,6 +260,7 @@ int main()
 	v->addNewBuildingTile(*t2, 1, 0); //GIVES two unavailable and does not add any element OR doesn't bypass and places the tile again (
 	//v->addNewBuildingTile(*t2, 2, 3);
 
+
 	v->printVGMap();
 	
 	BuildingColorType * type3 = new BuildingColorType(BuildingColorType::RedLumber);
@@ -272,6 +278,7 @@ int main()
 
 	v->addNewBuildingTile(*t4, 1, 2);
 
+
 	cout << "Final map" << endl; 
 	v->printVGMap();
 	*/
@@ -279,3 +286,4 @@ int main()
 	return 0; 
 }
 */ 
+

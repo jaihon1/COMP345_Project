@@ -3,7 +3,7 @@
 #include <time.h>
 #include <iostream>
 #include <algorithm>
-#include <time.h>
+
 #include "Resources.h"
 #include "Dictionary.h"
 
@@ -60,25 +60,26 @@ BuildingTile::BuildingTile()
 	//*_buildingNum = 0; 
 
     _firstBuilding = false;
+
 }
 
-BuildingTile::BuildingTile(BuildingColorType *type, BuildingStatus *status) : _buildingColorType(type), _buildingStatus(status), _buildingNum(generateBuildingNumber())
+BuildingTile::BuildingTile(BuildingColorType* type, BuildingStatus* status) : _buildingColorType(type), _buildingStatus(status), _buildingNum(generateBuildingNumber())
 {
-    //*_buildingColorType = type;
-    //*_buildingStatus = status;
-    //_buildingNum = generateBuildingNumber();
+	//*_buildingColorType = type;
+	//*_buildingStatus = status;
+	//_buildingNum = generateBuildingNumber();
 
-    _firstBuilding = false;
+	_firstBuilding = false;
 }
 
-BuildingTile::BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s): _buildingColorType(t), _buildingNum(n), _buildingStatus(s)
+BuildingTile::BuildingTile(BuildingColorType* t, int* n, BuildingStatus* s) : _buildingColorType(t), _buildingNum(n), _buildingStatus(s)
 {
-    /*
-    _buildingColorType = t;
-    _buildingNum = n;
-    _buildingStatus = s;
-    */
-    _firstBuilding = false;
+	/*
+	_buildingColorType = t;
+	_buildingNum = n;
+	_buildingStatus = s;
+	*/
+	_firstBuilding = false;
 }
 
 /*
@@ -91,12 +92,14 @@ BuildingTile::BuildingTile(const BuildingColorType t, const int n, const Buildin
 
 */ 
 
+
 BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
 {
 	*_buildingColorType = t;
 	*_buildingNum = n;
 	*_buildingStatus = s;
 
+	_firstBuilding = false; //not sure 
 }
 
 BuildingTile::~BuildingTile() {
@@ -116,37 +119,42 @@ BuildingTile::~BuildingTile() {
 }
 
 BuildingColorType BuildingTile::getBuildingColorType() {
-    return *_buildingColorType;
+	return *_buildingColorType;
 }
 
 BuildingStatus BuildingTile::getSide() {
-    return *_buildingStatus;
+	return *_buildingStatus;
 }
 
 int BuildingTile::getBuildingNum() {
-    return *_buildingNum;
+	return *_buildingNum;
 }
 
 
-int *BuildingTile::generateBuildingNumber() {
-    if (_firstBuilding)
-    {
-        srand(time(NULL));  //set the seed first
-    }
-//    cout << "Randomizing" << endl;
-    int* random = new int(rand() % 6 + 1); //generate a random number from 1 to 6                                                                              //srand and seed it...
-    //int rando = rand() % 6 + 1; //generate a random number from 1 to 6
-    //int* random = &rando; //generate a random number from 1 to 6
-    return random;
+int* BuildingTile::generateBuildingNumber() {
+	if (_firstBuilding)
+	{
+		srand(time(NULL));  //set the seed first
+	}
+	//    cout << "Randomizing" << endl;
+	int* random = new int(rand() % 6 + 1); //generate a random number from 1 to 6                                                                              //srand and seed it...
+	//int rando = rand() % 6 + 1; //generate a random number from 1 to 6
+	//int* random = &rando; //generate a random number from 1 to 6
+	return random;
 }
 
 void BuildingTile::setBuildingNum(int num) {
-    *_buildingNum = num;
+	*_buildingNum = num;
 }
 
 void BuildingTile::setBuildingStatus(BuildingStatus s)
 {
-    *_buildingStatus = s;
+	*_buildingStatus = s;
+}
+
+void BuildingTile::setBuildingColorType(BuildingColorType c)
+{
+	*_buildingColorType = c;
 }
 
 void BuildingTile::setBuildingColorType(BuildingColorType c)
@@ -155,11 +163,11 @@ void BuildingTile::setBuildingColorType(BuildingColorType c)
 }
 
 void BuildingTile::flip() {
-    if (getSide() == BuildingStatus::Normal) {
-        setBuildingNum(-1);
-        setBuildingStatus(BuildingStatus::Flipped);
-    }
-    //cannot flip back
+	if (getSide() == BuildingStatus::Normal) {
+		setBuildingNum(-1);
+		setBuildingStatus(BuildingStatus::Flipped);
+	}
+	//cannot flip back
 
 }
 
@@ -290,6 +298,16 @@ HarvestDeck::HarvestDeck()
 	};
 }
 
+HarvestDeck::~HarvestDeck()
+{
+	
+	for (int i = 0; i < deckLength; i++) {
+		delete harvestDeck[i];
+	}
+	delete[] harvestDeck;
+
+}
+
 int HarvestDeck::getSize() {
     return deckLength;
 }
@@ -301,13 +319,13 @@ HarvestTile* HarvestDeck::draw() {
 	int randomNumber = rand() % deckLength;
 
 	HarvestTile* temp = harvestDeck[randomNumber];
-	
+
 	//deckLength decreases by one as a card is drawn out of the deck
 	deckLength--;
 
 	//loop shuffles pointers down to keep remaining HarvestTiles together at the "top" of the deck
 	//subtract one again from deckLength to prevent index out of bounds errors
-	for (int i = randomNumber; i < deckLength-1; i++) {
+	for (int i = randomNumber; i < deckLength; i++) {
 		harvestDeck[i] = harvestDeck[i+1];
 	}
 

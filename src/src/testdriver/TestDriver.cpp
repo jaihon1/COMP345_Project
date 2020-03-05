@@ -1,5 +1,7 @@
 #include <iostream>
 #include <iomanip>
+#include <vector>
+#include <string>
 #include "../modules/board/GBMaps.h"
 #include "../modules/GBMapLoader/GBMapLoader.h"
 #include "../modules/tile/Dictionary.h"
@@ -7,11 +9,18 @@
 #include "../modules/tile/Resources.h"
 #include "../modules/Scoring/Scoring.h"
 #include "../modules/player/player.h"
+#include "../modules/board/VGMaps.h"
+#include "../modules/VGMapLoader/VGMapLoader.h"
+
+
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
 
 using namespace std;
 
-HarvestDeck* testDeck = new HarvestDeck();
+
 
 void printHarvestTile(HarvestTile* inHarvestTile) {
 	cout << "\n";
@@ -87,6 +96,8 @@ void printGameBoard(GBMaps* inBoard) {
 
 void harvestTileTest() {
 
+		HarvestDeck* testDeck = new HarvestDeck();
+
 		HarvestTile* testHarvestTile = testDeck->draw();
 		printHarvestTile(testHarvestTile);
 		cout << endl;
@@ -114,6 +125,7 @@ void harvestTileTest() {
 			cout << endl << "Again? y/n ";
 			cin >> yesNo;
 		}
+		delete testDeck;
 	
 }
 
@@ -126,6 +138,9 @@ void gbMapsTest() {
 
 		//SCORING OBJECT CONSTRUCTION
 		Scoring* sc = new Scoring();
+
+		//HARVEST DECK OBJECT CONSTRUCTION
+		HarvestDeck* testDeck = new HarvestDeck();
 
 		//GAMEBOARD CONSTRUCTION
 		GBMaps* gameBoard = new GBMaps(players, 'a', sc);
@@ -169,6 +184,10 @@ void gbMapsTest() {
 			cin >> quit;
 			cout << endl;
 		}
+
+		delete sc;
+		delete testDeck;
+		delete gameBoard;
 }
 
 void playerTest() {
@@ -207,7 +226,7 @@ void playerTest() {
 
 }
 
-void runGame(GBMaps* gameBoard) {
+void runGame(GBMaps* gameBoard, HarvestDeck* testDeck) {
 
 	printGameBoard(gameBoard);
 
@@ -257,6 +276,12 @@ void playGBMaps() {
 		Scoring* sc = new Scoring();
 
 
+		// HARVEST DECK OBJECT CONSTRUCTION
+		HarvestDeck* testDeck = new HarvestDeck();
+
+		GBMaps* gameBoard = NULL;
+
+
 		switch (oldOrNew) {
 		case 0:
 			flag = false;
@@ -268,8 +293,8 @@ void playGBMaps() {
 			cin >> players;
 
 			//GAMEBOARD CONSTRUCTION
-			GBMaps* gameBoard = new GBMaps(players, 'a', sc);
-			runGame(gameBoard);
+			gameBoard = new GBMaps(players, 'a', sc);
+			runGame(gameBoard, testDeck);
 			break;
 		}
 		case 2: {
@@ -278,23 +303,102 @@ void playGBMaps() {
 			cin >> filePath;
 			// LOADER CONSTRUCTION
 			GBMapLoader* testLoader = new GBMapLoader(&filePath[0], sc);
-			runGame(testLoader->getBoard());
+			gameBoard = testLoader->getBoard();
+			if (gameBoard != NULL) {
+				runGame(gameBoard, testDeck);
+			}
 			break;
 		}
 		default:
 			cout << "Sorry invalid input, please choose again" << endl;
 			break;
 		}
+		delete sc;
+		delete testDeck;
+		delete gameBoard;
+		
 	}
+}
+
+void VGMapLoaderTest()
+{
+	//create a new VGBoard
+	VGMaps* va = new VGMaps();
+
+	int ro = *(va->rows);
+	int co = *(va->columns);
+
+	va->printVGMap();
+	cout << "created VGMap" << endl;
+
+
+
+	cout << "Add building" << endl;
+
+
+
+	BuildingColorType* type1 = new BuildingColorType(BuildingColorType::GreenSheep);
+	BuildingStatus* status1 = new BuildingStatus(BuildingStatus::Normal);
+
+	BuildingTile* t1 = new BuildingTile(type1, status1);
+
+	/*
+	cout << BuildingTile::Building_typeToChar(t1->getBuildingColorType()) << endl;
+	cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
+	*/
+	cout << BuildingTile::Building_intToChar(t1->getBuildingNum()) << endl;
+
+
+	va->addNewBuildingTile(*t1, 0, 0);
+
+
+	cout << "Current map" << endl;
+	va->printVGMap();
+
+
+	cout << "Saving VGMAP out" << endl;
+
+	VGMapSaver* s = new VGMapSaver();
+	/*************************************************
+	**************************************************
+					CHECK FILE PATH!
+	**************************************************
+	**************************************************
+	vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+	*/
+	//s->save(va, "C:\json_test\VGMaptest.json");  -> BAD 
+	s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
+
+	cout << "Saved va map" << endl;
+
+
+
+	VGMapLoader* m = new VGMapLoader();
+
+	cout << "\n";
+	cout << "Loading VGMap in " << endl;
+
+	VGMapLoader* l = new VGMapLoader("C:\\json_test\\VGMaptest5.json");
+
+	cout << "\n";
+	cout << "\n";
+	cout << "Sucess in reading" << endl;
+
+	cout << "Current MAP" << endl;
+
+	va->printVGMap();
 }
 
 
 void menuOptions() {
-	cout << "1 - GBMaps Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "0 - Exit" << endl << endl <<"Which test would you like to run? ";
+	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - To Be Annouced" << endl << "0 - Exit" << endl << endl <<"Which test would you like to run? ";
 }
 
 int main()
 {
+	/*MemoryLeak*/
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	int menuOption;
 	menuOptions();
 	cin >> menuOption;
@@ -314,6 +418,9 @@ int main()
 			break;
 		case 4:
 			playerTest();
+			break;
+		case 5:
+			cout << "unavailable"<<endl;
 			break;
 		}
 		cout << endl;
