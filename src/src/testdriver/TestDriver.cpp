@@ -308,7 +308,7 @@ void playGBMaps() {
 	}
 }
 
-void VGMapLoaderTest()
+/*void VGMapLoaderTest()
 {
 	//create a new VGBoard
 	VGMaps* va = new VGMaps();
@@ -330,10 +330,10 @@ void VGMapLoaderTest()
 
 	BuildingTile* t1 = new BuildingTile(type1, status1);
 
-	/*
-	cout << BuildingTile::Building_typeToChar(t1->getBuildingColorType()) << endl;
-	cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
-	*/
+	
+	//cout << BuildingTile::Building_typeToChar(t1->getBuildingColorType()) << endl;
+	//cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
+	
 	cout << BuildingTile::Building_intToChar(t1->getBuildingNum()) << endl;
 
 
@@ -355,7 +355,7 @@ void VGMapLoaderTest()
 	vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	*/
 	//s->save(va, "C:\json_test\VGMaptest.json");  -> BAD 
-	s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
+	/*s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
 
 	cout << "Saved va map" << endl;
 
@@ -375,7 +375,7 @@ void VGMapLoaderTest()
 	cout << "Current MAP" << endl;
 
 	va->printVGMap();
-}
+}*/
 
 
 void menuOptions() {
@@ -416,6 +416,19 @@ int main()
 		cin >> menuOption;
 	}
 }
+
+/*struct Org {
+int x;
+};
+
+int main()
+{
+Org* ptr = DBG_NEW Org;
+ptr = DBG_NEW Org; // Oops, leaked the original!
+delete ptr;
+
+_CrtDumpMemoryLeaks();
+}*/
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
