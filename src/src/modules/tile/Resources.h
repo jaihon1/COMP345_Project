@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Dictionary.h"
+
 class Scoring;
 
 using namespace std;

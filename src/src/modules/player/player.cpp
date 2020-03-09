@@ -30,7 +30,7 @@ Player::~Player() {
 //        cout << "DONE" << endl;
     }
     
-    if (_buildingTiles) {
+    if (_villageBoard) {
         delete _villageBoard;
         _villageBoard = nullptr;
     }
