@@ -4,7 +4,8 @@
 #include <fstream>
 #include "../board/VGMaps.h"
 #include "../tile/Resources.h"
-#include <nlohmann/json.hpp>
+#include "../../nlohmann/json.hpp"
+
 using namespace std;
 
 using json = nlohmann::json;
@@ -79,8 +80,9 @@ VGMapLoader::VGMapLoader(const char* inFile)
 				cout << "Found side" << endl;
 				cout << BuildingTile::Building_statusToChar(s) << endl;
 
-				cout << "suspected crash" << endl;
+				//cout << "suspected crash" << endl;
 				int n = bIMap[*b_num];
+				cout << "Found num" << endl; 
 
 				BuildingTile* temp = new BuildingTile(c, n, s);
 
@@ -94,11 +96,11 @@ VGMapLoader::VGMapLoader(const char* inFile)
 				board->addNewBuildingTile(*temp, VG_row, VG_col); //dereference temp
 				cout << "Added new building sucess" << endl;
 
+				//Dont need
+				//auto const VGSquare_type = VGS->find("VGSquare_type");
 
-				auto const VGSquare_type = VGS->find("VGSquare_type");
-
-				//delete temp;
-				//temp = NULL; //good practice
+				delete temp;
+				temp = NULL; //good practice, clear out the temp pointer
 			}
 			else if (sMap[*VGstat] == VGSlotStatus::Empty)
 			{

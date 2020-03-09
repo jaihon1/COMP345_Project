@@ -5,7 +5,6 @@
 
 class GBMaps;
 
-
 #define _DEBUG
 #ifdef _DEBUG
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
@@ -67,10 +66,10 @@ public:
 	int get_sheep();
 	int get_wheat();
 	int get_stone();
-
 	int get_score(VGMaps &vil);
-
 	int get_res(int resv);
 	void display_res();
-};
 
+	int map(int index, GBMaps* inHarvestBoard);
+	void computeResources(int row, int column, HarvestTile* inHarvestTilePtr, GBMaps* inHarvestBoard);
+};

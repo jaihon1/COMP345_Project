@@ -42,31 +42,39 @@ string colortype_to_string(BuildingColorType c)
 
 VGMaps::VGMaps()
 {
-	village_board = new VGSquare * [*rows];
+	village_board = new VGSquare * [*rows]; //on the heap
 
 	for (int i = 0; i < *rows; i++)
 	{
-		village_board[i] = new VGSquare[*columns];
+		village_board[i] = new VGSquare[*columns]; // on the heap 
 
 		//initialized the current 2D array, might have to do outside 
 		for (int j = 0; j < *columns; j++)
 		{
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
-			//for now for testing
+			
 			village_board[i][j].VGSquare_type = BuildingColorType::None;
+
 
 		}
 	}
 }
 
-//I do not think we need, 
 VGMaps::~VGMaps()
 {
+	//delete everything inside the village board that is dynamically allocated
 	for (int i = 0; i < *rows; i++)
 	{
-		delete[] village_board[i];
+		delete[] village_board[i]; //deleting each element inside them pointers 
 	}
-	delete village_board;
+
+	delete [] village_board; //delete the array of pointers 
+
+	//deallocate the rows and colums pointer
+	delete rows; 
+	//rows = NULL; 
+	delete columns; 
+	//columns = NULL; 
 }
 
 //function is not useful, it is only called through the VGMaps but not inside connections 
@@ -139,8 +147,6 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		unavailable.building_ptr = NULL; //points to nothing cuz no building tile
 
 		connections[0] = unavailable; 
-
-
 	}
 
 	//check right
@@ -168,7 +174,6 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		//connections.insert(it + 1, unavailable);
 		cout << "right - unavailable" << endl; 
 		connections[1] = unavailable; 
-
 	}
 
 	int bottom = r + 1;
@@ -197,7 +202,6 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		//this means there are no slots at the bottom -> you are at the bottom row
 		//connections.insert(it + 2, unavailable);
 		connections[2] = unavailable; 
-
 	}
 
 	//check left 
@@ -436,9 +440,10 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			}
 		}
 
-		cout << "Null the to add" << endl;
+		cout << "Deallocate local ptr and Null the to add" << endl;
 		//make to_add point to null ptr
-		to_add = nullptr;
+		delete to_add; 
+		to_add = NULL; 
 
 	}
 

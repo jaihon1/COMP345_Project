@@ -7,6 +7,7 @@
 #include <iostream>
 #include <stdlib.h>
 using namespace std; 
+*/ 
 
 /*
 string status_to_string(VGSlotStatus s)

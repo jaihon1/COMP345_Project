@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
-#include "player.h"
-#include "Dictionary.h"
-#include "GBMaps.h"
-#include "Resources.h"
+#include "modules/player/player.h"
+#include "modules/tile/Dictionary.h"
+#include "modules/board/GBMaps.h"
+#include "modules/tile/Resources.h"
 
 /*
 #include "player.h"

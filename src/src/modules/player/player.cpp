@@ -1,4 +1,4 @@
-/*
+
 #include "player.h"
 #include <algorithm>
 
@@ -108,4 +108,3 @@ void Player::ressourceTracker() {
     getHarvestTiles();
     cout << "-- END --" << endl << endl;
 }
-*/ 

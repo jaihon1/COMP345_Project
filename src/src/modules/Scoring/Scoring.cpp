@@ -1,9 +1,7 @@
 
-
 #include "../tile/Resources.h"
 #include "../board/GBMaps.h"
 #include "Scoring.h"
-
 
 Scoring::Scoring()
 {
@@ -35,7 +33,7 @@ void Scoring::add_res(int resv, int numv)
 void Scoring::update_help(int v, int w, int res) {
 	if (vertices.is_adjacent(v, w))
 		add_res(res, vertices.connected(v));
-	else {		
+	else {
 		add_res(res, vertices.connected(v));
 		add_res(res, vertices.connected(w));
 	}
@@ -48,7 +46,7 @@ void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 	//update_help(pos[1], pos[2], res[1]);
 	//update_help(pos[2], pos[1], res[2]);
 	//update_help(pos[3], pos[0], res[3]);
-	
+
 	for (int i = 0; i < 4; i++)
 	{
 		if (res[i] == 0)
@@ -62,7 +60,7 @@ void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 		}
 		add_res(res[i], vertices.connected(pos[i]));
 	}
-		
+
 }
 
 void Scoring::connectedComponents()
@@ -100,8 +98,6 @@ int Scoring::get_stone()
 	return res_score[4];
 }
 
-
-
 int Scoring::get_score(VGMaps &vil)
 {
 	int score = 0;
@@ -110,25 +106,24 @@ int Scoring::get_score(VGMaps &vil)
 	int village_row = 6;
 	int village_col = 5;
 
-		
 	for (int i = 0; i < village_row; i++)
 	{
 		mul = true;
 		complete = true;
-		for (int j = 0; j < village_col; j++) {			
+		for (int j = 0; j < village_col; j++) {
 			if (vil.isEmpty(i, j))
 				complete = false;
 			else
 				if (vil.isFlipped(i, j))
-					mul = false;			
+					mul = false;
 		}
 		if (!complete)
 			continue;
 		if (mul)
 			score += (village_row - i) * 2;
-		else 
+		else
 			score += (village_row - i);
-	}		
+	}
 
 	for (int i = 0; i < village_col; i++) {
 		mul = true;
@@ -144,15 +139,16 @@ int Scoring::get_score(VGMaps &vil)
 		if (!complete)
 			continue;
 		if (mul)
-			score += (village_col - (2 - abs(i-2))) * 2;
+			score += (village_col - (2 - abs(i - 2))) * 2;
 		else
-			score += (village_col - (2 - abs(i-2)));
+			score += (village_col - (2 - abs(i - 2)));
 		//std::cout << "test: " << score << std::endl;
 	}
 
+
+
 	return score;
 }
-
 
 int Scoring::get_res(int resv)
 {
@@ -162,7 +158,7 @@ int Scoring::get_res(int resv)
 void Scoring::display_res()
 {
 	std::cout << "Resource: " << std::endl;
-	for(int i = 1; i < 5 ; i++)
+	for (int i = 1; i < 5; i++)
 		std::cout << res_score[i] << std::endl;
 	std::cout << std::endl;
 }
@@ -224,16 +220,16 @@ void Scoring::Graph::connectedComponents()
 	int retval = []() -> int { return 1; }();
 	VER *visited = new VER[V]();
 
-	for (int v = 0; v<V; v++)
+	for (int v = 0; v < V; v++)
 	{
 		if (visited[v].visited == false)
 		{
 			// print all reachable vertices from v 			
 			DFSUtil(v, visited);
 
-			std::cout << "\n";				
+			std::cout << "\n";
 		}
-	}	
+	}
 
 	delete visited;
 }
@@ -257,7 +253,6 @@ void Scoring::Graph::addEdge(int v, int w)
 	adj[v].push_back(w);
 	adj[w].push_back(v);
 }
-
 /*********************Nested Graph******************/
 
 
@@ -311,4 +306,3 @@ void Scoring::computeResources(int row, int column, HarvestTile* inHarvestTilePt
 		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomRight)) };
 	update_res(index, res);
 }
-

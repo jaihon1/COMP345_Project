@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Dictionary.h"
+class Scoring;
 
 using namespace std;
 
@@ -17,63 +18,9 @@ private:
 	BuildingColorType* _buildingColorType;
 	int* _buildingNum;
 	BuildingStatus* _buildingStatus;
-	*/ 
+	*/
 
 	//constructor for the attributes to allocate memory slot
-	BuildingColorType buildingColorType;
-	int buildingNum;
-	BuildingStatus buildingStatus;
-
-	//allocate memorys
-	BuildingColorType* _buildingColorType = &buildingColorType;
-	int* _buildingNum = &buildingNum;
-	BuildingStatus *_buildingStatus = &buildingStatus;
-	
-
-public:
-	BuildingTile();
-	BuildingTile(BuildingColorType* type, BuildingStatus* status);
-	BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s);
-	//buildingTile for map loader
-	BuildingTile(const BuildingColorType t, const int n, const BuildingStatus s);
-
-	~BuildingTile();
-
-	BuildingColorType getBuildingColorType();
-	BuildingStatus getSide();
-	int getBuildingNum();
-
-	void setBuildingNum(int num);
-	void setBuildingStatus(BuildingStatus s);
-	void setBuildingColorType(BuildingColorType c);
-
-	int* generateBuildingNumber();
-	void flip();
-
-	void deepCopy(const BuildingTile &t); 
-
-	//Deep copy constructor 
-	BuildingTile(const BuildingTile &t);
-
-	//methods for map Loader 
-	static const char* Building_typeToChar(BuildingColorType b)
-	{
-		switch (b)
-		{
-		case BuildingColorType::GreenSheep:
-			return "GreenSheep";
-		case BuildingColorType::GreyRock:
-			return "GreyRock";
-		case BuildingColorType::None:
-			return "None";
-		case BuildingColorType::RedLumber:
-			return "RedLumber";
-		case BuildingColorType::YellowHay:
-			return "YellowHay";
-		}
-	}
-
-
 	BuildingColorType buildingColorType;
 	int buildingNum;
 	BuildingStatus buildingStatus;
@@ -98,6 +45,7 @@ public:
 	int getBuildingNum();
 
 	void setBuildingNum(int num);
+	bool numCheck(int num); 
 	void setBuildingStatus(BuildingStatus s);
 	void setBuildingColorType(BuildingColorType c);
 
@@ -108,6 +56,8 @@ public:
 
 	//Deep copy constructor 
 	BuildingTile(const BuildingTile& t);
+
+	BuildingTile & operator = (const BuildingTile & b); 
 
 	//methods for map Loader 
 	static const char* Building_typeToChar(BuildingColorType b)
@@ -127,25 +77,6 @@ public:
 		}
 	}
 
-	/*
-	BuildingColorType buildingColorType;
-	int buildingNum;
-	BuildingStatus buildingStatus;
-	BuildingColorType* _buildingColorType = &buildingColorType;
-	int* _buildingNum = &buildingNum;
-	BuildingStatus* _buildingStatus = &buildingStatus;
-
-public:
-	BuildingTile();
-	BuildingTile(BuildingColorType* type, BuildingStatus* status);
-	BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s);
-	BuildingTile(BuildingColorType t, int n, BuildingStatus s);
-
-    ~BuildingTile();
-*/
-
-	//methods for map Loader 
-
 	static const char* Building_statusToChar(BuildingStatus t)
 	{
 		switch (t)
@@ -159,81 +90,95 @@ public:
 	}
 
 	//methods for map Loader 
-	static string Building_intToChar(int i) 
+	static string Building_intToChar(int i)
 	{
 		string digits[] = { "1", "2", "3", "4", "5", "6" };
 		//char *aChar = new char(); 
+
 		string aChar = digits[--i];
 		return aChar; //returning the value assigned to the pointer 
 	}
 };
 
-	class HarvestTile :
-		public Tile
-	{
-	private:
-		ResourceName* resourceArr;
+class BuildingDeck {
+private:
+	int* _sizeMax;
+	vector<BuildingTile*>* _deck;
 
-	public:
-		//parameters are the resources intended for the various locations on the tile
-		HarvestTile(ResourceName topRightRes, ResourceName topLeftRes, ResourceName bottomLeftRes, ResourceName bottomRightRes);
-		HarvestTile(const HarvestTile &harvestTile);
-		HarvestTile();
+public:
+	BuildingDeck();
+	BuildingDeck(const BuildingDeck& deck);
+	~BuildingDeck();
 
-		~HarvestTile();
+	vector<BuildingTile*>* getDeck();
+	BuildingTile* draw();
+	unsigned long getSize();
+	void add(BuildingTile& tile);
+	void remove(BuildingTile& tile);
 
-		void RotateRight();
+};
 
-		void RotateLeft();
+class HarvestTile :
+	public Tile
+{
+private:
+	ResourceName* resourceArr;
 
-		ResourceName getResource(ResourceLocation inLocation);
+public:
+	//parameters are the resources intended for the various locations on the tile
+	HarvestTile(ResourceName topRightRes, ResourceName topLeftRes, ResourceName bottomLeftRes, ResourceName bottomRightRes);
+	HarvestTile(const HarvestTile &harvestTile);
+	HarvestTile();
 
-		static const char* ResourceNameToString(ResourceName inResourceName) {
-			switch (inResourceName) {
-			case ResourceName::Lumber:
-				return "Lumber";
+	~HarvestTile();
 
-			case ResourceName::Rock:
-				return "Rock";
+	void RotateRight();
 
-			case ResourceName::Sheep:
-				return "Sheep";
+	void RotateLeft();
 
-			case ResourceName::Wheat:
-				return "Wheat";
-			}
+	ResourceName getResource(ResourceLocation inLocation);
 
+	static const char* ResourceNameToString(ResourceName inResourceName) {
+		switch (inResourceName) {
+		case ResourceName::Lumber:
+			return "Lumber";
 
-			return "Error from ResourceNameToString";
+		case ResourceName::Rock:
+			return "Rock";
+
+		case ResourceName::Sheep:
+			return "Sheep";
+
+		case ResourceName::Wheat:
+			return "Wheat";
 		}
-	};
+
+		return "Error from ResourceNameToString";
+	}
+};
+
+class HarvestDeck {
+private:
+	HarvestTile** harvestDeck;
+	int deckLength = 60;
+
+public:
+	HarvestDeck();
+	~HarvestDeck();
+	HarvestTile* draw();
+	int getSize();
+
+};
 
 
-	class HarvestDeck {
-	private:
-		HarvestTile** harvestDeck;
-		int deckLength = 60;
+class Hand {
+private:
+	Scoring* sc;
+	int* resourceScoreArr;
 
-	public:
-		HarvestDeck();
-		HarvestTile* draw();
-		int getSize();
-	};
+public:
+	Hand(Scoring* sc);
+	int* exchange();
+	void displayHand();
+};
 
-	class BuildingDeck {
-	private:
-		int *_sizeMax;
-		vector<BuildingTile*> *_deck;
-
-	public:
-		BuildingDeck();
-		BuildingDeck(const BuildingDeck &deck);
-		~BuildingDeck();
-
-		vector<BuildingTile*>* getDeck();
-		BuildingTile* draw();
-		unsigned long getSize();
-		void add(BuildingTile &tile);
-		void remove(BuildingTile &tile);
-
-	};
