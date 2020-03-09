@@ -52,7 +52,6 @@ VGMaps::VGMaps()
 		for (int j = 0; j < *columns; j++)
 		{
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
-			
 			village_board[i][j].VGSquare_type = BuildingColorType::None;
 
 

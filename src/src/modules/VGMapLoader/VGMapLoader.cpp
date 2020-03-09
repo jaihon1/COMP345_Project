@@ -1,11 +1,4 @@
-
 #include "VGMapLoader.h"
-#include <iostream>
-#include <fstream>
-#include "../board/VGMaps.h"
-#include "../tile/Resources.h"
-#include "../../nlohmann/json.hpp"
-
 using namespace std;
 
 using json = nlohmann::json;
@@ -138,7 +131,7 @@ VGMaps* VGMapLoader::getBoard()
 }
 
 //why VGMapsaver? 
-void VGMapSaver::save(VGMaps* inGame, const char* inFilePath)
+void VGMapSaver::save(VGMaps * inGame, const char* inFilePath)
 {
 	outFile.open(inFilePath);
 	cout << "Opening file path " << endl;

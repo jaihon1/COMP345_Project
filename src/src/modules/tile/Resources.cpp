@@ -118,10 +118,13 @@ BuildingTile::~BuildingTile() {
 
 	
 	delete _buildingColorType;
+	cout << "deallocated color type" << endl; 
 	//_buildingColorType = NULL;
 	delete _buildingStatus;
+	cout << "deallocated buildingStat" << endl; 
 	//_buildingStatus = NULL;
 	delete _buildingNum;
+	cout << "deallocated num" << endl; 
 	//_buildingNum = NULL;
 }
 
