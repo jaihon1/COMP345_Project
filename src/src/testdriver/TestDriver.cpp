@@ -254,6 +254,8 @@ void runGame(GBMaps* gameBoard, HarvestDeck* testDeck) {
 		}
 
 	}
+	
+	delete testSaver;
 
 }
 
@@ -305,6 +307,7 @@ void playGBMaps() {
 		}
 		delete sc;
 		delete testDeck;
+		delete testLoader;
 		delete gameBoard;
 
 	}
@@ -380,6 +383,14 @@ void VGMapLoaderTest()
 	cout << "Current MAP" << endl;
 
 	va->printVGMap();
+	
+	delete va;
+	delete type1;
+	delete status1;
+	delete t1;
+	delete s;
+	delete m;
+	delete l;
 }
 
 

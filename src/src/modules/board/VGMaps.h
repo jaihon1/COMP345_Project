@@ -1,7 +1,8 @@
+#pragma once
 #include <stdio.h>
-
-#include "../tile/Resources.h"
 #include <vector>
+#include "../tile/Resources.h"
+
 using std::vector;
 
 struct VGSquare{ //why struct? 
