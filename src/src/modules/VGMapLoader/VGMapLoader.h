@@ -11,7 +11,7 @@ using namespace std;
 class VGMapLoader
 {
 private:
-	VGMaps* board;
+	VGMaps* board; //does
 
 	struct statusVGMap : public map<string, VGSlotStatus> //Status of the VGSquare
 	{

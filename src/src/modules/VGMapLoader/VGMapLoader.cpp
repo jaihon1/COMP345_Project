@@ -129,7 +129,7 @@ VGMapLoader::VGMapLoader(const char* inFile)
 
 VGMapLoader::~VGMapLoader()
 {
-
+	delete board;
 }
 
 VGMaps* VGMapLoader::getBoard()
