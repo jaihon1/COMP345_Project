@@ -71,9 +71,9 @@ VGMaps::~VGMaps()
 
 	//deallocate the rows and colums pointer
 	delete rows; 
-	//rows = NULL; 
+	rows = NULL; 
 	delete columns; 
-	//columns = NULL; 
+	columns = NULL; 
 }
 
 //function is not useful, it is only called through the VGMaps but not inside connections 
