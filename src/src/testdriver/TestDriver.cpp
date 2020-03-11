@@ -43,11 +43,11 @@ const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
 
 void printHarvestTile(HarvestTile* inHarvestTile) {
 
-	cout << setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topLeft)) 
-		<< setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topRight))<<endl
+	cout << setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topLeft))
+		<< setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topRight)) << endl
 		<< setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::bottomLeft))
-		<< setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::bottomRight))<<endl;
-	
+		<< setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::bottomRight)) << endl;
+
 }
 
 void printGameBoard(GBMaps* inBoard) {
@@ -86,131 +86,131 @@ void printGameBoard(GBMaps* inBoard) {
 }
 
 void harvestTileTest() {
-	
-		HarvestDeck* testDeck = new HarvestDeck();
-		HarvestTile* testHarvestTile = testDeck->draw();
-		printHarvestTile(testHarvestTile);
+
+	HarvestDeck* testDeck = new HarvestDeck();
+	HarvestTile* testHarvestTile = testDeck->draw();
+	printHarvestTile(testHarvestTile);
+	cout << endl;
+	char yesNo;
+	char rotate;
+	cout << "Would you like to rotate the tile? y/n ";
+	cin >> yesNo;
+	//ROTATE METHODS TEST
+	while (yesNo == 'y') {
+		cout << "Right = r, Left = l: ";
+		cin >> rotate;
 		cout << endl;
-		char yesNo;
-		char rotate;
-		cout << "Would you like to rotate the tile? y/n ";
-		cin >> yesNo;
-		//ROTATE METHODS TEST
-		while (yesNo == 'y') {
-			cout << "Right = r, Left = l: ";
-			cin >> rotate;
-			cout << endl;
-			switch (rotate) {
-			case 'r':
-				testHarvestTile->RotateRight();
-				break;
-			case 'l':
-				testHarvestTile->RotateLeft();
-				break;
-			default:
-				cout << "Invalid selection." << endl;
-				break;
-			}
-			printHarvestTile(testHarvestTile);
-			cout << endl << "Again? y/n ";
-			cin >> yesNo;
+		switch (rotate) {
+		case 'r':
+			testHarvestTile->RotateRight();
+			break;
+		case 'l':
+			testHarvestTile->RotateLeft();
+			break;
+		default:
+			cout << "Invalid selection." << endl;
+			break;
 		}
-		delete testDeck;
-	
+		printHarvestTile(testHarvestTile);
+		cout << endl << "Again? y/n ";
+		cin >> yesNo;
+	}
+	delete testDeck;
+
 }
 
 void gbMapsTest() {
 
 	int players;
 
-		cout << "Welcome to GBMapsTest"<< endl << "How many players? Select 2, 3, or 4: ";
-		cin >> players;
+	cout << "Welcome to GBMapsTest" << endl << "How many players? Select 2, 3, or 4: ";
+	cin >> players;
 
-		//SCORING OBJECT CONSTRUCTION
-		Scoring* sc = new Scoring();
+	//SCORING OBJECT CONSTRUCTION
+	Scoring* sc = new Scoring();
 
-		//HARVEST DECK OBJECT CONSTRUCTION
-		HarvestDeck* testDeck = new HarvestDeck();
+	//HARVEST DECK OBJECT CONSTRUCTION
+	HarvestDeck* testDeck = new HarvestDeck();
 
-		//GAMEBOARD CONSTRUCTION
-		GBMaps* gameBoard = new GBMaps(players, 'a', sc);
-		printGameBoard(gameBoard);
-		cout << endl;
+	//GAMEBOARD CONSTRUCTION
+	GBMaps* gameBoard = new GBMaps(players, 'a', sc);
+	printGameBoard(gameBoard);
+	cout << endl;
 
-		int quit;
-		int row;
-		int column;
+	int quit;
+	int row;
+	int column;
 
-		cout << "Would you like to add a harvest tile? Press 1 to continue. To quit, press 0. ";
-		cin >> quit;
-		HarvestTile* testHarvestTile;
-		while (quit != 0) {
-			
-			switch (quit) {
-			case 1:
-				testHarvestTile = testDeck->draw();
-				cout << "Where would you like to place the tile?\n" << "row: ";
-				cin >> row;
-				cout << "column: ";
-				cin >> column;
-				cout << endl;
-				gameBoard->addHarvestTile(row, column, testHarvestTile);
-				printGameBoard(gameBoard);
-				cout << endl;
-				break;
-			case 2:
-				//sc->display_res();
-				cout << "Rock:   " << sc->get_stone() << endl;
-				cout << "Lumber: " << sc->get_lumber() << endl;
-				cout << "Wheat:  " << sc->get_wheat() << endl;
-				cout << "Sheep:  " << sc->get_sheep() << endl;
-			
-				break;
-			default:
-				cout << "Sorry invalid input." << endl;
-				break;
-			}
-			cout << "To place another tile, Press 1.  To see resource list press 2. Otherwise to quit press 0. ";
-			cin >> quit;
+	cout << "Would you like to add a harvest tile? Press 1 to continue. To quit, press 0. ";
+	cin >> quit;
+	HarvestTile* testHarvestTile;
+	while (quit != 0) {
+
+		switch (quit) {
+		case 1:
+			testHarvestTile = testDeck->draw();
+			cout << "Where would you like to place the tile?\n" << "row: ";
+			cin >> row;
+			cout << "column: ";
+			cin >> column;
 			cout << endl;
-		}
+			gameBoard->addHarvestTile(row, column, testHarvestTile);
+			printGameBoard(gameBoard);
+			cout << endl;
+			break;
+		case 2:
+			//sc->display_res();
+			cout << "Rock:   " << sc->get_stone() << endl;
+			cout << "Lumber: " << sc->get_lumber() << endl;
+			cout << "Wheat:  " << sc->get_wheat() << endl;
+			cout << "Sheep:  " << sc->get_sheep() << endl;
 
-		delete sc;
-		delete testDeck;
-		delete gameBoard;
+			break;
+		default:
+			cout << "Sorry invalid input." << endl;
+			break;
+		}
+		cout << "To place another tile, Press 1.  To see resource list press 2. Otherwise to quit press 0. ";
+		cin >> quit;
+		cout << endl;
+	}
+
+	delete sc;
+	delete testDeck;
+	delete gameBoard;
 }
 
 void playerTest() {
-    // Initializing variables
-    Player bob;
-//    GBMaps map(4, 'b');
-    BuildingDeck buildingDeck;
-    HarvestDeck harvestDeck;
-    HarvestTile harvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber);
-    
-    // Get status of resources
-    bob.ressourceTracker();
-    
-    // Drawing items from Building Deck
-    cout << "BuildingDeck size: " << buildingDeck.getSize() << endl;
-    cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
-    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl;
-    cout << "Deck size: " << buildingDeck.getSize() << endl;
-    cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
-    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl << endl;
-    
-    // Drawing items from Harvest Deck
-    cout << "HarvestDeck size: " << harvestDeck.getSize() << endl;
-    cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
-    cout << "Draw from HarvestDeck: " <<  bob.drawHarvestTile(harvestDeck) << endl;
-    cout << "H Deck size: " << harvestDeck.getSize() << endl;
-    cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
-    cout << "Draw from HarvestDeck: " <<  bob.drawHarvestTile(harvestDeck) << endl << endl;
-    
-    // Get status of resources
-    bob.ressourceTracker();
-    
-    // Placing a Harvest Tile
+	// Initializing variables
+	Player bob;
+	//    GBMaps map(4, 'b');
+	BuildingDeck buildingDeck;
+	HarvestDeck harvestDeck;
+	HarvestTile harvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber);
+
+	// Get status of resources
+	bob.ressourceTracker();
+
+	// Drawing items from Building Deck
+	cout << "BuildingDeck size: " << buildingDeck.getSize() << endl;
+	cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
+	cout << "Draw from BuildingDeck: " << bob.drawBuilding(buildingDeck) << endl;
+	cout << "Deck size: " << buildingDeck.getSize() << endl;
+	cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
+	cout << "Draw from BuildingDeck: " << bob.drawBuilding(buildingDeck) << endl << endl;
+
+	// Drawing items from Harvest Deck
+	cout << "HarvestDeck size: " << harvestDeck.getSize() << endl;
+	cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
+	cout << "Draw from HarvestDeck: " << bob.drawHarvestTile(harvestDeck) << endl;
+	cout << "H Deck size: " << harvestDeck.getSize() << endl;
+	cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
+	cout << "Draw from HarvestDeck: " << bob.drawHarvestTile(harvestDeck) << endl << endl;
+
+	// Get status of resources
+	bob.ressourceTracker();
+
+	// Placing a Harvest Tile
 //    cout << "Placing Harvest Tile: " << endl;
 //    bob.placeHarvestTile(0, 0, harvestTile, map);
 
@@ -259,7 +259,7 @@ void playGBMaps() {
 	bool flag = true;
 	while (flag) {
 		int oldOrNew;
-		cout << "Welcome to New Haven" << endl << "1 - Start a new game" << endl << "2 - Load game" << endl<< "0 - return to previous menu" << endl << "Which would you like to do: ";
+		cout << "Welcome to New Haven" << endl << "1 - Start a new game" << endl << "2 - Load game" << endl << "0 - return to previous menu" << endl << "Which would you like to do: ";
 		cin >> oldOrNew;
 
 		// SCORING OBJECT CONSTRUCTION
@@ -304,7 +304,7 @@ void playGBMaps() {
 		delete sc;
 		delete testDeck;
 		delete gameBoard;
-		
+
 	}
 }
 
@@ -379,7 +379,7 @@ void VGMapLoaderTest()
 
 
 void menuOptions() {
-	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - To Be Annouced" << endl << "0 - Exit" << endl << endl <<"Which test would you like to run? ";
+	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - To Be Annouced" << endl << "0 - Exit" << endl << endl << "Which test would you like to run? ";
 }
 
 int main()
@@ -390,7 +390,7 @@ int main()
 	int menuOption;
 	menuOptions();
 	cin >> menuOption;
-	
+
 
 	while (menuOption != 0) {
 		cout << endl;
@@ -408,7 +408,7 @@ int main()
 			playerTest();
 			break;
 		case 5:
-			cout << "unavailable"<<endl;
+			cout << "unavailable" << endl;
 			break;
 		}
 		cout << endl;

@@ -2,10 +2,11 @@
 #define Dictionary_h
 
 enum class ResourceName {
-    Lumber = 1,
-    Rock = 2,
-    Sheep = 3,
-    Wheat = 4
+	Lumber = 1,
+	Sheep = 2,
+    Wheat = 3,
+	Rock = 4
+	
 };
 
 enum class TileStatus {
@@ -22,10 +23,10 @@ enum ResourceLocation {
 };
 
 enum class BuildingColorType {
-    GreenSheep = 0,
-    GreyRock = 1,
-    RedLumber = 2,
-    YellowHay = 3,
+	RedLumber = 1,
+	GreenSheep = 2,
+	YellowHay = 3,
+    GreyRock = 4,
     None //initial value for the initialization of the empty VGMap - matches VGSlotStatus::Empty
 };
 
