@@ -1,3 +1,4 @@
+/*
 #include "player.h"
 #include <algorithm>
 
@@ -96,6 +97,7 @@ unsigned long Player::getNumberOfBuildingTiles() {
     return _buildingTiles -> size();
 }
 
+
 void Player::ressourceTracker() {
     cout << "--Player Resources--" << endl;
     cout << "Number of Building Tiles: " << getNumberOfBuildingTiles() << endl;
@@ -106,3 +108,4 @@ void Player::ressourceTracker() {
     getHarvestTiles();
     cout << "-- END --" << endl << endl;
 }
+*/ 

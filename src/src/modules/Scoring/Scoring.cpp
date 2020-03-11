@@ -1,7 +1,9 @@
 
+
 #include "../tile/Resources.h"
 #include "../board/GBMaps.h"
 #include "Scoring.h"
+
 
 Scoring::Scoring()
 {
@@ -98,6 +100,8 @@ int Scoring::get_stone()
 	return res_score[4];
 }
 
+
+
 int Scoring::get_score(VGMaps &vil)
 {
 	int score = 0;
@@ -106,6 +110,7 @@ int Scoring::get_score(VGMaps &vil)
 	int village_row = 6;
 	int village_col = 5;
 
+		
 	for (int i = 0; i < village_row; i++)
 	{
 		mul = true;
@@ -144,11 +149,10 @@ int Scoring::get_score(VGMaps &vil)
 			score += (village_col - (2 - abs(i-2)));
 		//std::cout << "test: " << score << std::endl;
 	}
-		
-		
 
 	return score;
 }
+
 
 int Scoring::get_res(int resv)
 {
@@ -253,6 +257,7 @@ void Scoring::Graph::addEdge(int v, int w)
 	adj[v].push_back(w);
 	adj[w].push_back(v);
 }
+
 /*********************Nested Graph******************/
 
 
@@ -306,3 +311,4 @@ void Scoring::computeResources(int row, int column, HarvestTile* inHarvestTilePt
 		static_cast<int>((*inHarvestTilePtr).getResource(ResourceLocation::bottomRight)) };
 	update_res(index, res);
 }
+

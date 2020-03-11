@@ -1,3 +1,4 @@
+/*
 #ifndef player_h
 #define player_h
 
@@ -55,4 +56,4 @@ public:
 };
 
 #endif /* player_h */
-
+*/

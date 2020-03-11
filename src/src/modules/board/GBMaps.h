@@ -1,5 +1,7 @@
 #ifndef board_h
 #define board_h
+#include "../Scoring/Scoring.h"
+
 #include<iostream> 
 #include "../tile/Resources.h"
 class Scoring;
@@ -33,7 +35,6 @@ class GBMaps {
 
 private:
 	int* numberOfPlayers;
-	Scoring* scoringObj;
 
 	//using const pointers because the assignment says attributes have to be pointers
 	const int* const rows = new int(7);
@@ -48,7 +49,7 @@ private:
 
 public:
 	//constructor takes number of players and whether the game is played on Side A or Side B
-    GBMaps(int numberOfPlayers, char boardSide, Scoring* sc);
+    GBMaps(int numberOfPlayers, char boardSide);
 	
     ~GBMaps();
     
@@ -57,7 +58,11 @@ public:
 	GBSquareStatus getSquareStatus(int row, int column);
 
 	//return int: 1 = tile successfully added, 0 = tile not added (probably because square is unavailable)
-	int addHarvestTile(int row, int column, HarvestTile * inHarvestTilePtr);
+	int addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr);
+
+	int map(int index);
+
+	int addHarvestTile(int row, int column, HarvestTile * inHarvestTilePtr, Scoring & sc);
 
 	HarvestTile* getHarvestTile(int row, int column);
 
@@ -69,7 +74,6 @@ public:
 	int getColumns();
 
 	int getNumberOfPlayers();
-
 	
 };
 

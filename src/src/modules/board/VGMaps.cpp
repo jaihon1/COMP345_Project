@@ -42,19 +42,19 @@ string colortype_to_string(BuildingColorType c)
 
 VGMaps::VGMaps()
 {
-	village_board = new VGSquare * [*rows];
+	village_board = new VGSquare*[*rows];
 
 	for (int i = 0; i < *rows; i++)
 	{
-		village_board[i] = new VGSquare[*columns];
+		village_board[i] = new VGSquare[*columns];  
 
 		//initialized the current 2D array, might have to do outside 
 		for (int j = 0; j < *columns; j++)
 		{
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
 			//for now for testing
-			village_board[i][j].VGSquare_type = BuildingColorType::None;
-
+			village_board[i][j].VGSquare_type = BuildingColorType::None; 
+			
 		}
 	}
 }
@@ -64,7 +64,7 @@ VGMaps::~VGMaps()
 {
 	for (int i = 0; i < *rows; i++)
 	{
-		delete[] village_board[i];
+		delete[] village_board[i]; 
 	}
 	delete village_board;
 }
@@ -72,7 +72,7 @@ VGMaps::~VGMaps()
 //function is not useful, it is only called through the VGMaps but not inside connections 
 VGSlotStatus VGMaps::getStatus(int row, int column)
 {
-	return village_board[row][column].VGstatus;
+	return village_board[row][column].VGstatus; 
 }
 
 
@@ -95,29 +95,29 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 {
 	VGSquare current = village_board[r][c];
 
-	cout << "Checking connection slots" << endl;
-	vector <VGSquare> connections(4);
+	cout << "Checking connection slots" << endl; 
+	vector <VGSquare> connections(4); 
 
-	cout << "Created connections" << endl;
+	cout << "Created connections" << endl; 
+	
 
-
-	cout << "Created unavaiblable square" << endl;
+	cout << "Created unavaiblable square" << endl; 
 
 	//create iterator for insertion
-
+	
 	/*
-	vector <VGSquare>::iterator it;
-	it = connections.begin();
-	*/
+	vector <VGSquare>::iterator it; 
+	it = connections.begin(); 
+	*/ 
 
 	// 0 -> top, 2 -> right, 3 -> bot, 4 -> left
 
 	//check top
 	int top = r - 1;
-	if (top >= 0) //ensure that top is greater or equal to 0 (not above the first row) 
+	if(top >= 0) //ensure that top is greater or equal to 0 (not above the first row) 
 	{
-		cout << "Checking top" << endl;
-		connections[0] = village_board[r - 1][c];
+		cout << "Checking top" << endl; 
+		connections[0] = village_board[r - 1][c]; 
 		//connections->insert(it, village_board[r - 1][c]); //insert at position 1 , dpes the iterator moves?
 	}
 	else
@@ -134,17 +134,17 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		unavailable.VGstatus = VGSlotStatus::Unavailable;
 		unavailable.building_ptr = NULL; //points to nothing cuz no building tile
 
-		connections[0] = unavailable;
+		connections[0] = unavailable; 
 
 	}
 
 	//check right
-	int right = c + 1;
+	int right = c + 1; 
 	if (right <= 4)
 	{
-		cout << "Checking right" << endl;
+		cout << "Checking right" << endl; 
 		//connections.insert(it + 1, village_board[r][c + 1]); 
-		connections[1] = village_board[r][c + 1];
+		connections[1] = village_board[r][c + 1]; 
 	}
 	else
 	{
@@ -159,22 +159,22 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 		//this means that there are no slots at the right -> you are at the most right column
 		//connections.insert(it + 1, unavailable);
-		cout << "right - unavailable" << endl;
-		connections[1] = unavailable;
+		cout << "right - unavailable" << endl; 
+		connections[1] = unavailable; 
 	}
-
-	int bottom = r + 1;
+	
+	int bottom = r + 1; 
 	//check bottom
 	if (bottom <= 4)
 	{
-		cout << "checking bottom" << endl;
-		connections[2] = village_board[r + 1][c];
+		cout << "checking bottom" << endl; 
+		connections[2] = village_board[r + 1][c]; 
 		//connections.insert(it + 2, village_board[r+1][c]);
 	}
 	else
 	{
-		cout << "bottom - unavailable" << endl;
-
+		cout << "bottom - unavailable" << endl; 
+		
 		VGSquare unavailable;
 		//declaration of a default constructor for VGSquare empty
 		//to print to check if it actually works 
@@ -186,20 +186,20 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 		//this means there are no slots at the bottom -> you are at the bottom row
 		//connections.insert(it + 2, unavailable);
-		connections[2] = unavailable;
+		connections[2] = unavailable; 
 	}
 
 	//check left 
-	int left = c - 1;
-	if (left >= 0)
+	int left = c - 1; 
+	if(left >= 0)
 	{
-		cout << "checking left" << endl;
-		connections[3] = village_board[r][c - 1];
+		cout << "checking left" << endl; 
+		connections[3] = village_board[r][c - 1]; 
 		//connections.insert(it + 3, village_board[r][c-1]);
 	}
 	else
 	{
-		cout << "left - unavailable" << endl;
+		cout << "left - unavailable" << endl; 
 		VGSquare unavailable;
 		//declaration of a default constructor for VGSquare empty
 		//to print to check if it actually works 
@@ -211,7 +211,7 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 		//this means there are no slots at the left -> you are at the most left column
 		//connections.insert(it + 3, unavailable);
-		connections[3] = unavailable;
+		connections[3] = unavailable; 
 	}
 
 	//cout << "Returning collections " << endl; 
@@ -234,7 +234,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		cout << "Copy constructor Tile" << endl;
 
 
-		BuildingTile* to_add = new BuildingTile(t); //deep copy constructor, preapre to add tile 
+		BuildingTile *to_add = new BuildingTile(t); //deep copy constructor, preapre to add tile 
 
 		BuildingColorType t_type = t.getBuildingColorType();
 		//int t_num = t.getBuildingNum(); 
@@ -425,18 +425,18 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		to_add = nullptr;
 
 	}
-
+	
 }
 
 BuildingTile VGMaps::getBuildingTile(int r, int c)
 {
-	return *(village_board[r][c].building_ptr);
+	return *(village_board[r][c].building_ptr); 
 }
 
 void VGMaps::printVGMap()
 {
 	int ro = *rows;
-	int co = *columns;
+	int co = *columns; 
 
 	for (int i = 0; i < ro; i++)
 	{

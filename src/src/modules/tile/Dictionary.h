@@ -9,6 +9,13 @@ enum class ResourceName {
 	
 };
 
+enum class ResourceName1 {
+    Lumber,
+    Rock,
+    Sheep,
+    Wheat
+};
+
 enum class TileStatus {
 	InHand,
 	InDeck,
@@ -43,9 +50,9 @@ enum class Connection {
 };
 
 enum class VGSlotStatus {
-    Empty, //int 0
+    Empty, //int 0 
     Taken, //int 1
-    Unavailable //int 2 - any invalid slot (outside the actual map)
+    Unavailable //int 2 - any invalid slot (outside the actual map) - only used in connections 
 };
 
 
