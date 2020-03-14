@@ -1,3 +1,8 @@
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
+
 #include "VGMapLoader.h"
 using namespace std;
 
@@ -122,6 +127,7 @@ VGMapLoader::VGMapLoader(const char* inFile)
 
 VGMapLoader::~VGMapLoader()
 {
+	cout << "deleting board - make sure to get board assignment first" << endl; 
 	delete board;
 }
 
@@ -168,7 +174,7 @@ void VGMapSaver::save(VGMaps * inGame, const char* inFilePath)
 			{
 				//push back status 
 
-				BuildingTile* t = new BuildingTile(inGame->getBuildingTile(i, j));
+				BuildingTile *t = new BuildingTile(inGame->getBuildingTile(i, j));
 
 				nlohmann::basic_json <> building_stats =
 				{
@@ -195,6 +201,9 @@ void VGMapSaver::save(VGMaps * inGame, const char* inFilePath)
 				jsonColumns.push_back({ { "VGSquare", building_stats } });
 				cout << "Pushed json object back" << endl;
 
+				//good practice 
+				delete t; 
+				t = NULL; 
 			}
 
 		}
@@ -209,6 +218,5 @@ void VGMapSaver::save(VGMaps * inGame, const char* inFilePath)
 	outFile << d.dump(2);
 	outFile.close();
 	cout << "Closing outFile path" << endl;
-
 }
 

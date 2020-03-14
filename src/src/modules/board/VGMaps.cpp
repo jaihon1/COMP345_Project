@@ -67,7 +67,13 @@ VGMaps::~VGMaps()
 	//delete everything inside the village board that is dynamically allocated
 	for (int i = 0; i < *rows; i++)
 	{
-		delete[] village_board[i]; //deleting each element inside them pointers 
+		for (int j = 0; j < *columns; j++)
+		{
+			delete village_board[i][j].building_ptr; //deleting each building ptr to new
+			village_board[i][j].building_ptr = NULL; 
+		}
+		delete [] village_board[i]; //deleting the rows 
+		village_board[i] = NULL; 
 	}
 
 	delete [] village_board; //delete the array of pointers 
@@ -444,10 +450,10 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			}
 		}
 
-		cout << "Deallocate local ptr and Null the to add" << endl;
+		//cout << "Deallocate local ptr and Null the to add" << endl;
 		//make to_add point to null ptr
-		delete to_add; 
-		to_add = NULL; 
+		//delete to_add; 
+		to_add = NULL; //make to_add point to null but dont delete it because we are adding the buildingTile
 
 	}
 

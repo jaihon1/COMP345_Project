@@ -70,9 +70,10 @@ BuildingTile::BuildingTile()
 
 BuildingTile::BuildingTile(BuildingColorType* type, BuildingStatus* status)
 {
+	cout << "Constructor with random number generator" << endl; 
 	_buildingColorType = new BuildingColorType(*type); 
 	_buildingStatus = new BuildingStatus(*status); 
-	_buildingNum = new int(*generateBuildingNumber()); 
+	_buildingNum = &(*generateBuildingNumber()); 
 	//*_buildingStatus = status;
 	//_buildingNum = generateBuildingNumber();
 
@@ -215,7 +216,6 @@ void BuildingTile::deepCopy(const BuildingTile& t)
 
 	if (t._buildingColorType)
 	{
-		
 		_buildingColorType = new BuildingColorType(*t._buildingColorType);
 	}
 	else

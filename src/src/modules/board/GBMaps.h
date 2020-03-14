@@ -1,5 +1,6 @@
 #ifndef board_h
 #define board_h
+#include "../Scoring/Scoring.h"
 #include<iostream> 
 #include "../tile/Resources.h"
 class Scoring;
