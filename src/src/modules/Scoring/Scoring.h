@@ -39,7 +39,9 @@ private:
 	};
 
 	Graph vertices{ 196 };
-	int res_score[5] = { 0 , 0, 0, 0, 0 };//1st field for building	
+	int res_score[5] = { 0 , 0, 0, 0, 0 };
+	//1st field for building
+	//1st lumber, 2nd sheep, 3rd wheat, 4 stone
 
 	void add_res(int resv, int numv);
 	void update_help(int v, int w, int res);
