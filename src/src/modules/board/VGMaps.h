@@ -1,4 +1,8 @@
 #pragma once
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 #include <stdio.h>
 #include <vector>
 #include "../tile/Resources.h"
@@ -33,7 +37,6 @@ public:
 	VGMaps();
 
 	~VGMaps();
-
 
 	VGSlotStatus getStatus(int row, int column);
 

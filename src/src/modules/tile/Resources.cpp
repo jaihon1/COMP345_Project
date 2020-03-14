@@ -4,10 +4,13 @@
 #include <algorithm>
 #include <iostream>
 #include <algorithm>
-
 #include "Resources.h"
 #include "Dictionary.h"
 #include "../Scoring/Scoring.h"
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 
 using namespace std;
 
@@ -57,29 +60,40 @@ ResourceName HarvestTile::getResource(ResourceLocation inLocation)
 
 BuildingTile::BuildingTile()
 {
-	//*_buildingColorType = BuildingColorType::None; 
-	//*_buildingStatus = BuildingStatus::Normal; 
-	//*_buildingNum = 0; 
+	_buildingColorType =  new BuildingColorType(BuildingColorType::None); 
+	_buildingStatus = new BuildingStatus(BuildingStatus::Normal); 
+	_buildingNum = new int(1); 
 
 	_firstBuilding = false;
 }
 
-BuildingTile::BuildingTile(BuildingColorType* type, BuildingStatus* status) : _buildingColorType(type), _buildingStatus(status), _buildingNum(generateBuildingNumber())
+
+BuildingTile::BuildingTile(BuildingColorType* type, BuildingStatus* status)
 {
-	//*_buildingColorType = type;
+	_buildingColorType = new BuildingColorType(*type); 
+	_buildingStatus = new BuildingStatus(*status); 
+	_buildingNum = new int(*generateBuildingNumber()); 
 	//*_buildingStatus = status;
 	//_buildingNum = generateBuildingNumber();
 
 	_firstBuilding = false;
 }
 
-BuildingTile::BuildingTile(BuildingColorType* t, int* n, BuildingStatus* s) : _buildingColorType(t), _buildingNum(n), _buildingStatus(s)
+BuildingTile::BuildingTile(BuildingColorType *t, int* n, BuildingStatus* s)
 {
-	/*
-	_buildingColorType = t;
-	_buildingNum = n;
-	_buildingStatus = s;
-	*/
+	
+	_buildingColorType = new BuildingColorType(*t); 
+
+	if (numCheck(*n))
+	{
+		_buildingNum = new int(*n); 
+	}
+	else
+	{
+		cerr << "Error in assigning value. Please assign a number between 1 to 6" << endl;
+	}
+	_buildingStatus = new BuildingStatus(*s); 
+	
 	_firstBuilding = false;
 }
 
@@ -94,21 +108,31 @@ BuildingTile::BuildingTile(const BuildingColorType t, const int n, const Buildin
 
 BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
 {
-	cout << "inside constructor" << endl; 
-	*_buildingColorType = t;
+	_buildingColorType = new BuildingColorType(t); 
 	if (numCheck(n))
 	{
-		*_buildingNum = n;
+		_buildingNum = new int(n); 
 	}
 	else
 	{
 		cerr << "Error in assigning value. Please assign a number between 1 to 6" << endl;
 	}
-	*_buildingStatus = s;
+	_buildingStatus = new BuildingStatus(s); 
 
 }
 
 BuildingTile::~BuildingTile() {
+	delete _buildingColorType; 
+	cout << "1 \n"; 
+	delete _buildingNum; 
+	cout << "2 \n";
+	delete _buildingStatus; 
+	cout << "3 \n"; 
+
+	//cout << "Make all 3 pointer variables to null"; 
+
+	
+
 
 }
 
@@ -138,9 +162,11 @@ int* BuildingTile::generateBuildingNumber() {
 }
 
 void BuildingTile::setBuildingNum(int num) {
+
+	// do I need to check if it exists 
 	if (numCheck(num))
 	{
-		*_buildingNum = num;
+		*_buildingNum = num; //dereference and change it
 	}
 	else
 	{
@@ -184,10 +210,12 @@ void BuildingTile::flip() {
 
 void BuildingTile::deepCopy(const BuildingTile& t)
 {
+
 	delete _buildingColorType;
 
 	if (t._buildingColorType)
 	{
+		
 		_buildingColorType = new BuildingColorType(*t._buildingColorType);
 	}
 	else
@@ -217,6 +245,8 @@ void BuildingTile::deepCopy(const BuildingTile& t)
 	{
 		_buildingStatus = nullptr;
 	}
+
+	cout << "Success in deep copying" << endl; 
 }
 
 BuildingTile::BuildingTile(const BuildingTile& t) : _buildingColorType{ nullptr }, _buildingNum{ nullptr }, _buildingStatus{ nullptr }
@@ -227,6 +257,7 @@ BuildingTile::BuildingTile(const BuildingTile& t) : _buildingColorType{ nullptr 
 //Assignment operator for deep copy 
 BuildingTile &BuildingTile:: operator = (const BuildingTile &b)
 {
+	cout << "Inside deep copy assignment operator " << endl; 
 	if (this == &b) //self-guarding 
 	{
 		return *this; 

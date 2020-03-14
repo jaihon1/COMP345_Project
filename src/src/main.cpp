@@ -6,6 +6,7 @@
 #include "modules/tile/Resources.h"
 #include "modules/Scoring/Scoring.h"
 
+/*
 void playerTest() {
     // Initializing variables
     Player bob;
@@ -208,4 +209,5 @@ int main(int argc, const char * argv[]) {
 //    harvestTileTest();
 //    gbMapsTest();
 }
+*/ 
 

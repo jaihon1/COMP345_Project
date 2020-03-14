@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream> 
 #include <list> 
+#include "../tile/Resources.h"
+#include "../board/GBMaps.h"
 #include "../board/VGMaps.h"
 
 class GBMaps;

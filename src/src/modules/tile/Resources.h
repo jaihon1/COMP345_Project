@@ -1,5 +1,8 @@
 #pragma once
-
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 #include <string>
 #include <vector>
 #include "Dictionary.h"
@@ -15,22 +18,22 @@ class Tile {
 class BuildingTile {
 private:
 
-	/*
+	
 	BuildingColorType* _buildingColorType;
 	int* _buildingNum;
 	BuildingStatus* _buildingStatus;
-	*/
-
+	
+	/*
 	//constructor for the attributes to allocate memory slot
 	BuildingColorType buildingColorType;
 	int buildingNum;
 	BuildingStatus buildingStatus;
 
 	//allocate memorys
-	BuildingColorType* _buildingColorType = &buildingColorType;
+	BuildingColorType* _buildingColorType = &buildingColorType; if on stack if on heap i need new 
 	int* _buildingNum = &buildingNum;
 	BuildingStatus* _buildingStatus = &buildingStatus;
-
+	*/ 
 
 public:
 	BuildingTile();

@@ -1,10 +1,15 @@
 
 #pragma once
 
-#include <map>
-#include <string>
+#include "pch.h"
 #include <iostream>
 #include <fstream>
+#include "../../nlohmann/json.hpp"
+#include <map>
+#include <string>
+#include "../board/GBMaps.h"
+#include "../tile/Dictionary.h"
+#include "../tile/Resources.h"
 
 using namespace std;
 
@@ -15,7 +20,7 @@ class GBMapLoader {
 
 	private:
 
-		GBMaps* board; 
+		GBMaps* board;
 
 		//redefining index operator of the struct so that it will return an enum
 		//the purpose of this is to convert string to enum

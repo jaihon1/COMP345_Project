@@ -4,6 +4,10 @@
 #include <ostream>
 #include <stdlib.h>
 #include "VGMaps.h"
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 
 
 using namespace std;
@@ -53,8 +57,7 @@ VGMaps::VGMaps()
 		{
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
 			village_board[i][j].VGSquare_type = BuildingColorType::None;
-
-
+			village_board[i][j].building_ptr = NULL; //building ptr not having anything to it
 		}
 	}
 }
@@ -68,6 +71,8 @@ VGMaps::~VGMaps()
 	}
 
 	delete [] village_board; //delete the array of pointers 
+	village_board = NULL;  //make village_board null 
+
 
 	//deallocate the rows and colums pointer
 	delete rows; 
@@ -106,8 +111,6 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	vector <VGSquare> connections(4); 
 
 	cout << "Created connections" << endl; 
-	
-
 	cout << "Created unavaiblable square" << endl; 
 
 	//create iterator for insertion
@@ -231,7 +234,6 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		connections[3] = unavailable; 
 
 	}
-
 	//cout << "Returning collections " << endl; 
 	return connections;
 
@@ -251,8 +253,11 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		cout << "Adding building Tile" << endl;
 		cout << "Copy constructor Tile" << endl;
 
+		cout << BuildingTile::Building_typeToChar(t.getBuildingColorType()) << endl; 
 
 		BuildingTile *to_add = new BuildingTile(t); //deep copy constructor, prepare to add tile 
+		 
+		cout << "Checking to add: " << BuildingTile::Building_typeToChar(to_add->getBuildingColorType()) << endl;
 
 
 		BuildingColorType t_type = t.getBuildingColorType();
@@ -278,7 +283,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					if ((*(it + i)).VGSquare_type == BuildingColorType::GreenSheep) //derefference the iterator 
 					{
-						village_board[r][c].building_ptr = to_add;
+						village_board[r][c].building_ptr = to_add; //copy of assignment operator 
 						village_board[r][c].VGSquare_type = BuildingColorType::GreenSheep;
 						village_board[r][c].VGstatus = VGSlotStatus::Taken;
 
