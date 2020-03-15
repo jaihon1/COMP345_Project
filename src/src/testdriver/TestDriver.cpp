@@ -1,4 +1,4 @@
-/*
+
 
 #include <iostream>
 #include <iomanip>
@@ -307,7 +307,7 @@ void playGBMaps() {
 		}
 		delete sc;
 		delete testDeck;
-		delete testLoader;
+		//delete testLoader;
 		delete gameBoard;
 
 	}
@@ -335,12 +335,12 @@ void VGMapLoaderTest()
 
 	BuildingTile* t1 = new BuildingTile(type1, status1);
 
-	/*
-	cout << BuildingTile::Building_typeToChar(t1->getBuildingColorType()) << endl;
-	cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
-	*/
+	
+	//cout << BuildingTile::Building_typeToChar(t1->getBuildingColorType()) << endl;
+	//cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
+	
 
-/*
+
 	cout << BuildingTile::Building_intToChar(t1->getBuildingNum()) << endl;
 
 
@@ -354,15 +354,12 @@ void VGMapLoaderTest()
 	cout << "Saving VGMAP out" << endl;
 
 	VGMapSaver* s = new VGMapSaver();
-	/*************************************************
-	**************************************************
-					CHECK FILE PATH!
-	**************************************************
-	**************************************************
-	vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-	*/
+
+					//CHECK FILE PATH!
+
+	
 	//s->save(va, "C:\json_test\VGMaptest.json");  -> BAD 
-/*
+
 	s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
 
 	cout << "Saved va map" << endl;
@@ -401,39 +398,34 @@ void menuOptions() {
 int main()
 {
 	/*MemoryLeak*/
-/*
+
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	int menuOption;
 	menuOptions();
-	cin >> menuOption;
+
+	BuildingColorType * type2 = new BuildingColorType(BuildingColorType::RedLumber);
+	BuildingStatus *status2 = new BuildingStatus(BuildingStatus::Normal);
+
+	BuildingTile *t2 = new BuildingTile(type2, status2);
 
 
-	while (menuOption != 0) {
-		cout << endl;
-		switch (menuOption) {
-		case 1:
-			gbMapsTest();
-			break;
-		case 2:
-			harvestTileTest();
-			break;
-		case 3:
-			playGBMaps();
-			break;
-		case 4:
-			playerTest();
-			break;
-		case 5:
-			cout << "unavailable" << endl;
-			break;
-		}
-		cout << endl;
-		menuOptions();
-		cin >> menuOption;
-	}
+	BuildingColorType * type3 = new BuildingColorType(BuildingColorType::RedLumber);
+	BuildingStatus *status3 = new BuildingStatus(BuildingStatus::Normal);
+
+	BuildingTile *t3 = new BuildingTile(type3, status3);
+
+	*t2 = *t3;
+	delete type2;
+	delete status2;
+	delete type3;
+	delete status3;
+	delete t2;
+	delete t3;
+
+	system("pause");
 }
-*/ 
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
