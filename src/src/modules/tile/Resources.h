@@ -14,22 +14,21 @@ class Tile {
 class BuildingTile {
 private:
 
-	/*
+
 	BuildingColorType* _buildingColorType;
 	int* _buildingNum;
 	BuildingStatus* _buildingStatus;
-	*/
 
+	/*
 	//constructor for the attributes to allocate memory slot
 	BuildingColorType buildingColorType;
 	int buildingNum;
 	BuildingStatus buildingStatus;
-
 	//allocate memorys
-	BuildingColorType* _buildingColorType = &buildingColorType;
+	BuildingColorType* _buildingColorType = &buildingColorType; if on stack if on heap i need new
 	int* _buildingNum = &buildingNum;
 	BuildingStatus* _buildingStatus = &buildingStatus;
-
+	*/
 
 public:
 	BuildingTile();
@@ -45,6 +44,7 @@ public:
 	int getBuildingNum();
 
 	void setBuildingNum(int num);
+	bool numCheck(int num);
 	void setBuildingStatus(BuildingStatus s);
 	void setBuildingColorType(BuildingColorType c);
 
@@ -55,6 +55,8 @@ public:
 
 	//Deep copy constructor 
 	BuildingTile(const BuildingTile& t);
+
+	BuildingTile& operator = (const BuildingTile& b);
 
 	//methods for map Loader 
 	static const char* Building_typeToChar(BuildingColorType b)
@@ -74,23 +76,6 @@ public:
 		}
 	}
 
-	/*
-	BuildingColorType buildingColorType;
-	int buildingNum;
-	BuildingStatus buildingStatus;
-	BuildingColorType* _buildingColorType = &buildingColorType;
-	int* _buildingNum = &buildingNum;
-	BuildingStatus* _buildingStatus = &buildingStatus;
-
-public:
-	BuildingTile();
-	BuildingTile(BuildingColorType* type, BuildingStatus* status);
-	BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s);
-	BuildingTile(BuildingColorType t, int n, BuildingStatus s);
-	~BuildingTile();
-*/
-
-//methods for map Loader 
 	static const char* Building_statusToChar(BuildingStatus t)
 	{
 		switch (t)

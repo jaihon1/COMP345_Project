@@ -1,8 +1,12 @@
-#pragma once 
+#pragma once
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 #include <stdio.h>
-
-#include "../tile/Resources.h"
 #include <vector>
+#include "../tile/Resources.h"
+
 using std::vector;
 
 struct VGSquare { //why struct? 
@@ -12,6 +16,7 @@ struct VGSquare { //why struct?
 
 	//void deepCopy_square(const VGSquare & v); 
 };
+
 
 class VGMaps {
 private:
@@ -26,14 +31,12 @@ private:
 public:
 
 	//is it the end of the world 
-	int* rows = new int(6); //length of the row
-	int* columns = new int(5); //length of the column
-
+	const int* rows = new int(6); //length of the row
+	const int* columns = new int(5); //length of the column
 
 	VGMaps();
 
 	~VGMaps();
-
 
 	VGSlotStatus getStatus(int row, int column);
 
@@ -58,8 +61,6 @@ public:
 	void addNewBuildingTile(BuildingTile t, int r, int c);
 
 	BuildingTile getBuildingTile(int r, int c);
-
-
 	void printVGMap();
 
 

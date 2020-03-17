@@ -1,9 +1,9 @@
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 
 #include "VGMapLoader.h"
-#include <iostream>
-#include <fstream>
-#include "../board/VGMaps.h"
-#include "../tile/Resources.h"
 #include <nlohmann/json.hpp>
 using namespace std;
 
@@ -79,8 +79,9 @@ VGMapLoader::VGMapLoader(const char* inFile)
 				cout << "Found side" << endl;
 				cout << BuildingTile::Building_statusToChar(s) << endl;
 
-				cout << "suspected crash" << endl;
+				//cout << "suspected crash" << endl;
 				int n = bIMap[*b_num];
+				cout << "Found num" << endl;
 
 				BuildingTile* temp = new BuildingTile(c, n, s);
 
@@ -94,11 +95,11 @@ VGMapLoader::VGMapLoader(const char* inFile)
 				board->addNewBuildingTile(*temp, VG_row, VG_col); //dereference temp
 				cout << "Added new building sucess" << endl;
 
+				//Dont need
+				//auto const VGSquare_type = VGS->find("VGSquare_type");
 
-				auto const VGSquare_type = VGS->find("VGSquare_type");
-
-				//delete temp;
-				//temp = NULL; //good practice
+				delete temp;
+				temp = NULL; //good practice, clear out the temp pointer
 			}
 			else if (sMap[*VGstat] == VGSlotStatus::Empty)
 			{
@@ -127,7 +128,8 @@ VGMapLoader::VGMapLoader(const char* inFile)
 
 VGMapLoader::~VGMapLoader()
 {
-
+	cout << "deleting board - make sure to get board assignment first" << endl;
+	delete board;
 }
 
 VGMaps* VGMapLoader::getBoard()
@@ -200,6 +202,9 @@ void VGMapSaver::save(VGMaps* inGame, const char* inFilePath)
 				jsonColumns.push_back({ { "VGSquare", building_stats } });
 				cout << "Pushed json object back" << endl;
 
+				//good practice 
+				delete t;
+				t = NULL;
 			}
 
 		}
@@ -214,6 +219,5 @@ void VGMapSaver::save(VGMaps* inGame, const char* inFilePath)
 	outFile << d.dump(2);
 	outFile.close();
 	cout << "Closing outFile path" << endl;
-
 }
 

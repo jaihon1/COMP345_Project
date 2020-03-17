@@ -4,6 +4,10 @@
 #include <ostream>
 #include <stdlib.h>
 #include "VGMaps.h"
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 
 
 using namespace std;
@@ -42,31 +46,45 @@ string colortype_to_string(BuildingColorType c)
 
 VGMaps::VGMaps()
 {
-	village_board = new VGSquare * [*rows];
+	village_board = new VGSquare * [*rows]; //on the heap
 
 	for (int i = 0; i < *rows; i++)
 	{
-		village_board[i] = new VGSquare[*columns];
+		village_board[i] = new VGSquare[*columns]; // on the heap 
 
 		//initialized the current 2D array, might have to do outside 
 		for (int j = 0; j < *columns; j++)
 		{
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
-			//for now for testing
 			village_board[i][j].VGSquare_type = BuildingColorType::None;
-
+			village_board[i][j].building_ptr = NULL; //building ptr not having anything to it
 		}
 	}
 }
 
-//I do not think we need, 
 VGMaps::~VGMaps()
 {
+	//delete everything inside the village board that is dynamically allocated
 	for (int i = 0; i < *rows; i++)
 	{
-		delete[] village_board[i];
+		for (int j = 0; j < *columns; j++)
+		{
+			delete village_board[i][j].building_ptr; //deleting each building ptr to new
+			village_board[i][j].building_ptr = NULL;
+		}
+		delete[] village_board[i]; //deleting the rows 
+		village_board[i] = NULL;
 	}
-	delete village_board;
+
+	delete[] village_board; //delete the array of pointers 
+	village_board = NULL;  //make village_board null 
+
+
+	//deallocate the rows and colums pointer
+	delete rows;
+	rows = NULL;
+	delete columns;
+	columns = NULL;
 }
 
 //function is not useful, it is only called through the VGMaps but not inside connections 
@@ -99,8 +117,6 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	vector <VGSquare> connections(4);
 
 	cout << "Created connections" << endl;
-
-
 	cout << "Created unavaiblable square" << endl;
 
 	//create iterator for insertion
@@ -116,6 +132,10 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	int top = r - 1;
 	if (top >= 0) //ensure that top is greater or equal to 0 (not above the first row) 
 	{
+
+		cout << "Checking top" << endl;
+		connections[0] = village_board[r - 1][c];
+
 		cout << "Checking top" << endl;
 		connections[0] = village_board[r - 1][c];
 		//connections->insert(it, village_board[r - 1][c]); //insert at position 1 , dpes the iterator moves?
@@ -135,16 +155,17 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		unavailable.building_ptr = NULL; //points to nothing cuz no building tile
 
 		connections[0] = unavailable;
-
 	}
 
 	//check right
 	int right = c + 1;
 	if (right <= 4)
 	{
+
 		cout << "Checking right" << endl;
 		//connections.insert(it + 1, village_board[r][c + 1]); 
 		connections[1] = village_board[r][c + 1];
+
 	}
 	else
 	{
@@ -167,12 +188,14 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	//check bottom
 	if (bottom <= 4)
 	{
+
 		cout << "checking bottom" << endl;
 		connections[2] = village_board[r + 1][c];
 		//connections.insert(it + 2, village_board[r+1][c]);
 	}
 	else
 	{
+
 		cout << "bottom - unavailable" << endl;
 
 		VGSquare unavailable;
@@ -193,13 +216,16 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	int left = c - 1;
 	if (left >= 0)
 	{
+
 		cout << "checking left" << endl;
 		connections[3] = village_board[r][c - 1];
+
 		//connections.insert(it + 3, village_board[r][c-1]);
 	}
 	else
 	{
 		cout << "left - unavailable" << endl;
+
 		VGSquare unavailable;
 		//declaration of a default constructor for VGSquare empty
 		//to print to check if it actually works 
@@ -212,8 +238,8 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		//this means there are no slots at the left -> you are at the most left column
 		//connections.insert(it + 3, unavailable);
 		connections[3] = unavailable;
-	}
 
+	}
 	//cout << "Returning collections " << endl; 
 	return connections;
 
@@ -233,8 +259,12 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		cout << "Adding building Tile" << endl;
 		cout << "Copy constructor Tile" << endl;
 
+		cout << BuildingTile::Building_typeToChar(t.getBuildingColorType()) << endl;
 
-		BuildingTile* to_add = new BuildingTile(t); //deep copy constructor, preapre to add tile 
+		BuildingTile* to_add = new BuildingTile(t); //deep copy constructor, prepare to add tile 
+
+		cout << "Checking to add: " << BuildingTile::Building_typeToChar(to_add->getBuildingColorType()) << endl;
+
 
 		BuildingColorType t_type = t.getBuildingColorType();
 		//int t_num = t.getBuildingNum(); 
@@ -259,7 +289,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					if ((*(it + i)).VGSquare_type == BuildingColorType::GreenSheep) //derefference the iterator 
 					{
-						village_board[r][c].building_ptr = to_add;
+						village_board[r][c].building_ptr = to_add; //copy of assignment operator 
 						village_board[r][c].VGSquare_type = BuildingColorType::GreenSheep;
 						village_board[r][c].VGstatus = VGSlotStatus::Taken;
 
@@ -358,6 +388,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				}
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 				{
+
 					//failed to 
 					cout << "Error in placing tile: existing type (RED LUMBER) is already on village board, player has to place it next to it" << endl;
 				}
@@ -394,7 +425,6 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 						village_board[r][c].VGstatus = VGSlotStatus::Taken;
 
 						cout << "Success in placing another YelloHayTile" << endl;
-
 						break;
 					}
 				}
@@ -420,9 +450,10 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			}
 		}
 
-		cout << "Null the to add" << endl;
+		//cout << "Deallocate local ptr and Null the to add" << endl;
 		//make to_add point to null ptr
-		to_add = nullptr;
+		//delete to_add; 
+		to_add = NULL; //make to_add point to null but dont delete it because we are adding the buildingTile
 
 	}
 
@@ -431,12 +462,14 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 BuildingTile VGMaps::getBuildingTile(int r, int c)
 {
 	return *(village_board[r][c].building_ptr);
+
 }
 
 void VGMaps::printVGMap()
 {
 	int ro = *rows;
 	int co = *columns;
+
 
 	for (int i = 0; i < ro; i++)
 	{

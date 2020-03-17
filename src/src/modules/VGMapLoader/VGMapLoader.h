@@ -1,3 +1,7 @@
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 
 #pragma once
 #include "../board/VGMaps.h"
@@ -5,13 +9,16 @@
 #include <fstream>
 #include <map>
 #include <string>
+#include "../tile/Resources.h"
+
+//#include "../../nlohmann/json.hpp"
 using namespace std;
 
 //VGMapLoader just needs to be able to read in a existing building board
 class VGMapLoader
 {
 private:
-	VGMaps* board;
+	VGMaps* board; //does
 
 	struct statusVGMap : public map<string, VGSlotStatus> //Status of the VGSquare
 	{
