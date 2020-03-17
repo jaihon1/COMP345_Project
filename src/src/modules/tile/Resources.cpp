@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <iostream>
 #include <algorithm>
-#include <time.h>
+
 #include "Resources.h"
 #include "Dictionary.h"
 #include "../Scoring/Scoring.h"
@@ -57,95 +57,212 @@ ResourceName HarvestTile::getResource(ResourceLocation inLocation)
 
 BuildingTile::BuildingTile()
 {
-    //
-    _firstBuilding = false;
+	_buildingColorType = new BuildingColorType(BuildingColorType::None);
+	_buildingStatus = new BuildingStatus(BuildingStatus::Normal);
+	_buildingNum = new int(1);
+
+	_firstBuilding = false;
 }
 
-BuildingTile::BuildingTile(BuildingColorType *type, BuildingStatus *status) : _buildingColorType(type), _buildingStatus(status), _buildingNum(generateBuildingNumber())
+
+BuildingTile::BuildingTile(BuildingColorType* type, BuildingStatus* status)
 {
-    //*_buildingColorType = type;
-    //*_buildingStatus = status;
-    //_buildingNum = generateBuildingNumber();
+	cout << "Constructor with random number generator" << endl;
+	_buildingColorType = new BuildingColorType(*type);
+	_buildingStatus = new BuildingStatus(*status);
+	_buildingNum = &(*generateBuildingNumber());
+	//*_buildingStatus = status;
+	//_buildingNum = generateBuildingNumber();
 
-    _firstBuilding = false;
+	_firstBuilding = false;
 }
 
-BuildingTile::BuildingTile(BuildingColorType *t, int *n, BuildingStatus *s): _buildingColorType(t), _buildingNum(n), _buildingStatus(s)
+BuildingTile::BuildingTile(BuildingColorType* t, int* n, BuildingStatus* s)
 {
-    /*
-    _buildingColorType = t;
-    _buildingNum = n;
-    _buildingStatus = s;
-    */
-    _firstBuilding = false;
+
+	_buildingColorType = new BuildingColorType(*t);
+
+	if (numCheck(*n))
+	{
+		_buildingNum = new int(*n);
+	}
+	else
+	{
+		cerr << "Error in assigning value. Please assign a number between 1 to 6" << endl;
+	}
+	_buildingStatus = new BuildingStatus(*s);
+
+	_firstBuilding = false;
 }
 
-BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
+/*
+BuildingTile::BuildingTile(const BuildingColorType t, const int n, const BuildingStatus s)
 {
 	*_buildingColorType = t;
 	*_buildingNum = n;
 	*_buildingStatus = s;
+	_firstBuilding = false;
+*/
+
+BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
+{
+	_buildingColorType = new BuildingColorType(t);
+	if (numCheck(n))
+	{
+		_buildingNum = new int(n);
+	}
+	else
+	{
+		cerr << "Error in assigning value. Please assign a number between 1 to 6" << endl;
+	}
+	_buildingStatus = new BuildingStatus(s);
+
 }
 
 BuildingTile::~BuildingTile() {
-    //do I need to code?
-    //if the member variables dont go on the stack, make them dynamic objects and delete every
-    //random to delete
-    //delete _int
+	delete _buildingColorType;
+	cout << "1 \n";
+	delete _buildingNum;
+	cout << "2 \n";
+	delete _buildingStatus;
+	cout << "3 \n";
 
-//    cout << "in destr" << endl;
-//    delete _buildingColorType;
-//    _buildingColorType = NULL;
-//    delete _buildingStatus;
-//    _buildingStatus = NULL;
+	//cout << "Make all 3 pointer variables to null"; 
 
-    //delete _buildingNum;
-    //_buildingNum = NULL;
+
+
 
 }
 
 BuildingColorType BuildingTile::getBuildingColorType() {
-    return *_buildingColorType;
+	return *_buildingColorType;
 }
 
 BuildingStatus BuildingTile::getSide() {
-    return *_buildingStatus;
+	return *_buildingStatus;
 }
 
 int BuildingTile::getBuildingNum() {
-    return *_buildingNum;
+	return *_buildingNum;
 }
 
 
-int *BuildingTile::generateBuildingNumber() {
-    if (_firstBuilding)
-    {
-        srand(time(NULL));  //set the seed first
-    }
-//    cout << "Randomizing" << endl;
-    int* random = new int(rand() % 6 + 1); //generate a random number from 1 to 6                                                                              //srand and seed it...
-    //int rando = rand() % 6 + 1; //generate a random number from 1 to 6
-    //int* random = &rando; //generate a random number from 1 to 6
-    return random;
+int* BuildingTile::generateBuildingNumber() {
+	if (_firstBuilding)
+	{
+		srand(time(NULL));  //set the seed first
+	}
+	//    cout << "Randomizing" << endl;
+	int* random = new int(rand() % 6 + 1); //generate a random number from 1 to 6                                                                              //srand and seed it...
+	//int rando = rand() % 6 + 1; //generate a random number from 1 to 6
+	//int* random = &rando; //generate a random number from 1 to 6
+	return random;
 }
 
 void BuildingTile::setBuildingNum(int num) {
-    *_buildingNum = num;
+
+	// do I need to check if it exists 
+	if (numCheck(num))
+	{
+		*_buildingNum = num; //dereference and change it
+	}
+	else
+	{
+		cerr << "Error in assigning value. Please assign a number between 1 to 6" << endl;
+	}
+
+}
+
+bool BuildingTile::numCheck(int num)
+{
+	//if number is good - return true
+	if ((num >= 1) || (num <= 6))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 void BuildingTile::setBuildingStatus(BuildingStatus s)
 {
-    *_buildingStatus = s;
+	*_buildingStatus = s;
+}
+
+void BuildingTile::setBuildingColorType(BuildingColorType c)
+{
+	*_buildingColorType = c;
 }
 
 void BuildingTile::flip() {
-    if (getSide() == BuildingStatus::Normal) {
-        setBuildingNum(-1);
-        setBuildingStatus(BuildingStatus::Flipped);
-    }
-    //cannot flip back
+
+	if (getSide() == BuildingStatus::Normal) {
+		setBuildingNum(-1);
+		setBuildingStatus(BuildingStatus::Flipped);
+	}
+	//cannot flip back
 
 }
+
+void BuildingTile::deepCopy(const BuildingTile& t)
+{
+
+	delete _buildingColorType;
+
+	if (t._buildingColorType)
+	{
+		_buildingColorType = new BuildingColorType(*t._buildingColorType);
+	}
+	else
+	{
+		_buildingColorType = nullptr;
+	}
+
+	delete _buildingNum;
+
+	if (t._buildingNum)
+	{
+		_buildingNum = new int(*t._buildingNum);
+	}
+	else
+	{
+		_buildingNum = nullptr;
+	}
+
+	delete _buildingStatus;
+
+	if (t._buildingStatus)
+	{
+		_buildingStatus = new BuildingStatus(*t._buildingStatus);
+
+	}
+	else
+	{
+		_buildingStatus = nullptr;
+	}
+
+	cout << "Success in deep copying" << endl;
+}
+
+BuildingTile::BuildingTile(const BuildingTile& t) : _buildingColorType{ nullptr }, _buildingNum{ nullptr }, _buildingStatus{ nullptr }
+{
+	deepCopy(t);
+}
+
+//Assignment operator for deep copy 
+BuildingTile& BuildingTile:: operator = (const BuildingTile& b)
+{
+	cout << "Inside deep copy assignment operator " << endl;
+	if (this == &b) //self-guarding 
+	{
+		return *this;
+	}
+	deepCopy(b);
+	return *this;
+}
+
 
 
 HarvestDeck::HarvestDeck()
@@ -231,6 +348,16 @@ HarvestDeck::HarvestDeck()
 	};
 }
 
+HarvestDeck::~HarvestDeck()
+{
+	
+	for (int i = 0; i < deckLength; i++) {
+		delete harvestDeck[i];
+	}
+	delete[] harvestDeck;
+
+}
+
 int HarvestDeck::getSize() {
     return deckLength;
 }
@@ -242,13 +369,13 @@ HarvestTile* HarvestDeck::draw() {
 	int randomNumber = rand() % deckLength;
 
 	HarvestTile* temp = harvestDeck[randomNumber];
-	
+
 	//deckLength decreases by one as a card is drawn out of the deck
 	deckLength--;
 
 	//loop shuffles pointers down to keep remaining HarvestTiles together at the "top" of the deck
 	//subtract one again from deckLength to prevent index out of bounds errors
-	for (int i = randomNumber; i < deckLength-1; i++) {
+	for (int i = randomNumber; i < deckLength; i++) {
 		harvestDeck[i] = harvestDeck[i+1];
 	}
 
@@ -258,233 +385,234 @@ HarvestTile* HarvestDeck::draw() {
 }
 
 BuildingDeck::BuildingDeck() {
-//    cout << "Creating BuildingDeck with Main: " << this << endl;
-    
-    // Initializing deck size
-    int size = 144;
-    _sizeMax = &size;
-    
-    // Initialize deck resources
-    BuildingColorType greenSheep = BuildingColorType::GreenSheep;
-    BuildingColorType greyRock = BuildingColorType::GreyRock;
-    BuildingColorType redLumber = BuildingColorType::RedLumber;
-    BuildingColorType yellowHay = BuildingColorType::YellowHay;
-    
-    int num1 = 1;
-    int num2 = 2;
-    int num3 = 3;
-    int num4 = 4;
-    int num5 = 5;
-    int num6 = 6;
-    
-    BuildingStatus normal = BuildingStatus::Normal;
-    
-    // Deck: 6 x 4 x 6
-    BuildingTile tiles[144] = {
-        BuildingTile(&greenSheep, &num1, &normal),
-        BuildingTile(&greenSheep, &num2, &normal),
-        BuildingTile(&greenSheep, &num3, &normal),
-        BuildingTile(&greenSheep, &num4, &normal),
-        BuildingTile(&greenSheep, &num5, &normal),
-        BuildingTile(&greenSheep, &num6, &normal),
-        BuildingTile(&greyRock, &num1, &normal),
-        BuildingTile(&greyRock, &num2, &normal),
-        BuildingTile(&greyRock, &num3, &normal),
-        BuildingTile(&greyRock, &num4, &normal),
-        BuildingTile(&greyRock, &num5, &normal),
-        BuildingTile(&greyRock, &num6, &normal),
-        BuildingTile(&redLumber, &num1, &normal),
-        BuildingTile(&redLumber, &num2, &normal),
-        BuildingTile(&redLumber, &num3, &normal),
-        BuildingTile(&redLumber, &num4, &normal),
-        BuildingTile(&redLumber, &num5, &normal),
-        BuildingTile(&redLumber, &num6, &normal),
-        BuildingTile(&yellowHay, &num1, &normal),
-        BuildingTile(&yellowHay, &num2, &normal),
-        BuildingTile(&yellowHay, &num3, &normal),
-        BuildingTile(&yellowHay, &num4, &normal),
-        BuildingTile(&yellowHay, &num5, &normal),
-        BuildingTile(&yellowHay, &num6, &normal),
+	//    cout << "Creating BuildingDeck with Main: " << this << endl;
 
-        BuildingTile(&greenSheep, &num1, &normal),
-        BuildingTile(&greenSheep, &num2, &normal),
-        BuildingTile(&greenSheep, &num3, &normal),
-        BuildingTile(&greenSheep, &num4, &normal),
-        BuildingTile(&greenSheep, &num5, &normal),
-        BuildingTile(&greenSheep, &num6, &normal),
-        BuildingTile(&greyRock, &num1, &normal),
-        BuildingTile(&greyRock, &num2, &normal),
-        BuildingTile(&greyRock, &num3, &normal),
-        BuildingTile(&greyRock, &num4, &normal),
-        BuildingTile(&greyRock, &num5, &normal),
-        BuildingTile(&greyRock, &num6, &normal),
-        BuildingTile(&redLumber, &num1, &normal),
-        BuildingTile(&redLumber, &num2, &normal),
-        BuildingTile(&redLumber, &num3, &normal),
-        BuildingTile(&redLumber, &num4, &normal),
-        BuildingTile(&redLumber, &num5, &normal),
-        BuildingTile(&redLumber, &num6, &normal),
-        BuildingTile(&yellowHay, &num1, &normal),
-        BuildingTile(&yellowHay, &num2, &normal),
-        BuildingTile(&yellowHay, &num3, &normal),
-        BuildingTile(&yellowHay, &num4, &normal),
-        BuildingTile(&yellowHay, &num5, &normal),
-        BuildingTile(&yellowHay, &num6, &normal),
-        
-        BuildingTile(&greenSheep, &num1, &normal),
-        BuildingTile(&greenSheep, &num2, &normal),
-        BuildingTile(&greenSheep, &num3, &normal),
-        BuildingTile(&greenSheep, &num4, &normal),
-        BuildingTile(&greenSheep, &num5, &normal),
-        BuildingTile(&greenSheep, &num6, &normal),
-        BuildingTile(&greyRock, &num1, &normal),
-        BuildingTile(&greyRock, &num2, &normal),
-        BuildingTile(&greyRock, &num3, &normal),
-        BuildingTile(&greyRock, &num4, &normal),
-        BuildingTile(&greyRock, &num5, &normal),
-        BuildingTile(&greyRock, &num6, &normal),
-        BuildingTile(&redLumber, &num1, &normal),
-        BuildingTile(&redLumber, &num2, &normal),
-        BuildingTile(&redLumber, &num3, &normal),
-        BuildingTile(&redLumber, &num4, &normal),
-        BuildingTile(&redLumber, &num5, &normal),
-        BuildingTile(&redLumber, &num6, &normal),
-        BuildingTile(&yellowHay, &num1, &normal),
-        BuildingTile(&yellowHay, &num2, &normal),
-        BuildingTile(&yellowHay, &num3, &normal),
-        BuildingTile(&yellowHay, &num4, &normal),
-        BuildingTile(&yellowHay, &num5, &normal),
-        BuildingTile(&yellowHay, &num6, &normal),
-        
-        BuildingTile(&greenSheep, &num1, &normal),
-        BuildingTile(&greenSheep, &num2, &normal),
-        BuildingTile(&greenSheep, &num3, &normal),
-        BuildingTile(&greenSheep, &num4, &normal),
-        BuildingTile(&greenSheep, &num5, &normal),
-        BuildingTile(&greenSheep, &num6, &normal),
-        BuildingTile(&greyRock, &num1, &normal),
-        BuildingTile(&greyRock, &num2, &normal),
-        BuildingTile(&greyRock, &num3, &normal),
-        BuildingTile(&greyRock, &num4, &normal),
-        BuildingTile(&greyRock, &num5, &normal),
-        BuildingTile(&greyRock, &num6, &normal),
-        BuildingTile(&redLumber, &num1, &normal),
-        BuildingTile(&redLumber, &num2, &normal),
-        BuildingTile(&redLumber, &num3, &normal),
-        BuildingTile(&redLumber, &num4, &normal),
-        BuildingTile(&redLumber, &num5, &normal),
-        BuildingTile(&redLumber, &num6, &normal),
-        BuildingTile(&yellowHay, &num1, &normal),
-        BuildingTile(&yellowHay, &num2, &normal),
-        BuildingTile(&yellowHay, &num3, &normal),
-        BuildingTile(&yellowHay, &num4, &normal),
-        BuildingTile(&yellowHay, &num5, &normal),
-        BuildingTile(&yellowHay, &num6, &normal),
-        
-        BuildingTile(&greenSheep, &num1, &normal),
-        BuildingTile(&greenSheep, &num2, &normal),
-        BuildingTile(&greenSheep, &num3, &normal),
-        BuildingTile(&greenSheep, &num4, &normal),
-        BuildingTile(&greenSheep, &num5, &normal),
-        BuildingTile(&greenSheep, &num6, &normal),
-        BuildingTile(&greyRock, &num1, &normal),
-        BuildingTile(&greyRock, &num2, &normal),
-        BuildingTile(&greyRock, &num3, &normal),
-        BuildingTile(&greyRock, &num4, &normal),
-        BuildingTile(&greyRock, &num5, &normal),
-        BuildingTile(&greyRock, &num6, &normal),
-        BuildingTile(&redLumber, &num1, &normal),
-        BuildingTile(&redLumber, &num2, &normal),
-        BuildingTile(&redLumber, &num3, &normal),
-        BuildingTile(&redLumber, &num4, &normal),
-        BuildingTile(&redLumber, &num5, &normal),
-        BuildingTile(&redLumber, &num6, &normal),
-        BuildingTile(&yellowHay, &num1, &normal),
-        BuildingTile(&yellowHay, &num2, &normal),
-        BuildingTile(&yellowHay, &num3, &normal),
-        BuildingTile(&yellowHay, &num4, &normal),
-        BuildingTile(&yellowHay, &num5, &normal),
-        BuildingTile(&yellowHay, &num6, &normal),
-        
-        BuildingTile(&greenSheep, &num1, &normal),
-        BuildingTile(&greenSheep, &num2, &normal),
-        BuildingTile(&greenSheep, &num3, &normal),
-        BuildingTile(&greenSheep, &num4, &normal),
-        BuildingTile(&greenSheep, &num5, &normal),
-        BuildingTile(&greenSheep, &num6, &normal),
-        BuildingTile(&greyRock, &num1, &normal),
-        BuildingTile(&greyRock, &num2, &normal),
-        BuildingTile(&greyRock, &num3, &normal),
-        BuildingTile(&greyRock, &num4, &normal),
-        BuildingTile(&greyRock, &num5, &normal),
-        BuildingTile(&greyRock, &num6, &normal),
-        BuildingTile(&redLumber, &num1, &normal),
-        BuildingTile(&redLumber, &num2, &normal),
-        BuildingTile(&redLumber, &num3, &normal),
-        BuildingTile(&redLumber, &num4, &normal),
-        BuildingTile(&redLumber, &num5, &normal),
-        BuildingTile(&redLumber, &num6, &normal),
-        BuildingTile(&yellowHay, &num1, &normal),
-        BuildingTile(&yellowHay, &num2, &normal),
-        BuildingTile(&yellowHay, &num3, &normal),
-        BuildingTile(&yellowHay, &num4, &normal),
-        BuildingTile(&yellowHay, &num5, &normal),
-        BuildingTile(&yellowHay, &num6, &normal),
-    };
-    
-    // Initializing _deck vector
-    _deck = new vector<BuildingTile*>;
-    
-    for (int i = 0; i < *_sizeMax; i++) {
-//        cout << "Adding tile: " << &tiles[i] << endl;
-        _deck -> push_back(&tiles[i]);
-    }
-    
+		// Initializing deck size
+	int size = 144;
+	_sizeMax = &size;
+
+	// Initialize deck resources
+	BuildingColorType greenSheep = BuildingColorType::GreenSheep;
+	BuildingColorType greyRock = BuildingColorType::GreyRock;
+	BuildingColorType redLumber = BuildingColorType::RedLumber;
+	BuildingColorType yellowHay = BuildingColorType::YellowHay;
+
+	int num1 = 1;
+	int num2 = 2;
+	int num3 = 3;
+	int num4 = 4;
+	int num5 = 5;
+	int num6 = 6;
+
+	BuildingStatus normal = BuildingStatus::Normal;
+
+	// Deck: 6 x 4 x 6
+	BuildingTile tiles[144] = {
+		BuildingTile(&greenSheep, &num1, &normal),
+		BuildingTile(&greenSheep, &num2, &normal),
+		BuildingTile(&greenSheep, &num3, &normal),
+		BuildingTile(&greenSheep, &num4, &normal),
+		BuildingTile(&greenSheep, &num5, &normal),
+		BuildingTile(&greenSheep, &num6, &normal),
+		BuildingTile(&greyRock, &num1, &normal),
+		BuildingTile(&greyRock, &num2, &normal),
+		BuildingTile(&greyRock, &num3, &normal),
+		BuildingTile(&greyRock, &num4, &normal),
+		BuildingTile(&greyRock, &num5, &normal),
+		BuildingTile(&greyRock, &num6, &normal),
+		BuildingTile(&redLumber, &num1, &normal),
+		BuildingTile(&redLumber, &num2, &normal),
+		BuildingTile(&redLumber, &num3, &normal),
+		BuildingTile(&redLumber, &num4, &normal),
+		BuildingTile(&redLumber, &num5, &normal),
+		BuildingTile(&redLumber, &num6, &normal),
+		BuildingTile(&yellowHay, &num1, &normal),
+		BuildingTile(&yellowHay, &num2, &normal),
+		BuildingTile(&yellowHay, &num3, &normal),
+		BuildingTile(&yellowHay, &num4, &normal),
+		BuildingTile(&yellowHay, &num5, &normal),
+		BuildingTile(&yellowHay, &num6, &normal),
+
+		BuildingTile(&greenSheep, &num1, &normal),
+		BuildingTile(&greenSheep, &num2, &normal),
+		BuildingTile(&greenSheep, &num3, &normal),
+		BuildingTile(&greenSheep, &num4, &normal),
+		BuildingTile(&greenSheep, &num5, &normal),
+		BuildingTile(&greenSheep, &num6, &normal),
+		BuildingTile(&greyRock, &num1, &normal),
+		BuildingTile(&greyRock, &num2, &normal),
+		BuildingTile(&greyRock, &num3, &normal),
+		BuildingTile(&greyRock, &num4, &normal),
+		BuildingTile(&greyRock, &num5, &normal),
+		BuildingTile(&greyRock, &num6, &normal),
+		BuildingTile(&redLumber, &num1, &normal),
+		BuildingTile(&redLumber, &num2, &normal),
+		BuildingTile(&redLumber, &num3, &normal),
+		BuildingTile(&redLumber, &num4, &normal),
+		BuildingTile(&redLumber, &num5, &normal),
+		BuildingTile(&redLumber, &num6, &normal),
+		BuildingTile(&yellowHay, &num1, &normal),
+		BuildingTile(&yellowHay, &num2, &normal),
+		BuildingTile(&yellowHay, &num3, &normal),
+		BuildingTile(&yellowHay, &num4, &normal),
+		BuildingTile(&yellowHay, &num5, &normal),
+		BuildingTile(&yellowHay, &num6, &normal),
+
+		BuildingTile(&greenSheep, &num1, &normal),
+		BuildingTile(&greenSheep, &num2, &normal),
+		BuildingTile(&greenSheep, &num3, &normal),
+		BuildingTile(&greenSheep, &num4, &normal),
+		BuildingTile(&greenSheep, &num5, &normal),
+		BuildingTile(&greenSheep, &num6, &normal),
+		BuildingTile(&greyRock, &num1, &normal),
+		BuildingTile(&greyRock, &num2, &normal),
+		BuildingTile(&greyRock, &num3, &normal),
+		BuildingTile(&greyRock, &num4, &normal),
+		BuildingTile(&greyRock, &num5, &normal),
+		BuildingTile(&greyRock, &num6, &normal),
+		BuildingTile(&redLumber, &num1, &normal),
+		BuildingTile(&redLumber, &num2, &normal),
+		BuildingTile(&redLumber, &num3, &normal),
+		BuildingTile(&redLumber, &num4, &normal),
+		BuildingTile(&redLumber, &num5, &normal),
+		BuildingTile(&redLumber, &num6, &normal),
+		BuildingTile(&yellowHay, &num1, &normal),
+		BuildingTile(&yellowHay, &num2, &normal),
+		BuildingTile(&yellowHay, &num3, &normal),
+		BuildingTile(&yellowHay, &num4, &normal),
+		BuildingTile(&yellowHay, &num5, &normal),
+		BuildingTile(&yellowHay, &num6, &normal),
+
+		BuildingTile(&greenSheep, &num1, &normal),
+		BuildingTile(&greenSheep, &num2, &normal),
+		BuildingTile(&greenSheep, &num3, &normal),
+		BuildingTile(&greenSheep, &num4, &normal),
+		BuildingTile(&greenSheep, &num5, &normal),
+		BuildingTile(&greenSheep, &num6, &normal),
+		BuildingTile(&greyRock, &num1, &normal),
+		BuildingTile(&greyRock, &num2, &normal),
+		BuildingTile(&greyRock, &num3, &normal),
+		BuildingTile(&greyRock, &num4, &normal),
+		BuildingTile(&greyRock, &num5, &normal),
+		BuildingTile(&greyRock, &num6, &normal),
+		BuildingTile(&redLumber, &num1, &normal),
+		BuildingTile(&redLumber, &num2, &normal),
+		BuildingTile(&redLumber, &num3, &normal),
+		BuildingTile(&redLumber, &num4, &normal),
+		BuildingTile(&redLumber, &num5, &normal),
+		BuildingTile(&redLumber, &num6, &normal),
+		BuildingTile(&yellowHay, &num1, &normal),
+		BuildingTile(&yellowHay, &num2, &normal),
+		BuildingTile(&yellowHay, &num3, &normal),
+		BuildingTile(&yellowHay, &num4, &normal),
+		BuildingTile(&yellowHay, &num5, &normal),
+		BuildingTile(&yellowHay, &num6, &normal),
+
+		BuildingTile(&greenSheep, &num1, &normal),
+		BuildingTile(&greenSheep, &num2, &normal),
+		BuildingTile(&greenSheep, &num3, &normal),
+		BuildingTile(&greenSheep, &num4, &normal),
+		BuildingTile(&greenSheep, &num5, &normal),
+		BuildingTile(&greenSheep, &num6, &normal),
+		BuildingTile(&greyRock, &num1, &normal),
+		BuildingTile(&greyRock, &num2, &normal),
+		BuildingTile(&greyRock, &num3, &normal),
+		BuildingTile(&greyRock, &num4, &normal),
+		BuildingTile(&greyRock, &num5, &normal),
+		BuildingTile(&greyRock, &num6, &normal),
+		BuildingTile(&redLumber, &num1, &normal),
+		BuildingTile(&redLumber, &num2, &normal),
+		BuildingTile(&redLumber, &num3, &normal),
+		BuildingTile(&redLumber, &num4, &normal),
+		BuildingTile(&redLumber, &num5, &normal),
+		BuildingTile(&redLumber, &num6, &normal),
+		BuildingTile(&yellowHay, &num1, &normal),
+		BuildingTile(&yellowHay, &num2, &normal),
+		BuildingTile(&yellowHay, &num3, &normal),
+		BuildingTile(&yellowHay, &num4, &normal),
+		BuildingTile(&yellowHay, &num5, &normal),
+		BuildingTile(&yellowHay, &num6, &normal),
+
+		BuildingTile(&greenSheep, &num1, &normal),
+		BuildingTile(&greenSheep, &num2, &normal),
+		BuildingTile(&greenSheep, &num3, &normal),
+		BuildingTile(&greenSheep, &num4, &normal),
+		BuildingTile(&greenSheep, &num5, &normal),
+		BuildingTile(&greenSheep, &num6, &normal),
+		BuildingTile(&greyRock, &num1, &normal),
+		BuildingTile(&greyRock, &num2, &normal),
+		BuildingTile(&greyRock, &num3, &normal),
+		BuildingTile(&greyRock, &num4, &normal),
+		BuildingTile(&greyRock, &num5, &normal),
+		BuildingTile(&greyRock, &num6, &normal),
+		BuildingTile(&redLumber, &num1, &normal),
+		BuildingTile(&redLumber, &num2, &normal),
+		BuildingTile(&redLumber, &num3, &normal),
+		BuildingTile(&redLumber, &num4, &normal),
+		BuildingTile(&redLumber, &num5, &normal),
+		BuildingTile(&redLumber, &num6, &normal),
+		BuildingTile(&yellowHay, &num1, &normal),
+		BuildingTile(&yellowHay, &num2, &normal),
+		BuildingTile(&yellowHay, &num3, &normal),
+		BuildingTile(&yellowHay, &num4, &normal),
+		BuildingTile(&yellowHay, &num5, &normal),
+		BuildingTile(&yellowHay, &num6, &normal),
+	};
+
+	// Initializing _deck vector
+	_deck = new vector<BuildingTile*>;
+
+	for (int i = 0; i < *_sizeMax; i++) {
+		//        cout << "Adding tile: " << &tiles[i] << endl;
+		_deck->push_back(&tiles[i]);
+	}
+
 }
 
-BuildingDeck::BuildingDeck(const BuildingDeck &deck) {
-    
+BuildingDeck::BuildingDeck(const BuildingDeck& deck) {
+
 }
 
 BuildingDeck::~BuildingDeck() {
-    if (_deck) {
-//        cout << "Deleting _deck of BuildingTile with address: " << this << endl;
-        delete _deck;
-        _deck = nullptr;
-//        cout << "DONE" << endl;
-    }
+	if (_deck) {
+		//        cout << "Deleting _deck of BuildingTile with address: " << this << endl;
+		delete _deck;
+		_deck = nullptr;
+		//        cout << "DONE" << endl;
+	}
 }
 
 vector<BuildingTile*>* BuildingDeck::getDeck() {
-    return _deck;
+	return _deck;
 }
 
-void BuildingDeck::add(BuildingTile &tile) {
-//    cout << "Adding: " << &tile << endl;
-    _deck -> push_back(&tile);
+void BuildingDeck::add(BuildingTile& tile) {
+	//    cout << "Adding: " << &tile << endl;
+	_deck->push_back(&tile);
 }
 
 
-void BuildingDeck::remove(BuildingTile &tile) {
-    _deck -> erase(std::remove(_deck -> begin(), _deck -> end(), &tile), _deck -> end());
+void BuildingDeck::remove(BuildingTile& tile) {
+	_deck->erase(std::remove(_deck->begin(), _deck->end(), &tile), _deck->end());
 }
 
 
 BuildingTile* BuildingDeck::draw() {
-    if (_deck -> size() > 0) {
-        int randomIndex = rand() % _deck -> size();
-        BuildingTile *tile = _deck -> at(randomIndex);
-        remove(*tile);
-        return tile;
-    }
-    else {
-        return nullptr;
-    }
+	if (_deck->size() > 0) {
+		int randomIndex = rand() % _deck->size();
+		BuildingTile* tile = _deck->at(randomIndex);
+		remove(*tile);
+		return tile;
+	}
+	else {
+		return nullptr;
+	}
 }
 
 unsigned long BuildingDeck::getSize() {
-    return _deck -> size();
+	return _deck->size();
 }
+
 
 Hand::Hand(Scoring* inSc) {
 	sc = inSc;
