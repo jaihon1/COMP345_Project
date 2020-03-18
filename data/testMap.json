@@ -33,7 +33,7 @@
 			 {"GBSquare": {"status": "Empty"}}, 
 			 {"GBSquare": {"status": "Empty"}},
 			 {"GBSquare": {"status": "Empty"}},
-			 {"GBSquare": {"status": "HarvestTile", "resources": ["Wheat", "Rock", "Sheep", "Sheep"]}},
+			 {"GBSquare": {"status": "HarvestTile", "resources": ["Sheep", "Sheep", "Sheep", "Sheep"]}},
 			 {"GBSquare": {"status": "Empty"}},
 			 {"GBSquare": {"status": "Empty"}},
 			 {"GBSquare": {"status": "Empty"}}

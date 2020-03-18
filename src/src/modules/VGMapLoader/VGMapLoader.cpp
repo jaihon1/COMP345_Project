@@ -1,115 +1,223 @@
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 
 #include "VGMapLoader.h"
-#include <iostream>
-#include <fstream>
 #include <nlohmann/json.hpp>
-using namespace std; 
+using namespace std;
 
-using json = nlohmann::json; 
+using json = nlohmann::json;
 //VGMapLoader write out to file the current map loader 
 VGMapLoader::VGMapLoader()
 {
-	//deliberately empty for now 
+	//deliberately empty for now
 }
 
-VGMapLoader::VGMapLoader(const char * inFile)
+VGMapLoader::VGMapLoader(const char* inFile)
 {
-	ifstream inFileStream; 
-	inFileStream.open(inFile); 
+	cout << "Inside in File VGMAPLoader constructor" << endl;
+	ifstream inFileStream;
+	inFileStream.open(inFile);
 
-	json VGMapDoc; 
+	json VGMapDoc;
 	inFileStream >> VGMapDoc; //dump inpute file strea into the DOM
 
-	board = new VGMaps(); 
+	board = new VGMaps();
 
-	auto const boardJson = VGMapDoc.find("board"); 
+	auto const boardJson = VGMapDoc.find("VGboard");
+
+	cout << "Found VGBoard" << endl;
 
 	if (boardJson == VGMapDoc.end())
 	{
-		cerr << "board not found"; 
+		cerr << "VGboard not found";
 		return;  //return back to where you were
 	}
 
-	int VG_row = -1;  //why -1 rather than 0? is it because you want to consatntly iterate through? yes 
+	int VG_row = -1;
 
-	statusVGMap sMap; 
-	buildingMap bMap;
-	// Damian: needed to instantiate the new enum class
-	buildingStatusMap bsMap;
+	statusVGMap sMap;
+	buildingColorTypeMap bCTMap; //for both vgMap and BuildingTile
+	buildingStatusMap bSMap;
+	buildingInt bIMap;
+	cout << "Created the maps to check " << endl;
+
 
 	for (auto const& row : *boardJson)
 	{
-		VG_row++; 
-		int VG_col = -1; 
+		VG_row++;
+		int VG_col = -1;
 		for (auto const& column : row)
 		{
-			VG_col++; 
+			VG_col++;
 
-			auto const VGSquare = column.find("VGSquare"); 
+			auto const VGS = column.find("VGSquare");
+			cout << "Found VGSquare" << endl;
 
-			auto const VGSlotStatus = VGSquare->find("VGstatus"); 
+			auto const VGstat = VGS->find("VGstatus"); //get value attached to VGStatus 
 
-			auto const BuildingColorType = VGSquare->find("VGSquare_type"); 
-		
-			//to recheck!!!
-			/*
-			 Damian: 
-			 it looked like you were trying to check the status of the VGMap with the BuildColorType which are incompatable
-			 I'm assuming you wanted to check wether the VGSlotStatus was empty?  
-			 also, you comparing specific enum to a whole enum class so again I assumed you only wanted to execute the if-statement when the slot status wasn't empty
-			 I'm confused because you index into your sMap with BuildingColorType.  So this code will build but will result in runtime failure because there is no buildingColorType names in your sMap
-			*/
-			
-			if (sMap[*BuildingColorType] != VGSlotStatus::Empty) //is this line good? 
+			if (sMap[*VGstat] == VGSlotStatus::Taken)
 			{
-				auto const b_type = VGSlotStatus->find("_buildingColorType"); 
-				auto const b_int = VGSlotStatus->find("_buildingNum"); 
-				auto const b_side = VGSlotStatus->find("_buildingStatus");
 
-				/*
-				Damian:
-				BuildingTile constructor takes an int pointer as second argument
-				so first created int variable and then get the address in the constructor
-				with that said, this line converts from JSON int to actual int
-				*/
-				int buildingNum = b_int[0].get<int>();
-				
-				//do you create the buildingTile again? im assuming yes
-				/*
-				Damian:
-				BuildingTile constructor takes all pointers in the parameter so
-				changed b_type string to enum and then passing the address of that enum to the constructor
-				same thing for b_side
-				*/
-				BuildingTile *temp = new BuildingTile(&bMap[*b_type], &buildingNum, &bsMap[*b_side]); 
-				board->addNewBuildingTile(*temp , row, column); //dereference temp 
+				cout << "inside taken" << endl;
+
+				auto const b_ptr = VGS->find("*building_ptr");
+
+				auto const b_type = b_ptr->find("BuildingColorType");
+				auto const b_side = b_ptr->find("BuildingSide");
+				auto const b_num = b_ptr->find("BuildingNumber");
+				cout << "Found each building attribute" << endl;
+
+
+				BuildingColorType c = bCTMap[*b_type];
+
+				cout << "Found color type" << endl;
+				cout << BuildingTile::Building_typeToChar(c) << endl;
+
+				BuildingStatus s = bSMap[*b_side];
+				cout << "Found side" << endl;
+				cout << BuildingTile::Building_statusToChar(s) << endl;
+
+				//cout << "suspected crash" << endl;
+				int n = bIMap[*b_num];
+				cout << "Found num" << endl;
+
+				BuildingTile* temp = new BuildingTile(c, n, s);
+
+				cout << "created new building" << endl;
+
+				cout << BuildingTile::Building_typeToChar(temp->getBuildingColorType()) << endl;
+				cout << BuildingTile::Building_statusToChar(temp->getSide()) << endl;
+				cout << BuildingTile::Building_intToChar(temp->getBuildingNum()) << endl;
+
+
+				board->addNewBuildingTile(*temp, VG_row, VG_col); //dereference temp
+				cout << "Added new building sucess" << endl;
+
+				//Dont need
+				//auto const VGSquare_type = VGS->find("VGSquare_type");
+
+				delete temp;
+				temp = NULL; //good practice, clear out the temp pointer
 			}
-			else
+			else if (sMap[*VGstat] == VGSlotStatus::Empty)
 			{
+				cout << "Inside empty" << endl;
 				/*
 				Damian:
 				this "board" variable is a VGMap object so you can't index into it like an array
 				so I created a setStatus method in your VGmaps to set the slot status to empty
 				*/
-				board->setStatus(row, column, VGSlotStatus::Empty);
+
+				//board->setStatus(row, column, VGSlotStatus::Empty);
 				//make this area empty
-				//board[row][column].VGStatus == VGSlotStatus::Empty; 
+
+				board->village_board[VG_row][VG_col].VGstatus = VGSlotStatus::Empty;
+				board->village_board[VG_row][VG_col].VGSquare_type = BuildingColorType::None;
+				board->village_board[VG_row][VG_col].building_ptr = NULL;
+
+				cout << "Set status to empty and color type to none" << endl;
 			}
+
+
 		}
-
-		//Make the remaining of the board empty in status
-
 
 	}
 }
 
 VGMapLoader::~VGMapLoader()
 {
-
+	cout << "deleting board - make sure to get board assignment first" << endl;
+	delete board;
 }
 
-VGMaps * VGMapLoader::getBoard()
+VGMaps* VGMapLoader::getBoard()
 {
-	return board; 
+	return board;
+}
+
+//why VGMapsaver? 
+void VGMapSaver::save(VGMaps* inGame, const char* inFilePath)
+{
+	outFile.open(inFilePath);
+	cout << "Opening file path " << endl;
+	json d;
+
+	nlohmann::basic_json<> jsonRows = json::array();
+
+	for (int i = 0; i < *(inGame->rows); i++)
+	{
+		nlohmann::basic_json<> jsonColumns = json::array();
+
+		for (int j = 0; j < *(inGame->columns); j++)
+		{
+
+			if ((inGame->village_board[i][j].VGstatus) == VGSlotStatus::Empty)
+			{
+				nlohmann::basic_json <> stats =
+				{
+					{"VGstatus", "Empty"},
+					{"VGSquare_type", "None"},
+					{"*building_ptr", NULL}
+				};
+
+				jsonColumns.push_back({ { "VGSquare",  stats } });
+
+				/*
+				jsonColumns.push_back({ { "VGSquare" ,{{"VGstatus", "Empty"}}} });
+				jsonColumns.push_back({ { "VGSquare" ,{{"VGSquare_type", "None"}}} }); //cuz Empty is automatically associated with none
+				jsonColumns.push_back({ { "VGSquare" ,{{"*building_ptr", NULL}}} });
+				*/
+
+			}
+			else if ((inGame->village_board[i][j].VGstatus) == VGSlotStatus::Taken)
+			{
+				//push back status 
+
+				BuildingTile* t = new BuildingTile(inGame->getBuildingTile(i, j));
+
+				nlohmann::basic_json <> building_stats =
+				{
+					{"VGstatus", "Taken"},
+					{"VGSquare_type", BuildingTile::Building_typeToChar(t->getBuildingColorType())},
+					{"*building_ptr", {{"BuildingColorType", BuildingTile::Building_typeToChar(t->getBuildingColorType())}, {"BuildingSide",BuildingTile::Building_statusToChar(t->getSide())}, {"BuildingNumber", BuildingTile::Building_intToChar(t->getBuildingNum())} } }
+
+				};
+
+				//json b = json::object({ { "*building_ptr", "attributes" },{"BuildingColorType", BuildingTile::Building_typeToChar(t->getBuildingColorType())}, {"BuildingSide",BuildingTile::Building_statusToChar(t->getSide())}, {"BuildingNumber", BuildingTile::Building_intToChar(t->getBuildingNum())} });
+
+				/*
+				nlohmann::basic_json<> building_attributes =
+				{
+					BuildingTile::Building_typeToChar(t->getBuildingColorType()),
+					BuildingTile::Building_statusToChar(t->getSide()),
+					//should I do this?
+					BuildingTile::Building_intToChar(t->getBuildingNum())
+				};
+				*/
+
+				//jsonColumns.push_back({ { "VGSquare" , b} });
+
+				jsonColumns.push_back({ { "VGSquare", building_stats } });
+				cout << "Pushed json object back" << endl;
+
+				//good practice 
+				delete t;
+				t = NULL;
+			}
+
+		}
+		jsonRows.push_back(jsonColumns);
+
+	}
+	d["VGboard"] = jsonRows;
+
+	//cout << "printing out d test" << endl;
+	// cout << d << endl;
+
+	outFile << d.dump(2);
+	outFile.close();
+	cout << "Closing outFile path" << endl;
 }
 
