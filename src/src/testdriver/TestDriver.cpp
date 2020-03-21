@@ -10,6 +10,7 @@
 #include "../modules/player/player.h"
 #include "../modules/board/VGMaps.h"
 #include "../modules/VGMapLoader/VGMapLoader.h"
+#include "../GameStart/GameStart.h"
 
 
 #define _CRTDBG_MAP_ALLOC
@@ -17,7 +18,6 @@
 #include <crtdbg.h>
 
 using namespace std;
-
 
 
 const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
@@ -378,8 +378,45 @@ void VGMapLoaderTest()
 }
 
 
+void gameStartTest() {
+	GameStart* gameStart = new GameStart();
+	cout << "How many players: 2, 3, or 4? ";
+	int numPlayers;
+	cin >> numPlayers;
+	gameStart->setup(numPlayers);
+
+	cout << "Initial Game Board: \n";
+	printGameBoard(gameStart->getGBoard());
+
+	Player** player = gameStart->getPlayerArr();
+	cout << "These are your initial harvest tiles, which tile would you like to use (indexed 0 and 1): ";
+	// PLAY AS FIRST PLAYER FOR NOW
+	vector<HarvestTile*>* htVector = player[0]->getHarvestTiles();
+	printHarvestTile(htVector->at(0));
+	printHarvestTile(htVector->at(1));
+	int htIndex;
+	cin >> htIndex;
+	HarvestTile* harvestTile = htVector->at(htIndex);
+
+	int row;
+	int column;
+
+	cout << "Where would you like to place the tile?\n" << "row: ";
+	cin >> row;
+	cout << "column: ";
+	cin >> column;
+	cout << endl;
+
+	gameStart->getGBoard()->addHarvestTile(row, column, harvestTile);
+	gameStart->getHand()->intializeHand();
+	printGameBoard(gameStart->getGBoard());
+	cout << endl;
+	gameStart->getHand()->displayHand();
+
+}
+
 void menuOptions() {
-	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - To Be Annouced" << endl << "0 - Exit" << endl << endl << "Which test would you like to run? ";
+	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - GameStart Test" << endl << "0 - Exit" << endl << endl << "Which test would you like to run? ";
 }
 
 int main()
@@ -408,7 +445,7 @@ int main()
 			playerTest();
 			break;
 		case 5:
-			cout << "unavailable" << endl;
+			gameStartTest();
 			break;
 		}
 		cout << endl;

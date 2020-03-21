@@ -7,11 +7,29 @@
 
 #include "Resources.h"
 #include "Dictionary.h"
+#include "../player/player.h"
 #include "../Scoring/Scoring.h"
 
 using namespace std;
 
 static bool _firstBuilding = true;
+
+BuildingPool::BuildingPool(BuildingDeck* inBuildingDeck) {
+	buildingDeck = inBuildingDeck;
+	for (int i = 0; i < size; i++) {
+		buildingPoolArr[i] = buildingDeck->draw();
+	}
+}
+
+BuildingTile* BuildingPool::pickBuildingTile(int index) {
+	BuildingTile* returnTile =  buildingPoolArr[index];
+	buildingPoolArr[index] = buildingDeck->draw();
+	return returnTile;
+}
+
+BuildingTile**  BuildingPool::getBuildingPool() {
+	return buildingPoolArr;
+}
 
 
 HarvestTile::HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, ResourceName bottomLeftRes, ResourceName bottomRightRes)
@@ -619,19 +637,88 @@ Hand::Hand(Scoring* inSc) {
 	resourceScoreArr = new int[4] { 0, 0, 0, 0};
 }
 
-int* Hand::exchange()
+void Hand::intializeHand()
 {
 	resourceScoreArr[static_cast<int>(ResourceName::Rock)] = sc->get_stone();
 	resourceScoreArr[static_cast<int>(ResourceName::Lumber)] = sc->get_lumber();
 	resourceScoreArr[static_cast<int>(ResourceName::Wheat)] = sc->get_wheat();
 	resourceScoreArr[static_cast<int>(ResourceName::Sheep)] = sc->get_sheep();
-
-	return resourceScoreArr;
 }
 
 void Hand::displayHand() {
 
-	for (int i = 0; i < 4; i++) {
-		cout << HarvestTile::ResourceNameToString(static_cast<ResourceName>(i)) << ": " << resourceScoreArr[i];
+	for (int i = 1; i < 5; i++) {
+		cout << HarvestTile::ResourceNameToString(static_cast<ResourceName>(i)) << ": " << resourceScoreArr[i-1]<<" ";
 	}
+}
+
+int Hand::exchange(ExchangeToken* exchangeToken) {
+	Player* player = exchangeToken->getPlayer();
+	BuildingTile* buildingTile = exchangeToken->getBT();
+	int row = exchangeToken->getRow();
+	int column = exchangeToken->getCol();
+	int index;
+
+	// get index for resourceScoreArr
+	switch (buildingTile->getBuildingColorType()) {
+		case BuildingColorType::GreenSheep:
+			index = static_cast<int>(ResourceName::Sheep);
+			break;
+		case BuildingColorType::GreyRock:
+			index = static_cast<int>(ResourceName::Rock);
+			break;
+		case BuildingColorType::RedLumber:
+			index = static_cast<int>(ResourceName::Lumber);
+			break;
+		case BuildingColorType::YellowHay:
+			index = static_cast<int>(ResourceName::Wheat);
+			break;
+		}
+
+	// verify there are enough resources to add the building tile
+	if (resourceScoreArr[index] < buildingTile->getBuildingNum()) {
+		return 1;
+	}
+
+	player->removeBuildingTile(*buildingTile);
+	VGMaps* playersVGBoard = player->getVGBoard();
+
+	// add buildingTile and decrement resource score
+	if (playersVGBoard->addNewBuildingTile(*buildingTile, row, column) == 0) {
+			resourceScoreArr[index] -= buildingTile->getBuildingNum();
+			return 0;
+	}
+	else {
+		player->addBuildingTile(*buildingTile);
+		return 2;
+	}
+
+}
+
+Hand::ExchangeToken::ExchangeToken(Player* inP, BuildingTile* inBT, int inR, int inC)
+{
+		player = inP;
+		buildingTile = inBT;
+		row = inR;
+		column = inC;
+}
+
+Player* Hand::ExchangeToken::getPlayer()
+{
+	return player;
+}
+
+BuildingTile* Hand::ExchangeToken::getBT()
+{
+	return buildingTile;
+}
+
+int Hand::ExchangeToken::getRow()
+{
+	return row;
+}
+
+int Hand::ExchangeToken::getCol()
+{
+	return column;
 }
