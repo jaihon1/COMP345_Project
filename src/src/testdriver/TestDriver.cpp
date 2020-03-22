@@ -2,7 +2,7 @@
 #include <iomanip>
 #include "../modules/board/GBMaps.h"
 #include "../modules/board/VGMaps.h"
-#include "../modules/GBMapLoader/GBMapLoader.h"
+//#include "../modules/GBMapLoader/GBMapLoader.h"
 #include "../modules/tile/Dictionary.h"
 #include "../modules/scoring/Scoring.h"
 #include "../modules/tile/Resources.h"

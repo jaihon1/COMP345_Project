@@ -3,9 +3,9 @@
 
 enum class ResourceName {
     Lumber = 1,
-    Rock = 2,
-    Sheep = 3,
-    Wheat = 4
+	Sheep = 2,
+	 Wheat = 3,
+	Rock = 4
 };
 
 enum class ResourceName1 {

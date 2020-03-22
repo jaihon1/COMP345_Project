@@ -156,8 +156,10 @@ int Scoring::get_res(int resv)
 void Scoring::display_res()
 {
 	std::cout << "Resource: " << std::endl;
-	for(int i = 1; i < 5 ; i++)
-		std::cout << res_score[i] << std::endl;
+	std::cout << "Lumber: " << res_score[1] << std::endl;
+	std::cout << "Sheep: " << res_score[2] << std::endl;
+	std::cout << "Wheat: " << res_score[3] << std::endl;
+	std::cout << "Rock: " << res_score[4] << std::endl;
 	std::cout << std::endl;
 }
 
