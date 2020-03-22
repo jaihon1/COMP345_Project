@@ -40,8 +40,11 @@ private:
 	};
 
 	Graph vertices{ 196 };
-	int res_score[5] = { 0 , 0, 0, 0, 0 };//1st field for building	
-	
+	//Lumber = 1, Sheep = 2, Wheat = 3,	Rock = 4
+	int res_score[5] = { 0 , 0, 0, 0, 0 };//1st field for buildings leftover	
+	int player_score[5] = { 0 , 0, 0, 0, 0 };//1st field for buildings leftover
+	int player_density[5] = { 0 , 0, 0, 0, 0 };//1st field for buildings leftover
+
 	void add_res(int resv, int numv);
 	void update_help(int v, int w, int res);
 	
@@ -64,8 +67,11 @@ public:
 	int get_sheep();
 	int get_wheat();
 	int get_stone();
-	int get_score(VGMap &vil);
 	int get_res(int resv);
 	void display_res();
+
+	int get_score(const VGMap &vil);//const VGMap &vil
+	int get_density(const VGMap &vil);//const VGMap &vil
+	int get_winner(const int score[4][3]);
 };
 

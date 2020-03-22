@@ -3,11 +3,11 @@
 #include "GBMap.h"
 #include "VGMap.h"
 
-class GBMapDriver
+class Driver
 {
 public:
-	GBMapDriver();
-	~GBMapDriver();
+	Driver();
+	~Driver();
 
 };
 

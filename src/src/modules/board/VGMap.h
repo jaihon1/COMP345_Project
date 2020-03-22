@@ -22,7 +22,7 @@ private:
 		Building();
 		~Building();
 
-		int get();
+		int get() const;
 		void set(int typev);
 	};
 
@@ -30,7 +30,9 @@ private:
 	int test;
 	void init_building(int rv, int cv, int typev);
 
-	friend int Scoring::get_score(VGMap &vil);
+	friend int Scoring::get_score(const VGMap &vil);
+	friend int Scoring::get_density(const VGMap &vil);
+	friend int Scoring::get_winner(const int score[4][3]);
 
 public:
 	VGMap();

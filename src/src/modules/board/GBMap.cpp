@@ -2,10 +2,10 @@
 
 //current system use row(x) and column(y)
 
-GBMap::GBMap(int map_player, bool map_type)
+GBMap::GBMap(int map_player, bool map_type, Scoring &sc)
 {
-	srand(0);
-	
+	srand(1);
+	no_tile = 0;
 	for (int i = 0; i < board_length; i++)
 		for (int j = 0; j < board_length; j++)
 			map[i][j] = Tile(i, j, 0);
@@ -40,8 +40,10 @@ GBMap::GBMap(int map_player, bool map_type)
 	if (map_type == true)
 	{
 		int init_res_coor[4][2] = { { 1, 1 },{ 1, 5 },{ 5, 1 },{ 5, 5 } };//int res_temp[] = { 1, 2, 3, 4 };
-		for (int i = 0; i < 4; i++)
-			init_resource(init_res_coor[i][0], init_res_coor[i][1]);
+		for (int i = 0; i < 4; i++) {
+			int temp[4] = { rand() % 4 + 1, rand() % 4 + 1, rand() % 4 + 1, rand() % 4 + 1 };
+			add_tile(init_res_coor[i][0], init_res_coor[i][1], temp, sc);
+		}			
 	}
 	else
 	{
@@ -68,6 +70,7 @@ GBMap::~GBMap()
 
 void GBMap::init_obstacle(XY &coor)
 {
+	no_tile++;
 	(map[coor.x][coor.y]).set(tile_type::obstacle);
 	(map[coor.x][coor.y + 1]).set(tile_type::obstacle);
 	(map[coor.x + 1][coor.y]).set(tile_type::obstacle);
@@ -76,6 +79,7 @@ void GBMap::init_obstacle(XY &coor)
 
 void GBMap::init_tile(int &xv, int &yv, int val[4])
 {
+	no_tile++;
 	XY coor{ xv, yv };
 	(map[coor.x][coor.y]).set(static_cast<tile_type>(val[0]));
 	(map[coor.x][coor.y + 1]).set(static_cast<tile_type>(val[1]));
@@ -169,6 +173,16 @@ int GBMap::check_availibility(int &xv, int &yv)
 		return -1;
 }
 
+int GBMap::get_no_tile()
+{
+	return no_tile;
+}
+
+bool GBMap::end_game()
+{
+	return (max_tile-no_tile==1);
+}
+
 void GBMap::put_resource_sim()
 {
 	for (int i = 0; i < board_size; i++)
@@ -179,6 +193,19 @@ void GBMap::put_resource_sim()
 				put_resource(i, j, res_temp);
 			}			
 		}	
+}
+
+void GBMap::put_resource_sim(Scoring &sc)
+{
+	for (int i = 0; i < board_size-1; i++)
+		for (int j = 0; j < board_size; j++)
+		{
+			if (check_availibility(i, j) == 0) {
+				int res_temp[] = { rand() % 4 + 1, rand() % 4 + 1, rand() % 4 + 1, rand() % 4 + 1 };
+				add_tile(i, j, res_temp, sc);				
+			}
+		}
+	//sc.display_res();//must pass by ref
 }
 
 void GBMap::display_map()

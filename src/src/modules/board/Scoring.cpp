@@ -97,7 +97,22 @@ int Scoring::get_stone()
 	return res_score[4];
 }
 
-int Scoring::get_score(VGMap &vil)
+int Scoring::get_res(int resv)
+{
+	return res_score[resv];
+}
+
+void Scoring::display_res()
+{
+	std::cout << "Resource: " << std::endl;
+	std::cout << "Lumber: " << res_score[1] << std::endl;
+	std::cout << "Sheep: " << res_score[2] << std::endl;
+	std::cout << "Wheat: " << res_score[3] << std::endl;
+	std::cout << "Rock: " << res_score[4] << std::endl;
+	std::cout << std::endl;
+}
+
+int Scoring::get_score(const VGMap &vil)
 {
 	int score = 0;
 	bool mul = false;
@@ -112,8 +127,9 @@ int Scoring::get_score(VGMap &vil)
 		for (int j = 0; j < VGMap::village_col; j++) {	
 			if (vil.village[i][j].get() == 0)
 				complete = false;
-			if (vil.village[i][j].get() == -1)
-				mul = false;			
+			else
+				if (vil.village[i][j].get() == -1)
+					mul = false;			
 		}
 		if (!complete)
 			continue;
@@ -127,10 +143,12 @@ int Scoring::get_score(VGMap &vil)
 		mul = true;
 		complete = true;
 		for (int j = 0; j < VGMap::village_row; j++) {
-			if (vil.village[i][j].get() == 0)
+			//if (vil.village[i][j].get() == 0)//Wrong
+			if (vil.village[j][i].get() == 0)
 				complete = false;
-			if (vil.village[i][j].get() == -1)
-				mul = false;
+			else
+				if (vil.village[j][i].get() == -1)
+					mul = false;
 		}
 		if (!complete)
 			continue;
@@ -140,23 +158,56 @@ int Scoring::get_score(VGMap &vil)
 			score += (VGMap::village_col - (2 - abs(i - 2)));
 		//std::cout << "test: " << score << std::endl;
 	}
-		
-		
-
 	return score;
 }
 
-int Scoring::get_res(int resv)
+int Scoring::get_density(const VGMap & vil)
 {
-	return res_score[resv];
+	int result = 0;
+	for (int i = 0; i < VGMap::village_row; i++)
+	{
+		for (int j = 0; j < VGMap::village_col; j++) {
+			if (vil.village[i][j].get() != 0)
+				result++;
+		}
+	}
+
+	return result;
 }
 
-void Scoring::display_res()
+void insertionSort(int arr[], int n)
 {
-	std::cout << "Resource: " << std::endl;
-	for(int i = 1; i < 5 ; i++)
-		std::cout << res_score[i] << std::endl;
-	std::cout << std::endl;
+	int i, key, j;
+	for (i = 1; i < n; i++)
+	{
+		key = arr[i];
+		j = i - 1;
+
+		while (j >= 0 && arr[j] < key)
+		{
+			arr[j + 1] = arr[j];
+			j = j - 1;
+		}
+		arr[j + 1] = key;
+	}
+}
+
+int Scoring::get_winner(const int score[4][3])
+{
+	using namespace std;
+	int total[4];
+	int winner = 0;
+
+	for (int i = 0; i < 4; i++) 
+		total[i] = score[i][0] * 100000 + score[i][1] * 1000 + (100 - score[i][2]) * 10 + i;
+	
+	insertionSort(total, 4);
+
+	for (int i = 0; i < 4; i++)
+		if (total[i] == total[0])
+			cout << "The winner is player: " << total[i]%10 << endl;
+	
+	return winner;
 }
 
 

@@ -24,7 +24,12 @@ void VGMap::put_building_sim()
 {
 	for (int i = 0; i < village_row; i++)
 		for (int j = 0; j < village_col; j++)
-			init_building(i, j, 6 - i);
+			if (i == j && i > 2)
+				init_building(i, j, -1);
+			else if (rand() % 8 < 1)
+				init_building(i, j, 0);
+			else
+				init_building(i, j, 6 - i);
 }
 
 void VGMap::display_village()
@@ -55,7 +60,7 @@ VGMap::Building::~Building()
 {
 }
 
-int VGMap::Building::get()
+int VGMap::Building::get() const
 {
 	return type;
 }

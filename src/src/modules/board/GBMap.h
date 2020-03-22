@@ -60,6 +60,7 @@ private:
 
 	bool map_type;//true = A
 	int map_player;
+	int no_tile;
 	Tile map[board_length][board_length];
 
 	void init_obstacle(XY &coor);
@@ -71,12 +72,16 @@ private:
 	void connect_resource(ptrdiff_t &index, Tile *pos, Scoring &sc);
 
 public:
-	GBMap(int map_player, bool map_type);
+	GBMap(int map_player, bool map_type, Scoring &sc);
 	~GBMap();
 
 	void add_tile(int xv, int yv, int res[4], Scoring &sc);
 	int check_availibility(int &xv, int &yv);
+	int get_no_tile();
+	bool end_game();
 	void put_resource_sim();
+	//void put_resource_sim(Scoring sc); sc in main wont update
+	void put_resource_sim(Scoring &sc);
 
 	void display_map();	
 };
