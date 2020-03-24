@@ -638,11 +638,11 @@ Hand::Hand(Scoring* inSc) {
 }
 
 void Hand::intializeHand()
-{
-	resourceScoreArr[static_cast<int>(ResourceName::Rock)] = sc->get_stone();
-	resourceScoreArr[static_cast<int>(ResourceName::Lumber)] = sc->get_lumber();
-	resourceScoreArr[static_cast<int>(ResourceName::Wheat)] = sc->get_wheat();
-	resourceScoreArr[static_cast<int>(ResourceName::Sheep)] = sc->get_sheep();
+{	
+	resourceScoreArr[static_cast<int>(ResourceName::Lumber)-1] = sc->get_lumber();
+	resourceScoreArr[static_cast<int>(ResourceName::Rock)-1] = sc->get_stone();
+	resourceScoreArr[static_cast<int>(ResourceName::Wheat)-1] = sc->get_wheat();
+	resourceScoreArr[static_cast<int>(ResourceName::Sheep)-1] = sc->get_sheep();
 }
 
 void Hand::displayHand() {
@@ -661,7 +661,8 @@ int Hand::exchange(ExchangeToken* exchangeToken) {
 
 	// get index for resourceScoreArr
 	switch (buildingTile->getBuildingColorType()) {
-		case BuildingColorType::GreenSheep:
+
+	case BuildingColorType::GreenSheep:
 			index = static_cast<int>(ResourceName::Sheep);
 			break;
 		case BuildingColorType::GreyRock:

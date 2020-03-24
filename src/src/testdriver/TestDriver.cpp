@@ -393,6 +393,7 @@ void gameStartTest() {
 	// PLAY AS FIRST PLAYER FOR NOW
 	vector<HarvestTile*>* htVector = player[0]->getHarvestTiles();
 	printHarvestTile(htVector->at(0));
+	cout << endl;
 	printHarvestTile(htVector->at(1));
 	int htIndex;
 	cin >> htIndex;
