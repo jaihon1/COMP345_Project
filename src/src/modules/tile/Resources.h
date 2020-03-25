@@ -178,6 +178,11 @@ public:
 
 
 class Hand {
+private:
+	Scoring* sc;
+	int* resourceScoreArr;
+
+public:
 	class ExchangeToken {
 	private:
 		Player* player;
@@ -193,11 +198,7 @@ class Hand {
 		int getCol();
 
 	};
-private:
-	Scoring* sc;
-	int* resourceScoreArr;
 
-public:
 	Hand(Scoring* sc);
 	void intializeHand();
 	void displayHand();

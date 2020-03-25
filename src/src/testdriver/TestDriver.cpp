@@ -50,6 +50,10 @@ void printHarvestTile(HarvestTile* inHarvestTile) {
 
 }
 
+void printBuildingTile(BuildingTile* inBT) {
+	cout << inBT->getBuildingNum() << " " << inBT->Building_typeToChar(inBT->getBuildingColorType()) << endl;
+}
+
 void printGameBoard(GBMaps* inBoard) {
 	cout << "  ";
 	for (int columnNUM = 0; columnNUM < 7; columnNUM++) {
@@ -413,7 +417,37 @@ void gameStartTest() {
 	printGameBoard(gameStart->getGBoard());
 	cout << endl;
 	gameStart->getHand()->displayHand();
+	cout << endl;
+	
+	vector<BuildingTile*>* btVector = player[0]->getBuildings();
+	for (int i = 0; i < btVector->size(); i++) {
+		cout << "Tile "<< i + 1 << ": ";
+		printBuildingTile(btVector->at(i));
+	}
+	cout << endl;
+	player[0]->getVGBoard()->printVGMap();
+	cout << endl;
+	int btInput;
+	cout << "Which building tile would you like to use? ";
+	cin >> btInput;
+	BuildingTile* btToAdd = btVector->at(btInput-1);
+	int vgRow;
+	int vgColumn;
 
+	cout << endl;
+	cout << "Where would you like to place the tile?\n" << "row: ";
+	cin >> vgRow;
+	cout << "column: ";
+	cin >> vgColumn;
+	cout << endl;
+
+	Hand::ExchangeToken* exToken = new Hand::ExchangeToken(player[0], btToAdd, vgRow, vgColumn);
+	gameStart->getHand()->exchange(exToken);
+
+	player[0]->getVGBoard()->printVGMap();
+	cout << endl;
+	gameStart->getHand()->displayHand();
+	cout << endl;
 }
 
 void menuOptions() {
