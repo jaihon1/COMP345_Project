@@ -25,6 +25,7 @@ private:
     
     // Owns resources Gathering and Building Scoring facilities
     
+	HarvestTile* shipmentTile;
     
 public:
     Player();
@@ -38,6 +39,8 @@ public:
     void placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard);
     HarvestTile* drawHarvestTile(HarvestDeck &deck);
     unsigned long getNumberOfHarvestTiles();
+
+	void setShipmentTile(HarvestTile* harvestTile);
     
     // Manage Building Tiles
     vector<BuildingTile*>* getBuildings();
@@ -50,6 +53,11 @@ public:
     void ressourceTracker();
     void buildVillage();
     void calculateResources();
+
+	// Method for Board
+	VGMaps* getVGBoard();
+
+	
     
     
 };

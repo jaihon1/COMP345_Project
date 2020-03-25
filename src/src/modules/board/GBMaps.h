@@ -22,7 +22,7 @@ enum class GBSquareStatus {
 class GBSquare {
 public:
 	GBSquareStatus status;
-	Tile* tilePtr;
+	HarvestTile* tilePtr;
 
 	GBSquare();
 	~GBSquare();

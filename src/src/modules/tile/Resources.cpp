@@ -7,11 +7,29 @@
 
 #include "Resources.h"
 #include "Dictionary.h"
+#include "../player/player.h"
 #include "../Scoring/Scoring.h"
 
 using namespace std;
 
 static bool _firstBuilding = true;
+
+BuildingPool::BuildingPool(BuildingDeck* inBuildingDeck) {
+	buildingDeck = inBuildingDeck;
+	for (int i = 0; i < size; i++) {
+		buildingPoolArr[i] = buildingDeck->draw();
+	}
+}
+
+BuildingTile* BuildingPool::pickBuildingTile(int index) {
+	BuildingTile* returnTile =  buildingPoolArr[index];
+	buildingPoolArr[index] = buildingDeck->draw();
+	return returnTile;
+}
+
+BuildingTile**  BuildingPool::getBuildingPool() {
+	return buildingPoolArr;
+}
 
 
 HarvestTile::HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, ResourceName bottomLeftRes, ResourceName bottomRightRes)
@@ -407,156 +425,156 @@ BuildingDeck::BuildingDeck() {
 	BuildingStatus normal = BuildingStatus::Normal;
 
 	// Deck: 6 x 4 x 6
-	BuildingTile tiles[144] = {
-		BuildingTile(&greenSheep, &num1, &normal),
-		BuildingTile(&greenSheep, &num2, &normal),
-		BuildingTile(&greenSheep, &num3, &normal),
-		BuildingTile(&greenSheep, &num4, &normal),
-		BuildingTile(&greenSheep, &num5, &normal),
-		BuildingTile(&greenSheep, &num6, &normal),
-		BuildingTile(&greyRock, &num1, &normal),
-		BuildingTile(&greyRock, &num2, &normal),
-		BuildingTile(&greyRock, &num3, &normal),
-		BuildingTile(&greyRock, &num4, &normal),
-		BuildingTile(&greyRock, &num5, &normal),
-		BuildingTile(&greyRock, &num6, &normal),
-		BuildingTile(&redLumber, &num1, &normal),
-		BuildingTile(&redLumber, &num2, &normal),
-		BuildingTile(&redLumber, &num3, &normal),
-		BuildingTile(&redLumber, &num4, &normal),
-		BuildingTile(&redLumber, &num5, &normal),
-		BuildingTile(&redLumber, &num6, &normal),
-		BuildingTile(&yellowHay, &num1, &normal),
-		BuildingTile(&yellowHay, &num2, &normal),
-		BuildingTile(&yellowHay, &num3, &normal),
-		BuildingTile(&yellowHay, &num4, &normal),
-		BuildingTile(&yellowHay, &num5, &normal),
-		BuildingTile(&yellowHay, &num6, &normal),
+	BuildingTile* tiles[144] = {
+		new BuildingTile(&greenSheep, &num1, &normal),
+		new BuildingTile(&greenSheep, &num2, &normal),
+		new BuildingTile(&greenSheep, &num3, &normal),
+		new BuildingTile(&greenSheep, &num4, &normal),
+		new BuildingTile(&greenSheep, &num5, &normal),
+		new BuildingTile(&greenSheep, &num6, &normal),
+		new BuildingTile(&greyRock, &num1, &normal),
+		new BuildingTile(&greyRock, &num2, &normal),
+		new BuildingTile(&greyRock, &num3, &normal),
+		new BuildingTile(&greyRock, &num4, &normal),
+		new BuildingTile(&greyRock, &num5, &normal),
+		new BuildingTile(&greyRock, &num6, &normal),
+		new BuildingTile(&redLumber, &num1, &normal),
+		new BuildingTile(&redLumber, &num2, &normal),
+		new BuildingTile(&redLumber, &num3, &normal),
+		new BuildingTile(&redLumber, &num4, &normal),
+		new BuildingTile(&redLumber, &num5, &normal),
+		new BuildingTile(&redLumber, &num6, &normal),
+		new BuildingTile(&yellowHay, &num1, &normal),
+		new BuildingTile(&yellowHay, &num2, &normal),
+		new BuildingTile(&yellowHay, &num3, &normal),
+		new BuildingTile(&yellowHay, &num4, &normal),
+		new BuildingTile(&yellowHay, &num5, &normal),
+		new BuildingTile(&yellowHay, &num6, &normal),
 
-		BuildingTile(&greenSheep, &num1, &normal),
-		BuildingTile(&greenSheep, &num2, &normal),
-		BuildingTile(&greenSheep, &num3, &normal),
-		BuildingTile(&greenSheep, &num4, &normal),
-		BuildingTile(&greenSheep, &num5, &normal),
-		BuildingTile(&greenSheep, &num6, &normal),
-		BuildingTile(&greyRock, &num1, &normal),
-		BuildingTile(&greyRock, &num2, &normal),
-		BuildingTile(&greyRock, &num3, &normal),
-		BuildingTile(&greyRock, &num4, &normal),
-		BuildingTile(&greyRock, &num5, &normal),
-		BuildingTile(&greyRock, &num6, &normal),
-		BuildingTile(&redLumber, &num1, &normal),
-		BuildingTile(&redLumber, &num2, &normal),
-		BuildingTile(&redLumber, &num3, &normal),
-		BuildingTile(&redLumber, &num4, &normal),
-		BuildingTile(&redLumber, &num5, &normal),
-		BuildingTile(&redLumber, &num6, &normal),
-		BuildingTile(&yellowHay, &num1, &normal),
-		BuildingTile(&yellowHay, &num2, &normal),
-		BuildingTile(&yellowHay, &num3, &normal),
-		BuildingTile(&yellowHay, &num4, &normal),
-		BuildingTile(&yellowHay, &num5, &normal),
-		BuildingTile(&yellowHay, &num6, &normal),
+		new BuildingTile(&greenSheep, &num1, &normal),
+		new BuildingTile(&greenSheep, &num2, &normal),
+		new BuildingTile(&greenSheep, &num3, &normal),
+		new BuildingTile(&greenSheep, &num4, &normal),
+		new BuildingTile(&greenSheep, &num5, &normal),
+		new BuildingTile(&greenSheep, &num6, &normal),
+		new BuildingTile(&greyRock, &num1, &normal),
+		new BuildingTile(&greyRock, &num2, &normal),
+		new BuildingTile(&greyRock, &num3, &normal),
+		new BuildingTile(&greyRock, &num4, &normal),
+		new BuildingTile(&greyRock, &num5, &normal),
+		new BuildingTile(&greyRock, &num6, &normal),
+		new BuildingTile(&redLumber, &num1, &normal),
+		new BuildingTile(&redLumber, &num2, &normal),
+		new BuildingTile(&redLumber, &num3, &normal),
+		new BuildingTile(&redLumber, &num4, &normal),
+		new BuildingTile(&redLumber, &num5, &normal),
+		new BuildingTile(&redLumber, &num6, &normal),
+		new BuildingTile(&yellowHay, &num1, &normal),
+		new BuildingTile(&yellowHay, &num2, &normal),
+		new BuildingTile(&yellowHay, &num3, &normal),
+		new BuildingTile(&yellowHay, &num4, &normal),
+		new BuildingTile(&yellowHay, &num5, &normal),
+		new BuildingTile(&yellowHay, &num6, &normal),
 
-		BuildingTile(&greenSheep, &num1, &normal),
-		BuildingTile(&greenSheep, &num2, &normal),
-		BuildingTile(&greenSheep, &num3, &normal),
-		BuildingTile(&greenSheep, &num4, &normal),
-		BuildingTile(&greenSheep, &num5, &normal),
-		BuildingTile(&greenSheep, &num6, &normal),
-		BuildingTile(&greyRock, &num1, &normal),
-		BuildingTile(&greyRock, &num2, &normal),
-		BuildingTile(&greyRock, &num3, &normal),
-		BuildingTile(&greyRock, &num4, &normal),
-		BuildingTile(&greyRock, &num5, &normal),
-		BuildingTile(&greyRock, &num6, &normal),
-		BuildingTile(&redLumber, &num1, &normal),
-		BuildingTile(&redLumber, &num2, &normal),
-		BuildingTile(&redLumber, &num3, &normal),
-		BuildingTile(&redLumber, &num4, &normal),
-		BuildingTile(&redLumber, &num5, &normal),
-		BuildingTile(&redLumber, &num6, &normal),
-		BuildingTile(&yellowHay, &num1, &normal),
-		BuildingTile(&yellowHay, &num2, &normal),
-		BuildingTile(&yellowHay, &num3, &normal),
-		BuildingTile(&yellowHay, &num4, &normal),
-		BuildingTile(&yellowHay, &num5, &normal),
-		BuildingTile(&yellowHay, &num6, &normal),
+		new BuildingTile(&greenSheep, &num1, &normal),
+		new BuildingTile(&greenSheep, &num2, &normal),
+		new BuildingTile(&greenSheep, &num3, &normal),
+		new BuildingTile(&greenSheep, &num4, &normal),
+		new BuildingTile(&greenSheep, &num5, &normal),
+		new BuildingTile(&greenSheep, &num6, &normal),
+		new BuildingTile(&greyRock, &num1, &normal),
+		new BuildingTile(&greyRock, &num2, &normal),
+		new BuildingTile(&greyRock, &num3, &normal),
+		new BuildingTile(&greyRock, &num4, &normal),
+		new BuildingTile(&greyRock, &num5, &normal),
+		new BuildingTile(&greyRock, &num6, &normal),
+		new BuildingTile(&redLumber, &num1, &normal),
+		new BuildingTile(&redLumber, &num2, &normal),
+		new BuildingTile(&redLumber, &num3, &normal),
+		new BuildingTile(&redLumber, &num4, &normal),
+		new BuildingTile(&redLumber, &num5, &normal),
+		new BuildingTile(&redLumber, &num6, &normal),
+		new BuildingTile(&yellowHay, &num1, &normal),
+		new BuildingTile(&yellowHay, &num2, &normal),
+		new BuildingTile(&yellowHay, &num3, &normal),
+		new BuildingTile(&yellowHay, &num4, &normal),
+		new BuildingTile(&yellowHay, &num5, &normal),
+		new BuildingTile(&yellowHay, &num6, &normal),
 
-		BuildingTile(&greenSheep, &num1, &normal),
-		BuildingTile(&greenSheep, &num2, &normal),
-		BuildingTile(&greenSheep, &num3, &normal),
-		BuildingTile(&greenSheep, &num4, &normal),
-		BuildingTile(&greenSheep, &num5, &normal),
-		BuildingTile(&greenSheep, &num6, &normal),
-		BuildingTile(&greyRock, &num1, &normal),
-		BuildingTile(&greyRock, &num2, &normal),
-		BuildingTile(&greyRock, &num3, &normal),
-		BuildingTile(&greyRock, &num4, &normal),
-		BuildingTile(&greyRock, &num5, &normal),
-		BuildingTile(&greyRock, &num6, &normal),
-		BuildingTile(&redLumber, &num1, &normal),
-		BuildingTile(&redLumber, &num2, &normal),
-		BuildingTile(&redLumber, &num3, &normal),
-		BuildingTile(&redLumber, &num4, &normal),
-		BuildingTile(&redLumber, &num5, &normal),
-		BuildingTile(&redLumber, &num6, &normal),
-		BuildingTile(&yellowHay, &num1, &normal),
-		BuildingTile(&yellowHay, &num2, &normal),
-		BuildingTile(&yellowHay, &num3, &normal),
-		BuildingTile(&yellowHay, &num4, &normal),
-		BuildingTile(&yellowHay, &num5, &normal),
-		BuildingTile(&yellowHay, &num6, &normal),
+		new BuildingTile(&greenSheep, &num1, &normal),
+		new BuildingTile(&greenSheep, &num2, &normal),
+		new BuildingTile(&greenSheep, &num3, &normal),
+		new BuildingTile(&greenSheep, &num4, &normal),
+		new BuildingTile(&greenSheep, &num5, &normal),
+		new BuildingTile(&greenSheep, &num6, &normal),
+		new BuildingTile(&greyRock, &num1, &normal),
+		new BuildingTile(&greyRock, &num2, &normal),
+		new BuildingTile(&greyRock, &num3, &normal),
+		new BuildingTile(&greyRock, &num4, &normal),
+		new BuildingTile(&greyRock, &num5, &normal),
+		new BuildingTile(&greyRock, &num6, &normal),
+		new BuildingTile(&redLumber, &num1, &normal),
+		new BuildingTile(&redLumber, &num2, &normal),
+		new BuildingTile(&redLumber, &num3, &normal),
+		new BuildingTile(&redLumber, &num4, &normal),
+		new BuildingTile(&redLumber, &num5, &normal),
+		new BuildingTile(&redLumber, &num6, &normal),
+		new BuildingTile(&yellowHay, &num1, &normal),
+		new BuildingTile(&yellowHay, &num2, &normal),
+		new BuildingTile(&yellowHay, &num3, &normal),
+		new BuildingTile(&yellowHay, &num4, &normal),
+		new BuildingTile(&yellowHay, &num5, &normal),
+		new BuildingTile(&yellowHay, &num6, &normal),
 
-		BuildingTile(&greenSheep, &num1, &normal),
-		BuildingTile(&greenSheep, &num2, &normal),
-		BuildingTile(&greenSheep, &num3, &normal),
-		BuildingTile(&greenSheep, &num4, &normal),
-		BuildingTile(&greenSheep, &num5, &normal),
-		BuildingTile(&greenSheep, &num6, &normal),
-		BuildingTile(&greyRock, &num1, &normal),
-		BuildingTile(&greyRock, &num2, &normal),
-		BuildingTile(&greyRock, &num3, &normal),
-		BuildingTile(&greyRock, &num4, &normal),
-		BuildingTile(&greyRock, &num5, &normal),
-		BuildingTile(&greyRock, &num6, &normal),
-		BuildingTile(&redLumber, &num1, &normal),
-		BuildingTile(&redLumber, &num2, &normal),
-		BuildingTile(&redLumber, &num3, &normal),
-		BuildingTile(&redLumber, &num4, &normal),
-		BuildingTile(&redLumber, &num5, &normal),
-		BuildingTile(&redLumber, &num6, &normal),
-		BuildingTile(&yellowHay, &num1, &normal),
-		BuildingTile(&yellowHay, &num2, &normal),
-		BuildingTile(&yellowHay, &num3, &normal),
-		BuildingTile(&yellowHay, &num4, &normal),
-		BuildingTile(&yellowHay, &num5, &normal),
-		BuildingTile(&yellowHay, &num6, &normal),
+		new BuildingTile(&greenSheep, &num1, &normal),
+		new BuildingTile(&greenSheep, &num2, &normal),
+		new BuildingTile(&greenSheep, &num3, &normal),
+		new BuildingTile(&greenSheep, &num4, &normal),
+		new BuildingTile(&greenSheep, &num5, &normal),
+		new BuildingTile(&greenSheep, &num6, &normal),
+		new BuildingTile(&greyRock, &num1, &normal),
+		new BuildingTile(&greyRock, &num2, &normal),
+		new BuildingTile(&greyRock, &num3, &normal),
+		new BuildingTile(&greyRock, &num4, &normal),
+		new BuildingTile(&greyRock, &num5, &normal),
+		new BuildingTile(&greyRock, &num6, &normal),
+		new BuildingTile(&redLumber, &num1, &normal),
+		new BuildingTile(&redLumber, &num2, &normal),
+		new BuildingTile(&redLumber, &num3, &normal),
+		new BuildingTile(&redLumber, &num4, &normal),
+		new BuildingTile(&redLumber, &num5, &normal),
+		new BuildingTile(&redLumber, &num6, &normal),
+		new BuildingTile(&yellowHay, &num1, &normal),
+		new BuildingTile(&yellowHay, &num2, &normal),
+		new BuildingTile(&yellowHay, &num3, &normal),
+		new BuildingTile(&yellowHay, &num4, &normal),
+		new BuildingTile(&yellowHay, &num5, &normal),
+		new BuildingTile(&yellowHay, &num6, &normal),
 
-		BuildingTile(&greenSheep, &num1, &normal),
-		BuildingTile(&greenSheep, &num2, &normal),
-		BuildingTile(&greenSheep, &num3, &normal),
-		BuildingTile(&greenSheep, &num4, &normal),
-		BuildingTile(&greenSheep, &num5, &normal),
-		BuildingTile(&greenSheep, &num6, &normal),
-		BuildingTile(&greyRock, &num1, &normal),
-		BuildingTile(&greyRock, &num2, &normal),
-		BuildingTile(&greyRock, &num3, &normal),
-		BuildingTile(&greyRock, &num4, &normal),
-		BuildingTile(&greyRock, &num5, &normal),
-		BuildingTile(&greyRock, &num6, &normal),
-		BuildingTile(&redLumber, &num1, &normal),
-		BuildingTile(&redLumber, &num2, &normal),
-		BuildingTile(&redLumber, &num3, &normal),
-		BuildingTile(&redLumber, &num4, &normal),
-		BuildingTile(&redLumber, &num5, &normal),
-		BuildingTile(&redLumber, &num6, &normal),
-		BuildingTile(&yellowHay, &num1, &normal),
-		BuildingTile(&yellowHay, &num2, &normal),
-		BuildingTile(&yellowHay, &num3, &normal),
-		BuildingTile(&yellowHay, &num4, &normal),
-		BuildingTile(&yellowHay, &num5, &normal),
-		BuildingTile(&yellowHay, &num6, &normal),
+		new BuildingTile(&greenSheep, &num1, &normal),
+		new BuildingTile(&greenSheep, &num2, &normal),
+		new BuildingTile(&greenSheep, &num3, &normal),
+		new BuildingTile(&greenSheep, &num4, &normal),
+		new BuildingTile(&greenSheep, &num5, &normal),
+		new BuildingTile(&greenSheep, &num6, &normal),
+		new BuildingTile(&greyRock, &num1, &normal),
+		new BuildingTile(&greyRock, &num2, &normal),
+		new BuildingTile(&greyRock, &num3, &normal),
+		new BuildingTile(&greyRock, &num4, &normal),
+		new BuildingTile(&greyRock, &num5, &normal),
+		new BuildingTile(&greyRock, &num6, &normal),
+		new BuildingTile(&redLumber, &num1, &normal),
+		new BuildingTile(&redLumber, &num2, &normal),
+		new BuildingTile(&redLumber, &num3, &normal),
+		new BuildingTile(&redLumber, &num4, &normal),
+		new BuildingTile(&redLumber, &num5, &normal),
+		new BuildingTile(&redLumber, &num6, &normal),
+		new BuildingTile(&yellowHay, &num1, &normal),
+		new BuildingTile(&yellowHay, &num2, &normal),
+		new BuildingTile(&yellowHay, &num3, &normal),
+		new BuildingTile(&yellowHay, &num4, &normal),
+		new BuildingTile(&yellowHay, &num5, &normal),
+		new BuildingTile(&yellowHay, &num6, &normal),
 	};
 
 	// Initializing _deck vector
@@ -564,7 +582,7 @@ BuildingDeck::BuildingDeck() {
 
 	for (int i = 0; i < *_sizeMax; i++) {
 		//        cout << "Adding tile: " << &tiles[i] << endl;
-		_deck->push_back(&tiles[i]);
+		_deck->push_back(tiles[i]);
 	}
 
 }
@@ -574,7 +592,14 @@ BuildingDeck::BuildingDeck(const BuildingDeck& deck) {
 }
 
 BuildingDeck::~BuildingDeck() {
+
 	if (_deck) {
+
+		for (vector<BuildingTile*>::iterator it = _deck->begin(); it != _deck->end(); ++it) {
+			delete *it;
+			*it = nullptr;
+		}
+
 		//        cout << "Deleting _deck of BuildingTile with address: " << this << endl;
 		delete _deck;
 		_deck = nullptr;
@@ -619,19 +644,92 @@ Hand::Hand(Scoring* inSc) {
 	resourceScoreArr = new int[4] { 0, 0, 0, 0};
 }
 
-int* Hand::exchange()
-{
-	resourceScoreArr[static_cast<int>(ResourceName::Rock)] = sc->get_stone();
-	resourceScoreArr[static_cast<int>(ResourceName::Lumber)] = sc->get_lumber();
-	resourceScoreArr[static_cast<int>(ResourceName::Wheat)] = sc->get_wheat();
-	resourceScoreArr[static_cast<int>(ResourceName::Sheep)] = sc->get_sheep();
-
-	return resourceScoreArr;
+void Hand::intializeHand()
+{	
+	resourceScoreArr[static_cast<int>(ResourceName::Lumber)-1] = sc->get_lumber();
+	resourceScoreArr[static_cast<int>(ResourceName::Rock)-1] = sc->get_stone();
+	resourceScoreArr[static_cast<int>(ResourceName::Wheat)-1] = sc->get_wheat();
+	resourceScoreArr[static_cast<int>(ResourceName::Sheep)-1] = sc->get_sheep();
 }
 
 void Hand::displayHand() {
 
-	for (int i = 0; i < 4; i++) {
-		cout << HarvestTile::ResourceNameToString(static_cast<ResourceName>(i)) << ": " << resourceScoreArr[i];
+	for (int i = 1; i < 5; i++) {
+		cout << HarvestTile::ResourceNameToString(static_cast<ResourceName>(i)) << ": " << resourceScoreArr[i-1]<<" ";
 	}
+}
+
+int Hand::exchange(ExchangeToken* exchangeToken) {
+	Player* player = exchangeToken->getPlayer();
+	BuildingTile* buildingTile = exchangeToken->getBT();
+	int row = exchangeToken->getRow();
+	int column = exchangeToken->getCol();
+	int index;
+
+	// get index for resourceScoreArr
+	switch (buildingTile->getBuildingColorType()) {
+
+	case BuildingColorType::GreenSheep:
+			index = static_cast<int>(ResourceName::Sheep);
+			break;
+		case BuildingColorType::GreyRock:
+			index = static_cast<int>(ResourceName::Rock);
+			break;
+		case BuildingColorType::RedLumber:
+			index = static_cast<int>(ResourceName::Lumber);
+			break;
+		case BuildingColorType::YellowHay:
+			index = static_cast<int>(ResourceName::Wheat);
+			break;
+		}
+
+	//enum goes from 1-4 but array is 0-3
+	index -= 1;
+
+	// verify there are enough resources to add the building tile
+	if (resourceScoreArr[index] < buildingTile->getBuildingNum()) {
+		return 1;
+	}
+
+	player->removeBuildingTile(*buildingTile);
+	VGMaps* playersVGBoard = player->getVGBoard();
+
+	// add buildingTile and decrement resource score
+	if (playersVGBoard->addNewBuildingTile(*buildingTile, row, column) == 0) {
+			resourceScoreArr[index] -= buildingTile->getBuildingNum();
+			return 0;
+	}
+	else {
+		player->addBuildingTile(*buildingTile);
+		return 2;
+	}
+
+}
+
+Hand::ExchangeToken::ExchangeToken(Player* inP, BuildingTile* inBT, int inR, int inC)
+{
+		player = inP;
+		buildingTile = inBT;
+		row = inR;
+		column = inC;
+}
+
+Player* Hand::ExchangeToken::getPlayer()
+{
+	return player;
+}
+
+BuildingTile* Hand::ExchangeToken::getBT()
+{
+	return buildingTile;
+}
+
+int Hand::ExchangeToken::getRow()
+{
+	return row;
+}
+
+int Hand::ExchangeToken::getCol()
+{
+	return column;
 }
