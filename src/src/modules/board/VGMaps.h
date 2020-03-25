@@ -5,6 +5,7 @@
 #endif
 #include <stdio.h>
 #include <vector>
+#include <string>
 #include "../tile/Resources.h"
 
 using std::vector;
@@ -27,6 +28,9 @@ private:
 	bool GreyRockPlaced = false;
 	bool RedLumberPlaced = false;
 	bool YellowHayPlaced = false;
+	
+	vector <string> village_names { "Guildford", "Stratford" , "Fairfield", "Milford" }; 
+	
 
 public:
 
@@ -41,6 +45,7 @@ public:
 	VGSlotStatus getStatus(int row, int column);
 
 	VGSquare** village_board;
+	string village_name;
 
 	//useless?
 	bool getGreenSheepPlaced() { return GreenSheepPlaced; }
@@ -63,6 +68,7 @@ public:
 	BuildingTile getBuildingTile(int r, int c);
 	void printVGMap();
 
+	string getVillageName(); 
 
 };
 

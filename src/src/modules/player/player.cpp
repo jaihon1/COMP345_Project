@@ -7,6 +7,7 @@ Player::Player() {
     _villageBoard = new VGMaps();
     _harvestTiles = new vector<HarvestTile*>;
     _buildingTiles = new vector<BuildingTile*>;
+	ID = new int(0); //will be decided at runtime 
 }
 
 Player::Player(const Player &player) {
@@ -34,6 +35,12 @@ Player::~Player() {
         delete _villageBoard;
         _villageBoard = nullptr;
     }
+
+	if (ID)
+	{
+		delete ID; 
+		ID = nullptr; 
+	}
 }
 
 
@@ -107,4 +114,14 @@ void Player::ressourceTracker() {
     cout << endl << "Harvest Tiles: " << endl;
     getHarvestTiles();
     cout << "-- END --" << endl << endl;
+}
+
+int Player::getID()
+{
+	return *ID;
+}
+
+void Player::setID(int n)
+{
+	*ID = n; 
 }

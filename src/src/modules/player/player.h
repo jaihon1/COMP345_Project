@@ -24,6 +24,8 @@ private:
     // Owns/Give up Ressource Markers
     
     // Owns resources Gathering and Building Scoring facilities
+
+	int *ID; 
     
     
 public:
@@ -51,6 +53,9 @@ public:
     void buildVillage();
     void calculateResources();
     
+	//for MainLoop
+	int getID(); 
+	void setID(int n); 
     
 };
 

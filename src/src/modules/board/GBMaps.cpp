@@ -141,6 +141,8 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 		board[row][column].status = GBSquareStatus::HarvestTile;
 		board[row][column].tilePtr = inHarvestTilePtr;
 
+		*numTiles += 1; 
+
 		if (scoringObj != NULL) {
 			scoringObj->computeResources(row, column, inHarvestTilePtr, this);
 		}
@@ -148,6 +150,8 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 		return 1;
 	}
 	return 0;
+
+
 }
 
 HarvestTile* GBMaps::getHarvestTile(int row, int column)
@@ -179,4 +183,9 @@ int GBMaps::getColumns()
 int GBMaps::getNumberOfPlayers()
 {
 	return *numberOfPlayers;
+}
+
+int GBMaps::getNumTiles()
+{
+	return *numTiles; 
 }

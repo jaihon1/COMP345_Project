@@ -60,6 +60,15 @@ VGMaps::VGMaps()
 			village_board[i][j].building_ptr = NULL; //building ptr not having anything to it
 		}
 	}
+
+	//set VGMAP name 
+	for (int i = 0; i < 4; i++)
+	{
+		if (village_names.at(i) != "Taken")
+		{
+			village_name = village_names.at(i); 
+		}
+	}
 }
 
 VGMaps::~VGMaps()
@@ -487,6 +496,11 @@ void VGMaps::printVGMap()
 		//cout << "=====================================" << endl;
 	}
 
+}
+
+string VGMaps::getVillageName()
+{
+	return village_name; 
 }
 
 

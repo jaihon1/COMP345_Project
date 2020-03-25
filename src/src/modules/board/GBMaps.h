@@ -42,6 +42,8 @@ private:
 
 	void intializeBoardB();
 
+	int *numTiles = new int(4);
+
 public:
 	//constructor takes number of players and whether the game is played on Side A or Side B
 	GBMaps(int numberOfPlayers, char boardSide, Scoring* sc);
@@ -65,6 +67,9 @@ public:
 	int getColumns();
 
 	int getNumberOfPlayers();
+
+	int getNumTiles(); 
+
 };
 
 #endif /* board_h */
