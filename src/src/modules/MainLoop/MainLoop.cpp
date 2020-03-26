@@ -15,75 +15,7 @@ MainLoop::MainLoop(int n)
 	else
 	{
 		cout << "wrong number of players" << endl; 
-	}
-
-	//Code to request the player 
-
-	for (int i = 0; i < n; i++)
-	{
-		cout << "Enter the ID of player #" + (i+1) << endl; 
-		cin >> player_order.at(i); 
-	}
-	//I'm assuming the rest will be initialized by default to 0 (default for int).
-	findPlayerOrder(n); 
-
-	//create players and set game limits
-
-	game_limit = new int(0); 
-
-	switch (n)
-	{
-	case 2:
-		p1 = new Player();
-		p1->setID(player_order.at(0)); 
-		players.push_back(*p1); 
-
-		p2 = new Player(); 
-		p2->setID(player_order.at(1)); 
-		players.push_back(*p2); 
-
-		setGameLimit(game_limits.at(0)); //set game limit to 25
-		break; 
-	case 3:
-		p1 = new Player();
-		p1->setID(player_order.at(0));
-		players.push_back(*p1); 
-
-		p2 = new Player();
-		p2->setID(player_order.at(1));
-		players.push_back(*p2); 
-
-		p3 = new Player(); 
-		p3->setID(player_order.at(2)); 
-		players.push_back(*p3); 
-
-		setGameLimit(game_limits.at(1));
-		break;
-	case 4: 
-		p1 = new Player();
-		p1->setID(player_order.at(0));
-		players.push_back(*p1);
-
-		p2 = new Player();
-		p2->setID(player_order.at(1));
-		players.push_back(*p2);
-
-		p3 = new Player();
-		p3->setID(player_order.at(2));
-		players.push_back(*p3);
-
-		p4 = new Player(); 
-		p4->setID(player_order.at(3)); 
-		players.push_back(*p4);
-
-		setGameLimit(game_limits.at(2));
-		break;
-	}
-
-	//Create a new Gameboard
-
-	gameboard = new GBMaps(n, 'a', sc); //initialize board A
-	
+	}	
 
 }
 
@@ -195,6 +127,77 @@ void MainLoop::findPlayerOrder(int n)
 }
 
 
+void MainLoop::MainLoopSetup(int n)
+{
+	//Code to request the player 
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << "Enter the ID of player #" + (i + 1) << endl;
+		cin >> player_order.at(i);
+	}
+	//I'm assuming the rest will be initialized by default to 0 (default for int).
+	findPlayerOrder(n);
+
+	//create players and set game limits
+
+	game_limit = new int(0);
+
+	switch (n)
+	{
+	case 2:
+		p1 = new Player();
+		p1->setID(player_order.at(0));
+		players.push_back(*p1);
+
+		p2 = new Player();
+		p2->setID(player_order.at(1));
+		players.push_back(*p2);
+
+		setGameLimit(game_limits.at(0)); //set game limit to 25
+		break;
+	case 3:
+		p1 = new Player();
+		p1->setID(player_order.at(0));
+		players.push_back(*p1);
+
+		p2 = new Player();
+		p2->setID(player_order.at(1));
+		players.push_back(*p2);
+
+		p3 = new Player();
+		p3->setID(player_order.at(2));
+		players.push_back(*p3);
+
+		setGameLimit(game_limits.at(1));
+		break;
+	case 4:
+		p1 = new Player();
+		p1->setID(player_order.at(0));
+		players.push_back(*p1);
+
+		p2 = new Player();
+		p2->setID(player_order.at(1));
+		players.push_back(*p2);
+
+		p3 = new Player();
+		p3->setID(player_order.at(2));
+		players.push_back(*p3);
+
+		p4 = new Player();
+		p4->setID(player_order.at(3));
+		players.push_back(*p4);
+
+		setGameLimit(game_limits.at(2));
+		break;
+	}
+
+	//Create a new Gameboard
+
+	gameboard = new GBMaps(n, 'a', sc); //initialize board A
+}
+
+
 void MainLoop::MainLoopStart(int n)
 {
 	//keep looping while the number of tiles and game limits arent done 
@@ -202,7 +205,6 @@ void MainLoop::MainLoopStart(int n)
 	{
 		for (int i = 0; i < n; i++)
 		{
-			players.at(i); 
 
 			//code for player 
 
@@ -210,14 +212,12 @@ void MainLoop::MainLoopStart(int n)
 			{
 				i = 0; //reset the loop 
 			}
-
 		}
-
-
 	}
-	
+
 
 }
+
 
 void MainLoop::setGameLimit(int n)
 {

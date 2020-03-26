@@ -47,6 +47,8 @@ public:
 	int * getNumPlayers(); 
 	void findPlayerOrder(int n);
 
+	void MainLoopSetup(int n);
+
 	void MainLoopStart(int n); 
 
 	void setGameLimit(int n); 
