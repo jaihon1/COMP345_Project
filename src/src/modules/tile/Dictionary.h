@@ -6,7 +6,6 @@ enum class ResourceName {
 	Sheep = 2,
     Wheat = 3,
 	Rock = 4
-	
 };
 
 enum class TileStatus {

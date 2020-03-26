@@ -94,12 +94,12 @@ VGSlotStatus VGMaps::getStatus(int row, int column)
 }
 
 
-bool VGMaps::isEmpty(int row, int column)
+bool VGMaps::isEmpty(int row, int column) const
 {
 	return (village_board[row][column].VGstatus == VGSlotStatus::Empty);
 }
 
-bool VGMaps::isFlipped(int row, int column)
+bool VGMaps::isFlipped(int row, int column) const
 {
 	return ((*village_board[row][column].building_ptr).getSide() == BuildingStatus::Flipped);
 }
