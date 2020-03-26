@@ -103,6 +103,16 @@ int Scoring::get_res(int resv)
 	return res_score[resv];
 }
 
+int Scoring::remove_res(int resv, int quantity)
+{
+	if (res_score[resv] > quantity) {
+		res_score[resv] = res_score[resv] - quantity;
+		return quantity;
+	}
+	else
+		return 0;
+}
+
 void Scoring::display_res()
 {
 	std::cout << "Resource: " << std::endl;

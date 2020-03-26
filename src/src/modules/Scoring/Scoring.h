@@ -73,6 +73,7 @@ public:
 	int get_wheat();
 	int get_stone();
 	int get_res(int resv);
+	int remove_res(int resv, int quantity);
 	void display_res();
 
 	int get_score(const VGMaps &vil);
