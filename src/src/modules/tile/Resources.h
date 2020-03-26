@@ -17,8 +17,6 @@ class Tile {
 
 class BuildingTile {
 private:
-
-	
 	BuildingColorType* _buildingColorType;
 	int* _buildingNum;
 	BuildingStatus* _buildingStatus;
@@ -28,12 +26,12 @@ private:
 	BuildingColorType buildingColorType;
 	int buildingNum;
 	BuildingStatus buildingStatus;
-
 	//allocate memorys
 	BuildingColorType* _buildingColorType = &buildingColorType; if on stack if on heap i need new 
 	int* _buildingNum = &buildingNum;
 	BuildingStatus* _buildingStatus = &buildingStatus;
 	*/ 
+
 
 public:
 	BuildingTile();
@@ -49,7 +47,9 @@ public:
 	int getBuildingNum();
 
 	void setBuildingNum(int num);
+
 	bool numCheck(int num); 
+
 	void setBuildingStatus(BuildingStatus s);
 	void setBuildingColorType(BuildingColorType c);
 
@@ -61,7 +61,8 @@ public:
 	//Deep copy constructor 
 	BuildingTile(const BuildingTile& t);
 
-	BuildingTile & operator = (const BuildingTile & b); 
+	BuildingTile & operator = (const BuildingTile &b); 
+
 
 	//methods for map Loader 
 	static const char* Building_typeToChar(BuildingColorType b)

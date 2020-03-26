@@ -4,6 +4,8 @@
 #endif
 
 #include "VGMapLoader.h"
+#include <nlohmann/json.hpp>
+
 using namespace std;
 
 using json = nlohmann::json;
@@ -81,6 +83,7 @@ VGMapLoader::VGMapLoader(const char* inFile)
 				//cout << "suspected crash" << endl;
 				int n = bIMap[*b_num];
 				cout << "Found num" << endl; 
+
 
 				BuildingTile* temp = new BuildingTile(c, n, s);
 
@@ -202,8 +205,10 @@ void VGMapSaver::save(VGMaps * inGame, const char* inFilePath)
 				cout << "Pushed json object back" << endl;
 
 				//good practice 
+
 				delete t; 
 				t = NULL; 
+
 			}
 
 		}

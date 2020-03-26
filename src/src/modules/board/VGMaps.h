@@ -19,6 +19,7 @@ struct VGSquare{ //why struct?
 }; 
 
 
+
 class VGMaps {
 private:
 	//const int* const rows = new int(6); //length of the row
@@ -52,8 +53,8 @@ public:
 	bool getGreyRockPlaced() { return GreyRockPlaced; }
 	bool getRedLumberPlaced() { return RedLumberPlaced; }
 	bool getYellowHayPlaced() { return YellowHayPlaced; }
-	bool isEmpty(int row, int column);
-	bool isFlipped(int row, int column);
+	bool isEmpty(int row, int column) const;
+	bool isFlipped(int row, int column) const;
 
 
 	void setStatus(int row, int column, VGSlotStatus inStatus);

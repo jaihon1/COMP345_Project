@@ -5,7 +5,7 @@
         "VGSquare": {
           "*building_ptr": {
             "BuildingColorType": "GreenSheep",
-            "BuildingNumber": "3",
+            "BuildingNumber": "6",
             "BuildingSide": "Normal"
           },
           "VGSquare_type": "GreenSheep",

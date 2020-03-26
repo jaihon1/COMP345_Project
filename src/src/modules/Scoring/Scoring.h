@@ -40,8 +40,14 @@ private:
 		void connectedComponents();
 	};
 
+	int village_row = 6;
+	int village_col = 5;
 	Graph vertices{ 196 };
+
+	//Lumber = 1, Sheep = 2, Wheat = 3,	Rock = 4
 	int res_score[5] = { 0 , 0, 0, 0, 0 };//1st field for building	
+	int vil_score[4][3];//1st village score 2nd village density 3rd village build
+	int total_score[4];
 
 	void add_res(int resv, int numv);
 	void update_help(int v, int w, int res);
@@ -63,9 +69,13 @@ public:
 	int get_sheep();
 	int get_wheat();
 	int get_stone();
-	int get_score(VGMaps &vil);
 	int get_res(int resv);
+	int remove_res(int resv, int quantity);
 	void display_res();
+
+	int get_score(const VGMaps &vil);
+	int get_density(const VGMaps &vil);
+	int get_winner(const VGMaps villages[4]);
 
 	int map(int index, GBMaps* inHarvestBoard);
 	void computeResources(int row, int column, HarvestTile* inHarvestTilePtr, GBMaps* inHarvestBoard);

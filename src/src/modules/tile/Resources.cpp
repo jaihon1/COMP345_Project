@@ -60,6 +60,7 @@ ResourceName HarvestTile::getResource(ResourceLocation inLocation)
 
 BuildingTile::BuildingTile()
 {
+
 	_buildingColorType =  new BuildingColorType(BuildingColorType::None); 
 	_buildingStatus = new BuildingStatus(BuildingStatus::Normal); 
 	_buildingNum = new int(1); 
@@ -74,6 +75,7 @@ BuildingTile::BuildingTile(BuildingColorType* type, BuildingStatus* status)
 	_buildingColorType = new BuildingColorType(*type); 
 	_buildingStatus = new BuildingStatus(*status); 
 	_buildingNum = &(*generateBuildingNumber()); 
+
 	//*_buildingStatus = status;
 	//_buildingNum = generateBuildingNumber();
 
@@ -88,13 +90,16 @@ BuildingTile::BuildingTile(BuildingColorType *t, int* n, BuildingStatus* s)
 	if (numCheck(*n))
 	{
 		_buildingNum = new int(*n); 
+
 	}
 	else
 	{
 		cerr << "Error in assigning value. Please assign a number between 1 to 6" << endl;
 	}
+
 	_buildingStatus = new BuildingStatus(*s); 
 	
+
 	_firstBuilding = false;
 }
 
@@ -113,6 +118,7 @@ BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
 	if (numCheck(n))
 	{
 		_buildingNum = new int(n); 
+
 	}
 	else
 	{
@@ -120,9 +126,12 @@ BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
 	}
 	_buildingStatus = new BuildingStatus(s); 
 
+
 }
 
-BuildingTile::~BuildingTile() {
+BuildingTile::~BuildingTile() 
+{
+
 	delete _buildingColorType; 
 	cout << "1 \n"; 
 	delete _buildingNum; 
@@ -131,9 +140,6 @@ BuildingTile::~BuildingTile() {
 	cout << "3 \n"; 
 
 	//cout << "Make all 3 pointer variables to null"; 
-
-	
-
 
 }
 
@@ -247,12 +253,14 @@ void BuildingTile::deepCopy(const BuildingTile& t)
 	}
 
 	cout << "Success in deep copying" << endl; 
+
 }
 
 BuildingTile::BuildingTile(const BuildingTile& t) : _buildingColorType{ nullptr }, _buildingNum{ nullptr }, _buildingStatus{ nullptr }
 {
 	deepCopy(t);
 }
+
 
 //Assignment operator for deep copy 
 BuildingTile &BuildingTile:: operator = (const BuildingTile &b)
@@ -570,7 +578,9 @@ BuildingDeck::BuildingDeck() {
 
 }
 
-BuildingDeck::BuildingDeck(const BuildingDeck &deck) {
+
+BuildingDeck::BuildingDeck(const BuildingDeck& deck) {
+
 
 }
 
@@ -587,13 +597,15 @@ vector<BuildingTile*>* BuildingDeck::getDeck() {
 	return _deck;
 }
 
-void BuildingDeck::add(BuildingTile &tile) {
+
+void BuildingDeck::add(BuildingTile& tile) {
+
 	//    cout << "Adding: " << &tile << endl;
 	_deck->push_back(&tile);
 }
 
+void BuildingDeck::remove(BuildingTile& tile) {
 
-void BuildingDeck::remove(BuildingTile &tile) {
 	_deck->erase(std::remove(_deck->begin(), _deck->end(), &tile), _deck->end());
 }
 
@@ -601,7 +613,9 @@ void BuildingDeck::remove(BuildingTile &tile) {
 BuildingTile* BuildingDeck::draw() {
 	if (_deck->size() > 0) {
 		int randomIndex = rand() % _deck->size();
-		BuildingTile *tile = _deck->at(randomIndex);
+
+		BuildingTile* tile = _deck->at(randomIndex);
+
 		remove(*tile);
 		return tile;
 	}
@@ -613,6 +627,7 @@ BuildingTile* BuildingDeck::draw() {
 unsigned long BuildingDeck::getSize() {
 	return _deck->size();
 }
+
 
 Hand::Hand(Scoring* inSc) {
 	sc = inSc;

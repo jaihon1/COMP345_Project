@@ -96,13 +96,34 @@ int Scoring::get_stone()
 	return res_score[4];
 }
 
-int Scoring::get_score(VGMaps &vil)
+int Scoring::get_res(int resv)
+{
+	return res_score[resv];
+}
+
+int Scoring::remove_res(int resv, int quantity)
+{
+	if (res_score[resv] > quantity) {
+		res_score[resv] = res_score[resv] - quantity;
+		return quantity;
+	}
+	else
+		return 0;
+}
+
+void Scoring::display_res()
+{
+	std::cout << "Resource: " << std::endl;
+	for(int i = 1; i < 5 ; i++)
+		std::cout << res_score[i] << std::endl;
+	std::cout << std::endl;
+}
+
+int Scoring::get_score(const VGMaps &vil)
 {
 	int score = 0;
 	bool mul = false;
 	bool complete = false;
-	int village_row = 6;
-	int village_col = 5;
 
 	for (int i = 0; i < village_row; i++)
 	{
@@ -142,25 +163,70 @@ int Scoring::get_score(VGMaps &vil)
 			score += (village_col - (2 - abs(i - 2)));
 		//std::cout << "test: " << score << std::endl;
 	}
-
-
-
 	return score;
 }
 
-int Scoring::get_res(int resv)
+int Scoring::get_density(const VGMaps &vil)
 {
-	return res_score[resv];
+	int result = 0;
+	for (int i = 0; i < village_row; i++)
+	{
+		for (int j = 0; j < village_col; j++) {
+			if (!vil.isEmpty(j, i))
+				result++;
+		}
+	}
+
+	return result;
 }
 
-void Scoring::display_res()
+void insertionSort(int arr[], int n)
 {
-	std::cout << "Resource: " << std::endl;
-	for (int i = 1; i < 5; i++)
-		std::cout << res_score[i] << std::endl;
-	std::cout << std::endl;
+	int i, key, j;
+	for (i = 1; i < n; i++)
+	{
+		key = arr[i];
+		j = i - 1;
+
+		while (j >= 0 && arr[j] < key)
+		{
+			arr[j + 1] = arr[j];
+			j = j - 1;
+		}
+		arr[j + 1] = key;
+	}
 }
 
+int Scoring::get_winner(const VGMaps villages[4])
+{
+	using namespace std;
+	int winner = 0;
+
+	for (int i = 0; i < 4; i++) {
+		vil_score[i][0] = get_score(villages[i]);
+		vil_score[i][1] = get_density(villages[i]);
+		vil_score[i][2] = rand() % 100;
+		if (i == 2) {
+			vil_score[2][0] = 56;
+			vil_score[2][1] = 29;
+			vil_score[2][2] = 47;
+		}
+		std::cout << "village score: " << vil_score[i][0] << std::endl;
+		std::cout << "village densi: " << vil_score[i][1] << std::endl;
+		std::cout << "village build: " << vil_score[i][2] << std::endl;
+	}
+
+	for (int i = 0; i < 4; i++)
+		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i;
+
+	insertionSort(total_score, 4);
+
+	for (int i = 0; i < 4; i++)
+		if (total_score[i] / 10 == total_score[0] / 10)
+			cout << "The winner is player: " << total_score[i] % 10 << endl;
+
+	return winner;
+}
 
 /*********************Nested Graph******************/
 Scoring::Graph::Graph(int V)
