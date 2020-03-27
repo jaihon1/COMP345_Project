@@ -36,11 +36,8 @@
 src/src.xcodeproj
 
 # Visual Studio Related
-*.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
-*.sln
-src/src/COMP345_Project.sln
 
 
 #Damian's Test Files 
