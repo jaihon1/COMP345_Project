@@ -36,9 +36,18 @@ GBMapLoader::GBMapLoader(const char* inFilePath, Scoring* sc)
 	auto const boardJSON = GBMapDoc.find("board");
 	if (boardJSON == GBMapDoc.end()) {
 		cerr << "board not found";
+		delete board;
+		board = nullptr;
 		return;
 	}
 
+	if (boardJSON->size() != 7) {
+		cerr << "incorrect number of rows";
+		delete board;
+		board = nullptr;
+		return;
+	}
+	
 	int boardRow = -1;
 	
 	statusMap statusMap;
@@ -46,7 +55,16 @@ GBMapLoader::GBMapLoader(const char* inFilePath, Scoring* sc)
 
 	//for statement loops through each row of the board object
 	for (auto const& row : *boardJSON) {
+
 		boardRow++;
+
+		if (row.size() != 7) {
+			cerr << "row " << boardRow << " has an incorrect number of columns";
+			delete board;
+			board = nullptr;
+			return;
+		}
+
 		int boardColumn = -1;
 		for (auto const& column : row) {
 			boardColumn++;

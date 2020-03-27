@@ -123,6 +123,39 @@ void harvestTileTest() {
 
 }
 
+HarvestTile* rotateHT(HarvestTile* inTile) {
+
+	printHarvestTile(inTile);
+	cout << endl;
+	char yesNo;
+	char rotate;
+	cout << "Would you like to rotate the tile? y/n ";
+	cin >> yesNo;
+	//ROTATE METHODS TEST
+	while (yesNo == 'y') {
+		cout << "Right = r, Left = l: ";
+		cin >> rotate;
+		cout << endl;
+		switch (rotate) {
+		case 'r':
+			inTile->RotateRight();
+			break;
+		case 'l':
+			inTile->RotateLeft();
+			break;
+		default:
+			cout << "Invalid selection." << endl;
+			break;
+		}
+		printHarvestTile(inTile);
+		cout << endl << "Again? y/n ";
+		cin >> yesNo;
+	}
+
+	return inTile;
+
+}
+
 void gbMapsTest() {
 
 	int players;
