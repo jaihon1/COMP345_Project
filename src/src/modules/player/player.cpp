@@ -6,12 +6,14 @@ Player::Player() {
     _villageBoard = new VGMaps();
     _harvestTiles = new vector<HarvestTile*>;
     _buildingTiles = new vector<BuildingTile*>;
+	//shipmentTile = NULL;
 }
 
 Player::Player(const Player &player) {
 //    cout << "Creating Player with Copy: " << this << endl;
     _harvestTiles = player._harvestTiles;
     _buildingTiles = player._buildingTiles;
+	shipmentTile = player.shipmentTile;
 }
 
 Player::~Player() {
@@ -33,6 +35,11 @@ Player::~Player() {
         delete _villageBoard;
         _villageBoard = nullptr;
     }
+
+	if (shipmentTile) {
+		delete shipmentTile;
+		shipmentTile = nullptr;
+	}
 }
 
 
@@ -66,6 +73,11 @@ HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
 
 unsigned long Player::getNumberOfHarvestTiles() {
     return _harvestTiles -> size();
+}
+
+void Player::setShipmentTile(HarvestTile* harvestTile)
+{
+	shipmentTile = harvestTile;
 }
 
 
@@ -105,4 +117,8 @@ void Player::ressourceTracker() {
     cout << endl << "Harvest Tiles: " << endl;
     getHarvestTiles();
     cout << "-- END --" << endl << endl;
+}
+
+VGMaps* Player::getVGBoard() {
+	return _villageBoard;
 }

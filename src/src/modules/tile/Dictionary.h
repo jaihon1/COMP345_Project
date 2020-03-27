@@ -4,7 +4,7 @@
 enum class ResourceName {
 	Lumber = 1,
 	Sheep = 2,
-    Wheat = 3,
+  Wheat = 3,
 	Rock = 4
 };
 
@@ -22,11 +22,12 @@ enum ResourceLocation {
 };
 
 enum class BuildingColorType {
+	None = 0, //initial value for the initialization of the empty VGMap - matches VGSlotStatus::Empty
 	RedLumber = 1,
 	GreenSheep = 2,
 	YellowHay = 3,
     GreyRock = 4,
-    None //initial value for the initialization of the empty VGMap - matches VGSlotStatus::Empty
+   
 };
 
 enum class BuildingStatus {

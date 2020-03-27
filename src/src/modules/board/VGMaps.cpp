@@ -247,12 +247,16 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 //use vectors...
 
-void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
+int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 {
+	//assume successful add (only change return status if there is an error)
+	int returnStatus = 0;
+
 	//check if its taken
 	if (village_board[r][c].VGstatus == VGSlotStatus::Taken)
 	{
 		cout << "Error in placing tile: tile already existing on this slot" << endl;
+		returnStatus = 1;
 	}
 	else
 	{
@@ -302,7 +306,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//failed to 
 					cout << "Error in placing tile: existing type (GREEN SHEEP) is already on village board, player has to place it next to it" << endl;
-
+					returnStatus = 2;
 				}
 			}
 			else
@@ -348,7 +352,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//failed to 
 					cout << "Error in placing tile: existing type (GREY ROCK) is already on village board, player has to place it next to it" << endl;
-
+					returnStatus = 2;
 				}
 			}
 			else
@@ -391,6 +395,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 
 					//failed to 
 					cout << "Error in placing tile: existing type (RED LUMBER) is already on village board, player has to place it next to it" << endl;
+					returnStatus = 3;
 				}
 			}
 			else
@@ -432,6 +437,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//failed to 
 					cout << "Error in placing tile: existing type (YELLOW HAY) is already on village board, player has to place it next to it" << endl;
+					returnStatus = 4;
 				}
 			}
 			else
@@ -454,6 +460,8 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		//make to_add point to null ptr
 		//delete to_add; 
 		to_add = NULL; //make to_add point to null but dont delete it because we are adding the buildingTile
+
+		return returnStatus;
 
 	}
 
@@ -488,5 +496,6 @@ void VGMaps::printVGMap()
 	}
 
 }
+
 
 

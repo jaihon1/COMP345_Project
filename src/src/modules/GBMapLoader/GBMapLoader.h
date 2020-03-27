@@ -6,6 +6,12 @@
 #include <iostream>
 #include <fstream>
 
+#include "../board/GBMaps.h"
+#include "../tile/Dictionary.h"
+#include "../tile/Resources.h"
+#include "../Scoring/Scoring.h"
+#include "../player/player.h"
+
 using namespace std;
 
 class GBMapLoader {
