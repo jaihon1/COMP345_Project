@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../scoring/Scoring.h"
+#include "../Scoring/Scoring.h"
 #include "GBMaps.h"
-
 
 GBSquare::GBSquare() {
 	status = GBSquareStatus::Empty;

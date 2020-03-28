@@ -2,15 +2,12 @@
 #include <algorithm>
 
 Player::Player() {
-//    cout << "Creating Player with Main: " << this << endl;
     _villageBoard = new VGMaps();
     _harvestTiles = new vector<HarvestTile*>;
     _buildingTiles = new vector<BuildingTile*>;
-	//shipmentTile = NULL;
 }
 
 Player::Player(const Player &player) {
-//    cout << "Creating Player with Copy: " << this << endl;
     _harvestTiles = player._harvestTiles;
     _buildingTiles = player._buildingTiles;
 	shipmentTile = player.shipmentTile;
@@ -18,20 +15,16 @@ Player::Player(const Player &player) {
 
 Player::~Player() {
     if (_harvestTiles) {
-//        cout << "Deleting _harvestTiles of Player with address: " << this << endl;
         delete _harvestTiles;
         _harvestTiles = nullptr;
-//        cout << "DONE" << endl;
     }
 
     if (_buildingTiles) {
-//        cout << "Deleting _buildingTiles of Player with address: " << this << endl;
         delete _buildingTiles;
         _buildingTiles = nullptr;
-//        cout << "DONE" << endl;
     }
     
-    if (_buildingTiles) {
+    if (_villageBoard) {
         delete _villageBoard;
         _villageBoard = nullptr;
     }
