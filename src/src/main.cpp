@@ -43,10 +43,8 @@ void playerDriver() {
 }
 
 int main(int argc, const char * argv[]) {
-        
     playerDriver();
     
-
     return 0;
 }
 

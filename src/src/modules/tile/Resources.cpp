@@ -141,9 +141,9 @@ BuildingTile::~BuildingTile() {
 	delete _buildingColorType;
 	cout << "1 \n";
 	delete _buildingNum;
-	cout << "2 \n";
+//	cout << "2 \n";
 	delete _buildingStatus;
-	cout << "3 \n";
+//	cout << "3 \n";
 
 	//cout << "Make all 3 pointer variables to null"; 
 

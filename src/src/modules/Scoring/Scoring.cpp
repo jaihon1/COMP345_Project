@@ -263,7 +263,7 @@ int Scoring::Graph::connected(int v)
 
 	DFS(v, visited, count);
 
-	delete visited;
+	delete[] visited;
 
 	return count;
 }
@@ -298,7 +298,7 @@ void Scoring::Graph::connectedComponents()
 		}
 	}	
 
-	delete visited;
+	delete[] visited;
 }
 
 void Scoring::Graph::DFSUtil(int v, VER visited[])

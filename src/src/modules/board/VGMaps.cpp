@@ -459,6 +459,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		return returnStatus;
 
 	}
+    return returnStatus;
 
 }
 
