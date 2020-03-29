@@ -150,6 +150,30 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 	return 0;
 }
 
+int GBMaps::addShipmentTile(int row, int column, HarvestTile * inHarvestTilePtr, int type)
+{
+	ResourceName re = static_cast<ResourceName>(type);
+	HarvestTile* ship = new HarvestTile(re, re, re, re);
+	Scoring stemp(*scoringObj);
+	stemp.reset_res();
+	//check if game board square is empty to add tile
+	if (board[row][column].status == GBSquareStatus::Empty) {
+		board[row][column].status = GBSquareStatus::HarvestTile;
+		board[row][column].tilePtr = ship;
+
+		if (scoringObj != NULL) {
+			stemp.computeResources(row, column, ship, this);
+		}
+		board[row][column].status = GBSquareStatus::Empty;
+		addHarvestTile(row, column, inHarvestTilePtr);
+		int temp[4];
+		stemp.get_res(temp);
+		scoringObj->set_res(temp);
+		return 1;
+	}
+	return 0;
+}
+
 HarvestTile* GBMaps::getHarvestTile(int row, int column)
 {
 	HarvestTile* harvestTilePtr = (HarvestTile*)board[row][column].tilePtr;

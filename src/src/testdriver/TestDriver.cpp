@@ -140,8 +140,9 @@ void gbMapsTest() {
 	int quit;
 	int row;
 	int column;
+	int type;
 
-	cout << "Would you like to add a harvest tile? Press 1 to continue. To quit, press 0. ";
+	cout << "Would you like to add a harvest tile? Press 1 to continue. Press 3 to add ship. To quit, press 0. ";
 	cin >> quit;
 	HarvestTile* testHarvestTile;
 	while (quit != 0) {
@@ -160,11 +161,23 @@ void gbMapsTest() {
 			break;
 		case 2:
 			//sc->display_res();
-			cout << "Rock:   " << sc->get_stone() << endl;
 			cout << "Lumber: " << sc->get_lumber() << endl;
-			cout << "Wheat:  " << sc->get_wheat() << endl;
 			cout << "Sheep:  " << sc->get_sheep() << endl;
-
+			cout << "Wheat:  " << sc->get_wheat() << endl;
+			cout << "Rock:   " << sc->get_stone() << endl;
+			break;
+		case 3:
+			testHarvestTile = testDeck->draw();
+			cout << "Where would you like to place the tile?\n" << "row: ";
+			cin >> row;
+			cout << "column: ";
+			cin >> column;
+			cout << "type: ";
+			cin >> type;
+			cout << endl;
+			gameBoard->addShipmentTile(row, column, testHarvestTile, type);
+			printGameBoard(gameBoard);
+			cout << endl;
 			break;
 		default:
 			cout << "Sorry invalid input." << endl;
