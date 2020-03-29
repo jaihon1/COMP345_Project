@@ -1,5 +1,4 @@
-#ifndef resources_h
-#define resources_h
+#pragma once
 
 #include <string>
 #include <vector>
@@ -15,16 +14,6 @@ private:
 	int* _buildingNum;
 	BuildingStatus* _buildingStatus;
 
-	/*
-	//constructor for the attributes to allocate memory slot
-	BuildingColorType buildingColorType;
-	int buildingNum;
-	BuildingStatus buildingStatus;
-	//allocate memorys
-	BuildingColorType* _buildingColorType = &buildingColorType; if on stack if on heap i need new
-	int* _buildingNum = &buildingNum;
-	BuildingStatus* _buildingStatus = &buildingStatus;
-	*/
 
 public:
 	BuildingTile();
@@ -204,7 +193,4 @@ public:
 	void displayHand();
 	int exchange(ExchangeToken* exchangeToken);
 };
-
-#endif // resources_h
-
 

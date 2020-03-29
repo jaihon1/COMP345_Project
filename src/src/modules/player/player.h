@@ -1,6 +1,3 @@
-#ifndef player_h
-#define player_h
-
 #include <iostream>
 #include <stdio.h>
 #include <vector>
@@ -12,18 +9,9 @@ using namespace std;
 
 class Player {
 private:
-    // Own one Village Board
     VGMaps *_villageBoard;
-    
-    // Owns Harverst Tiles
     vector<HarvestTile*> *_harvestTiles;
-    
-    // Owns Building Tiles
     vector<BuildingTile*> *_buildingTiles;
-    
-    // Owns/Give up Ressource Markers
-    
-    // Owns resources Gathering and Building Scoring facilities
     
 	HarvestTile* shipmentTile;
     
@@ -57,10 +45,5 @@ public:
 	// Method for Board
 	VGMaps* getVGBoard();
 
-	
-    
-    
 };
-
-#endif /* player_h */
 

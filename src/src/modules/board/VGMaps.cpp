@@ -4,11 +4,6 @@
 #include <ostream>
 #include <stdlib.h>
 #include "VGMaps.h"
-#define _DEBUG
-#ifdef _DEBUG
-#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
-#endif
-
 
 using namespace std;
 using std::vector;
@@ -464,6 +459,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		return returnStatus;
 
 	}
+    return returnStatus;
 
 }
 
