@@ -114,7 +114,8 @@ void turnSequenceDriver() {
     
     
     // TODO: 2. Determine Resources Gathered
-    
+    int res[4];
+    scobj->get_res(res);
     
     
     // 3. Place building tile on board. Must be running in while(true) and until player decided to not do it anymore
