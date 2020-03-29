@@ -38,6 +38,7 @@ src/src.xcodeproj
 # Visual Studio Related
 *.vcxproj.filters
 *.vcxproj.user
+*.vcxproj
 
 
 #Damian's Test Files 
