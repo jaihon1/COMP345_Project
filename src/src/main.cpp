@@ -111,8 +111,15 @@ void turnSequenceDriver() {
     
     int row = 3;
     int column = 3;
-    player1.placeHarvestTile(row, column, *testHarvestTile, *gameBoard);
-    
+	int ship = 3;
+	if(rand() % 2 ==0){
+		player1.placeHarvestTile(row, column, *testHarvestTile, *gameBoard);
+		cout << endl << "placeHarvestTile" << endl;
+	}
+	else{
+		player1.placeShipmentTile(row, column, *testHarvestTile, *gameBoard, ship);
+		cout << endl << "placeShipmentTile" << endl;
+	}
     
     // 2. Determine Resources Gathered
     int res[4];
@@ -126,7 +133,7 @@ void turnSequenceDriver() {
     int row_village = 1;
     int column_village = 2;
     player1.placeBuildingTile(row_village, column_village, *testBuildingTile);
-    scobj->remove_res(static_cast<int>(testBuildingTile->), row_village);//remove resource match the type of building???
+    scobj->remove_res(static_cast<int>(testBuildingTile->getBuildingColorType()), row_village);//remove resource match the type of building???
     
     // 4. Share the Wealth
     scobj->get_res(res);
@@ -185,7 +192,8 @@ void turnSequenceDriver() {
         player1.drawBuilding(*buildingDeck);
     }
 	
-	/************************/
+	/***********the below maybe a more detail version*************/
+	scobj->get_res(res);
 	int total_left = 0;
 	for (int i = 0; i < 4; i++) {
 		total_left += res[i];

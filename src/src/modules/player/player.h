@@ -25,6 +25,7 @@ public:
     HarvestTile* addHarvestTile(HarvestTile &tile);
     HarvestTile* removeHarvestTile(HarvestTile &tile);
     void placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard);
+	void placeShipmentTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard, int type);
     HarvestTile* drawHarvestTile(HarvestDeck &deck);
     unsigned long getNumberOfHarvestTiles();
 

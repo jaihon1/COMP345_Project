@@ -55,6 +55,11 @@ void Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameB
     removeHarvestTile(tile);
 }
 
+void Player::placeShipmentTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard, int type) {
+    gameBoard.addShipmentTile(row, col, &tile, type);
+    removeHarvestTile(tile);
+}
+
 HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
     HarvestTile *drawn_card = deck.draw();
     addHarvestTile(*drawn_card);
