@@ -8,7 +8,7 @@ Player::Player() {
 }
 
 Player::Player(const Player &player) {
-    _villageBoard = new VGMaps();
+    _villageBoard = player._villageBoard;
     _harvestTiles = player._harvestTiles;
     _buildingTiles = player._buildingTiles;
 	shipmentTile = player.shipmentTile;
