@@ -112,14 +112,14 @@ void turnSequenceDriver() {
     int row = 3;
     int column = 3;
 	int ship = 3;
-	if(rand() % 2 ==0){
-		player1.placeHarvestTile(row, column, *testHarvestTile, *gameBoard);
-		cout << endl << "placeHarvestTile" << endl;
-	}
-	else{
-		player1.placeShipmentTile(row, column, *testHarvestTile, *gameBoard, ship);
-		cout << endl << "placeShipmentTile" << endl;
-	}
+    if(rand() % 2 == 0){
+        player1.placeHarvestTile(row, column, *testHarvestTile, *gameBoard);
+        cout << endl << "placeHarvestTile" << endl;
+    }
+    else{
+        player1.placeShipmentTile(row, column, *testHarvestTile, *gameBoard, ship);
+        cout << endl << "placeShipmentTile" << endl;
+    }
     
     // 2. Determine Resources Gathered
     int res[4];
