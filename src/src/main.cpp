@@ -176,7 +176,6 @@ void turnSequenceDriver() {
         }
     }
     
-    
     // 5. Player draws building tiles. 1) Pick from game pool, 2) Pick from pool or deck
     /// Simulating player to select a buidling tile from pool and then select one more building tile from building deck
     int pick_index_1 = 1;
@@ -198,13 +197,13 @@ void turnSequenceDriver() {
 	for (int i = 0; i < 4; i++) {
 		total_left += res[i];
 	}
-	int deck_pick = total_left % 5;
-	for (int i = 0; i < deck_pick; i++) {
-		player1.drawBuilding(*buildingDeck);
-	}
-	for (int i = 0; i < total_left-deck_pick; i++) {
-		player1.pickFromBuildingPool(*building_pool, rand() % 60);//please check if drawed then re-draw
-	}    
+    int pool_pick = total_left % 5;
+    for (int i = 0; i < pool_pick; i++) {
+        player1.pickFromBuildingPool(*building_pool, i);
+    }
+    for (int i = 0; i < total_left-pool_pick; i++) {
+        player1.drawBuilding(*buildingDeck);
+    }
     
     // 6. Reset Resource Markers back to 0 AND draw one harvest tile
     player1.drawHarvestTile(*harvestDeck);
