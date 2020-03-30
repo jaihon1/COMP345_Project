@@ -97,14 +97,15 @@ void turnSequenceDriver() {
     Scoring *scobj = new Scoring();
     BuildingPool *building_pool = new BuildingPool(buildingDeck);
     
-    GBMaps* gameBoard = new GBMaps(2, 'a', scobj);
+    int players_num = 2;
+    GBMaps* gameBoard = new GBMaps(players_num, 'a', scobj);
     Player player1;
     Player player2;
 
     scobj->reset_res();
     
     
-    // 1. Place harvest tile on board
+    // 1. Player 1 Turn: Place harvest tile on board
     /// Simulating player to use one of his own harvest tile
     HarvestTile* testHarvestTile = harvestDeck->draw();
     
@@ -113,7 +114,7 @@ void turnSequenceDriver() {
     player1.placeHarvestTile(row, column, *testHarvestTile, *gameBoard);
     
     
-    // TODO: 2. Determine Resources Gathered
+    // 2. Determine Resources Gathered
     int res[4];
     scobj->get_res(res);
     
@@ -126,8 +127,43 @@ void turnSequenceDriver() {
     int column_village = 2;
     player1.placeBuildingTile(row_village, column_village, *testBuildingTile);
     
-    // TODO: 4. Share the Wealth
     
+    // 4. Share the Wealth
+    scobj->get_res(res);
+    cout << endl << "Sharing the Wealth" << endl;
+
+    /// Each player takes a turn to use remaining resources. Simulating
+    for (int i = 0; i < players_num; i++) {
+        scobj->display_res();
+        int player_decision_pass = 1; // must take input from player (1 == use resource) (0 == pass turn)
+       
+        if (player_decision_pass == 1) {
+            /// Use resources
+            int player_decision_resource_lumber = 1; // Decision to use Lumber
+            if (player_decision_resource_lumber) {
+                int resource_quantity = 1;
+                scobj->remove_res(1, resource_quantity);
+            }
+            int player_decision_resource_sheep = 1; // Decision to use Sheep
+            if (player_decision_resource_sheep) {
+                int resource_quantity = 1;
+                scobj->remove_res(2, resource_quantity);
+            }
+            int player_decision_resource_wheat = 0; // Decision to use Wheat
+            if (player_decision_resource_wheat) {
+                int resource_quantity = 1;
+                scobj->remove_res(3, resource_quantity);
+            }
+            int player_decision_resource = 0; // Decision to use Rock
+            if (player_decision_resource) {
+                int resource_quantity = 1;
+                scobj->remove_res(4, resource_quantity);
+            }
+        }
+        else {
+            /// Pass turn
+        }
+    }
     
     
     // 5. Player draws building tiles. 1) Pick from game pool, 2) Pick from pool or deck
@@ -145,11 +181,11 @@ void turnSequenceDriver() {
         player1.drawBuilding(*buildingDeck);
     }
     
+    
     // 6. Reset Resource Markers back to 0 AND draw one harvest tile
     player1.drawHarvestTile(*harvestDeck);
     
-    
-    
+    cout << endl << "End of Turn" << endl;
     scobj->display_res();
 
     printGameBoard(gameBoard);
