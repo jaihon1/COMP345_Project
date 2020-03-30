@@ -12,7 +12,7 @@ using namespace std;
 void playerDriver() {
     // Initializing variables
     Player bob;
-//    GBMaps map(4, 'b');
+	// GBMaps map(4, 'b');
     BuildingDeck buildingDeck;
     HarvestDeck harvestDeck;
     HarvestTile harvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber);
@@ -126,7 +126,7 @@ void turnSequenceDriver() {
     int row_village = 1;
     int column_village = 2;
     player1.placeBuildingTile(row_village, column_village, *testBuildingTile);
-    
+    scobj->remove_res(static_cast<int>(testBuildingTile->), row_village);//remove resource match the type of building???
     
     // 4. Share the Wealth
     scobj->get_res(res);
@@ -141,23 +141,27 @@ void turnSequenceDriver() {
             /// Use resources
             int player_decision_resource_lumber = 1; // Decision to use Lumber
             if (player_decision_resource_lumber) {
-                int resource_quantity = 1;
-                scobj->remove_res(1, resource_quantity);
+                int resource_quantity =  rand() % 6;
+                if(scobj->remove_res(1, resource_quantity)==0)
+					 cout << endl << "Not enough resource" << endl;
             }
             int player_decision_resource_sheep = 1; // Decision to use Sheep
             if (player_decision_resource_sheep) {
-                int resource_quantity = 1;
-                scobj->remove_res(2, resource_quantity);
+                int resource_quantity = rand() % 6;
+                if(scobj->remove_res(2, resource_quantity)==0)
+					 cout << endl << "Not enough resource" << endl;
             }
             int player_decision_resource_wheat = 0; // Decision to use Wheat
             if (player_decision_resource_wheat) {
-                int resource_quantity = 1;
-                scobj->remove_res(3, resource_quantity);
+                int resource_quantity = rand() % 6;
+                if(scobj->remove_res(3, resource_quantity)==0)
+					 cout << endl << "Not enough resource" << endl;
             }
             int player_decision_resource = 0; // Decision to use Rock
             if (player_decision_resource) {
-                int resource_quantity = 1;
-                scobj->remove_res(4, resource_quantity);
+                int resource_quantity = rand() % 6;
+                if(scobj->remove_res(4, resource_quantity)==0)
+					 cout << endl << "Not enough resource" << endl;
             }
         }
         else {
@@ -180,7 +184,19 @@ void turnSequenceDriver() {
     else if (decision == 1){
         player1.drawBuilding(*buildingDeck);
     }
-    
+	
+	/************************/
+	int total_left = 0;
+	for (int i = 0; i < 4; i++) {
+		total_left += res[i];
+	}
+	int deck_pick = total_left % 5;
+	for (int i = 0; i < deck_pick; i++) {
+		player1.drawBuilding(*buildingDeck);
+	}
+	for (int i = 0; i < total_left-deck_pick; i++) {
+		player1.pickFromBuildingPool(*building_pool, rand() % 60);//please check if drawed then re-draw
+	}    
     
     // 6. Reset Resource Markers back to 0 AND draw one harvest tile
     player1.drawHarvestTile(*harvestDeck);
