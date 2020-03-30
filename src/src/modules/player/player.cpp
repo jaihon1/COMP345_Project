@@ -8,6 +8,7 @@ Player::Player() {
 }
 
 Player::Player(const Player &player) {
+    _villageBoard = player._villageBoard;
     _harvestTiles = player._harvestTiles;
     _buildingTiles = player._buildingTiles;
 	shipmentTile = player.shipmentTile;
@@ -29,10 +30,6 @@ Player::~Player() {
         _villageBoard = nullptr;
     }
 
-	if (shipmentTile) {
-		delete shipmentTile;
-		shipmentTile = nullptr;
-	}
 }
 
 
@@ -55,6 +52,11 @@ vector<HarvestTile*>* Player::getHarvestTiles() {
 
 void Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard) {
     gameBoard.addHarvestTile(row, col, &tile);
+    removeHarvestTile(tile);
+}
+
+void Player::placeShipmentTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard, int type) {
+    gameBoard.addShipmentTile(row, col, &tile, type);
     removeHarvestTile(tile);
 }
 
@@ -93,6 +95,17 @@ BuildingTile* Player::removeBuildingTile(BuildingTile &tile) {
 
 BuildingTile* Player::drawBuilding(BuildingDeck &deck) {
     BuildingTile *drawn_card = deck.draw();
+    addBuildingTile(*drawn_card);
+    return drawn_card;
+}
+
+void Player::placeBuildingTile(int row, int col, BuildingTile &tile) {
+    _villageBoard->addNewBuildingTile(tile, row, col);
+    removeBuildingTile(tile);
+}
+
+BuildingTile* Player::pickFromBuildingPool(BuildingPool &pool, int index) {
+    BuildingTile *drawn_card = pool.pickBuildingTile(index);
     addBuildingTile(*drawn_card);
     return drawn_card;
 }
