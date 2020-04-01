@@ -11,7 +11,7 @@ MainLoop::MainLoop(int n)
 	//check for safety 
 	if ((n >=2)&&(n <= 4))
 	{
-		this->num_players = new int(n);
+		num_players = new int(n);
 	}
 	else
 	{
@@ -76,9 +76,10 @@ MainLoop::MainLoop(int n)
 
 		cout << "Created P2" << endl; 
 
-		setGameLimit(game_limits.at(0)); //set game limit to 25
-
-		cout << "Set game limit" + *game_limit << endl;
+		//game_limit = new int(game_limits.at(0)); 
+		
+		//*game_limit = 25; 
+		game_limit = new int(game_limits.at(0));
 		break;
 	case 3:
 		p1 = new Player();
@@ -93,7 +94,7 @@ MainLoop::MainLoop(int n)
 		p3->setID(player_order.at(2));
 		players->push_back(p3);
 
-		setGameLimit(game_limits.at(1));
+		game_limit = new int(game_limits.at(1));
 		break;
 	case 4:
 		p1 = new Player();
@@ -112,15 +113,19 @@ MainLoop::MainLoop(int n)
 		p4->setID(player_order.at(3));
 		players->push_back(p4);
 
-		setGameLimit(game_limits.at(2));
+		//setGameLimit(game_limits.at(2));
+		cout << game_limits.at(2) << endl; 
+		game_limit = new int(game_limits.at(2)); 
+		//cout << "game limit:" << *game_limit << endl; 
 		break;
 	}
 
 	cout << "Created players" << endl;
 	//Create a new Gameboard
 
+	sc = new Scoring();
 	gameboard = new GBMaps(n, 'a', sc); //initialize board A
-
+	
 }
 
 
@@ -172,14 +177,11 @@ MainLoop::~MainLoop()
 
 	delete gameboard; 
 	gameboard = NULL; 
+
+	delete sc; 
+	sc = NULL; 
 }
 
-/*
-vector<int> * MainLoop::getPlayerOrder()
-{
-	return ; 
-}
-*/ 
 
 int * MainLoop::getNumPlayers()
 {
@@ -206,7 +208,7 @@ void MainLoop::findPlayerOrder(int n)
 		}
 
 	}
-	cout << min << endl; 
+	//cout << min << endl; 
 
 	int start = 0; 
 	//find which index the min element is at 
@@ -219,8 +221,6 @@ void MainLoop::findPlayerOrder(int n)
 	}
 
 	int tem1; 
-
-
 	if (n == 2)
 	{
 		switch (start)
@@ -236,7 +236,6 @@ void MainLoop::findPlayerOrder(int n)
 		}
 	}
 	
-
 	if (n == 3)
 	{
 		switch (start)
@@ -306,30 +305,34 @@ void MainLoop::MainLoopSetup(int n)
 }
 
 
-void MainLoop::MainLoopStart(int n)
+void MainLoop::MainLoopStart()
 {
+	cout << "Here are the orders for the players - (-1 means that there are no valid player)" << endl;
+
+	cout << "Player 1 has ID : " << player_order.at(0) << endl;
+	cout << "Player 2 has ID : " << player_order.at(1) << endl;
+	cout << "Player 3 has ID : " << player_order.at(2) << endl;
+	cout << "Player 4 has ID : " << player_order.at(3) << endl;
 	//keep looping while the number of tiles and game limits arent done 
 	while (gameboard->getNumTiles() < *game_limit)
 	{
-		for (int i = 0; i < n; i++)
+		//cout << *num_players << endl; 
+		for (int i = 0; i < *num_players; i++)
 		{
 			//code for player
-			cout << "Player " << ++i << " 's turn" << endl; 
-
+			cout << "Player " << i + 1 << " 's turn" << endl; 
 			//*** IMPUT TURN SEQUENCE HERE AND IM DONE ***// 
 
 			//to write 
 
-			if (i++ == n)
+			if ((i + 1) == (*num_players + 1))
 			{
+				cout << "End of the player turn" << endl; 
 				i = 0; //reset the loop 
 			}
 		}
 	}
-
-
 }
-
 
 void MainLoop::setGameLimit(int n)
 {

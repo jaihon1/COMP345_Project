@@ -4,20 +4,21 @@
 #include <vector>
 using namespace std; 
 
-
 int main()
 {
-	
-	MainLoop *m = new MainLoop(4); //2 is the number of players 
+	cout << "Driver for MainLoop" << endl; 
 
+	MainLoop *m = new MainLoop(3); //2 is the number of players 
+
+	/*
 	vector <Player*> *temp = m->getPlayers(); 
-
 	Player *pp1 = temp->at(0); 
-
 	VGMaps *v = pp1->getVGMaps(); 
-
 	v->printVGMap(); 
+	*/ 
+
 	
+	m->MainLoopStart(); 
 
 	return 0; 
 }

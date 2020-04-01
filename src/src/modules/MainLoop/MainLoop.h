@@ -28,14 +28,13 @@ private:
 	Player *p3;
 	Player *p4; 
 
-	vector <int> game_limits{ 25, 35, 45};
+	vector <int> game_limits{25, 35, 45};
 
 	int *game_limit; 
 
 	//create gameboard
 
 	GBMaps * gameboard; 
-
 	Scoring * sc; 
 
 public:
@@ -51,7 +50,7 @@ public:
 
 	void MainLoopSetup(int n);
 
-	void MainLoopStart(int n); 
+	void MainLoopStart(); 
 
 	void setGameLimit(int n); 
 
