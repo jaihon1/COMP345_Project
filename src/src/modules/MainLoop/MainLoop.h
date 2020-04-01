@@ -3,23 +3,25 @@
 #include <algorithm> //for min and max function 
 #include <vector>
 #include <iostream>
-#include "files/modules/player/player.h"
-#include "files/modules/board/GBMaps.h"
+#include "../player/player.h"
+#include "../board/GBMaps.h"
+#include <iomanip>
 using namespace std; 
 
 class MainLoop
 {
 private:
-	vector <int> player_order { player1, player2, player3, player4 };
+
 	int * num_players; 
+	vector <int> player_order{ player1, player2, player3, player4 }; //determined should do that for this too - if its 0 its gonna mess up 
 
 	//for the IDs 
 	int player1;
 	int player2;
 	int player3; 
 	int player4; 
-
-	vector <Player> players; 
+	
+	vector <Player*> *players = new vector <Player *> (4); //vector with player objects (because idk the number of players)
 
 	Player *p1; 
 	Player *p2; 
@@ -52,6 +54,10 @@ public:
 	void MainLoopStart(int n); 
 
 	void setGameLimit(int n); 
+
+	vector <Player*> * getPlayers(); 
+
+
 
 };
 

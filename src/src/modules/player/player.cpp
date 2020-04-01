@@ -4,10 +4,12 @@
 
 Player::Player() {
 //    cout << "Creating Player with Main: " << this << endl;
-    _villageBoard = new VGMaps();
+
+	cout << "Inside player constructor" << endl; 
+	_villageBoard = new VGMaps();
     _harvestTiles = new vector<HarvestTile*>;
     _buildingTiles = new vector<BuildingTile*>;
-	ID = new int(0); //will be decided at runtime 
+	ID = new int(-1); //will be decided at runtime 
 }
 
 Player::Player(const Player &player) {
@@ -17,6 +19,13 @@ Player::Player(const Player &player) {
 }
 
 Player::~Player() {
+
+	cout << "Player destructor" << endl; 
+	if (_villageBoard) {
+		delete _villageBoard;
+		_villageBoard = nullptr;
+	}
+
     if (_harvestTiles) {
 //        cout << "Deleting _harvestTiles of Player with address: " << this << endl;
         delete _harvestTiles;
@@ -30,11 +39,7 @@ Player::~Player() {
         _buildingTiles = nullptr;
 //        cout << "DONE" << endl;
     }
-    
-    if (_villageBoard) {
-        delete _villageBoard;
-        _villageBoard = nullptr;
-    }
+
 
 	if (ID)
 	{
@@ -104,6 +109,10 @@ unsigned long Player::getNumberOfBuildingTiles() {
     return _buildingTiles -> size();
 }
 
+VGMaps* Player::getVGMaps()
+{
+	return _villageBoard; 
+}
 
 void Player::ressourceTracker() {
     cout << "--Player Resources--" << endl;

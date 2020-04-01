@@ -47,6 +47,7 @@ public:
     BuildingTile* removeBuildingTile(BuildingTile &tile);
     BuildingTile* drawBuilding(BuildingDeck &deck);
     unsigned long getNumberOfBuildingTiles();
+	VGMaps* getVGMaps(); 
     
     // Methods for the driver
     void ressourceTracker();

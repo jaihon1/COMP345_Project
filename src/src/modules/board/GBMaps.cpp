@@ -3,6 +3,25 @@
 #include "../Scoring/Scoring.h"
 #include "GBMaps.h"
 
+const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
+	switch (inSquareStatus) {
+	case GBSquareStatus::Empty:
+		return "Empty";
+	case GBSquareStatus::HarvestTile:
+		return "Harvest";
+
+	case GBSquareStatus::BuildingTile:
+		return "Buildin";
+
+	case GBSquareStatus::PondTile:
+		return "Pond";
+
+	case GBSquareStatus::Unavailable:
+		return "Unavail";
+
+	}
+	return "Error from SquareStatusToString";
+}
 
 GBSquare::GBSquare() {
 	status = GBSquareStatus::Empty;
@@ -189,3 +208,29 @@ int GBMaps::getNumTiles()
 {
 	return *numTiles; 
 }
+
+void GBMaps::printBoard()
+{
+	for (int i = 0; i < 7; i++) {
+		for (int k = 0; k < 2; k++) {
+			for (int j = 0; j < 7; j++) {
+				if (this->getSquareStatus(i, j) == GBSquareStatus::HarvestTile) {
+					HarvestTile* tileTemp = this->getHarvestTile(i, j);
+					if (k == 0) {
+						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::topLeft));
+						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::topRight));
+					}
+					else {
+						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomLeft));
+						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomRight));
+					}
+				}
+				else {
+					cout << setw(8) << SquareStatusToString(this->getSquareStatus(i, j)) << setw(8) << " ";
+				}
+			}
+			cout << endl;
+		}
+	}
+}
+

@@ -46,6 +46,8 @@ string colortype_to_string(BuildingColorType c)
 
 VGMaps::VGMaps()
 {
+	cout << "Inside VGMAps constructor" << endl; 
+
 	village_board = new VGSquare * [*rows]; //on the heap
 
 	for (int i = 0; i < *rows; i++)
@@ -74,6 +76,7 @@ VGMaps::VGMaps()
 
 VGMaps::~VGMaps()
 {
+	cout << "Inside VGMAP destructor" << endl; 
 	//delete everything inside the village board that is dynamically allocated
 	for (int i = 0; i < *rows; i++)
 	{
@@ -94,11 +97,12 @@ VGMaps::~VGMaps()
 
 	//deallocate the rows and colums pointer
 
+	
 	delete rows; 
 	rows = NULL; 
 	delete columns; 
 	columns = NULL; 
-
+	
 }
 
 //function is not useful, it is only called through the VGMaps but not inside connections 

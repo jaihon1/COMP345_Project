@@ -3,6 +3,8 @@
 #include "../Scoring/Scoring.h"
 #include<iostream> 
 #include "../tile/Resources.h"
+#include <iomanip>
+
 class Scoring;
 
 //enumerated class to give name to the status that a square could have
@@ -69,6 +71,8 @@ public:
 	int getNumberOfPlayers();
 
 	int getNumTiles(); 
+
+	void printBoard(); 
 
 };
 
