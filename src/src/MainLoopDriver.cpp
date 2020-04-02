@@ -8,8 +8,8 @@ int main()
 {
 	cout << "Driver for MainLoop" << endl; 
 
-	MainLoop *m = new MainLoop(3); //2 is the number of players 
-
+	MainLoop *m = new MainLoop(); //2 is the number of players 
+	m->MainLoopSetup(3); 
 	/*
 	vector <Player*> *temp = m->getPlayers(); 
 	Player *pp1 = temp->at(0); 
@@ -17,7 +17,6 @@ int main()
 	v->printVGMap(); 
 	*/ 
 
-	
 	m->MainLoopStart(); 
 
 	return 0; 

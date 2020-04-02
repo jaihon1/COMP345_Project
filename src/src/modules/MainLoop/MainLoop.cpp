@@ -7,125 +7,7 @@ MainLoop::MainLoop()
 
 MainLoop::MainLoop(int n)
 {
-	cout << "Inside main loop constructor" << endl; 
-	//check for safety 
-	if ((n >=2)&&(n <= 4))
-	{
-		num_players = new int(n);
-	}
-	else
-	{
-		cout << "wrong number of players" << endl; 
-	}	
-
-	//Code to request the player 
-
-	for (int i = 0; i < n; i++)
-	{
-		cout << "Hello! Enter the ID of player # " << endl;
-		cin >> player_order.at(i);
-	}
-
-	//Filler function 
-	if (n != 4)
-	{
-		switch (n)
-		{
-		case 2:
-			player_order.at(2) = -1; 
-			player_order.at(3) = -1;
-			break; 
-		case 3:
-			player_order.at(3) = -1; 
-			break; 
-		}
-	}
-
-	cout << player_order.at(0) << endl;
-	cout << player_order.at(1) << endl;
-	cout << player_order.at(2) << endl;
-	cout << player_order.at(3) << endl;
-
-	//I'm assuming the rest will be initialized by default to 0 (default for int).
-	findPlayerOrder(n);
-
-	cout << "Found the order of the players" << endl;
-
-	cout << player_order.at(0) << endl; 
-	cout << player_order.at(1) << endl;
-	cout << player_order.at(2) << endl;
-	cout << player_order.at(3) << endl;
-	//create players and set game limits
-
-	game_limit = new int(0);
-
-	players = new vector <Player*>; 
-
-	switch (n)
-	{
-	case 2:
-		p1 = new Player();
-		p1->setID(player_order.at(0)); //double check this 
-		players->push_back(p1);
-
-		cout << "Created P1" << endl; 
-
-		p2 = new Player();
-		p2->setID(player_order.at(1));
-		players->push_back(p2);
-
-		cout << "Created P2" << endl; 
-
-		//game_limit = new int(game_limits.at(0)); 
-		
-		//*game_limit = 25; 
-		game_limit = new int(game_limits.at(0));
-		break;
-	case 3:
-		p1 = new Player();
-		p1->setID(player_order.at(0));
-		players->push_back(p1);
-
-		p2 = new Player();
-		p2->setID(player_order.at(1));
-		players->push_back(p2);
-
-		p3 = new Player();
-		p3->setID(player_order.at(2));
-		players->push_back(p3);
-
-		game_limit = new int(game_limits.at(1));
-		break;
-	case 4:
-		p1 = new Player();
-		p1->setID(player_order.at(0));
-		players->push_back(p1);
-
-		p2 = new Player();
-		p2->setID(player_order.at(1));
-		players->push_back(p2);
-
-		p3 = new Player();
-		p3->setID(player_order.at(2));
-		players->push_back(p3);
-
-		p4 = new Player();
-		p4->setID(player_order.at(3));
-		players->push_back(p4);
-
-		//setGameLimit(game_limits.at(2));
-		cout << game_limits.at(2) << endl; 
-		game_limit = new int(game_limits.at(2)); 
-		//cout << "game limit:" << *game_limit << endl; 
-		break;
-	}
-
-	cout << "Created players" << endl;
-	//Create a new Gameboard
-
-	sc = new Scoring();
-	sc->reset_res(); //reset result
-	gameboard = new GBMaps(n, 'a', sc); //initialize board A
+	
 	
 }
 
@@ -302,7 +184,125 @@ void MainLoop::findPlayerOrder(int n)
 
 void MainLoop::MainLoopSetup(int n)
 {
+	cout << "Inside main loop constructor" << endl;
+	//check for safety 
+	if ((n >= 2) && (n <= 4))
+	{
+		num_players = new int(n);
+	}
+	else
+	{
+		cout << "wrong number of players" << endl;
+	}
 
+	//Code to request the player 
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << "Hello! Enter the ID of player # " << endl;
+		cin >> player_order.at(i);
+	}
+
+	//Filler function 
+	if (n != 4)
+	{
+		switch (n)
+		{
+		case 2:
+			player_order.at(2) = -1;
+			player_order.at(3) = -1;
+			break;
+		case 3:
+			player_order.at(3) = -1;
+			break;
+		}
+	}
+
+	cout << player_order.at(0) << endl;
+	cout << player_order.at(1) << endl;
+	cout << player_order.at(2) << endl;
+	cout << player_order.at(3) << endl;
+
+	//I'm assuming the rest will be initialized by default to 0 (default for int).
+	findPlayerOrder(n);
+
+	cout << "Found the order of the players" << endl;
+
+	cout << player_order.at(0) << endl;
+	cout << player_order.at(1) << endl;
+	cout << player_order.at(2) << endl;
+	cout << player_order.at(3) << endl;
+	//create players and set game limits
+
+	game_limit = new int(0);
+
+	players = new vector <Player*>;
+
+	switch (n)
+	{
+	case 2:
+		p1 = new Player();
+		p1->setID(player_order.at(0)); //double check this 
+		players->push_back(p1);
+
+		cout << "Created P1" << endl;
+
+		p2 = new Player();
+		p2->setID(player_order.at(1));
+		players->push_back(p2);
+
+		cout << "Created P2" << endl;
+
+		//game_limit = new int(game_limits.at(0)); 
+
+		//*game_limit = 25; 
+		game_limit = new int(game_limits.at(0));
+		break;
+	case 3:
+		p1 = new Player();
+		p1->setID(player_order.at(0));
+		players->push_back(p1);
+
+		p2 = new Player();
+		p2->setID(player_order.at(1));
+		players->push_back(p2);
+
+		p3 = new Player();
+		p3->setID(player_order.at(2));
+		players->push_back(p3);
+
+		game_limit = new int(game_limits.at(1));
+		break;
+	case 4:
+		p1 = new Player();
+		p1->setID(player_order.at(0));
+		players->push_back(p1);
+
+		p2 = new Player();
+		p2->setID(player_order.at(1));
+		players->push_back(p2);
+
+		p3 = new Player();
+		p3->setID(player_order.at(2));
+		players->push_back(p3);
+
+		p4 = new Player();
+		p4->setID(player_order.at(3));
+		players->push_back(p4);
+
+		//setGameLimit(game_limits.at(2));
+		cout << game_limits.at(2) << endl;
+		game_limit = new int(game_limits.at(2));
+		//cout << "game limit:" << *game_limit << endl; 
+		break;
+	}
+
+	cout << "Created players" << endl;
+	//Create a new Gameboard
+
+	sc = new Scoring();
+	sc->reset_res(); //reset result
+	gameboard = new GBMaps(n, 'a', sc); //initialize board A
 }
 
 
@@ -320,9 +320,11 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 		//cout << *num_players << endl; 
 		for (int i = 0; i < *num_players; i++) //0 to max 4 
 		{
+			cout << "Player " << i + 1 << " 's turn" << endl;
+
 			/*
 			// CODE FOR PLAYER THAT NEEDS TO BE CHECKED ASPA // 
-			cout << "Player " << i + 1 << " 's turn" << endl; 
+			
 			//*** IMPUT TURN SEQUENCE HERE AND IM DONE **
 
 			cout << "Here is your current hand: " << endl; 
@@ -355,7 +357,6 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 		}
 	}
 
-	//Calculate the winner
 }
 
 void MainLoop::setGameLimit(int n)
