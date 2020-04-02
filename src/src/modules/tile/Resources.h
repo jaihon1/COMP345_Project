@@ -7,30 +7,16 @@
 #include <vector>
 #include "Dictionary.h"
 
+class Player;
 class Scoring;
 
 using namespace std;
-
-class Tile {
-
-};
 
 class BuildingTile {
 private:
 	BuildingColorType* _buildingColorType;
 	int* _buildingNum;
 	BuildingStatus* _buildingStatus;
-	
-	/*
-	//constructor for the attributes to allocate memory slot
-	BuildingColorType buildingColorType;
-	int buildingNum;
-	BuildingStatus buildingStatus;
-	//allocate memorys
-	BuildingColorType* _buildingColorType = &buildingColorType; if on stack if on heap i need new 
-	int* _buildingNum = &buildingNum;
-	BuildingStatus* _buildingStatus = &buildingStatus;
-	*/ 
 
 
 public:
@@ -123,9 +109,20 @@ public:
 
 };
 
-class HarvestTile :
-	public Tile
-{
+class BuildingPool {
+private:
+	int size = 5;
+	BuildingTile** buildingPoolArr = new BuildingTile * [size];
+	BuildingDeck* buildingDeck;
+
+public:
+	BuildingPool(BuildingDeck* inBuildingDeck);
+	char* displayPool();
+	BuildingTile* pickBuildingTile(int index);
+	BuildingTile** getBuildingPool();
+};
+
+class HarvestTile {
 private:
 	ResourceName* resourceArr;
 
@@ -182,8 +179,25 @@ private:
 	int* resourceScoreArr;
 
 public:
+	class ExchangeToken {
+	private:
+		Player* player;
+		BuildingTile* buildingTile;
+		int row;
+		int column;
+	
+	public:
+		ExchangeToken(Player* inP, BuildingTile* inBT, int inR, int inC);
+		Player* getPlayer();
+		BuildingTile* getBT();
+		int getRow();
+		int getCol();
+
+	};
+
 	Hand(Scoring* sc);
-	int* exchange();
+	void intializeHand();
 	void displayHand();
+	int exchange(ExchangeToken* exchangeToken);
 };
 

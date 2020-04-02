@@ -13,9 +13,10 @@ Player::Player() {
 }
 
 Player::Player(const Player &player) {
-//    cout << "Creating Player with Copy: " << this << endl;
+    _villageBoard = player._villageBoard;
     _harvestTiles = player._harvestTiles;
     _buildingTiles = player._buildingTiles;
+	shipmentTile = player.shipmentTile;
 }
 
 Player::~Player() {
@@ -27,25 +28,21 @@ Player::~Player() {
 	}
 
     if (_harvestTiles) {
-//        cout << "Deleting _harvestTiles of Player with address: " << this << endl;
         delete _harvestTiles;
         _harvestTiles = nullptr;
-//        cout << "DONE" << endl;
     }
 
     if (_buildingTiles) {
-//        cout << "Deleting _buildingTiles of Player with address: " << this << endl;
         delete _buildingTiles;
         _buildingTiles = nullptr;
-//        cout << "DONE" << endl;
     }
-
 
 	if (ID)
 	{
 		delete ID; 
 		ID = nullptr; 
 	}
+
 }
 
 
@@ -71,6 +68,11 @@ void Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameB
     removeHarvestTile(tile);
 }
 
+void Player::placeShipmentTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard, int type) {
+    gameBoard.addShipmentTile(row, col, &tile, type);
+    removeHarvestTile(tile);
+}
+
 HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
     HarvestTile *drawn_card = deck.draw();
     addHarvestTile(*drawn_card);
@@ -79,6 +81,11 @@ HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
 
 unsigned long Player::getNumberOfHarvestTiles() {
     return _harvestTiles -> size();
+}
+
+void Player::setShipmentTile(HarvestTile* harvestTile)
+{
+	shipmentTile = harvestTile;
 }
 
 
@@ -105,6 +112,17 @@ BuildingTile* Player::drawBuilding(BuildingDeck &deck) {
     return drawn_card;
 }
 
+void Player::placeBuildingTile(int row, int col, BuildingTile &tile) {
+    _villageBoard->addNewBuildingTile(tile, row, col);
+    removeBuildingTile(tile);
+}
+
+BuildingTile* Player::pickFromBuildingPool(BuildingPool &pool, int index) {
+    BuildingTile *drawn_card = pool.pickBuildingTile(index);
+    addBuildingTile(*drawn_card);
+    return drawn_card;
+}
+
 unsigned long Player::getNumberOfBuildingTiles() {
     return _buildingTiles -> size();
 }
@@ -125,6 +143,7 @@ void Player::ressourceTracker() {
     cout << "-- END --" << endl << endl;
 }
 
+
 int Player::getID()
 {
 	return *ID;
@@ -133,4 +152,9 @@ int Player::getID()
 void Player::setID(int n)
 {
 	*ID = n; 
+
+
+VGMaps* Player::getVGBoard() {
+	return _villageBoard;
+
 }

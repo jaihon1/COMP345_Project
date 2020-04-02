@@ -5,6 +5,10 @@ Scoring::Scoring()
 {
 }
 
+Scoring::Scoring(const Scoring &sc) :vertices(sc.vertices)
+{
+	ver_lim = sc.ver_lim;
+}
 
 Scoring::~Scoring()
 {
@@ -13,6 +17,14 @@ Scoring::~Scoring()
 void Scoring::addEdge(int v, int w)
 {
 	vertices.addEdge(v, w);
+}
+
+void Scoring::set_res(int res[4])
+{
+	res_score[1] = res[0];
+	res_score[2] = res[1];
+	res_score[3] = res[2];
+	res_score[4] = res[3];
 }
 
 void Scoring::reset_res()
@@ -40,11 +52,6 @@ void Scoring::update_help(int v, int w, int res) {
 void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 {
 	//std::cout << "Test" << vertices.connected(90) << std::endl;
-	//update_help(pos[0], pos[3], res[0]);
-	//update_help(pos[1], pos[2], res[1]);
-	//update_help(pos[2], pos[1], res[2]);
-	//update_help(pos[3], pos[0], res[3]);
-
 	for (int i = 0; i < 4; i++)
 	{
 		if (res[i] == 0)
@@ -53,7 +60,10 @@ void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 		{
 			if (res[j] == 0)
 				continue;
-			if (vertices.is_adjacent(pos[i], pos[j]))
+			if (j == i)
+				continue;
+			//vertices.is_adjacent() wrong
+			if (vertices.is_connected(pos[i], pos[j]))
 				res[j] = 0;
 		}
 		add_res(res[i], vertices.connected(pos[i]));
@@ -96,9 +106,13 @@ int Scoring::get_stone()
 	return res_score[4];
 }
 
-int Scoring::get_res(int resv)
+int Scoring::get_res(int res[4])
 {
-	return res_score[resv];
+	res[0] = res_score[1];
+	res[1] = res_score[2];
+	res[2] = res_score[3];
+	res[3] = res_score[4];
+	return 0;
 }
 
 int Scoring::remove_res(int resv, int quantity)
@@ -114,8 +128,10 @@ int Scoring::remove_res(int resv, int quantity)
 void Scoring::display_res()
 {
 	std::cout << "Resource: " << std::endl;
-	for(int i = 1; i < 5 ; i++)
-		std::cout << res_score[i] << std::endl;
+	std::cout << "Lumber: " << res_score[1] << std::endl;
+	std::cout << "Sheep: " << res_score[2] << std::endl;
+	std::cout << "Wheat: " << res_score[3] << std::endl;
+	std::cout << "Rock: " << res_score[4] << std::endl;
 	std::cout << std::endl;
 }
 
@@ -180,7 +196,7 @@ int Scoring::get_density(const VGMaps &vil)
 	return result;
 }
 
-void insertionSort(int arr[], int n)
+void Scoring::insertionSort(int arr[], int n)
 {
 	int i, key, j;
 	for (i = 1; i < n; i++)
@@ -206,11 +222,6 @@ int Scoring::get_winner(const VGMaps villages[4])
 		vil_score[i][0] = get_score(villages[i]);
 		vil_score[i][1] = get_density(villages[i]);
 		vil_score[i][2] = rand() % 100;
-		if (i == 2) {
-			vil_score[2][0] = 56;
-			vil_score[2][1] = 29;
-			vil_score[2][2] = 47;
-		}
 		std::cout << "village score: " << vil_score[i][0] << std::endl;
 		std::cout << "village densi: " << vil_score[i][1] << std::endl;
 		std::cout << "village build: " << vil_score[i][2] << std::endl;
@@ -235,8 +246,35 @@ Scoring::Graph::Graph(int V)
 	adj = new std::list<int>[V];
 }
 
+Scoring::Graph::Graph(const Graph &gr)
+{
+	V = gr.V;
+	adj = new std::list<int>[V];
+	for (int v = 0; v < V; v++)
+		adj[v] = gr.adj[v];
+}
+
+Scoring::Graph & Scoring::Graph::operator= (const Graph &gr)
+{
+	// self-assignment check
+	if (this == &gr)
+		return *this;
+
+	// if data exists in the current string, delete it
+	if (adj) delete[] adj;
+
+	V = gr.V;
+	adj = new std::list<int>[V];
+	for (int v = 0; v < V; v++)
+		adj[v] = gr.adj[v];
+
+	// return the existing object so we can chain this operator
+	return *this;
+}
+
 Scoring::Graph::~Graph()
 {
+	if (adj) delete[] adj;
 }
 
 int Scoring::Graph::adjacency(int v)
@@ -258,14 +296,43 @@ int Scoring::Graph::connected(int v)
 	for (int v = 0; v < V; v++)
 		visited[v] = false;
 
-	DFS(v, visited, count);
+	DFS_count(v, visited, count);
 
     delete [] visited;
 
 	return count;
 }
 
-void Scoring::Graph::DFS(int v, bool visited[], int &count)
+bool Scoring::Graph::is_connected(int v, int w)
+{
+	bool *visited = new bool[V];
+	bool result = false;
+	for (int v = 0; v < V; v++)
+		visited[v] = false;
+
+	DFS_connect(v, visited, w, result);
+
+	delete[] visited;
+
+	return result;
+}
+
+void Scoring::Graph::DFS_connect(int v, bool visited[], int w, bool &result)
+{
+	visited[v] = true;
+	if (v == w)
+		result = true;
+	else {
+		// Recur for all the vertices 
+		// adjacent to this vertex 
+		std::list<int>::iterator i;
+		for (i = adj[v].begin(); i != adj[v].end(); ++i)
+			if (!visited[*i])
+				DFS_connect(*i, visited, w, result);
+	}
+}
+
+void Scoring::Graph::DFS_count(int v, bool visited[], int &count)
 {
 	visited[v] = true;
 
@@ -274,7 +341,7 @@ void Scoring::Graph::DFS(int v, bool visited[], int &count)
 	std::list<int>::iterator i;
 	for (i = adj[v].begin(); i != adj[v].end(); ++i)
 		if (!visited[*i])
-			DFS(*i, visited, ++count);
+			DFS_count(*i, visited, ++count);
 }
 
 // Method to print connected components in an undirected graph 
@@ -295,9 +362,7 @@ void Scoring::Graph::connectedComponents()
 		}
 	}
 
-	//code is different here 
-	delete visited; 
-	//delete [] visited;
+	delete[] visited;
 }
 
 void Scoring::Graph::DFSUtil(int v, VER visited[])

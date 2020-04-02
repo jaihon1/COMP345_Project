@@ -5,7 +5,8 @@
 #include "../tile/Resources.h"
 #include <iomanip>
 
-class Scoring;
+//class Scoring;
+
 
 //enumerated class to give name to the status that a square could have
 enum class GBSquareStatus {
@@ -20,7 +21,7 @@ enum class GBSquareStatus {
 class GBSquare {
 public:
 	GBSquareStatus status;
-	Tile* tilePtr;
+	HarvestTile* tilePtr;
 
 	GBSquare();
 	~GBSquare();
@@ -58,6 +59,7 @@ public:
 
 	//return int: 1 = tile successfully added, 0 = tile not added (probably because square is unavailable)
 	int addHarvestTile(int row, int column, HarvestTile * inHarvestTilePtr);
+	int addShipmentTile(int row, int column, HarvestTile * inHarvestTilePtr, int type);
 
 	HarvestTile* getHarvestTile(int row, int column);
 
