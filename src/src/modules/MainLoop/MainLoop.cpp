@@ -317,13 +317,27 @@ void MainLoop::MainLoopStart()
 	while (gameboard->getNumTiles() < *game_limit)
 	{
 		//cout << *num_players << endl; 
-		for (int i = 0; i < *num_players; i++)
+		for (int i = 0; i < *num_players; i++) //0 to max 4 
 		{
-			//code for player
+			// CODE FOR PLAYER THAT NEEDS TO BE CHECKED ASPA // 
 			cout << "Player " << i + 1 << " 's turn" << endl; 
 			//*** IMPUT TURN SEQUENCE HERE AND IM DONE ***// 
 
-			//to write 
+			cout << "Here is your current hand: " << endl; 
+			//*****SHOW RESSOURCES ATTACHED TO current player*****//
+
+			Player *temp_p = players->at(i); 
+
+			cout << "Here are your current harvest Tiles " << endl; 
+			temp_p->getHarvestTiles(); 
+			temp_p->getBuildings(); 
+
+			cout << "Here is the current GameBoard" << endl; 
+
+			gameboard->printBoard(); 
+			
+			cout << "Select a location to place a harvest tile" << endl; 
+			//the rest to wriet...
 
 			if ((i + 1) == (*num_players + 1))
 			{
