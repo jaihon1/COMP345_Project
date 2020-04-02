@@ -6,6 +6,8 @@
 #include "../player/player.h"
 #include "../board/GBMaps.h"
 #include <iomanip>
+#include "../tile/Resources.h"
+#include "../tile/Dictionary.h"
 using namespace std; 
 
 class MainLoop
@@ -32,8 +34,10 @@ private:
 
 	int *game_limit; 
 
-	//create gameboard
-
+	//SET UP ITEMS 
+	HarvestDeck * harvestDeck; 
+	BuildingDeck * buildingDeck; 
+	
 	GBMaps * gameboard; 
 	Scoring * sc; 
 

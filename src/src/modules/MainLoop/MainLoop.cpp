@@ -124,6 +124,7 @@ MainLoop::MainLoop(int n)
 	//Create a new Gameboard
 
 	sc = new Scoring();
+	sc->reset_res(); //reset result
 	gameboard = new GBMaps(n, 'a', sc); //initialize board A
 	
 }
@@ -305,7 +306,7 @@ void MainLoop::MainLoopSetup(int n)
 }
 
 
-void MainLoop::MainLoopStart()
+void MainLoop::MainLoopStart() //Function that the entire game relies upon 
 {
 	cout << "Here are the orders for the players - (-1 means that there are no valid player)" << endl;
 
@@ -319,12 +320,13 @@ void MainLoop::MainLoopStart()
 		//cout << *num_players << endl; 
 		for (int i = 0; i < *num_players; i++) //0 to max 4 
 		{
+			/*
 			// CODE FOR PLAYER THAT NEEDS TO BE CHECKED ASPA // 
 			cout << "Player " << i + 1 << " 's turn" << endl; 
-			//*** IMPUT TURN SEQUENCE HERE AND IM DONE ***// 
+			//*** IMPUT TURN SEQUENCE HERE AND IM DONE **
 
 			cout << "Here is your current hand: " << endl; 
-			//*****SHOW RESSOURCES ATTACHED TO current player*****//
+			//*****SHOW RESSOURCES ATTACHED TO current player*****
 
 			Player *temp_p = players->at(i); 
 
@@ -337,15 +339,23 @@ void MainLoop::MainLoopStart()
 			gameboard->printBoard(); 
 			
 			cout << "Select a location to place a harvest tile" << endl; 
-			//the rest to wriet...
+			//REST NEEDS TO BE WRITTEN 
+
+			//PLACE HARVEST TILE 
+			*/ 
+
+
+			//
 
 			if ((i + 1) == (*num_players + 1))
 			{
-				cout << "End of the player turn" << endl; 
+				cout << "End of the players vector" << endl; 
 				i = 0; //reset the loop 
 			}
 		}
 	}
+
+	//Calculate the winner
 }
 
 void MainLoop::setGameLimit(int n)
