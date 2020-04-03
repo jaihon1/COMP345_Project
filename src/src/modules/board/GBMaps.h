@@ -38,6 +38,8 @@ private:
 	//using const pointers because the assignment says attributes have to be pointers
 	const int* const rows = new int(7);
 	const int* const columns = new int(7);
+	const int total_tile = 49;
+	int occupied_tile = 0;
 
 	//Game Board is a pointer to an array of pointers
 	GBSquare** board;
@@ -71,7 +73,7 @@ public:
 
 	int getNumberOfPlayers();
 
-	
+	int getOccupiedTile();
 };
 
 #endif /* board_h */

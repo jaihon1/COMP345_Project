@@ -390,9 +390,16 @@ void VGMapLoaderTest()
 	va->printVGMap();
 }
 
-
 void menuOptions() {
-	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - To Be Annouced" << endl << "0 - Exit" << endl << endl << "Which test would you like to run? ";
+	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - Result Test" << endl << "0 - Exit" << endl << endl << "Which test would you like to run? ";
+}
+
+
+void resultTest() {
+	cout << "resultTest" << endl;
+
+
+	system("pause");
 }
 
 int main()
@@ -421,7 +428,7 @@ int main()
 			playerTest();
 			break;
 		case 5:
-			cout << "unavailable" << endl;
+			resultTest();
 			break;
 		}
 		cout << endl;
