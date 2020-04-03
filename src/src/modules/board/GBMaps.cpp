@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../Scoring/Scoring.h"
+#include "../scoring/Scoring.h"
 #include "GBMaps.h"
 
 const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
@@ -11,14 +11,13 @@ const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
 		return "Harvest";
 
 	case GBSquareStatus::BuildingTile:
-		return "Buildin";
+		return "Building";
 
 	case GBSquareStatus::PondTile:
 		return "Pond";
 
 	case GBSquareStatus::Unavailable:
 		return "Unavail";
-
 	}
 	return "Error from SquareStatusToString";
 }
@@ -60,7 +59,7 @@ GBMaps::GBMaps(int inNumberOfPlayers, char boardSide, Scoring* sc)
 
 	switch (*numberOfPlayers) {
 	case 2:
-
+		occupied_tile += 24;
 		//top and bottom row on a 7x7 map is unavailable for a two person game as well as the first and last columns
 		for (int i = 0; i < 7; i++) {
 			board[0][i].status = GBSquareStatus::Unavailable;
@@ -71,7 +70,7 @@ GBMaps::GBMaps(int inNumberOfPlayers, char boardSide, Scoring* sc)
 		break;
 
 	case 3:
-
+		occupied_tile += 14;
 		//first and last column are unavailable for a three person game on a 7x7 map
 		for (int i = 0; i < 7; i++) {
 			board[i][0].status = GBSquareStatus::Unavailable;
@@ -80,6 +79,7 @@ GBMaps::GBMaps(int inNumberOfPlayers, char boardSide, Scoring* sc)
 		break;
 
 	case 4:
+		occupied_tile += 4;
 		board[0][0].status = GBSquareStatus::Unavailable;
 		board[0][6].status = GBSquareStatus::Unavailable;
 		board[6][0].status = GBSquareStatus::Unavailable;
@@ -109,6 +109,7 @@ void GBMaps::initializeBoardA() {
 	//TODO: NEED TO GET A SCORING OBJECT vvvvvv
 
 	//default resource tiles
+	occupied_tile += 4;
 	HarvestTile* firstDefaultTile = new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber);
 	addHarvestTile(1, 1, firstDefaultTile);
 	addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
@@ -124,6 +125,7 @@ void GBMaps::intializeBoardB() {
 									{ 4,0 },{ 4,2 },{ 4,4 },{ 4,6 },{ 6,2 },{ 6,4 } };
 	//hardcode seed for random number?  will create same random numbers everytime.
 	srand(0);
+	occupied_tile += 8;
 	for (int i = 0; i < 4; i++)
 	{
 		int temp = rand() % 8;
@@ -159,9 +161,7 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 	if (board[row][column].status == GBSquareStatus::Empty) {
 		board[row][column].status = GBSquareStatus::HarvestTile;
 		board[row][column].tilePtr = inHarvestTilePtr;
-
-		*numTiles += 1; 
-
+		occupied_tile++;
 		if (scoringObj != NULL) {
 			scoringObj->computeResources(row, column, inHarvestTilePtr, this);
 		}
@@ -169,8 +169,6 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 		return 1;
 	}
 	return 0;
-
-
 }
 
 int GBMaps::addShipmentTile(int row, int column, HarvestTile * inHarvestTilePtr, int type)
@@ -207,6 +205,7 @@ int GBMaps::addPondTile(int row, int column)
 {
 	//check if game board square is empty to add tile
 	if (board[row][column].status == GBSquareStatus::Empty) {
+		occupied_tile++;
 		board[row][column].status = GBSquareStatus::PondTile;
 		return 1;
 	}
@@ -228,12 +227,12 @@ int GBMaps::getNumberOfPlayers()
 	return *numberOfPlayers;
 }
 
-int GBMaps::getNumTiles()
+int GBMaps::getOccupiedTile()
 {
-	return *numTiles; 
+	return occupied_tile;
 }
 
-void GBMaps::printBoard()
+void GBMaps::printGameBoard()
 {
 	for (int i = 0; i < 7; i++) {
 		for (int k = 0; k < 2; k++) {
@@ -254,7 +253,9 @@ void GBMaps::printBoard()
 				}
 			}
 			cout << endl;
+
 		}
 	}
-}
 
+
+}

@@ -1,4 +1,5 @@
-
+#include "../tile/Resources.h"
+#include "../board/GBMaps.h"
 #include "Scoring.h"
 
 Scoring::Scoring()
@@ -52,6 +53,7 @@ void Scoring::update_help(int v, int w, int res) {
 void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 {
 	//std::cout << "Test" << vertices.connected(90) << std::endl;
+
 	for (int i = 0; i < 4; i++)
 	{
 		if (res[i] == 0)
@@ -298,7 +300,7 @@ int Scoring::Graph::connected(int v)
 
 	DFS_count(v, visited, count);
 
-    delete [] visited;
+	delete visited;
 
 	return count;
 }
@@ -362,7 +364,7 @@ void Scoring::Graph::connectedComponents()
 		}
 	}
 
-	delete[] visited;
+	delete visited;
 }
 
 void Scoring::Graph::DFSUtil(int v, VER visited[])

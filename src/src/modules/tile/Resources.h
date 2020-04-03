@@ -18,7 +18,6 @@ private:
 	int* _buildingNum;
 	BuildingStatus* _buildingStatus;
 
-
 public:
 	BuildingTile();
 	BuildingTile(BuildingColorType* type, BuildingStatus* status);
@@ -49,6 +48,7 @@ public:
 
 	BuildingTile & operator = (const BuildingTile &b); 
 
+	void printBuildingTile(); 
 
 	//methods for map Loader 
 	static const char* Building_typeToChar(BuildingColorType b)
@@ -140,6 +140,8 @@ public:
 
 	ResourceName getResource(ResourceLocation inLocation);
 
+	void printHarvestTile(); 
+
 	static const char* ResourceNameToString(ResourceName inResourceName) {
 		switch (inResourceName) {
 		case ResourceName::Lumber:
@@ -154,7 +156,6 @@ public:
 		case ResourceName::Wheat:
 			return "Wheat";
 		}
-
 		return "Error from ResourceNameToString";
 	}
 };

@@ -1,13 +1,13 @@
 #include <iostream>
 #include <iomanip>
 
-#include "player.h"
-#include "Dictionary.h"
-#include "GBMaps.h"
-#include "Resources.h"
-#include "Scoring.h"
+#include "modules/player/player.h"
+#include "modules/tile/Dictionary.h"
+#include "modules/board/GBMaps.h"
+#include "modules/tile/Resources.h"
+#include "modules/Scoring/Scoring.h"
 
-/*
+/**/ 
 void playerTest() {
     // Initializing variables
     Player bob;
@@ -224,5 +224,5 @@ int main(int argc, const char * argv[]) {
         
     return 0;
 }
-*/ 
+
 

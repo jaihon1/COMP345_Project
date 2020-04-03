@@ -495,7 +495,7 @@ void VGMaps::printVGMap()
 	int ro = *rows;
 	int co = *columns; 
 
-
+	cout << this->getVillageName() << endl;
 
 	for (int i = 0; i < ro; i++)
 	{

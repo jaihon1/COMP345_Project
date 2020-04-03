@@ -76,6 +76,15 @@ ResourceName HarvestTile::getResource(ResourceLocation inLocation)
 	return resourceArr[inLocation];
 }
 
+void HarvestTile::printHarvestTile()
+{
+	cout << setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::topLeft))
+		<< setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::topRight)) << endl
+		<< setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::bottomLeft))
+		<< setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::bottomRight)) << endl;
+
+}
+
 BuildingTile::BuildingTile()
 {
 
@@ -289,6 +298,11 @@ BuildingTile &BuildingTile:: operator = (const BuildingTile &b)
 	}
 	deepCopy(b);
 	return *this; 
+}
+
+void BuildingTile::printBuildingTile()
+{
+	cout << this->getBuildingNum() << " " << this->Building_typeToChar(this->getBuildingColorType()) << " " << this->Building_statusToChar(this->getSide()) << endl;
 }
 
 HarvestDeck::HarvestDeck()

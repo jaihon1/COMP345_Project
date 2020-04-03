@@ -58,7 +58,8 @@ HarvestTile* Player::removeHarvestTile(HarvestTile &tile) {
 
 vector<HarvestTile*>* Player::getHarvestTiles() {
     for (int i = 0; i < _harvestTiles->size(); i++) {
-        cout << (*_harvestTiles)[i] << endl;
+		cout << "HarvestTile " << i << endl; 
+		(*_harvestTiles)[i]->printHarvestTile();
     }
     return _harvestTiles;
 }
@@ -91,7 +92,7 @@ void Player::setShipmentTile(HarvestTile* harvestTile)
 
 vector<BuildingTile*>* Player::getBuildings() {
     for (int i = 0; i < _buildingTiles->size(); i++) {
-        cout << (*_buildingTiles)[i] << endl;
+		(*_buildingTiles)[i]->printBuildingTile(); 
     }
     return _buildingTiles;
 }
@@ -152,9 +153,10 @@ int Player::getID()
 void Player::setID(int n)
 {
 	*ID = n; 
+}
 
-
-VGMaps* Player::getVGBoard() {
+VGMaps* Player::getVGBoard() 
+{
 	return _villageBoard;
 
 }

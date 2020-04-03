@@ -1,6 +1,6 @@
-#include "files/modules/MainLoop/MainLoop.h"
-#include "files/modules/player/player.h"
-#include "files/modules/board/VGMaps.h"
+#include "modules/MainLoop/MainLoop.h"
+#include "modules/player/player.h"
+#include "modules/board/VGMaps.h"
 #include <vector>
 using namespace std; 
 

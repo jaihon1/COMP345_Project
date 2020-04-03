@@ -8,13 +8,14 @@
 #include <iomanip>
 #include "../tile/Resources.h"
 #include "../tile/Dictionary.h"
+#include "../Scoring/Scoring.h"
 using namespace std; 
 
 class MainLoop
 {
 private:
 
-	int * num_players; 
+	int *num_players; 
 	vector <int> player_order{ player1, player2, player3, player4 }; //determined should do that for this too - if its 0 its gonna mess up 
 
 	//for the IDs 
@@ -30,16 +31,21 @@ private:
 	Player *p3;
 	Player *p4; 
 
-	vector <int> game_limits{25, 35, 45};
+	//vector <int> game_limits{25, 35, 45};
 
-	int *game_limit; 
+	int *game_limit = new int(48); 
 
 	//SET UP ITEMS 
-	HarvestDeck * harvestDeck; 
-	BuildingDeck * buildingDeck; 
-	
+	HarvestDeck* harvestDeck;
+	BuildingDeck* buildingDeck;
+	BuildingPool *building_pool;
+
 	GBMaps * gameboard; 
-	Scoring * sc; 
+	Scoring *scobj; 
+
+	HarvestTile* testHarvestTile; 
+
+	bool shipment[4]{0};
 
 public:
 	MainLoop();

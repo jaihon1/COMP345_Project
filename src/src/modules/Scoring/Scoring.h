@@ -1,13 +1,17 @@
 #pragma once
 #include <iostream> 
 #include <list> 
-#include "../tile/Resources.h"
-#include "../board/GBMaps.h"
 #include "../board/VGMaps.h"
 
 class GBMaps;
 
-class Scoring {
+#define _DEBUG
+#ifdef _DEBUG
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#endif
+
+class Scoring
+{
 private:
 	class Graph
 	{
@@ -25,7 +29,7 @@ private:
 
 		int V; // No. of vertices		
 		std::list<int> *adj; // Pointer to an array containing adjacency lists 		
-		
+
 		void DFSUtil(int v, VER visited[]);// A function used by DFS 
 		void DFS_count(int v, bool visited[], int &count);// A function used by DFS 
 		void DFS_connect(int v, bool visited[], int w, bool &result);// A function used by is_connected 
@@ -67,7 +71,7 @@ public:
 	int adjacency(int v);
 	int connected(int v);
 	void addEdge(int v, int w);
-	void reset_res();	
+	void reset_res();
 	void set_res(int res[4]);
 	void update_res(ptrdiff_t pos[4], int res[4]);
 
