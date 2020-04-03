@@ -35,12 +35,17 @@ private:
 	int* numberOfPlayers;
 	Scoring* scoringObj;
 
+	int const* endGame;
+
 	//using const pointers because the assignment says attributes have to be pointers
 	const int* const rows = new int(7);
 	const int* const columns = new int(7);
 
 	//Game Board is a pointer to an array of pointers
 	GBSquare** board;
+
+	// counter to keep track of end game condition
+	int* cardsPlayed;
 
 	void initializeBoardA();
 
@@ -69,6 +74,11 @@ public:
 	int getColumns();
 
 	int getNumberOfPlayers();
+
+	int getCardsPlayed();
+
+	// returns 1 if the game is over
+	int getEndGame();
 
 	
 };

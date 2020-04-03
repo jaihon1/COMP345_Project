@@ -22,6 +22,7 @@ GBSquare::~GBSquare() {
 */
 GBMaps::GBMaps(int inNumberOfPlayers, char boardSide, Scoring* sc)
 {
+	cardsPlayed = new int(0);
 	scoringObj = sc;
 
 	numberOfPlayers = new int(inNumberOfPlayers);
@@ -42,6 +43,8 @@ GBMaps::GBMaps(int inNumberOfPlayers, char boardSide, Scoring* sc)
 	switch (*numberOfPlayers) {
 	case 2:
 
+		endGame = new const int(24);
+
 		//top and bottom row on a 7x7 map is unavailable for a two person game as well as the first and last columns
 		for (int i = 0; i < 7; i++) {
 			board[0][i].status = GBSquareStatus::Unavailable;
@@ -53,6 +56,8 @@ GBMaps::GBMaps(int inNumberOfPlayers, char boardSide, Scoring* sc)
 
 	case 3:
 
+		endGame = new const int(34);
+
 		//first and last column are unavailable for a three person game on a 7x7 map
 		for (int i = 0; i < 7; i++) {
 			board[i][0].status = GBSquareStatus::Unavailable;
@@ -61,6 +66,10 @@ GBMaps::GBMaps(int inNumberOfPlayers, char boardSide, Scoring* sc)
 		break;
 
 	case 4:
+
+		endGame = new const int(44);
+
+		// squares in four corners unavailable in 4 person game
 		board[0][0].status = GBSquareStatus::Unavailable;
 		board[0][6].status = GBSquareStatus::Unavailable;
 		board[6][0].status = GBSquareStatus::Unavailable;
@@ -95,7 +104,7 @@ void GBMaps::initializeBoardA() {
 	addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
 	addHarvestTile(5, 1, new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat));
 	addHarvestTile(5, 5, new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat));
-
+	
 }
 
 void GBMaps::intializeBoardB() {
@@ -145,6 +154,7 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 			scoringObj->computeResources(row, column, inHarvestTilePtr, this);
 		}
 
+		*cardsPlayed += 1;
 		return 1;
 	}
 	return 0;
@@ -179,6 +189,19 @@ int GBMaps::getColumns()
 int GBMaps::getNumberOfPlayers()
 {
 	return *numberOfPlayers;
+}
+
+int GBMaps::getCardsPlayed()
+{
+	return *cardsPlayed;
+}
+
+int GBMaps::getEndGame()
+{
+	if (*endGame == *cardsPlayed) {
+		return 1;
+	}
+	return 0;
 }
 
 
