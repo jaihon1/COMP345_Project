@@ -4,11 +4,6 @@
 #include <ostream>
 #include <stdlib.h>
 #include "VGMaps.h"
-#define _DEBUG
-#ifdef _DEBUG
-#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
-#endif
-
 
 using namespace std;
 using std::vector;
@@ -46,13 +41,13 @@ string colortype_to_string(BuildingColorType c)
 
 VGMaps::VGMaps()
 {
-	village_board = new VGSquare * [*rows]; //on the heap
+	village_board = new VGSquare *[*rows]; //on the heap
 
 	for (int i = 0; i < *rows; i++)
 	{
 		village_board[i] = new VGSquare[*columns]; // on the heap 
 
-		//initialized the current 2D array, might have to do outside 
+												   //initialized the current 2D array, might have to do outside 
 		for (int j = 0; j < *columns; j++)
 		{
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
@@ -80,7 +75,7 @@ VGMaps::~VGMaps()
 	village_board = NULL;  //make village_board null 
 
 
-	//deallocate the rows and colums pointer
+						   //deallocate the rows and colums pointer
 	delete rows;
 	rows = NULL;
 	delete columns;
@@ -178,8 +173,8 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		unavailable.VGstatus = VGSlotStatus::Unavailable;
 		unavailable.building_ptr = NULL; //points to nothing cuz no building tile
 
-		//this means that there are no slots at the right -> you are at the most right column
-		//connections.insert(it + 1, unavailable);
+										 //this means that there are no slots at the right -> you are at the most right column
+										 //connections.insert(it + 1, unavailable);
 		cout << "right - unavailable" << endl;
 		connections[1] = unavailable;
 	}
@@ -207,8 +202,8 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		unavailable.VGstatus = VGSlotStatus::Unavailable;
 		unavailable.building_ptr = NULL; //points to nothing cuz no building tile
 
-		//this means there are no slots at the bottom -> you are at the bottom row
-		//connections.insert(it + 2, unavailable);
+										 //this means there are no slots at the bottom -> you are at the bottom row
+										 //connections.insert(it + 2, unavailable);
 		connections[2] = unavailable;
 	}
 
@@ -235,8 +230,8 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		unavailable.VGstatus = VGSlotStatus::Unavailable;
 		unavailable.building_ptr = NULL; //points to nothing cuz no building tile
 
-		//this means there are no slots at the left -> you are at the most left column
-		//connections.insert(it + 3, unavailable);
+										 //this means there are no slots at the left -> you are at the most left column
+										 //connections.insert(it + 3, unavailable);
 		connections[3] = unavailable;
 
 	}
@@ -247,12 +242,16 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 //use vectors...
 
-void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
+int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 {
+	//assume successful add (only change return status if there is an error)
+	int returnStatus = 0;
+
 	//check if its taken
 	if (village_board[r][c].VGstatus == VGSlotStatus::Taken)
 	{
 		cout << "Error in placing tile: tile already existing on this slot" << endl;
+		returnStatus = 1;
 	}
 	else
 	{
@@ -276,7 +275,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			//check does it exist already or not
 			if (getGreenSheepPlaced()) //is this code right
-								  // true, this means that there already exist a tile of that type on the board, check connections!
+									   // true, this means that there already exist a tile of that type on the board, check connections!
 			{
 				cout << "INSIDE GREENSHEEP (true)" << endl;
 				vector <VGSquare> find_green = checkConnectionsOfSlot(t, r, c);
@@ -302,7 +301,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//failed to 
 					cout << "Error in placing tile: existing type (GREEN SHEEP) is already on village board, player has to place it next to it" << endl;
-
+					returnStatus = 2;
 				}
 			}
 			else
@@ -348,7 +347,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//failed to 
 					cout << "Error in placing tile: existing type (GREY ROCK) is already on village board, player has to place it next to it" << endl;
-
+					returnStatus = 2;
 				}
 			}
 			else
@@ -391,6 +390,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 
 					//failed to 
 					cout << "Error in placing tile: existing type (RED LUMBER) is already on village board, player has to place it next to it" << endl;
+					returnStatus = 3;
 				}
 			}
 			else
@@ -432,6 +432,7 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//failed to 
 					cout << "Error in placing tile: existing type (YELLOW HAY) is already on village board, player has to place it next to it" << endl;
+					returnStatus = 4;
 				}
 			}
 			else
@@ -455,7 +456,10 @@ void VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		//delete to_add; 
 		to_add = NULL; //make to_add point to null but dont delete it because we are adding the buildingTile
 
+		return returnStatus;
+
 	}
+	return returnStatus;
 
 }
 
@@ -488,5 +492,3 @@ void VGMaps::printVGMap()
 	}
 
 }
-
-

@@ -1,8 +1,5 @@
 #pragma once
-#define _DEBUG
-#ifdef _DEBUG
-#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
-#endif
+
 #include <stdio.h>
 #include <vector>
 #include "../tile/Resources.h"
@@ -10,11 +7,12 @@
 using std::vector;
 
 struct VGSquare { //why struct? 
+
 	VGSlotStatus VGstatus;
 	BuildingTile* building_ptr;
 	BuildingColorType VGSquare_type;  //same as buildingtype 
 
-	//void deepCopy_square(const VGSquare & v); 
+									  //void deepCopy_square(const VGSquare & v); 
 };
 
 
@@ -58,11 +56,10 @@ public:
 
 	vector <VGSquare> checkConnectionsOfSlot(BuildingTile t, int r, int c);
 
-	void addNewBuildingTile(BuildingTile t, int r, int c);
+	int addNewBuildingTile(BuildingTile t, int r, int c);
 
 	BuildingTile getBuildingTile(int r, int c);
 	void printVGMap();
 
 
 };
-
