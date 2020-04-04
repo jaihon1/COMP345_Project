@@ -362,14 +362,17 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			//PART 3. Place building tile on board. Must be running in while(true) and until player decided to not do it anymore
 			
 			//SHOW PLAYER BUILDING TILE
-
 			int build_tile; 
 
 			while (build_tile != 0)
 			{
+				cout << "Here is your village board" << endl;
 				temp->getVGBoard()->printVGMap();
 
+				cout << "Here are the building tiles in your hand: " << endl; 
 				vector <BuildingTile*> *building_tile = temp->getBuildings();
+
+				//CHECK FOR NUMBER OF RESSOURCES HERE - VALIDITY TO FIX 
 
 				cout << "Enter 1 to build a building tile, 0 to skip" << endl;
 				int choice;
@@ -395,10 +398,10 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 					temp->placeBuildingTile(row_village, column_village, *select_b);
 					scobj->remove_res(static_cast<int>(select_b->getBuildingColorType()), row_village);//remove resource match the type of building???
 
-					cout << "Do you want to build another tile? 1 for yes, 2 for no" << endl;
+					cout << "Do you want to build another tile? 1 for yes, 0 for no" << endl;
 					cin >> build_tile; 
 				}
-				else if(choice == 0)
+				else if(choice == 0) //Technically we never go through here becuz it will automatically break out- this is just safety net 
 				{
 					cout << "DEBUG LOG: Breaking the current loop" << endl; 
 					building_tile = 0; 
@@ -455,12 +458,70 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 				int repeat; 
 				while (repeat != 0)
 				{
+					//SHOW EACH REMAINING PLAYER THEIR VILLAGEA BOARD
+					cout << "Here is your current village board: " << endl; 
+					next->getVGBoard()->printVGMap();
+
+					cout << "Here are the building tiles in your hand: " << endl;
+					vector <BuildingTile*> *next_btiles = next->getBuildings();
+
+
 					int player_decision_pass; // must take input from player (1 == use resource) (0 == pass turn)
-
 					cout << "Enter 1 if you want to build. 0 if you want to pass turn" << endl;
-					if (player_decision_pass == 1) {
-						//WHAT IS THIS??? 
+					cin >> player_decision_pass; 
 
+					if (player_decision_pass == 1) {
+	
+						//Shouldnt I do this for the player at the start too? 
+						int res_usage[4]; //why 4 - does user input four type and how many they want to use right away?
+						for (int i = 0; i < 4; i++)
+						{
+							//res_usage[i] = rand() % 10; 
+							cout << "For each type of ressources (Lumber - enter 1, Sheep - enter 2, Wheat - enter 3, Rock - enter 4), select how many you need" << endl; 
+							cout << endl << "Type #" << i << " and how many: " << endl; 
+							cin >> res_usage[i]; 
+						}
+
+						//Use ressouces 
+						for (int i = 0; i < 4; i++)
+						{
+							if (res_usage[i] > 0)
+							{
+								if (scobj->remove_res(1, res_usage[i] == 0))
+								{
+									cout << endl << "Not enough resource type " << i << endl; 
+								}
+								else
+								{
+									cout << "For type " << i << endl; //Print which type it is?
+									int next_check; 
+									while (next_check != 0)
+									{
+										int b_index2;
+										cout << "Enter index of which building tile you want to use" << endl;
+										cin >> b_index2;
+										BuildingTile *select_b2 = next_btiles->at(b_index2);
+
+										int row_village2;
+										int column_village2;
+										cout << "Choose where you want to place your building tile: " << endl;
+										cout << "Row: " << endl;
+										cin >> row_village2;
+										cout << "Column: " << endl;
+										cin >> column_village2;
+
+										next->placeBuildingTile(row_village2, column_village2, *select_b2);
+										scobj->remove_res(static_cast<int>(select_b2->getBuildingColorType()), row_village2); 
+
+										cout << "Do you want to build another tile? 1 for yes, 0 for no" << endl;
+										cin >> next_check;
+									}
+								}
+							}
+						}
+
+
+						/*
 						int player_decision_resource_lumber = 1; // Decision to use Lumber
 						if (player_decision_resource_lumber) {
 							int resource_quantity = rand() % 6;
@@ -485,18 +546,19 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 							if (scobj->remove_res(4, resource_quantity) == 0)
 								cout << endl << "Not enough resource" << endl;
 						}
+						*/ 
 					}
 					else {
 						cout << "Passing turn" << endl; 
 						repeat = 0; 
 					}
 				}
-				
-				
 			}
 
 			// 5. Player draws building tiles. 1) Pick from game pool, 2) Pick from pool or deck
 			/// Simulating player to select a buidling tile from pool and then select one more building tile from building deck
+			
+			/*
 			int pick_index_1 = 1;
 			int pick_index_2 = 3;
 			int decision = 1;
@@ -509,6 +571,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			else if (decision == 1) {
 				temp->drawBuilding(*buildingDeck);
 			}
+			*/ 
 
 			/***********the below maybe a more detail version*************/
 			scobj->get_res(res);
