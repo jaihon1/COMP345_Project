@@ -82,7 +82,6 @@ void HarvestTile::printHarvestTile()
 		<< setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::topRight)) << endl
 		<< setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::bottomLeft))
 		<< setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::bottomRight)) << endl;
-
 }
 
 BuildingTile::BuildingTile()
@@ -302,7 +301,7 @@ BuildingTile &BuildingTile:: operator = (const BuildingTile &b)
 
 void BuildingTile::printBuildingTile()
 {
-	cout << this->getBuildingNum() << " " << this->Building_typeToChar(this->getBuildingColorType()) << " " << this->Building_statusToChar(this->getSide()) << endl;
+	cout << this->getBuildingNum() << " " << this->Building_typeToChar(this->getBuildingColorType()) << " " << this->Building_statusToChar(this->getSide()) << endl << endl;
 }
 
 HarvestDeck::HarvestDeck()

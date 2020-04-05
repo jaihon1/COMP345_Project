@@ -1,13 +1,13 @@
+#pragma once
 #include <iostream>
 #include <stdio.h>
 #include <vector>
 #include "../board/VGMaps.h"
 #include "../tile/Resources.h"
 #include "../board/GBMaps.h"
-
 using namespace std;
 
-class Player {
+class Player{
 private:
     VGMaps *_villageBoard;
     vector<HarvestTile*> *_harvestTiles;

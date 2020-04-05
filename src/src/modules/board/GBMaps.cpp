@@ -109,7 +109,7 @@ void GBMaps::initializeBoardA() {
 	//TODO: NEED TO GET A SCORING OBJECT vvvvvv
 
 	//default resource tiles
-	occupied_tile += 4;
+	//occupied_tile += 4;
 	HarvestTile* firstDefaultTile = new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber);
 	addHarvestTile(1, 1, firstDefaultTile);
 	addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
@@ -165,7 +165,6 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 		if (scoringObj != NULL) {
 			scoringObj->computeResources(row, column, inHarvestTilePtr, this);
 		}
-
 		return 1;
 	}
 	return 0;
@@ -234,9 +233,17 @@ int GBMaps::getOccupiedTile()
 
 void GBMaps::printGameBoard()
 {
+	cout << "  ";
+	for (int columnNUM = 0; columnNUM < 7; columnNUM++) {
+		cout << setw(8) << columnNUM << setw(8) << " ";
+	}
+	cout << endl;
+
 	for (int i = 0; i < 7; i++) {
+		cout << setw(2) << i;
 		for (int k = 0; k < 2; k++) {
 			for (int j = 0; j < 7; j++) {
+
 				if (this->getSquareStatus(i, j) == GBSquareStatus::HarvestTile) {
 					HarvestTile* tileTemp = this->getHarvestTile(i, j);
 					if (k == 0) {
@@ -253,9 +260,9 @@ void GBMaps::printGameBoard()
 				}
 			}
 			cout << endl;
-
+			if (k == 0) {
+				cout << "  ";
+			}
 		}
 	}
-
-
 }

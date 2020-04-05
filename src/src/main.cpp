@@ -1,3 +1,4 @@
+/*
 #include <iostream>
 #include <iomanip>
 
@@ -7,7 +8,7 @@
 #include "modules/tile/Resources.h"
 #include "modules/Scoring/Scoring.h"
 
-/**/ 
+
 void playerTest() {
     // Initializing variables
     Player bob;
@@ -196,6 +197,7 @@ void turnSequenceDriver() {
     }
 	
 	/***********the below maybe a more detail version*************/
+/*
 	scobj->get_res(res);
 	int total_left = 0;
 	for (int i = 0; i < 4; i++) {
@@ -224,5 +226,6 @@ int main(int argc, const char * argv[]) {
         
     return 0;
 }
+*/ 
 
 

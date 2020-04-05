@@ -9,6 +9,7 @@
 #include "../tile/Resources.h"
 #include "../tile/Dictionary.h"
 #include "../Scoring/Scoring.h"
+#include "../../GameStart/GameStart.h"
 using namespace std; 
 
 class MainLoop
@@ -31,9 +32,10 @@ private:
 	Player *p3;
 	Player *p4; 
 
+	//vector <Player*> *remaining = new vector <Player *>(3); 
 	//vector <int> game_limits{25, 35, 45};
 
-	int *game_limit = new int(48); 
+	//int *game_limit = new int(48); 
 
 	//SET UP ITEMS 
 	HarvestDeck* harvestDeck;
@@ -43,8 +45,9 @@ private:
 	GBMaps * gameboard; 
 	Scoring *scobj; 
 
-	HarvestTile* testHarvestTile; 
+	GameStart * gstart = new GameStart(); 
 
+	Hand* hand;
 	bool shipment[4]{0};
 
 public:
@@ -62,7 +65,7 @@ public:
 
 	void MainLoopStart(); 
 
-	void setGameLimit(int n); 
+	//void setGameLimit(int n); 
 
 	vector <Player*> * getPlayers(); 
 

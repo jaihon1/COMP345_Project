@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iomanip>
 #include <stdio.h>
 #include <vector>
 #include <string>
@@ -8,14 +8,13 @@
 using std::vector;
 
 
-struct VGSquare{ //why struct? 
+struct VGSquare{ 
 	VGSlotStatus VGstatus; 
 	BuildingTile *building_ptr; 
 	BuildingColorType VGSquare_type;  //same as buildingtype 
-
+	int slotnum; //from 1 to 6 
 	//void deepCopy_square(const VGSquare & v); 
 }; 
-
 
 
 class VGMaps {
@@ -27,15 +26,16 @@ private:
 	bool GreyRockPlaced = false;
 	bool RedLumberPlaced = false;
 	bool YellowHayPlaced = false;
-	
-	vector <string> village_names { "Guildford", "Stratford" , "Fairfield", "Milford" }; 
-	
 
+	vector <string> village_names { "Guildford", "Stratford", "Fairfield", "Milford" };
+	
 public:
 
 	//is it the end of the world 
 	const int* rows = new int(6); //length of the row
 	const int* columns = new int(5); //length of the column
+
+	static int check_name;
 
 	VGMaps();
 
@@ -69,5 +69,5 @@ public:
 
 	string getVillageName(); 
 
-};
 
+};
