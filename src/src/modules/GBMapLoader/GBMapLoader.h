@@ -22,6 +22,8 @@ class GBMapLoader {
 	public:
 		GBMapLoader(const char* inFilePath, Scoring* sc);
 		GBMaps* getBoard();
+		void validate(GBMaps* board);
+		void validateSquareAndDeleteBoard(int row, int column, GBMaps* board);
 
 	private:
 

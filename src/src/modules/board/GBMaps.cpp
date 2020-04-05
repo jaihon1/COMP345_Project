@@ -3,7 +3,7 @@
 #include "../scoring/Scoring.h"
 #include "GBMaps.h"
 
-const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
+const char* GBMaps::SquareStatusToString(GBSquareStatus inSquareStatus) {
 	switch (inSquareStatus) {
 	case GBSquareStatus::Empty:
 		return "Empty";

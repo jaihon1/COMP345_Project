@@ -35,6 +35,8 @@ public:
 class GBMaps {
 
 private:
+	const char* SquareStatusToString(GBSquareStatus inSquareStatus);
+
 	int* numberOfPlayers;
 	Scoring* scoringObj;
 

@@ -1,4 +1,4 @@
-/*
+
 
 #include <iostream>
 #include <iomanip>
@@ -21,28 +21,6 @@
 
 using namespace std;
 
-
-const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
-	switch (inSquareStatus) {
-	case GBSquareStatus::Empty:
-		return "Empty";
-	case GBSquareStatus::HarvestTile:
-		return "Harvest";
-
-	case GBSquareStatus::BuildingTile:
-		return "Buildin";
-
-	case GBSquareStatus::PondTile:
-		return "Pond";
-
-	case GBSquareStatus::Unavailable:
-		return "Unavail";
-
-	}
-
-	return "Error from SquareStatusToString";
-}
-
 void printHarvestTile(HarvestTile* inHarvestTile) {
 
 	cout << setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topLeft))
@@ -54,41 +32,6 @@ void printHarvestTile(HarvestTile* inHarvestTile) {
 
 void printBuildingTile(BuildingTile* inBT) {
 	cout << inBT->getBuildingNum() << " " << inBT->Building_typeToChar(inBT->getBuildingColorType()) << endl;
-}
-
-void printGameBoard(GBMaps* inBoard) {
-	cout << "  ";
-	for (int columnNUM = 0; columnNUM < 7; columnNUM++) {
-		cout << setw(8) << columnNUM << setw(8) << " ";
-	}
-	cout << endl;
-
-	for (int i = 0; i < 7; i++) {
-		cout << setw(2) << i;
-		for (int k = 0; k < 2; k++) {
-			for (int j = 0; j < 7; j++) {
-
-				if (inBoard->getSquareStatus(i, j) == GBSquareStatus::HarvestTile) {
-					HarvestTile* tileTemp = inBoard->getHarvestTile(i, j);
-					if (k == 0) {
-						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::topLeft));
-						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::topRight));
-					}
-					else {
-						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomLeft));
-						cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomRight));
-					}
-				}
-				else {
-					cout << setw(8) << SquareStatusToString(inBoard->getSquareStatus(i, j)) << setw(8) << " ";
-				}
-			}
-			cout << endl;
-			if (k == 0) {
-				cout << "  ";
-			}
-		}
-	}
 }
 
 void harvestTileTest() {
@@ -125,6 +68,39 @@ void harvestTileTest() {
 
 }
 
+HarvestTile* rotateHT(HarvestTile* inTile) {
+
+	printHarvestTile(inTile);
+	cout << endl;
+	char yesNo;
+	char rotate;
+	cout << "Would you like to rotate the tile? y/n ";
+	cin >> yesNo;
+	//ROTATE METHODS TEST
+	while (yesNo == 'y') {
+		cout << "Right = r, Left = l: ";
+		cin >> rotate;
+		cout << endl;
+		switch (rotate) {
+		case 'r':
+			inTile->RotateRight();
+			break;
+		case 'l':
+			inTile->RotateLeft();
+			break;
+		default:
+			cout << "Invalid selection." << endl;
+			break;
+		}
+		printHarvestTile(inTile);
+		cout << endl << "Again? y/n ";
+		cin >> yesNo;
+	}
+
+	return inTile;
+
+}
+
 void gbMapsTest() {
 
 	int players;
@@ -140,7 +116,7 @@ void gbMapsTest() {
 
 	//GAMEBOARD CONSTRUCTION
 	GBMaps* gameBoard = new GBMaps(players, 'a', sc);
-	printGameBoard(gameBoard);
+	gameBoard->printGameBoard();
 	cout << endl;
 
 	int quit;
@@ -162,7 +138,7 @@ void gbMapsTest() {
 			cin >> column;
 			cout << endl;
 			gameBoard->addHarvestTile(row, column, testHarvestTile);
-			printGameBoard(gameBoard);
+			gameBoard->printGameBoard();
 			cout << endl;
 			break;
 		case 2:
@@ -182,7 +158,7 @@ void gbMapsTest() {
 			cin >> type;
 			cout << endl;
 			gameBoard->addShipmentTile(row, column, testHarvestTile, type);
-			printGameBoard(gameBoard);
+			gameBoard->printGameBoard();
 			cout << endl;
 			break;
 		default:
@@ -237,7 +213,7 @@ void playerTest() {
 
 void runGame(GBMaps* gameBoard, HarvestDeck* testDeck) {
 
-	printGameBoard(gameBoard);
+	gameBoard->printGameBoard();
 
 	//SAVER CONTSTRUCTION
 	GBMapSaver* testSaver = new GBMapSaver();
@@ -257,7 +233,7 @@ void runGame(GBMaps* gameBoard, HarvestDeck* testDeck) {
 		cin >> column;
 		cout << endl;
 		gameBoard->addHarvestTile(row, column, testHarvestTile);
-		printGameBoard(gameBoard);
+		gameBoard->printGameBoard();
 		cout << endl;
 		cout << "To place another tile, Press 1.  To save game press 2. Otherwise to quit press 0. ";
 		cin >> quit;
@@ -290,13 +266,13 @@ void playGBMaps() {
 		HarvestDeck* testDeck = new HarvestDeck();
 
 		GBMaps* gameBoard = NULL;
-
+		GBMapLoader* testLoader;
 		switch (oldOrNew) {
 		case 0:
 			flag = false;
 			break;
 
-		case 1: {
+		case 1:
 			int players;
 			cout << "How many players? Select 2, 3, or 4: ";
 			cin >> players;
@@ -305,26 +281,28 @@ void playGBMaps() {
 			gameBoard = new GBMaps(players, 'a', sc);
 			runGame(gameBoard, testDeck);
 			break;
-		}
+
 		case 2: {
-			string filePath;
-			cout << "Please enter the file path of the game you wish to load: " << endl;
-			cin >> filePath;
-			// LOADER CONSTRUCTION
-			GBMapLoader* testLoader = new GBMapLoader(&filePath[0], sc);
-			gameBoard = testLoader->getBoard();
-			if (gameBoard != NULL) {
-				runGame(gameBoard, testDeck);
-			}
-			break;
+				string filePath;
+				cout << "Please enter the file path of the game you wish to load: " << endl;
+				cin >> filePath;
+				// LOADER CONSTRUCTION
+				testLoader = new GBMapLoader(&filePath[0], sc);
+				gameBoard = testLoader->getBoard();
+				delete testLoader;
+				if (gameBoard != NULL) {
+					runGame(gameBoard, testDeck);
+				}
+				break;
 		}
 		default:
 			cout << "Sorry invalid input, please choose again" << endl;
 			break;
 		}
+
 		delete sc;
 		delete testDeck;
-		delete testLoader;
+		
 		delete gameBoard;
 
 	}
@@ -357,7 +335,7 @@ void VGMapLoaderTest()
 	cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
 	*/
 
-/*
+
 	cout << BuildingTile::Building_intToChar(t1->getBuildingNum()) << endl;
 
 
@@ -379,7 +357,7 @@ void VGMapLoaderTest()
 	vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	*/
 	//s->save(va, "C:\json_test\VGMaptest.json");  -> BAD 
-/*
+
 	s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
 
 	cout << "Saved va map" << endl;
@@ -419,7 +397,7 @@ void gameStartTest() {
 	gameStart->setup(numPlayers);
 
 	cout << "Initial Game Board: \n";
-	printGameBoard(gameStart->getGBoard());
+	gameStart->getGBoard()->printGameBoard();
 
 	Player** player = gameStart->getPlayerArr();
 	cout << "These are your initial harvest tiles, which tile would you like to use (indexed 0 and 1): ";
@@ -443,7 +421,7 @@ void gameStartTest() {
 
 	gameStart->getGBoard()->addHarvestTile(row, column, harvestTile);
 	gameStart->getHand()->intializeHand();
-	printGameBoard(gameStart->getGBoard());
+	gameStart->getGBoard()->printGameBoard();
 	cout << endl;
 	gameStart->getHand()->displayHand();
 	cout << endl;
@@ -486,7 +464,7 @@ void menuOptions() {
 int main()
 {
 	/*MemoryLeak*/
-/*
+
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	int menuOption;
@@ -518,7 +496,7 @@ int main()
 		cin >> menuOption;
 	}
 }
-*/ 
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

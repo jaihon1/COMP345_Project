@@ -1,17 +1,11 @@
-#pragma once
+#ifndef Dictionary_h
+#define Dictionary_h
 
 enum class ResourceName {
 	Lumber = 1,
 	Sheep = 2,
-	Wheat = 3,
+    Wheat = 3,
 	Rock = 4
-};
-
-enum class ResourceName1 {
-    Lumber,
-    Rock,
-    Sheep,
-    Wheat
 };
 
 enum class TileStatus {
@@ -49,7 +43,10 @@ enum class Connection {
 };
 
 enum class VGSlotStatus {
-    Empty, //int 0 
+    Empty, //int 0
     Taken, //int 1
-    Unavailable //int 2 - any invalid slot (outside the actual map) - only used in connections 
+    Unavailable //int 2 - any invalid slot (outside the actual map)
 };
+
+
+#endif /* Dictionary_h */

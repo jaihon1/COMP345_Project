@@ -39,19 +39,49 @@ VGMapLoader::VGMapLoader(const char* inFile)
 	buildingInt bIMap;
 	cout << "Created the maps to check " << endl;
 
+	if (boardJson->size() != 6) {
+		cerr << "error: incorrect number of rows" << endl << endl;
+		delete board;
+		board = nullptr;
+		return;
+	}
 
 	for (auto const& row : *boardJson)
 	{
 		VG_row++;
+
+		if (row.size() != 5) {
+			cerr << "error: row " << row << " has an incorrect number of columns" << endl << endl;
+			delete board;
+			board = nullptr;
+			return;
+		}
+
 		int VG_col = -1;
 		for (auto const& column : row)
 		{
 			VG_col++;
 
 			auto const VGS = column.find("VGSquare");
+
+			if (VGS == column.end())
+			{
+				cerr << "VGSquare attribute not found";
+				delete board;
+				return;  //return back to where you were
+			}
+
 			cout << "Found VGSquare" << endl;
 
 			auto const VGstat = VGS->find("VGstatus"); //get value attached to VGStatus 
+
+
+			if (VGstat == VGS->end())
+			{
+				cerr << "VGstatus attribute not found";
+				delete board;
+				return;  //return back to where you were
+			}
 
 			if (sMap[*VGstat] == VGSlotStatus::Taken)
 			{
@@ -60,9 +90,41 @@ VGMapLoader::VGMapLoader(const char* inFile)
 
 				auto const b_ptr = VGS->find("*building_ptr");
 
+				if (b_ptr == VGS->end())
+				{
+					cerr << "*building_ptr attribute not found";
+					delete board;
+					return;  //return back to where you were
+				}
+
 				auto const b_type = b_ptr->find("BuildingColorType");
+
+				if (b_type == b_ptr->end())
+				{
+					cerr << "BuildingColorType attribute not found";
+					delete board;
+					return;  //return back to where you were
+				}
+
 				auto const b_side = b_ptr->find("BuildingSide");
+
+				if (b_side == b_ptr->end())
+				{
+					cerr << "BuildingSide attribute not found";
+					delete board;
+					return;  //return back to where you were
+				}
+
 				auto const b_num = b_ptr->find("BuildingNumber");
+
+				if (b_num == b_ptr->end())
+				{
+					cerr << "BuildingNumber attribute not found";
+					delete board;
+					return;  //return back to where you were
+				}
+
+
 				cout << "Found each building attribute" << endl;
 
 
