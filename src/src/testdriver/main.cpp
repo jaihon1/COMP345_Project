@@ -169,15 +169,16 @@ void turnSequenceDriver() {
 	// 5. Player draws building tiles. 1) Pick from game pool, 2) Pick from pool or deck
 	/// Simulating player to select a buidling tile from pool and then select one more building tile from building deck
 	scobj->get_res(res);
-	int total_left = 0;
+	int total_building = 0;
 	for (int i = 0; i < 4; i++) {
-		total_left += res[i];
+		if( res[i]==0)
+			total_building++;
 	}
-	int pool_pick = total_left % 5;
+	int pool_pick = total_building % 3;
 	for (int i = 0; i < pool_pick; i++) {
 		player1.pickFromBuildingPool(*building_pool, i);
 	}
-	for (int i = 0; i < total_left - pool_pick; i++) {
+	for (int i = 0; i < total_building - pool_pick; i++) {
 		player1.drawBuilding(*buildingDeck);
 	}
 
@@ -190,10 +191,7 @@ void turnSequenceDriver() {
 	printGameBoard(gameBoard);
 }
 
-int main(int argc, const char * argv[]) {
-
-	//turnSequenceDriver();
-
+void scoringDriver() {
 	// Setup
 	HarvestDeck* harvestDeck = new HarvestDeck();
 	BuildingDeck* buildingDeck = new BuildingDeck();
@@ -214,6 +212,12 @@ int main(int argc, const char * argv[]) {
 	}
 
 	scobj->get_winner(m);
+}
+
+int main(int argc, const char * argv[]) {
+
+	//turnSequenceDriver();
+	//scoringDriver();	
 
 	system("pause");
 	return 0;

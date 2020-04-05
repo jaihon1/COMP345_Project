@@ -91,7 +91,6 @@ void GBMaps::initializeBoardA() {
 	//TODO: NEED TO GET A SCORING OBJECT vvvvvv
 
 	//default resource tiles
-	occupied_tile += 4;
 	HarvestTile* firstDefaultTile = new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Lumber);
 	addHarvestTile(1, 1, firstDefaultTile);
 	addHarvestTile(1, 5, new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber));
