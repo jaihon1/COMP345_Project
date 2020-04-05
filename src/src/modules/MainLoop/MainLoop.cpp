@@ -348,7 +348,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 		{
 			cout << "Player " << (i + 1) << " 's turn" << endl;
 			//PART 1. Player 1 Turn: Place harvest tile on board
-			Player * temp = players->at(i); 
+			Player *temp = players->at(i); 
 
 			cout << "Here is the current game board" << endl;
 			gameboard->printGameBoard(); 
@@ -358,55 +358,83 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 
 			cout << "You also have a shipment tile  that allows you to palce a tile with 4 of the same ressources!" << endl; 
 
-			int harvest_choice;
-
+			int harvest_choice = 0;
 			cout << "Enter 1 if you want to place a harvest tile or enter 2 if you want to place your shipment tile: " << endl; 
 			cin >> harvest_choice; 
 
-			int row;
-			int column;
+			int row = 0; 
+			int column = 0; 
 
 			if (harvest_choice == 1)
 			{
-				cout << "Choose where you want to place your harvest tile: " << endl;
-				cout << "Row: " << endl;
-				cin >> row;
-				cout << "Column: " << endl;
-				cin >> column;
+				bool h_placed = true; 
+				while (h_placed)
+				{
+					cout << "Choose where you want to place your harvest tile: " << endl;
+					cout << "Row: " << endl;
+					cin >> row;
+					cout << "Column: " << endl;
+					cin >> column;
 
-				int h_index;
+					int h_index;
 
-				cout << "Enter index of which HarvestTile of your hand you want to use: " << endl;
-				cin >> h_index;
+					cout << "Enter index of which HarvestTile of your hand you want to use: " << endl;
+					cin >> h_index;
 
-				HarvestTile *select_h = harvest_tile->at(h_index);
-				temp->placeHarvestTile(row, column, *select_h, *gameboard);
+					HarvestTile *select_h = harvest_tile->at(h_index);
+					int place_h_valid = temp->placeHarvestTile(row, column, *select_h, *gameboard);
 
-
+					if (place_h_valid == 0)
+					{
+						h_placed = true;  //redundant 
+						cout << "Wrong placement of harvest tile" << endl; 
+						break; 
+					}
+					else if (place_h_valid == 1)
+					{
+						cout << "Success in placing harvest tile" << endl; 
+						h_placed = false; 
+					}
+				}
 				cout << "Placed harvest tile" << endl;
 			}
 			else if (harvest_choice == 2)
 			{
-				int type; 
-				cout << "Enter what type you want: Lumber - 1, Sheep - 2, Wheat - 3, Rock - 4" << endl;
-				cin >> type; 
+				bool s_placed = true; 
 
-				cout << "Choose where you want to place your shipment tile: " << endl;
-				cout << "Row: " << endl;
-				cin >> row;
-				cout << "Column: " << endl;
+				while (s_placed)
+				{
+					int type = 0; 
+					cout << "Enter what type you want: Lumber - 1, Sheep - 2, Wheat - 3, Rock - 4" << endl;
+					cin >> type;
 
-				//Get the actual tile? or make a special tile? 
-				//***************************DAMIAN DOUBLE CHECK HERE PLZ***************************
-		
-				//temp->placeShipmentTile(row, column, ? ? ? , *gameboard, type); 
+					cout << "Choose where you want to place your shipment tile: " << endl;
+					cout << "Row: " << endl;
+					cin >> row;
+					cout << "Column: " << endl;
 
-				//TYPE is matching right? 
+					HarvestTile *special;
+					int place_s_valid = temp->placeShipmentTile(row, column, *special, *gameboard, type);
+
+					if (place_s_valid == 0)
+					{
+						s_placed = true;
+						cout << "Wrong placement of shipment tile" << endl;
+						break;
+					}
+					else if (place_s_valid == 1)
+					{
+						cout << "Success in placing shipment tile" << endl;
+						s_placed = false;
+
+					}
+				}
+				cout << "Place Shipment tile" << endl; 
 			}
 
 			cout << endl << "Here is the updated game board" << endl; 
 			gameboard->printGameBoard();
-
+			
 			//PART 2. Determine ressources 
 			int res[4]; //store the current ressources here to display 
 
@@ -690,16 +718,19 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 
 			//TO CHECK 
 			scobj->get_res(res);
-
-			int total_left = 0;
+			int total_building = 0;
 			for (int i = 0; i < 4; i++) {
-				total_left += res[i];
+				if (res[i] == 0)
+					total_building++;
 			}
-			int pool_pick = total_left % 5;
+
+			//FULL IMPLEMENTATION - PRINT POOL OUT AND LET THE PLAYER CHOOSE
+
+			int pool_pick = total_building % 3;
 			for (int i = 0; i < pool_pick; i++) {
 				temp->pickFromBuildingPool(*building_pool, i);
 			}
-			for (int i = 0; i < total_left - pool_pick; i++) {
+			for (int i = 0; i < total_building - pool_pick; i++) {
 				temp->drawBuilding(*buildingDeck);
 			}
 

@@ -64,7 +64,6 @@ private:
 			this->operator[]("5") = 5;
 			this->operator[]("6") = 6;
 		}
-
 		~buildingInt() {};
 	};
 

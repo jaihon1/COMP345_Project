@@ -115,11 +115,25 @@ VGMapLoader::VGMapLoader(const char* inFile)
 				board->village_board[VG_row][VG_col].building_ptr = NULL;
 
 				cout << "Set status to empty and color type to none" << endl;
+
 			}
-
-
 		}
 
+	}
+
+	//TO INITALIZE THE SLOW NUMBER 
+	//initialized the rest of the slot num - to double check 
+	int filler = 6; 
+	for (int i = 0; i < 6 ; i++)
+	{
+		for (int j = 0; i < 5; j++)
+		{
+			if (board->village_board[i][j].VGstatus == VGSlotStatus::Empty)
+			{
+				board->village_board[i][j].slotnum = filler; 
+			}
+		}
+		filler--;
 	}
 }
 

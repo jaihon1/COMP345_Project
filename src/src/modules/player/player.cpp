@@ -63,14 +63,16 @@ vector<HarvestTile*>* Player::getHarvestTiles() {
     return _harvestTiles;
 }
 
-void Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard) {
-    gameBoard.addHarvestTile(row, col, &tile);
+int Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard) {
+    int tile_success = gameBoard.addHarvestTile(row, col, &tile);
     removeHarvestTile(tile);
+	return tile_success; 
 }
 
-void Player::placeShipmentTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard, int type) {
-    gameBoard.addShipmentTile(row, col, &tile, type);
+int Player::placeShipmentTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard, int type) {
+    int ship_success = gameBoard.addShipmentTile(row, col, &tile, type);
     removeHarvestTile(tile);
+	return ship_success; 
 }
 
 HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
@@ -87,6 +89,7 @@ void Player::setShipmentTile(HarvestTile* harvestTile)
 {
 	shipmentTile = harvestTile;
 }
+
 
 
 vector<BuildingTile*>* Player::getBuildings() {
