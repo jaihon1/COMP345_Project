@@ -15,24 +15,33 @@ private:
 	private:
 		int x;
 		int y;
+		int num;
 		int type;
 
 	public:
 		Building(int xv, int yv, int typev);
+		Building(int xv, int yv, int numv, int typev);
 		Building();
 		~Building();
 
 		int get() const;
 		void set(int typev);
+		int get_num() const;
+		int get_type() const;
+		void set_num(int numv);
+		void set_type(int typev);
 	};
 
 	Building village[village_row][village_col];
+	bool initial_res[4];//0 red, 1 green, 2 yellow ,3 gray
 	int test;
 	void init_building(int rv, int cv, int typev);
+	void init_building(int rv, int cv, int numv, int typev);
+	bool validate(int color, int num, int row, int col, int state);
 
 	friend int Scoring::get_score(const VGMap &vil);
 	friend int Scoring::get_density(const VGMap &vil);
-	friend int Scoring::get_winner(const int score[4][3]);
+	friend int Scoring::get_winner(const VGMap villages[4]);
 
 public:
 	VGMap();

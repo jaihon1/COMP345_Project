@@ -127,6 +127,7 @@ bool GBMap::put_resource(int &xv, int &yv, int res[4])
 		init_tile(xv, yv, res);
 		return true;
 	}
+	std::cout << "choose another place" << std::endl;
 	return false;
 }
 
@@ -161,7 +162,28 @@ void GBMap::add_tile(int xv, int yv, int res[4], Scoring &sc)
 	sc.update_res(index, res);
 }
 
-int GBMap::check_availibility(int &xv, int &yv)
+void GBMap::add_shipment(int xv, int yv, int res[4], Scoring &sc, int type) {	
+	if (check_availibility(xv, yv) == 0) {
+		Scoring stemp(sc);
+		stemp.reset_res();
+		XY coor{ xv, yv };
+		Tile *pos[4] = { &map[coor.x][coor.y],&map[coor.x][coor.y + 1],&map[coor.x + 1][coor.y],&map[coor.x + 1][coor.y + 1] };
+		Tile *org = &map[0][0];
+		ptrdiff_t index[4] = { pos[0] - org, pos[1] - org, pos[2] - org, pos[3] - org };
+
+		int temp[4] = { type, type, type, type };
+		put_resource(xv, yv, temp);
+		for (int i = 0; i < 4; i++)
+			connect_resource(index[i], pos[i], stemp);		
+		stemp.update_res(index, temp);	
+		add_tile(xv, yv, res, sc);
+		stemp.get_res(temp);
+		sc.set_res(temp);
+		std::cout << "finish add_shipment" << std::endl;
+	}	
+}
+
+int GBMap::check_availibility(int xv, int yv)
 {
 	XY coor{ xv, yv };
 	int temp = (map[coor.x][coor.y]).get();
@@ -169,6 +191,12 @@ int GBMap::check_availibility(int &xv, int &yv)
 		return 1;
 	else if (temp == 0)
 		return 0;
+	else if ((map[coor.x][coor.y]).get() == (map[coor.x + 1][coor.y]).get()
+		&& (map[coor.x][coor.y]).get() == (map[coor.x][coor.y + 1]).get()
+		&& (map[coor.x][coor.y]).get() == (map[coor.x + 1][coor.y + 1]).get()) {
+		no_tile--;
+		return 0;
+	}		
 	else
 		return -1;
 }
@@ -197,7 +225,7 @@ void GBMap::put_resource_sim()
 
 void GBMap::put_resource_sim(Scoring &sc)
 {
-	for (int i = 0; i < board_size-1; i++)
+	for (int i = 0; i < board_size-3; i++)
 		for (int j = 0; j < board_size; j++)
 		{
 			if (check_availibility(i, j) == 0) {
@@ -205,7 +233,7 @@ void GBMap::put_resource_sim(Scoring &sc)
 				add_tile(i, j, res_temp, sc);				
 			}
 		}
-	//sc.display_res();//must pass by ref
+	//sc.display_res();//must pass by ref else main not update
 }
 
 void GBMap::display_map()

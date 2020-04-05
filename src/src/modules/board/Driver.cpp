@@ -11,12 +11,30 @@ Driver::~Driver()
 {
 }
 
+void test_winner(GBMap &map_test, Scoring &sc) {
+	VGMap villages[4];
+	int res_test4[] = { 2, 4, 3, 3 };
+
+	while (map_test.get_no_tile() < 49 - 1)
+	{
+		map_test.add_tile(6, rand() % 6, res_test4, sc);
+		sc.display_res();
+	}
+	map_test.display_map();
+
+	for (int i = 0; i < 4; i++) {
+		villages[i].put_building_sim();
+		villages[i].display_village();
+	}
+
+	sc.get_winner(villages);
+}
 
 
-int main(int argc, const char * argv[]) {
-
-	int id = 11;
+int main(int argc, const char * argv[]) 
+{
 	int players = 4;
+	bool shipment[4]{ 0 };
 
 	std::cout << "Number of Players: " << players << std::endl;
 
@@ -25,7 +43,7 @@ int main(int argc, const char * argv[]) {
 	int res_test[] = { 3, 1, 1, 3 };
 	int res_test0[] = { 3, 2, 1, 3 };
 	int res_test1[] = { 1, 1, 1, 1 };
-	int res_test2[] = { 3, 3, 3, 3 };
+	int res_test2[] = { 2, 2, 2, 2 };
 	int res_test3[] = { 3, 3, 3, 3 };
 	int res_test4[] = { 2, 4, 3, 3 };
 	
@@ -37,32 +55,18 @@ int main(int argc, const char * argv[]) {
 	sc.display_res();*/
 	
 	map_test.put_resource_sim(sc);
-	std::cout << map_test.get_no_tile() << std::endl << std::endl;
-	while (map_test.get_no_tile() < 49 - 1)
-	{
-		map_test.add_tile(6, rand() % 6, res_test4, sc);
-		sc.display_res();
-	}
+	std::cout << "total tile: " << map_test.get_no_tile() << std::endl;
+	std::cout << "map" << std::endl;
 	map_test.display_map();
-	
-	VGMap villages[4];
-	int score[4][3];
-	for (int i = 0; i < 4; i++) {
-		villages[i].put_building_sim();
-		score[i][0] = sc.get_score(villages[i]);
-		score[i][1] = sc.get_density(villages[i]);
-		score[i][2] = rand() % 100;
-		villages[i].display_village();
-		if (i == 2) {
-			score[2][0] = 55;
-			score[2][1] = 29;
-		}
-		std::cout << "village score: " << score[i][0] << std::endl;
-		std::cout << "village densi: " << score[i][1] << std::endl;
-		std::cout << "village build: " << score[i][2] << std::endl;
-	}	
-	
-	sc.get_winner(score);
+	int type = 3;
+	if(!shipment[1]){
+		map_test.add_shipment(4, 1, res_test4, sc, type);
+		shipment[1] = true;
+	}
+	else
+		std::cout << "already" << std::endl;
+	map_test.display_map();
+	sc.display_res();
 
 
 	/*int numbers[3][3] = { 1, 30, 3,

@@ -76,11 +76,11 @@ public:
 	~GBMap();
 
 	void add_tile(int xv, int yv, int res[4], Scoring &sc);
-	int check_availibility(int &xv, int &yv);
+	void add_shipment(int xv, int yv, int res[4], Scoring &sc, int type);
+	int check_availibility(int xv, int yv);
 	int get_no_tile();
 	bool end_game();
 	void put_resource_sim();
-	//void put_resource_sim(Scoring sc); sc in main wont update
 	void put_resource_sim(Scoring &sc);
 
 	void display_map();	

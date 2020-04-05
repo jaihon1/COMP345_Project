@@ -20,6 +20,12 @@ void VGMap::init_building(int rv, int cv, int typev)
 	(village[rv][cv]).set(typev);
 }
 
+void VGMap::init_building(int rv, int cv, int numv, int typev)
+{
+	(village[rv][cv]).set_num(numv);
+	(village[rv][cv]).set_type(typev);
+}
+
 void VGMap::put_building_sim()
 {
 	for (int i = 0; i < village_row; i++)
@@ -30,6 +36,33 @@ void VGMap::put_building_sim()
 				init_building(i, j, 0);
 			else
 				init_building(i, j, 6 - i);
+}
+
+bool VGMap::validate(int type, int num, int row, int col, int state)//state 0 = face down
+{
+	if ((row+1>village_row) ? false : village[row+1][col].get() == type
+		|| (row-1<0) ? false : village[row-1][col].get() == type
+		|| (col+1>village_col) ? false : village[row][col+1].get() == type
+		|| (col-1>village_col) ? false : village[row][col-1].get() == type) {
+		if (state != 0) {
+			if (num == row) {
+				init_building(row, col, num, type);
+				return 1;
+			}			
+		}
+		else {
+			init_building(row, col, state, type);
+			return 1;
+		}			
+	}
+	else {
+		if (initial_res[type] == false) {
+			initial_res[type] = true;
+			init_building(row, col, num, type);
+			return 1;
+		}
+	}
+	return 0;			
 }
 
 void VGMap::display_village()
@@ -52,6 +85,14 @@ VGMap::Building::Building(int xv, int yv, int typev)
 	type = typev;
 }
 
+VGMap::Building::Building(int xv, int yv, int numv, int typev)
+{
+	x = xv;
+	y = yv;
+	num = numv;
+	type = typev;
+}
+
 VGMap::Building::Building()
 {
 }
@@ -66,6 +107,24 @@ int VGMap::Building::get() const
 }
 
 void VGMap::Building::set(int typev)
+{
+	type = typev;
+}
+
+int VGMap::Building::get_num() const
+{
+	return num;
+}
+
+int VGMap::Building::get_type() const
+{
+	return type;
+}
+void VGMap::Building::set_num(int numv)
+{
+	num = numv;
+}
+void VGMap::Building::set_type(int typev)
 {
 	type = typev;
 }
