@@ -1,15 +1,12 @@
-#define _DEBUG
-#ifdef _DEBUG
-#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
-#endif
-
 #pragma once
+
 #include "../board/VGMaps.h"
 #include <iostream>
 #include <fstream>
 #include <map>
 #include <string>
 #include "../tile/Resources.h"
+#include <nlohmann/json.hpp>
 
 //#include "../../nlohmann/json.hpp"
 using namespace std;
@@ -67,7 +64,6 @@ private:
 			this->operator[]("5") = 5;
 			this->operator[]("6") = 6;
 		}
-
 		~buildingInt() {};
 	};
 

@@ -1,160 +1,231 @@
+/*
 #include <iostream>
-#include "player.h"
-#include "Dictionary.h"
-#include "GBMaps.h"
-#include "Resources.h"
+#include <iomanip>
 
-using namespace std;
+#include "modules/player/player.h"
+#include "modules/tile/Dictionary.h"
+#include "modules/board/GBMaps.h"
+#include "modules/tile/Resources.h"
+#include "modules/Scoring/Scoring.h"
 
-void playerDriver() {
+
+void playerTest() {
     // Initializing variables
     Player bob;
-//    GBMaps map(4, 'b');
+	// GBMaps map(4, 'b');
+
     BuildingDeck buildingDeck;
     HarvestDeck harvestDeck;
     HarvestTile harvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber);
-    
+
     // Get status of resources
     bob.ressourceTracker();
-    
+
     // Drawing items from Building Deck
     cout << "BuildingDeck size: " << buildingDeck.getSize() << endl;
     cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
-    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl;
+    cout << "Draw from BuildingDeck: " << bob.drawBuilding(buildingDeck) << endl;
     cout << "Deck size: " << buildingDeck.getSize() << endl;
     cout << "My Buildings size: " << bob.getNumberOfBuildingTiles() << endl;
-    cout << "Draw from BuildingDeck: " <<  bob.drawBuilding(buildingDeck) << endl << endl;
-    
+    cout << "Draw from BuildingDeck: " << bob.drawBuilding(buildingDeck) << endl << endl;
+
     // Drawing items from Harvest Deck
     cout << "HarvestDeck size: " << harvestDeck.getSize() << endl;
     cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
-    cout << "Draw from HarvestDeck: " <<  bob.drawHarvestTile(harvestDeck) << endl;
+    cout << "Draw from HarvestDeck: " << bob.drawHarvestTile(harvestDeck) << endl;
     cout << "H Deck size: " << harvestDeck.getSize() << endl;
     cout << "My Harvest size: " << bob.getNumberOfHarvestTiles() << endl;
-    cout << "Draw from HarvestDeck: " <<  bob.drawHarvestTile(harvestDeck) << endl << endl;
-    
+    cout << "Draw from HarvestDeck: " << bob.drawHarvestTile(harvestDeck) << endl << endl;
+
     // Get status of resources
     bob.ressourceTracker();
-    
+
     // Placing a Harvest Tile
 //    cout << "Placing Harvest Tile: " << endl;
 //    bob.placeHarvestTile(0, 0, harvestTile, map);
 
 }
 
-int main(int argc, const char * argv[]) {
-        
-    playerDriver();
-    
 
-    return 0;
+const char* SquareStatusToString(GBSquareStatus inSquareStatus) {
+    switch (inSquareStatus) {
+    case GBSquareStatus::Empty:
+        return "Empty";
+    case GBSquareStatus::HarvestTile:
+        return "Harvest";
+
+    case GBSquareStatus::BuildingTile:
+        return "Buildin";
+
+    case GBSquareStatus::PondTile:
+        return "Pond";
+
+    case GBSquareStatus::Unavailable:
+        return "Unavail";
+
+    }
+
+    return "Error from SquareStatusToString";
 }
 
-//int main(int argc, const char * argv[]) {
-//	//Damian's test code
-//	int id = 11;
-//    int players = 4;
-//
-//    GBMaps map1(&id, &players);
-//
-//    cout << "Board ID: " << map1.getIdAddress() << endl;
-//    cout << "Number of Players: " << map1.getNumberOfPlayers() << endl;
-//
-//
-//	VGMaps bmap1 = new VGMaps();
-//
-//
-//	VGMaps bmap1 = new VGMaps();
-//
-//	BuildingTile t1 = new BuildingTile();
-//
-//	bmap1.addNewBuildingTile(t1, 1, 1);
-//
-//
-//	system("pause");
-//
-//    return 0;
-//}
+void printGameBoard(GBMaps* inBoard) {
+
+    for (int i = 0; i < 7; i++) {
+        for (int k = 0; k < 2; k++) {
+            for (int j = 0; j < 7; j++) {
+                if (inBoard->getSquareStatus(i, j) == GBSquareStatus::HarvestTile) {
+                    HarvestTile* tileTemp = inBoard->getHarvestTile(i, j);
+                    if (k == 0) {
+                        cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::topLeft));
+                        cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::topRight));
+                    }
+                    else {
+                        cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomLeft));
+                        cout << setw(8) << HarvestTile::ResourceNameToString(tileTemp->getResource(ResourceLocation::bottomRight));
+                    }
+                }
+                else {
+                    cout << setw(8) << SquareStatusToString(inBoard->getSquareStatus(i, j)) << setw(8) <<" ";
+                }
+            }
+            cout << endl;
+
+        }
+    }
+}
 
 
+void turnSequenceDriver() {
+    // Setup
+    HarvestDeck* harvestDeck = new HarvestDeck();
+    BuildingDeck* buildingDeck = new BuildingDeck();
+    Scoring *scobj = new Scoring();
+    BuildingPool *building_pool = new BuildingPool(buildingDeck);
+    
+    int players_num = 2;
+    GBMaps* gameBoard = new GBMaps(players_num, 'a', scobj);
+    Player player1;
+    Player player2;
 
-// MAIN FUNCTIONS FROM A main.cpp FILE OUTSIDE src DRIECTORY !!!
-//int main() {
-//	BuildingColorType * type1 = new BuildingColorType(BuildingColorType::GreenSheep);
-//	BuildingStatus *status1 = new BuildingStatus(BuildingStatus::Normal);
-//
-//	BuildingTile t1(type1, status1); //on stack? do I delete?
-//	cout << t1.getBuildingNum() << endl;
-//
-//	BuildingColorType * type2 = new BuildingColorType(BuildingColorType::RedLumber);
-//	BuildingStatus *status2 = new BuildingStatus(BuildingStatus::Normal);
-//	BuildingTile t2(type2, status2); //why???
-//
-//	cout << t2.getBuildingNum() << endl;
-//
-//	cout << "Created building tile";
-//
-//	//A a(); stack
-//	//A* aPtr = &a;
-//
-//	//driver?
-//	return 0;
-//}
+    scobj->reset_res();
+    
+    
+    // 1. Player 1 Turn: Place harvest tile on board
+    /// Simulating player to use one of his own harvest tile
+    HarvestTile* testHarvestTile = harvestDeck->draw();
+    
+    int row = 3;
+    int column = 3;
+	int ship = 3;
+    if(rand() % 2 == 0){
+        player1.placeHarvestTile(row, column, *testHarvestTile, *gameBoard);
+        cout << endl << "placeHarvestTile" << endl;
+    }
+    else{
+        player1.placeShipmentTile(row, column, *testHarvestTile, *gameBoard, ship);
+        cout << endl << "placeShipmentTile" << endl;
+    }
+    
+    // 2. Determine Resources Gathered
+    int res[4];
+    scobj->get_res(res);
+    
+    
+    // 3. Place building tile on board. Must be running in while(true) and until player decided to not do it anymore
+    /// Simulating player to use one of his own harvest tile
+    BuildingTile* testBuildingTile = buildingDeck->draw();
+    
+    int row_village = 1;
+    int column_village = 2;
+    player1.placeBuildingTile(row_village, column_village, *testBuildingTile);
+    scobj->remove_res(static_cast<int>(testBuildingTile->getBuildingColorType()), row_village);//remove resource match the type of building???
+    
+    // 4. Share the Wealth
+    scobj->get_res(res);
+    cout << endl << "Sharing the Wealth" << endl;
+
+    /// Each player takes a turn to use remaining resources. Simulating
+    for (int i = 0; i < players_num; i++) {
+        scobj->display_res();
+        int player_decision_pass = 1; // must take input from player (1 == use resource) (0 == pass turn)
+       
+        if (player_decision_pass == 1) {
+            /// Use resources
+            int player_decision_resource_lumber = 1; // Decision to use Lumber
+            if (player_decision_resource_lumber) {
+                int resource_quantity =  rand() % 6;
+                if(scobj->remove_res(1, resource_quantity)==0)
+					 cout << endl << "Not enough resource" << endl;
+            }
+            int player_decision_resource_sheep = 1; // Decision to use Sheep
+            if (player_decision_resource_sheep) {
+                int resource_quantity = rand() % 6;
+                if(scobj->remove_res(2, resource_quantity)==0)
+					 cout << endl << "Not enough resource" << endl;
+            }
+            int player_decision_resource_wheat = 0; // Decision to use Wheat
+            if (player_decision_resource_wheat) {
+                int resource_quantity = rand() % 6;
+                if(scobj->remove_res(3, resource_quantity)==0)
+					 cout << endl << "Not enough resource" << endl;
+            }
+            int player_decision_resource = 0; // Decision to use Rock
+            if (player_decision_resource) {
+                int resource_quantity = rand() % 6;
+                if(scobj->remove_res(4, resource_quantity)==0)
+					 cout << endl << "Not enough resource" << endl;
+            }
+        }
+        else {
+            /// Pass turn
+        }
+    }
+    
+    // 5. Player draws building tiles. 1) Pick from game pool, 2) Pick from pool or deck
+    /// Simulating player to select a buidling tile from pool and then select one more building tile from building deck
+    int pick_index_1 = 1;
+    int pick_index_2 = 3;
+    int decision = 1;
+    
+    player1.pickFromBuildingPool(*building_pool, pick_index_1);
+    
+    if (decision == 0) {
+        player1.pickFromBuildingPool(*building_pool, pick_index_2);
+    }
+    else if (decision == 1){
+        player1.drawBuilding(*buildingDeck);
+    }
+	
+	/***********the below maybe a more detail version*************/
+/*
+	scobj->get_res(res);
+	int total_left = 0;
+	for (int i = 0; i < 4; i++) {
+		total_left += res[i];
+	}
+    int pool_pick = total_left % 5;
+    for (int i = 0; i < pool_pick; i++) {
+        player1.pickFromBuildingPool(*building_pool, i);
+    }
+    for (int i = 0; i < total_left-pool_pick; i++) {
+        player1.drawBuilding(*buildingDeck);
+    }
+    
+    // 6. Reset Resource Markers back to 0 AND draw one harvest tile
+    player1.drawHarvestTile(*harvestDeck);
+    
+    cout << endl << "End of Turn" << endl;
+    scobj->display_res();
+
+    printGameBoard(gameBoard);
+}
+
+int main(int argc, const char * argv[]) {
+
+    turnSequenceDriver();
+        
+    return 0;
+}
+*/ 
 
 
-//main for VGMaps
-// int main()
-// {
-// 	//test 
-// 	//VGMaps *map = new VGMaps();
-// 	VGMaps* v =  &VGMaps();
-// 
-// 	VGMaps* gg(); //most vexing part annoying error 
-// 	//int r = *(v.rows);
-// 	//int c = *(v.columns); 
-// 
-// 	//int *r = map->rows; 
-// 	//int *c = map->columns; 
-// 
-// 	int ro = *(v->rows); 
-// 	int co = *(v->columns); 
-// 
-// 	for (int i = 0; i < ro; i++)
-// 	{
-// 		for (int j = 0;  j < co; j++)
-// 		{
-// 			cout << "TILE ";
-// 		}
-// 		cout << "\n";
-// 		cout << "==========================" << endl; 
-// 	}
-// 	cout << "created VGMap"; 
-// 
-// 	
-// 	//enum function with a switch statements 
-// 	//give an example of VGMaps filled 
-// 	//edits 
-// 
-// 	BuildingColorType * type1 = new BuildingColorType(BuildingColorType::GreenSheep);
-// 	BuildingStatus *status1 = new BuildingStatus(BuildingStatus::Normal);
-// 
-// 	BuildingTile t1(type1, status1); //on stack? do I delete?
-// 
-// 	v->addNewBuildingTile(t1, 1, 1); 
-// 	cout << "added new tile" << endl; 
-// 
-// 	for (int i = 0; i < ro; i++)
-// 	{
-// 		for (int j = 0; j < co; j++)
-// 		{
-// 			//BuildingColorType e =
-// 			
-// 		}
-// 		cout << "\n";
-// 		cout << "==========================" << endl;
-// 	}
-// 	cout << "created VGMap";
-// 
-// 
-// 	return 0; 
-// }

@@ -4,14 +4,11 @@
 #include <ostream>
 #include <stdlib.h>
 #include "VGMaps.h"
-#define _DEBUG
-#ifdef _DEBUG
-#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
-#endif
-
 
 using namespace std;
 using std::vector;
+
+int VGMaps::check_name = 0;
 
 string status_to_string(VGSlotStatus s)
 {
@@ -46,6 +43,8 @@ string colortype_to_string(BuildingColorType c)
 
 VGMaps::VGMaps()
 {
+	cout << "Inside VGMAps constructor" << endl; 
+
 	village_board = new VGSquare * [*rows]; //on the heap
 
 	for (int i = 0; i < *rows; i++)
@@ -57,34 +56,58 @@ VGMaps::VGMaps()
 		{
 			village_board[i][j].VGstatus = VGSlotStatus::Empty;
 			village_board[i][j].VGSquare_type = BuildingColorType::None;
-			village_board[i][j].building_ptr = NULL; //building ptr not having anything to it
+			village_board[i][j].building_ptr = NULL; 
 		}
+	}
+
+	//set VGMAP name
+	cout << check_name << endl; 
+	this->village_name = village_names.at(check_name); 
+	cout << this->village_name << endl; 
+	check_name++;
+
+	//initialize the slotnum
+	int fill = 6; 
+
+	for (int i = 0; i < *rows; i++)
+	{
+		for (int j = 0; j < *columns; j++)
+		{
+			village_board[i][j].slotnum = fill; 
+		}
+		fill--; 
 	}
 }
 
 VGMaps::~VGMaps()
 {
+	cout << "Inside VGMAP destructor" << endl; 
 	//delete everything inside the village board that is dynamically allocated
 	for (int i = 0; i < *rows; i++)
 	{
 		for (int j = 0; j < *columns; j++)
 		{
 			delete village_board[i][j].building_ptr; //deleting each building ptr to new
-			village_board[i][j].building_ptr = NULL;
+
+			village_board[i][j].building_ptr = NULL; 
 		}
-		delete[] village_board[i]; //deleting the rows 
-		village_board[i] = NULL;
+		delete [] village_board[i]; //deleting the rows 
+		village_board[i] = NULL; 
 	}
 
-	delete[] village_board; //delete the array of pointers 
+	delete [] village_board; //delete the array of pointers 
+
 	village_board = NULL;  //make village_board null 
 
 
 	//deallocate the rows and colums pointer
-	delete rows;
-	rows = NULL;
-	delete columns;
-	columns = NULL;
+
+	
+	delete rows; 
+	rows = NULL; 
+	delete columns; 
+	columns = NULL; 
+	
 }
 
 //function is not useful, it is only called through the VGMaps but not inside connections 
@@ -113,18 +136,19 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 {
 	VGSquare current = village_board[r][c];
 
-	cout << "Checking connection slots" << endl;
-	vector <VGSquare> connections(4);
+	cout << "Checking connection slots" << endl; 
+	vector <VGSquare> connections(4); 
 
-	cout << "Created connections" << endl;
-	cout << "Created unavaiblable square" << endl;
+	cout << "Created connections" << endl; 
+	cout << "Created unavaiblable square" << endl; 
+
 
 	//create iterator for insertion
-
+	
 	/*
-	vector <VGSquare>::iterator it;
-	it = connections.begin();
-	*/
+	vector <VGSquare>::iterator it; 
+	it = connections.begin(); 
+	*/ 
 
 	// 0 -> top, 2 -> right, 3 -> bot, 4 -> left
 
@@ -133,8 +157,9 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	if (top >= 0) //ensure that top is greater or equal to 0 (not above the first row) 
 	{
 
-		cout << "Checking top" << endl;
-		connections[0] = village_board[r - 1][c];
+		cout << "Checking top" << endl; 
+		connections[0] = village_board[r - 1][c]; 
+
 
 		cout << "Checking top" << endl;
 		connections[0] = village_board[r - 1][c];
@@ -154,18 +179,17 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 		unavailable.VGstatus = VGSlotStatus::Unavailable;
 		unavailable.building_ptr = NULL; //points to nothing cuz no building tile
 
-		connections[0] = unavailable;
+		connections[0] = unavailable; 
+
 	}
 
 	//check right
 	int right = c + 1;
 	if (right <= 4)
 	{
-
-		cout << "Checking right" << endl;
+		cout << "Checking right" << endl; 
 		//connections.insert(it + 1, village_board[r][c + 1]); 
-		connections[1] = village_board[r][c + 1];
-
+		connections[1] = village_board[r][c + 1]; 
 	}
 	else
 	{
@@ -180,8 +204,8 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 		//this means that there are no slots at the right -> you are at the most right column
 		//connections.insert(it + 1, unavailable);
-		cout << "right - unavailable" << endl;
-		connections[1] = unavailable;
+		cout << "right - unavailable" << endl; 
+		connections[1] = unavailable; 
 	}
 
 	int bottom = r + 1;
@@ -189,14 +213,14 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 	if (bottom <= 4)
 	{
 
-		cout << "checking bottom" << endl;
-		connections[2] = village_board[r + 1][c];
+		cout << "checking bottom" << endl; 
+		connections[2] = village_board[r + 1][c]; 
+
 		//connections.insert(it + 2, village_board[r+1][c]);
 	}
 	else
 	{
-
-		cout << "bottom - unavailable" << endl;
+		cout << "bottom - unavailable" << endl; 
 
 		VGSquare unavailable;
 		//declaration of a default constructor for VGSquare empty
@@ -209,22 +233,23 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 		//this means there are no slots at the bottom -> you are at the bottom row
 		//connections.insert(it + 2, unavailable);
-		connections[2] = unavailable;
+		connections[2] = unavailable; 
 	}
 
 	//check left 
 	int left = c - 1;
 	if (left >= 0)
 	{
+		cout << "checking left" << endl; 
+		connections[3] = village_board[r][c - 1]; 
 
-		cout << "checking left" << endl;
-		connections[3] = village_board[r][c - 1];
 
 		//connections.insert(it + 3, village_board[r][c-1]);
 	}
 	else
 	{
-		cout << "left - unavailable" << endl;
+
+		cout << "left - unavailable" << endl; 
 
 		VGSquare unavailable;
 		//declaration of a default constructor for VGSquare empty
@@ -237,7 +262,8 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 		//this means there are no slots at the left -> you are at the most left column
 		//connections.insert(it + 3, unavailable);
-		connections[3] = unavailable;
+		connections[3] = unavailable; 
+
 
 	}
 	//cout << "Returning collections " << endl; 
@@ -263,12 +289,11 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		cout << "Adding building Tile" << endl;
 		cout << "Copy constructor Tile" << endl;
 
-		cout << BuildingTile::Building_typeToChar(t.getBuildingColorType()) << endl;
+		cout << BuildingTile::Building_typeToChar(t.getBuildingColorType()) << endl; 
 
-		BuildingTile* to_add = new BuildingTile(t); //deep copy constructor, prepare to add tile 
-
+		BuildingTile *to_add = new BuildingTile(t); //deep copy constructor, prepare to add tile 
+		
 		cout << "Checking to add: " << BuildingTile::Building_typeToChar(to_add->getBuildingColorType()) << endl;
-
 
 		BuildingColorType t_type = t.getBuildingColorType();
 		//int t_num = t.getBuildingNum(); 
@@ -282,23 +307,32 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			if (getGreenSheepPlaced()) //is this code right
 								  // true, this means that there already exist a tile of that type on the board, check connections!
 			{
-				cout << "INSIDE GREENSHEEP (true)" << endl;
+				cout << "INSIDE GREENSHEEP (already on board)" << endl;
 				vector <VGSquare> find_green = checkConnectionsOfSlot(t, r, c);
 
-				cout << "Going through iterator" << endl;
+				//cout << "Going through iterator" << endl;
 				it = find_green.begin();
 
 				//go through the iterations to check if one of its surroundings is of type GreenSheep
 				for (int i = 0; i < 4; i++)
 				{
-					if ((*(it + i)).VGSquare_type == BuildingColorType::GreenSheep) //derefference the iterator 
+					//Condition 1-Has a type of GreenSheep around it
+					if ((*(it + i)).VGSquare_type == BuildingColorType::GreenSheep)//derefference the iterator 
 					{
-						village_board[r][c].building_ptr = to_add; //copy of assignment operator 
-						village_board[r][c].VGSquare_type = BuildingColorType::GreenSheep;
-						village_board[r][c].VGstatus = VGSlotStatus::Taken;
+						//Condition 2-Has to match the number 
+						if (to_add->getBuildingNum() == village_board[r][c].slotnum)
+						{
+							village_board[r][c].building_ptr = to_add; //copy of assignment operator 
+							village_board[r][c].VGSquare_type = BuildingColorType::GreenSheep;
+							village_board[r][c].VGstatus = VGSlotStatus::Taken;
 
-						cout << "Success in placing another GreenSheepTile" << endl;
-						break;
+							cout << "Success in placing another GreenSheepTile" << endl;
+							break;
+						}
+						else
+						{
+							cout << "Error in placing GreenSheep - Building Number do not match slot number!" << endl;
+						}
 					}
 				}
 
@@ -315,11 +349,18 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				//placing new tile
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 				{
-					village_board[r][c].VGSquare_type = BuildingColorType::GreenSheep;
-					village_board[r][c].building_ptr = to_add;
-					village_board[r][c].VGstatus = VGSlotStatus::Taken;
+					if (to_add->getBuildingNum() == village_board[r][c].slotnum)
+					{
+						village_board[r][c].VGSquare_type = BuildingColorType::GreenSheep;
+						village_board[r][c].building_ptr = to_add;
+						village_board[r][c].VGstatus = VGSlotStatus::Taken;
 
-					this->GreenSheepPlaced = true;
+						this->GreenSheepPlaced = true;
+					}
+					else
+					{
+						cout << "Error in placing GreenSheep - Building Number do not match slot number!" << endl;
+					}
 				}
 			}
 		}
@@ -327,7 +368,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			if (getGreyRockPlaced()) // true, this means that there already exist a tile of that type on the board, check connections!
 			{
-				cout << "INSIDE GREY ROCK (true)" << endl;
+				cout << "INSIDE GREY ROCK (already on board)" << endl;
 
 				vector <VGSquare> find_grey = checkConnectionsOfSlot(t, r, c);
 				it = find_grey.begin();
@@ -336,16 +377,22 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					if ((*(it + i)).VGSquare_type == BuildingColorType::GreyRock)
 					{
-						//place tile right there 
-						village_board[r][c].building_ptr = to_add;
-						village_board[r][c].VGSquare_type = BuildingColorType::GreyRock;
-						village_board[r][c].VGstatus = VGSlotStatus::Taken;
+						if (to_add->getBuildingNum() == village_board[r][c].slotnum)
+						{
+							//place tile right there 
+							village_board[r][c].building_ptr = to_add;
+							village_board[r][c].VGSquare_type = BuildingColorType::GreyRock;
+							village_board[r][c].VGstatus = VGSlotStatus::Taken;
 
-						cout << "Success in placing another GreyRockTile" << endl;
-						break;
+							cout << "Success in placing another GreyRockTile" << endl;
+							break;
 
+						}
+						else
+						{
+							cout << "Error in placing GreyRock - Building Number do not match slot number!" << endl;
+						}
 					}
-
 				}
 
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
@@ -361,11 +408,18 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 				{
-					village_board[r][c].VGSquare_type = BuildingColorType::GreyRock;
-					village_board[r][c].building_ptr = to_add;
-					village_board[r][c].VGstatus = VGSlotStatus::Taken;
+					if (to_add->getBuildingNum() == village_board[r][c].slotnum)
+					{
+						village_board[r][c].VGSquare_type = BuildingColorType::GreyRock;
+						village_board[r][c].building_ptr = to_add;
+						village_board[r][c].VGstatus = VGSlotStatus::Taken;
 
-					this->GreyRockPlaced = true;
+						this->GreyRockPlaced = true;
+					}
+					else
+					{
+						cout << "Error in placing GreyRock - Building Number do not match slot number!" << endl;
+					}
 				}
 			}
 		}
@@ -381,15 +435,23 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					if ((*(it + i)).VGSquare_type == BuildingColorType::RedLumber)
 					{
-						//place tile right there 
-						village_board[r][c].building_ptr = to_add;
-						village_board[r][c].VGSquare_type = BuildingColorType::RedLumber;
-						village_board[r][c].VGstatus = VGSlotStatus::Taken;
+						//Condition 2
+						if (to_add->getBuildingNum() == village_board[r][c].slotnum)
+						{
+							village_board[r][c].building_ptr = to_add;
+							village_board[r][c].VGSquare_type = BuildingColorType::RedLumber;
+							village_board[r][c].VGstatus = VGSlotStatus::Taken;
 
-						cout << "Success in placing another RedLumberTile" << endl;
-						break;
+							cout << "Success in placing another RedLumberTile" << endl;
+							break;
+						}
+						else
+						{
+							cout << "Error in placing RedLumber - Building Number do not match slot number!" << endl;
+						}
 					}
 				}
+
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 				{
 
@@ -404,11 +466,19 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 				{
-					village_board[r][c].VGSquare_type = BuildingColorType::RedLumber;
-					village_board[r][c].building_ptr = to_add;
-					village_board[r][c].VGstatus = VGSlotStatus::Taken;
+					if (to_add->getBuildingNum() == village_board[r][c].slotnum)
+					{
+						village_board[r][c].VGSquare_type = BuildingColorType::RedLumber;
+						village_board[r][c].building_ptr = to_add;
+						village_board[r][c].VGstatus = VGSlotStatus::Taken;
 
-					this->RedLumberPlaced = true;
+						this->RedLumberPlaced = true;
+					}
+					else
+					{
+						cout << "Error in placing RedLumber - Building Number do not match slot number!" << endl;
+					}
+					
 				}
 			}
 		}
@@ -424,13 +494,19 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					if ((*(it + i)).VGSquare_type == BuildingColorType::YellowHay)
 					{
-						//place tile right there 
-						village_board[r][c].building_ptr = to_add;
-						village_board[r][c].VGSquare_type = BuildingColorType::YellowHay;
-						village_board[r][c].VGstatus = VGSlotStatus::Taken;
+						if (to_add->getBuildingNum() == village_board[r][c].slotnum)
+						{
+							village_board[r][c].building_ptr = to_add;
+							village_board[r][c].VGSquare_type = BuildingColorType::YellowHay;
+							village_board[r][c].VGstatus = VGSlotStatus::Taken;
 
-						cout << "Success in placing another YelloHayTile" << endl;
-						break;
+							cout << "Success in placing another YelloHayTile" << endl;
+							break;
+						}
+						else
+						{
+							cout << "Error in placing YellowHay - Building Number do not match slot number!" << endl;
+						}
 					}
 				}
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
@@ -447,11 +523,18 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				//empty slot
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 				{
-					village_board[r][c].VGSquare_type = BuildingColorType::YellowHay;
-					village_board[r][c].building_ptr = to_add;
-					village_board[r][c].VGstatus = VGSlotStatus::Taken;
+					if (to_add->getBuildingNum() == village_board[r][c].slotnum)
+					{
+						village_board[r][c].VGSquare_type = BuildingColorType::YellowHay;
+						village_board[r][c].building_ptr = to_add;
+						village_board[r][c].VGstatus = VGSlotStatus::Taken;
 
-					this->YellowHayPlaced = true;
+						this->YellowHayPlaced = true;
+					}
+					else
+					{
+						cout << "Error in placing YellowHay - Building Number do not match slot number!" << endl;
+					}
 				}
 			}
 		}
@@ -464,23 +547,30 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		return returnStatus;
 
 	}
+    return returnStatus;
 
 }
 
 BuildingTile VGMaps::getBuildingTile(int r, int c)
 {
-	return *(village_board[r][c].building_ptr);
-
+	return *(village_board[r][c].building_ptr); 
 }
 
 void VGMaps::printVGMap()
 {
 	int ro = *rows;
-	int co = *columns;
+	int co = *columns; 
 
+	cout << setw(8) << this->getVillageName() << endl;
+
+	for (int columnNUM = 0; columnNUM < 5; columnNUM++) {
+		cout << "     " << columnNUM << "         ";
+	}
+	cout << endl;
 
 	for (int i = 0; i < ro; i++)
 	{
+		cout << i;
 		for (int j = 0; j < co; j++)
 		{
 			//VGSquare *s = v->village_board[i]; 
@@ -488,7 +578,7 @@ void VGMaps::printVGMap()
 			//cout << status_to_string(check); 
 
 			BuildingColorType check2 = this->village_board[i][j].VGSquare_type;
-			cout << colortype_to_string(check2) << "   ";
+			cout << colortype_to_string(check2) << "(" << this->village_board[i][j].slotnum << ")   ";
 
 		}
 		cout << "\n";
@@ -497,5 +587,7 @@ void VGMaps::printVGMap()
 
 }
 
-
-
+string VGMaps::getVillageName()
+{
+	return village_name; 
+}

@@ -1,6 +1,8 @@
 #ifndef board_h
 #define board_h
 #include<iostream> 
+#include <iomanip>
+
 #include "../tile/Resources.h"
 class Scoring;
 
@@ -22,7 +24,8 @@ enum class GBSquareStatus {
 class GBSquare {
 public:
 	GBSquareStatus status;
-	HarvestTile* tilePtr;
+	HarvestTile* tilePtr; 
+	//Tile * tilePtr
 
 	GBSquare();
 	~GBSquare();
@@ -35,17 +38,14 @@ private:
 	int* numberOfPlayers;
 	Scoring* scoringObj;
 
-	int const* endGame;
-
 	//using const pointers because the assignment says attributes have to be pointers
 	const int* const rows = new int(7);
 	const int* const columns = new int(7);
+	const int total_tile = 49;
+	int occupied_tile = 0;
 
 	//Game Board is a pointer to an array of pointers
 	GBSquare** board;
-
-	// counter to keep track of end game condition
-	int* cardsPlayed;
 
 	void initializeBoardA();
 
@@ -53,10 +53,10 @@ private:
 
 public:
 	//constructor takes number of players and whether the game is played on Side A or Side B
-    GBMaps(int numberOfPlayers, char boardSide, Scoring* sc);
-	
-    ~GBMaps();
-    
+	GBMaps(int numberOfPlayers, char boardSide, Scoring* sc);
+
+	~GBMaps();
+
 	GBSquare getSquare(int row, int column);
 
 	GBSquareStatus getSquareStatus(int row, int column);
@@ -76,14 +76,9 @@ public:
 
 	int getNumberOfPlayers();
 
-	int getCardsPlayed();
+	int getOccupiedTile();
 
-	// returns 1 if the game is over
-	int getEndGame();
-
-	
+	void printGameBoard(); 
 };
 
 #endif /* board_h */
-
-

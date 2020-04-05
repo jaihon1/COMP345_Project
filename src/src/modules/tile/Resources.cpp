@@ -4,11 +4,14 @@
 #include <algorithm>
 #include <iostream>
 #include <algorithm>
-
 #include "Resources.h"
 #include "Dictionary.h"
 #include "../player/player.h"
 #include "../Scoring/Scoring.h"
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 
 using namespace std;
 
@@ -34,16 +37,16 @@ BuildingTile**  BuildingPool::getBuildingPool() {
 
 HarvestTile::HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, ResourceName bottomLeftRes, ResourceName bottomRightRes)
 {
-	resourceArr = new ResourceName[4] {topLeftRes, topRightRes, bottomLeftRes, bottomRightRes};
+	resourceArr = new ResourceName[4]{ topLeftRes, topRightRes, bottomLeftRes, bottomRightRes };
 }
 
 HarvestTile::HarvestTile(const HarvestTile &harvestTile) {
-    resourceArr = harvestTile.resourceArr;
+	resourceArr = harvestTile.resourceArr;
 }
 
 HarvestTile::~HarvestTile() {
 	delete[] resourceArr;
-    resourceArr = nullptr;
+	resourceArr = nullptr;
 }
 
 void HarvestTile::RotateLeft()
@@ -54,7 +57,7 @@ void HarvestTile::RotateLeft()
 	resourceArr[topRight] = resourceArr[bottomRight];
 	resourceArr[bottomRight] = resourceArr[bottomLeft];
 	resourceArr[bottomLeft] = temp;
-	
+
 }
 
 void HarvestTile::RotateRight()
@@ -73,11 +76,20 @@ ResourceName HarvestTile::getResource(ResourceLocation inLocation)
 	return resourceArr[inLocation];
 }
 
+void HarvestTile::printHarvestTile()
+{
+	cout << setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::topLeft))
+		<< setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::topRight)) << endl
+		<< setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::bottomLeft))
+		<< setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::bottomRight)) << endl;
+}
+
 BuildingTile::BuildingTile()
 {
-	_buildingColorType = new BuildingColorType(BuildingColorType::None);
-	_buildingStatus = new BuildingStatus(BuildingStatus::Normal);
-	_buildingNum = new int(1);
+
+	_buildingColorType =  new BuildingColorType(BuildingColorType::None); 
+	_buildingStatus = new BuildingStatus(BuildingStatus::Normal); 
+	_buildingNum = new int(1); 
 
 	_firstBuilding = false;
 }
@@ -85,30 +97,34 @@ BuildingTile::BuildingTile()
 
 BuildingTile::BuildingTile(BuildingColorType* type, BuildingStatus* status)
 {
-	cout << "Constructor with random number generator" << endl;
-	_buildingColorType = new BuildingColorType(*type);
-	_buildingStatus = new BuildingStatus(*status);
-	_buildingNum = &(*generateBuildingNumber());
+	cout << "Constructor with random number generator" << endl; 
+	_buildingColorType = new BuildingColorType(*type); 
+	_buildingStatus = new BuildingStatus(*status); 
+	_buildingNum = &(*generateBuildingNumber()); 
+
 	//*_buildingStatus = status;
 	//_buildingNum = generateBuildingNumber();
 
 	_firstBuilding = false;
 }
 
-BuildingTile::BuildingTile(BuildingColorType* t, int* n, BuildingStatus* s)
+BuildingTile::BuildingTile(BuildingColorType *t, int* n, BuildingStatus* s)
 {
-
-	_buildingColorType = new BuildingColorType(*t);
+	
+	_buildingColorType = new BuildingColorType(*t); 
 
 	if (numCheck(*n))
 	{
-		_buildingNum = new int(*n);
+		_buildingNum = new int(*n); 
+
 	}
 	else
 	{
 		cerr << "Error in assigning value. Please assign a number between 1 to 6" << endl;
 	}
-	_buildingStatus = new BuildingStatus(*s);
+
+	_buildingStatus = new BuildingStatus(*s); 
+	
 
 	_firstBuilding = false;
 }
@@ -124,31 +140,31 @@ BuildingTile::BuildingTile(const BuildingColorType t, const int n, const Buildin
 
 BuildingTile::BuildingTile(BuildingColorType t, int n, BuildingStatus s)
 {
-	_buildingColorType = new BuildingColorType(t);
+	_buildingColorType = new BuildingColorType(t); 
 	if (numCheck(n))
 	{
-		_buildingNum = new int(n);
+		_buildingNum = new int(n); 
+
 	}
 	else
 	{
 		cerr << "Error in assigning value. Please assign a number between 1 to 6" << endl;
 	}
-	_buildingStatus = new BuildingStatus(s);
+	_buildingStatus = new BuildingStatus(s); 
+
 
 }
 
+
 BuildingTile::~BuildingTile() {
 	delete _buildingColorType;
-	cout << "1 \n";
+//	cout << "1 \n";
 	delete _buildingNum;
-	cout << "2 \n";
+//	cout << "2 \n";
 	delete _buildingStatus;
-	cout << "3 \n";
+//	cout << "3 \n";
 
-	//cout << "Make all 3 pointer variables to null"; 
-
-
-
+//cout << "Make all 3 pointer variables to null"; 
 
 }
 
@@ -196,11 +212,11 @@ bool BuildingTile::numCheck(int num)
 	//if number is good - return true
 	if ((num >= 1) || (num <= 6))
 	{
-		return true;
+		return true; 
 	}
 	else
 	{
-		return false;
+		return false; 
 	}
 }
 
@@ -261,7 +277,8 @@ void BuildingTile::deepCopy(const BuildingTile& t)
 		_buildingStatus = nullptr;
 	}
 
-	cout << "Success in deep copying" << endl;
+	cout << "Success in deep copying" << endl; 
+
 }
 
 BuildingTile::BuildingTile(const BuildingTile& t) : _buildingColorType{ nullptr }, _buildingNum{ nullptr }, _buildingStatus{ nullptr }
@@ -269,106 +286,110 @@ BuildingTile::BuildingTile(const BuildingTile& t) : _buildingColorType{ nullptr 
 	deepCopy(t);
 }
 
+
 //Assignment operator for deep copy 
-BuildingTile& BuildingTile:: operator = (const BuildingTile& b)
+BuildingTile &BuildingTile:: operator = (const BuildingTile &b)
 {
-	cout << "Inside deep copy assignment operator " << endl;
+	cout << "Inside deep copy assignment operator " << endl; 
 	if (this == &b) //self-guarding 
 	{
-		return *this;
+		return *this; 
 	}
 	deepCopy(b);
-	return *this;
+	return *this; 
 }
 
-
+void BuildingTile::printBuildingTile()
+{
+	cout << this->getBuildingNum() << " " << this->Building_typeToChar(this->getBuildingColorType()) << " " << this->Building_statusToChar(this->getSide()) << endl << endl;
+}
 
 HarvestDeck::HarvestDeck()
 {
-	harvestDeck = new HarvestTile*[deckLength]{
+	harvestDeck = new HarvestTile*[deckLength] {
 		//IMG-1
 		new HarvestTile(ResourceName::Wheat, ResourceName::Lumber, ResourceName::Wheat, ResourceName::Sheep),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Sheep, ResourceName::Sheep, ResourceName::Rock),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Sheep),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Rock),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Sheep, ResourceName::Sheep, ResourceName::Rock),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Rock),
 
-		new HarvestTile(ResourceName::Sheep, ResourceName::Sheep, ResourceName::Sheep, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Rock, ResourceName::Wheat, ResourceName::Rock, ResourceName::Lumber),
-		new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Rock, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Sheep, ResourceName::Sheep, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Rock, ResourceName::Wheat, ResourceName::Rock, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Rock, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber),
 
-		new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Wheat, ResourceName::Sheep),
-		new HarvestTile(ResourceName::Wheat, ResourceName::Wheat, ResourceName::Wheat, ResourceName::Lumber),
-		new HarvestTile(ResourceName::Rock, ResourceName::Lumber, ResourceName::Rock, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Wheat, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Wheat, ResourceName::Wheat, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Rock, ResourceName::Lumber, ResourceName::Rock, ResourceName::Wheat),
 
-		new HarvestTile(ResourceName::Wheat, ResourceName::Wheat, ResourceName::Wheat, ResourceName::Rock),
-		new HarvestTile(ResourceName::Wheat, ResourceName::Wheat, ResourceName::Wheat, ResourceName::Sheep),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Lumber, ResourceName::Lumber, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Wheat, ResourceName::Lumber, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Wheat, ResourceName::Wheat, ResourceName::Rock),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Wheat, ResourceName::Wheat, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Lumber, ResourceName::Lumber, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Wheat, ResourceName::Lumber, ResourceName::Wheat),
 
-		new HarvestTile(ResourceName::Sheep, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Lumber),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber),
-		new HarvestTile(ResourceName::Rock, ResourceName::Wheat, ResourceName::Rock, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Rock, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Rock, ResourceName::Wheat, ResourceName::Rock, ResourceName::Sheep),
 
-		//IMG-2
-		new HarvestTile(ResourceName::Rock, ResourceName::Wheat, ResourceName::Lumber, ResourceName::Rock),
-		new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Lumber, ResourceName::Lumber),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Lumber, ResourceName::Sheep, ResourceName::Rock),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Rock),
+			//IMG-2
+			new HarvestTile(ResourceName::Rock, ResourceName::Wheat, ResourceName::Lumber, ResourceName::Rock),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Lumber, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Lumber, ResourceName::Sheep, ResourceName::Rock),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Rock),
 
-		new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Rock),
-		new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Rock, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Lumber, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Rock),
+			new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Rock, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Lumber, ResourceName::Sheep),
 
-		new HarvestTile(ResourceName::Rock, ResourceName::Lumber, ResourceName::Rock, ResourceName::Sheep),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Rock),
-		new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Wheat, ResourceName::Rock),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Sheep, ResourceName::Sheep, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Rock, ResourceName::Lumber, ResourceName::Rock, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Sheep, ResourceName::Rock),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Wheat, ResourceName::Rock),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Sheep, ResourceName::Sheep, ResourceName::Lumber),
 
-		new HarvestTile(ResourceName::Lumber, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Sheep),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Lumber, ResourceName::Lumber, ResourceName::Sheep),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Lumber, ResourceName::Sheep, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Lumber, ResourceName::Rock),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Lumber, ResourceName::Lumber, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Lumber, ResourceName::Sheep, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Lumber, ResourceName::Rock),
 
-		new HarvestTile(ResourceName::Lumber, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Wheat, ResourceName::Rock),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Rock),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Wheat, ResourceName::Rock),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Lumber, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Rock),
 
-		//IMG-3
-		new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Rock, ResourceName::Sheep),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber),
-		new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber, ResourceName::Sheep),
+			//IMG-3
+			new HarvestTile(ResourceName::Rock, ResourceName::Rock, ResourceName::Rock, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Sheep, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Lumber, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber, ResourceName::Sheep),
 
-		new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Wheat, ResourceName::Lumber),
-		new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Wheat, ResourceName::Lumber),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Wheat, ResourceName::Lumber, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Wheat, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Wheat, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Wheat, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Wheat, ResourceName::Lumber, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Wheat, ResourceName::Sheep),
 
-		new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Rock, ResourceName::Lumber),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Rock, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Rock),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Lumber, ResourceName::Lumber, ResourceName::Rock),
+			new HarvestTile(ResourceName::Rock, ResourceName::Sheep, ResourceName::Rock, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Rock, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Rock),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Lumber, ResourceName::Lumber, ResourceName::Rock),
 
-		new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Wheat, ResourceName::Lumber, ResourceName::Sheep),
-		new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Lumber),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Wheat, ResourceName::Lumber, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Rock, ResourceName::Sheep, ResourceName::Wheat),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Wheat, ResourceName::Sheep, ResourceName::Lumber),
 
-		new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Rock),
-		new HarvestTile(ResourceName::Wheat, ResourceName::Lumber, ResourceName::Wheat, ResourceName::Rock),
-		new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Lumber, ResourceName::Sheep),
-		new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Lumber, ResourceName::Rock)
+			new HarvestTile(ResourceName::Wheat, ResourceName::Sheep, ResourceName::Wheat, ResourceName::Rock),
+			new HarvestTile(ResourceName::Wheat, ResourceName::Lumber, ResourceName::Wheat, ResourceName::Rock),
+			new HarvestTile(ResourceName::Sheep, ResourceName::Rock, ResourceName::Lumber, ResourceName::Sheep),
+			new HarvestTile(ResourceName::Lumber, ResourceName::Rock, ResourceName::Lumber, ResourceName::Rock)
 	};
 }
 
 HarvestDeck::~HarvestDeck()
 {
-	
+
 	for (int i = 0; i < deckLength; i++) {
 		delete harvestDeck[i];
 	}
@@ -377,7 +398,7 @@ HarvestDeck::~HarvestDeck()
 }
 
 int HarvestDeck::getSize() {
-    return deckLength;
+	return deckLength;
 }
 
 HarvestTile* HarvestDeck::draw() {
@@ -394,7 +415,7 @@ HarvestTile* HarvestDeck::draw() {
 	//loop shuffles pointers down to keep remaining HarvestTiles together at the "top" of the deck
 	//subtract one again from deckLength to prevent index out of bounds errors
 	for (int i = randomNumber; i < deckLength; i++) {
-		harvestDeck[i] = harvestDeck[i+1];
+		harvestDeck[i] = harvestDeck[i + 1];
 	}
 
 	harvestDeck[deckLength] = NULL;
@@ -587,7 +608,9 @@ BuildingDeck::BuildingDeck() {
 
 }
 
+
 BuildingDeck::BuildingDeck(const BuildingDeck& deck) {
+
 
 }
 
@@ -611,13 +634,15 @@ vector<BuildingTile*>* BuildingDeck::getDeck() {
 	return _deck;
 }
 
+
 void BuildingDeck::add(BuildingTile& tile) {
+
 	//    cout << "Adding: " << &tile << endl;
 	_deck->push_back(&tile);
 }
 
-
 void BuildingDeck::remove(BuildingTile& tile) {
+
 	_deck->erase(std::remove(_deck->begin(), _deck->end(), &tile), _deck->end());
 }
 
@@ -625,7 +650,9 @@ void BuildingDeck::remove(BuildingTile& tile) {
 BuildingTile* BuildingDeck::draw() {
 	if (_deck->size() > 0) {
 		int randomIndex = rand() % _deck->size();
+
 		BuildingTile* tile = _deck->at(randomIndex);
+
 		remove(*tile);
 		return tile;
 	}
@@ -641,7 +668,7 @@ unsigned long BuildingDeck::getSize() {
 
 Hand::Hand(Scoring* inSc) {
 	sc = inSc;
-	resourceScoreArr = new int[4] { 0, 0, 0, 0};
+	resourceScoreArr = new int[4]{ 0, 0, 0, 0 };
 }
 
 void Hand::intializeHand()

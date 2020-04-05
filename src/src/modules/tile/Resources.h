@@ -1,9 +1,12 @@
-#ifndef resources_h
-#define resources_h
-
+#pragma once
+#define _DEBUG
+#ifdef _DEBUG
+#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 #include <string>
 #include <vector>
 #include "Dictionary.h"
+
 class Player;
 class Scoring;
 
@@ -14,17 +17,6 @@ private:
 	BuildingColorType* _buildingColorType;
 	int* _buildingNum;
 	BuildingStatus* _buildingStatus;
-
-	/*
-	//constructor for the attributes to allocate memory slot
-	BuildingColorType buildingColorType;
-	int buildingNum;
-	BuildingStatus buildingStatus;
-	//allocate memorys
-	BuildingColorType* _buildingColorType = &buildingColorType; if on stack if on heap i need new
-	int* _buildingNum = &buildingNum;
-	BuildingStatus* _buildingStatus = &buildingStatus;
-	*/
 
 public:
 	BuildingTile();
@@ -40,7 +32,9 @@ public:
 	int getBuildingNum();
 
 	void setBuildingNum(int num);
-	bool numCheck(int num);
+
+	bool numCheck(int num); 
+
 	void setBuildingStatus(BuildingStatus s);
 	void setBuildingColorType(BuildingColorType c);
 
@@ -52,7 +46,9 @@ public:
 	//Deep copy constructor 
 	BuildingTile(const BuildingTile& t);
 
-	BuildingTile& operator = (const BuildingTile& b);
+	BuildingTile & operator = (const BuildingTile &b); 
+
+	void printBuildingTile(); 
 
 	//methods for map Loader 
 	static const char* Building_typeToChar(BuildingColorType b)
@@ -133,16 +129,18 @@ private:
 public:
 	//parameters are the resources intended for the various locations on the tile
 	HarvestTile(ResourceName topRightRes, ResourceName topLeftRes, ResourceName bottomLeftRes, ResourceName bottomRightRes);
-    HarvestTile(const HarvestTile &harvestTile);
-    HarvestTile();
+	HarvestTile(const HarvestTile &harvestTile);
+	HarvestTile();
 
 	~HarvestTile();
 
 	void RotateRight();
-	
+
 	void RotateLeft();
 
 	ResourceName getResource(ResourceLocation inLocation);
+
+	void printHarvestTile(); 
 
 	static const char* ResourceNameToString(ResourceName inResourceName) {
 		switch (inResourceName) {
@@ -158,12 +156,11 @@ public:
 		case ResourceName::Wheat:
 			return "Wheat";
 		}
-
 		return "Error from ResourceNameToString";
 	}
 };
 
-class HarvestDeck{
+class HarvestDeck {
 private:
 	HarvestTile** harvestDeck;
 	int deckLength = 60;
@@ -172,7 +169,7 @@ public:
 	HarvestDeck();
 	~HarvestDeck();
 	HarvestTile* draw();
-    int getSize();
+	int getSize();
 
 };
 
@@ -204,7 +201,4 @@ public:
 	void displayHand();
 	int exchange(ExchangeToken* exchangeToken);
 };
-
-#endif // resources_h
-
 

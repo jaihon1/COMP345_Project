@@ -17,6 +17,7 @@ public:
 	Scoring* getSc();
 	HarvestDeck* getHarvestDeck();
 	BuildingDeck* getBuildingDeck();
+	BuildingPool * getBuildingPool(); 
 	Hand* getHand();
 	int getNumPlayers();
 

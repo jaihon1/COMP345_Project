@@ -1,4 +1,3 @@
-
 #include "../tile/Resources.h"
 #include "../board/GBMaps.h"
 #include "Scoring.h"
@@ -45,7 +44,7 @@ void Scoring::add_res(int resv, int numv)
 void Scoring::update_help(int v, int w, int res) {
 	if (vertices.is_adjacent(v, w))
 		add_res(res, vertices.connected(v));
-	else {		
+	else {
 		add_res(res, vertices.connected(v));
 		add_res(res, vertices.connected(w));
 	}
@@ -54,7 +53,7 @@ void Scoring::update_help(int v, int w, int res) {
 void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 {
 	//std::cout << "Test" << vertices.connected(90) << std::endl;
-	
+
 	for (int i = 0; i < 4; i++)
 	{
 		if (res[i] == 0)
@@ -71,7 +70,7 @@ void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 		}
 		add_res(res[i], vertices.connected(pos[i]));
 	}
-		
+
 }
 
 void Scoring::connectedComponents()
@@ -354,16 +353,16 @@ void Scoring::Graph::connectedComponents()
 	int retval = []() -> int { return 1; }();
 	VER *visited = new VER[V]();
 
-	for (int v = 0; v<V; v++)
+	for (int v = 0; v < V; v++)
 	{
 		if (visited[v].visited == false)
 		{
 			// print all reachable vertices from v 			
 			DFSUtil(v, visited);
 
-			std::cout << "\n";				
+			std::cout << "\n";
 		}
-	}	
+	}
 
 	delete visited;
 }

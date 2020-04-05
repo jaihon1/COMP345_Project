@@ -1,31 +1,24 @@
-#ifndef player_h
-#define player_h
-
+#pragma once
 #include <iostream>
 #include <stdio.h>
 #include <vector>
 #include "../board/VGMaps.h"
 #include "../tile/Resources.h"
 #include "../board/GBMaps.h"
-
 using namespace std;
 
-class Player {
+class Player{
 private:
-    // Own one Village Board
     VGMaps *_villageBoard;
-    
-    // Owns Harverst Tiles
     vector<HarvestTile*> *_harvestTiles;
-    
-    // Owns Building Tiles
     vector<BuildingTile*> *_buildingTiles;
     
     // Owns/Give up Ressource Markers
     
     // Owns resources Gathering and Building Scoring facilities
-    
-	HarvestTile* shipmentTile;
+
+	int *ID; 
+    HarvestTile* shipmentTile;
     
 public:
     Player();
@@ -36,7 +29,8 @@ public:
     vector<HarvestTile*>* getHarvestTiles();
     HarvestTile* addHarvestTile(HarvestTile &tile);
     HarvestTile* removeHarvestTile(HarvestTile &tile);
-    void placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard);
+    int placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard);
+	int placeShipmentTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard, int type);
     HarvestTile* drawHarvestTile(HarvestDeck &deck);
     unsigned long getNumberOfHarvestTiles();
 
@@ -46,21 +40,24 @@ public:
     vector<BuildingTile*>* getBuildings();
     BuildingTile* addBuildingTile(BuildingTile &tile);
     BuildingTile* removeBuildingTile(BuildingTile &tile);
+    void placeBuildingTile(int row, int col, BuildingTile &tile);
     BuildingTile* drawBuilding(BuildingDeck &deck);
     unsigned long getNumberOfBuildingTiles();
+	VGMaps* getVGMaps(); 
+    
+    // Building Pool
+    BuildingTile* pickFromBuildingPool(BuildingPool &pool, int index);
     
     // Methods for the driver
     void ressourceTracker();
     void buildVillage();
     void calculateResources();
 
-	// Method for Board
+	//for MainLoop
+	int getID(); 
+	void setID(int n); 
 	VGMaps* getVGBoard();
 
-	
-    
-    
 };
 
-#endif /* player_h */
 

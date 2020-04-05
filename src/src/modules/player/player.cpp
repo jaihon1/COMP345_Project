@@ -3,43 +3,45 @@
 
 Player::Player() {
 //    cout << "Creating Player with Main: " << this << endl;
-    _villageBoard = new VGMaps();
+
+	cout << "Inside player constructor" << endl; 
+	_villageBoard = new VGMaps();
     _harvestTiles = new vector<HarvestTile*>;
     _buildingTiles = new vector<BuildingTile*>;
-	//shipmentTile = NULL;
+	ID = new int(-1); //will be decided at runtime 
 }
 
 Player::Player(const Player &player) {
-//    cout << "Creating Player with Copy: " << this << endl;
+    _villageBoard = player._villageBoard;
     _harvestTiles = player._harvestTiles;
     _buildingTiles = player._buildingTiles;
 	shipmentTile = player.shipmentTile;
 }
 
 Player::~Player() {
+
+	cout << "Player destructor" << endl; 
+	if (_villageBoard) {
+		delete _villageBoard;
+		_villageBoard = nullptr;
+	}
+
     if (_harvestTiles) {
-//        cout << "Deleting _harvestTiles of Player with address: " << this << endl;
         delete _harvestTiles;
         _harvestTiles = nullptr;
-//        cout << "DONE" << endl;
     }
 
     if (_buildingTiles) {
-//        cout << "Deleting _buildingTiles of Player with address: " << this << endl;
         delete _buildingTiles;
         _buildingTiles = nullptr;
-//        cout << "DONE" << endl;
-    }
-    
-    if (_buildingTiles) {
-        delete _villageBoard;
-        _villageBoard = nullptr;
     }
 
-	if (shipmentTile) {
-		delete shipmentTile;
-		shipmentTile = nullptr;
+	if (ID)
+	{
+		delete ID; 
+		ID = nullptr; 
 	}
+
 }
 
 
@@ -55,14 +57,22 @@ HarvestTile* Player::removeHarvestTile(HarvestTile &tile) {
 
 vector<HarvestTile*>* Player::getHarvestTiles() {
     for (int i = 0; i < _harvestTiles->size(); i++) {
-        cout << (*_harvestTiles)[i] << endl;
+		cout << "HarvestTile (index " << i << ")" << endl; 
+		(*_harvestTiles)[i]->printHarvestTile();
     }
     return _harvestTiles;
 }
 
-void Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard) {
-    gameBoard.addHarvestTile(row, col, &tile);
+int Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard) {
+    int tile_success = gameBoard.addHarvestTile(row, col, &tile);
     removeHarvestTile(tile);
+	return tile_success; 
+}
+
+int Player::placeShipmentTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard, int type) {
+    int ship_success = gameBoard.addShipmentTile(row, col, &tile, type);
+    removeHarvestTile(tile);
+	return ship_success; 
 }
 
 HarvestTile* Player::drawHarvestTile(HarvestDeck &deck) {
@@ -81,10 +91,14 @@ void Player::setShipmentTile(HarvestTile* harvestTile)
 }
 
 
+
 vector<BuildingTile*>* Player::getBuildings() {
+	/*
     for (int i = 0; i < _buildingTiles->size(); i++) {
-        cout << (*_buildingTiles)[i] << endl;
+		//cout << "Index [" << i << "]  "; 
+		//(*_buildingTiles)[i]->printBuildingTile(); 
     }
+	*/ 
     return _buildingTiles;
 }
 
@@ -104,8 +118,24 @@ BuildingTile* Player::drawBuilding(BuildingDeck &deck) {
     return drawn_card;
 }
 
+void Player::placeBuildingTile(int row, int col, BuildingTile &tile) {
+    _villageBoard->addNewBuildingTile(tile, row, col);
+    removeBuildingTile(tile);
+}
+
+BuildingTile* Player::pickFromBuildingPool(BuildingPool &pool, int index) {
+    BuildingTile *drawn_card = pool.pickBuildingTile(index);
+    addBuildingTile(*drawn_card);
+    return drawn_card;
+}
+
 unsigned long Player::getNumberOfBuildingTiles() {
     return _buildingTiles -> size();
+}
+
+VGMaps* Player::getVGMaps()
+{
+	return _villageBoard; 
 }
 
 void Player::ressourceTracker() {
@@ -119,6 +149,19 @@ void Player::ressourceTracker() {
     cout << "-- END --" << endl << endl;
 }
 
-VGMaps* Player::getVGBoard() {
+
+int Player::getID()
+{
+	return *ID;
+}
+
+void Player::setID(int n)
+{
+	*ID = n; 
+}
+
+VGMaps* Player::getVGBoard() 
+{
 	return _villageBoard;
+
 }

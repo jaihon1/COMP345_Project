@@ -1,10 +1,6 @@
-#define _DEBUG
-#ifdef _DEBUG
-#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
-#endif
-
 #include "VGMapLoader.h"
-#include <nlohmann/json.hpp>
+//#include <nlohmann/json.hpp>
+
 using namespace std;
 
 using json = nlohmann::json;
@@ -81,7 +77,8 @@ VGMapLoader::VGMapLoader(const char* inFile)
 
 				//cout << "suspected crash" << endl;
 				int n = bIMap[*b_num];
-				cout << "Found num" << endl;
+				cout << "Found num" << endl; 
+
 
 				BuildingTile* temp = new BuildingTile(c, n, s);
 
@@ -118,17 +115,31 @@ VGMapLoader::VGMapLoader(const char* inFile)
 				board->village_board[VG_row][VG_col].building_ptr = NULL;
 
 				cout << "Set status to empty and color type to none" << endl;
+
 			}
-
-
 		}
 
+	}
+
+	//TO INITALIZE THE SLOW NUMBER 
+	//initialized the rest of the slot num - to double check 
+	int filler = 6; 
+	for (int i = 0; i < 6 ; i++)
+	{
+		for (int j = 0; i < 5; j++)
+		{
+			if (board->village_board[i][j].VGstatus == VGSlotStatus::Empty)
+			{
+				board->village_board[i][j].slotnum = filler; 
+			}
+		}
+		filler--;
 	}
 }
 
 VGMapLoader::~VGMapLoader()
 {
-	cout << "deleting board - make sure to get board assignment first" << endl;
+	cout << "deleting board - make sure to get board assignment first" << endl; 
 	delete board;
 }
 
@@ -138,7 +149,7 @@ VGMaps* VGMapLoader::getBoard()
 }
 
 //why VGMapsaver? 
-void VGMapSaver::save(VGMaps* inGame, const char* inFilePath)
+void VGMapSaver::save(VGMaps * inGame, const char* inFilePath)
 {
 	outFile.open(inFilePath);
 	cout << "Opening file path " << endl;
@@ -175,7 +186,7 @@ void VGMapSaver::save(VGMaps* inGame, const char* inFilePath)
 			{
 				//push back status 
 
-				BuildingTile* t = new BuildingTile(inGame->getBuildingTile(i, j));
+				BuildingTile *t = new BuildingTile(inGame->getBuildingTile(i, j));
 
 				nlohmann::basic_json <> building_stats =
 				{
@@ -203,8 +214,10 @@ void VGMapSaver::save(VGMaps* inGame, const char* inFilePath)
 				cout << "Pushed json object back" << endl;
 
 				//good practice 
-				delete t;
-				t = NULL;
+
+				delete t; 
+				t = NULL; 
+
 			}
 
 		}

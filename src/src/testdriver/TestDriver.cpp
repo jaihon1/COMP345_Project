@@ -1,3 +1,5 @@
+/*
+
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -302,6 +304,8 @@ void runGame(GBMaps* gameBoard, HarvestDeck* testDeck) {
 		}
 
 	}
+	
+	delete testSaver;
 
 }
 
@@ -353,6 +357,7 @@ void playGBMaps() {
 		}
 		delete sc;
 		delete testDeck;
+		delete testLoader;
 		delete gameBoard;
 
 	}
@@ -384,6 +389,8 @@ void VGMapLoaderTest()
 	cout << BuildingTile::Building_typeToChar(t1->getBuildingColorType()) << endl;
 	cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
 	*/
+
+/*
 	cout << BuildingTile::Building_intToChar(t1->getBuildingNum()) << endl;
 
 
@@ -405,6 +412,7 @@ void VGMapLoaderTest()
 	vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	*/
 	//s->save(va, "C:\json_test\VGMaptest.json");  -> BAD 
+/*
 	s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
 
 	cout << "Saved va map" << endl;
@@ -425,6 +433,14 @@ void VGMapLoaderTest()
 	cout << "Current MAP" << endl;
 
 	va->printVGMap();
+	
+	delete va;
+	delete type1;
+	delete status1;
+	delete t1;
+	delete s;
+	delete m;
+	delete l;
 }
 
 
@@ -503,6 +519,7 @@ void menuOptions() {
 int main()
 {
 	/*MemoryLeak*/
+/*
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	int menuOption;
@@ -534,6 +551,7 @@ int main()
 		cin >> menuOption;
 	}
 }
+*/ 
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
