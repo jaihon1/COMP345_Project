@@ -172,6 +172,8 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 
 int GBMaps::addShipmentTile(int row, int column, HarvestTile * inHarvestTilePtr, int type)
 {
+	//cout << "Inside add shipmentile of GBMaps " << endl; 
+
 	ResourceName re = static_cast<ResourceName>(type);
 	HarvestTile* ship = new HarvestTile(re, re, re, re);
 	Scoring stemp(*scoringObj);
@@ -184,8 +186,18 @@ int GBMaps::addShipmentTile(int row, int column, HarvestTile * inHarvestTilePtr,
 		if (scoringObj != NULL) {
 			stemp.computeResources(row, column, ship, this);
 		}
+
+		cout << "Adding the actual tile now" << endl; 
+
 		board[row][column].status = GBSquareStatus::Empty;
+		board[row][column].tilePtr = NULL;
+
 		addHarvestTile(row, column, inHarvestTilePtr);
+
+		cout << "Printing that actual harvest tile" << endl; 
+
+		board[row][column].tilePtr->printHarvestTile(); 
+
 		int temp[4];
 		stemp.get_res(temp);
 		scoringObj->set_res(temp);

@@ -70,8 +70,9 @@ int Player::placeHarvestTile(int row, int col, HarvestTile &tile, GBMaps &gameBo
 }
 
 int Player::placeShipmentTile(int row, int col, HarvestTile &tile, GBMaps &gameBoard, int type) {
+
     int ship_success = gameBoard.addShipmentTile(row, col, &tile, type);
-    removeHarvestTile(tile);
+    //removeHarvestTile(tile); //Dont remove it from the hand cuz it's never inside the hand to begin with
 	return ship_success; 
 }
 
@@ -93,12 +94,10 @@ void Player::setShipmentTile(HarvestTile* harvestTile)
 
 
 vector<BuildingTile*>* Player::getBuildings() {
-	/*
     for (int i = 0; i < _buildingTiles->size(); i++) {
-		//cout << "Index [" << i << "]  "; 
-		//(*_buildingTiles)[i]->printBuildingTile(); 
+		cout << "Index [" << i << "]  "; 
+		(*_buildingTiles)[i]->printBuildingTile(); 
     }
-	*/ 
     return _buildingTiles;
 }
 
@@ -164,4 +163,9 @@ VGMaps* Player::getVGBoard()
 {
 	return _villageBoard;
 
+}
+
+HarvestTile * Player::getShipmentTile()
+{
+	return shipmentTile; 
 }
