@@ -231,7 +231,7 @@ int Scoring::get_winner(const VGMaps villages[4])
 	}
 
 	for (int i = 0; i < 4; i++)
-		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i;
+		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i + 1;
 
 	insertionSort(total_score, 4);
 
@@ -257,7 +257,7 @@ int Scoring::get_winner(VGMaps *villages[4])
 	}
 
 	for (int i = 0; i < 4; i++)
-		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i;
+		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i + 1;
 
 	insertionSort(total_score, 4);
 
