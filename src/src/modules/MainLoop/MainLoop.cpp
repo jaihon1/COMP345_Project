@@ -731,7 +731,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 
 			int pool_pick = total_building % 3;
 			for (int i = 0; i < pool_pick; i++) {
-				temp->pickFromBuildingPool(*building_pool, i);o my
+				temp->pickFromBuildingPool(*building_pool, i);
 			}
 			for (int i = 0; i < total_building - pool_pick; i++) {
 				temp->drawBuilding(*buildingDeck);

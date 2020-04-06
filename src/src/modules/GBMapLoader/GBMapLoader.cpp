@@ -10,9 +10,6 @@
 #include "../tile/Dictionary.h"
 #include "GBMapLoader.h"
 
-
-
-
 using namespace std;
 using json = nlohmann::json;
 

@@ -14,7 +14,6 @@ private:
     vector<BuildingTile*> *_buildingTiles;
     
     // Owns/Give up Ressource Markers
-    
     // Owns resources Gathering and Building Scoring facilities
 
 	int *ID; 

@@ -7,7 +7,6 @@
 
 using std::vector;
 
-
 struct VGSquare{ 
 	VGSlotStatus VGstatus; 
 	BuildingTile *building_ptr; 

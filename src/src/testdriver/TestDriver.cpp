@@ -1,5 +1,4 @@
 
-
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -335,7 +334,6 @@ void VGMapLoaderTest()
 	cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
 	*/
 
-
 	cout << BuildingTile::Building_intToChar(t1->getBuildingNum()) << endl;
 
 
@@ -358,17 +356,18 @@ void VGMapLoaderTest()
 	*/
 	//s->save(va, "C:\json_test\VGMaptest.json");  -> BAD 
 
-	s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
+	//s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
+
+	s->save(va, "C:\\json_test\VGMaptest5.json");
 
 	cout << "Saved va map" << endl;
-
-
 
 	VGMapLoader* m = new VGMapLoader();
 
 	cout << "\n";
 	cout << "Loading VGMap in " << endl;
 
+	//DAMIAN ALSO CHECK THIS ONE 
 	VGMapLoader* l = new VGMapLoader("C:\\json_test\\VGMaptest5.json");
 
 	cout << "\n";
@@ -426,11 +425,13 @@ void gameStartTest() {
 	gameStart->getHand()->displayHand();
 	cout << endl;
 	
+	
 	vector<BuildingTile*>* btVector = player[0]->getBuildings();
 	for (int i = 0; i < btVector->size(); i++) {
 		cout << "Tile "<< i + 1 << ": ";
 		printBuildingTile(btVector->at(i));
 	}
+	
 	cout << endl;
 	player[0]->getVGBoard()->printVGMap();
 	cout << endl;
@@ -461,9 +462,10 @@ void menuOptions() {
 	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - GameStart Test" << endl << "0 - Exit" << endl << endl << "Which test would you like to run? ";
 }
 
+/*
 int main()
 {
-	/*MemoryLeak*/
+	//MemoryLeak
 
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
@@ -495,8 +497,9 @@ int main()
 		menuOptions();
 		cin >> menuOption;
 	}
+	return 0; 
 }
-
+*/
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

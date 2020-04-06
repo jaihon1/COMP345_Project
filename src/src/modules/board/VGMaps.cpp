@@ -62,9 +62,18 @@ VGMaps::VGMaps()
 
 	//set VGMAP name
 	cout << check_name << endl; 
-	this->village_name = village_names.at(check_name); 
-	cout << this->village_name << endl; 
-	check_name++;
+
+	if ((check_name >= 0) && (check_name <= 3))
+	{
+		this->village_name = village_names.at(check_name);
+		cout << this->village_name << endl;
+		check_name++;
+	}
+	else if (check_name >= 4)
+	{
+		cout << "More than 4 players" << endl; 
+		this->village_name = " "; //empty string 
+	}
 
 	//initialize the slotnum
 	int fill = 6; 
@@ -99,10 +108,8 @@ VGMaps::~VGMaps()
 
 	village_board = NULL;  //make village_board null 
 
-
 	//deallocate the rows and colums pointer
 
-	
 	delete rows; 
 	rows = NULL; 
 	delete columns; 
