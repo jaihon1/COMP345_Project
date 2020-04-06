@@ -199,7 +199,7 @@ void scoringDriver() {
 	BuildingPool *building_pool = new BuildingPool(buildingDeck);
 
 	Player p[4];
-	VGMaps m[4];
+	VGMaps* m[4];
 	for (int k = 0; k < 4; k++) {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -208,7 +208,7 @@ void scoringDriver() {
 			}
 		}
 		p[k].getVGBoard()->printVGMap();
-		m[k] = (*p[k].getVGBoard());
+		m[k] = p[k].getVGBoard();
 	}
 
 	scobj->get_winner(m);
@@ -217,7 +217,7 @@ void scoringDriver() {
 int main(int argc, const char * argv[]) {
 
 	//turnSequenceDriver();
-	//scoringDriver();	
+	scoringDriver();	
 
 	system("pause");
 	return 0;

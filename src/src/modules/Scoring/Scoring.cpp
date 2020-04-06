@@ -242,6 +242,32 @@ int Scoring::get_winner(const VGMaps villages[4])
 	return winner;
 }
 
+int Scoring::get_winner(VGMaps *villages[4])
+{
+	using namespace std;
+	int winner = 0;
+
+	for (int i = 0; i < 4; i++) {
+		vil_score[i][0] = get_score(*villages[i]);
+		vil_score[i][1] = get_density(*villages[i]);
+		vil_score[i][2] = rand() % 50;
+		std::cout << "village score: " << vil_score[i][0] << std::endl;
+		std::cout << "village densi: " << vil_score[i][1] << std::endl;
+		std::cout << "village build: " << vil_score[i][2] << std::endl;
+	}
+
+	for (int i = 0; i < 4; i++)
+		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i;
+
+	insertionSort(total_score, 4);
+
+	for (int i = 0; i < 4; i++)
+		if (total_score[i] / 10 == total_score[0] / 10)
+			cout << "The winner is player at index: " << total_score[i] % 10 << endl;
+
+	return winner;
+}
+
 /*********************Nested Graph******************/
 Scoring::Graph::Graph(int V)
 {
@@ -301,7 +327,7 @@ int Scoring::Graph::connected(int v)
 
 	DFS_count(v, visited, count);
 
-	delete visited;
+	delete[] visited;
 
 	return count;
 }
@@ -365,7 +391,7 @@ void Scoring::Graph::connectedComponents()
 		}
 	}	
 
-	delete visited;
+	delete[] visited;
 }
 
 void Scoring::Graph::DFSUtil(int v, VER visited[])
