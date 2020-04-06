@@ -242,7 +242,7 @@ int Scoring::get_winner(const VGMaps villages[4])
 	return winner;
 }
 
-int Scoring::get_winner(VGMaps *villages[4])
+int Scoring::get_winner(VGMaps * const villages[4])
 {
 	using namespace std;
 	int winner = 0;

@@ -86,7 +86,7 @@ public:
 	int get_score(const VGMaps &vil);
 	int get_density(const VGMaps &vil);
 	int get_winner(const VGMaps villages[4]);
-	int get_winner(VGMaps *villages[4]);
+	int get_winner(VGMaps * const villages[4]);
 
 	int map(int index, GBMaps* inHarvestBoard);
 	void computeResources(int row, int column, HarvestTile* inHarvestTilePtr, GBMaps* inHarvestBoard);
