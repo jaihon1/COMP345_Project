@@ -356,7 +356,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			cout << endl << "Here are your harvest tiles in your possession: " << endl; 
 			vector <HarvestTile*> *harvest_tile = temp->getHarvestTiles(); 
 
-			cout << "You also have a shipment tile  that allows you to palce a tile with 4 of the same ressources!" << endl; 
+			cout << endl << "You also have a shipment tile  that allows you to palce a tile with 4 of the same ressources!" << endl; 
 
 			int harvest_choice = 0;
 			cout << "Enter 1 if you want to place a harvest tile or enter 2 if you want to place your shipment tile: " << endl; 
@@ -401,7 +401,9 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			else if (harvest_choice == 2)
 			{
 				bool s_placed = true; 
-
+				//For testing? 
+				//HarvestTile *special = harvestDeck->draw(); 
+				HarvestTile *special = temp->getShipmentTile(); 
 				while (s_placed)
 				{
 					int type = 0; 
@@ -412,26 +414,27 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 					cout << "Row: " << endl;
 					cin >> row;
 					cout << "Column: " << endl;
+					cin >> column; 
 
-					HarvestTile *special;
+					//HarvestTile *special = new HarvestTile(); 
+
 					int place_s_valid = temp->placeShipmentTile(row, column, *special, *gameboard, type);
 
 					if (place_s_valid == 0)
 					{
+						cout << "Wrong placement of shipment tile, try again" << endl;
 						s_placed = true;
-						cout << "Wrong placement of shipment tile" << endl;
-						break;
 					}
 					else if (place_s_valid == 1)
 					{
 						cout << "Success in placing shipment tile" << endl;
 						s_placed = false;
-
 					}
 				}
 				cout << "Place Shipment tile" << endl; 
+				//delete special; 
+				//special = NULL; 
 			}
-
 			cout << endl << "Here is the updated game board" << endl; 
 			gameboard->printGameBoard();
 			
@@ -714,7 +717,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			*/ 
 
 			/***********the below maybe a more detail version*************/
-			//For now its simulated 
+			//For now its simulated - make the player 
 
 			//TO CHECK 
 			scobj->get_res(res);
@@ -728,7 +731,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 
 			int pool_pick = total_building % 3;
 			for (int i = 0; i < pool_pick; i++) {
-				temp->pickFromBuildingPool(*building_pool, i);
+				temp->pickFromBuildingPool(*building_pool, i);o my
 			}
 			for (int i = 0; i < total_building - pool_pick; i++) {
 				temp->drawBuilding(*buildingDeck);

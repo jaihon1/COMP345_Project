@@ -58,6 +58,9 @@ public:
 	void setID(int n); 
 	VGMaps* getVGBoard();
 
+	HarvestTile * getShipmentTile(); 
+
+
 };
 
 

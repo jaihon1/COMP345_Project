@@ -97,8 +97,11 @@ void GameStart::setup(int inNumPlayers) {
 		}
 		playerArr[i]->drawHarvestTile(*harvestDeck);
 		playerArr[i]->drawHarvestTile(*harvestDeck);
+		//HarvestTile *ship = playerArr[i]->drawHarvestTile(*harvestDeck); 
 
-		playerArr[i]->setShipmentTile(harvestDeck->draw());
+		playerArr[i]->setShipmentTile(harvestDeck->draw()); //he has a shipment tile 
+		//playerArr[i]->setShipmentTile(ship); //that harvest tile is not a shipment tile
+
 	}
 
 	hand = new Hand(sc);
