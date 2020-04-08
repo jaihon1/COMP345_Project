@@ -123,7 +123,6 @@ void turnSequenceDriver() {
 
 	// 2. Determine Resources Gathered
 	int res[4];
-
 	scobj->get_res(res);
 
 
@@ -199,7 +198,6 @@ void scoringDriver() {
 
 	Player p[4];
 	VGMaps* m[4];
-
 	for (int k = 0; k < 4; k++) {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -223,4 +221,3 @@ int main(int argc, const char * argv[]) {
 	return 0;
 }
 */ 
-
