@@ -6,8 +6,9 @@
 #include <map>
 #include <string>
 #include "../tile/Resources.h"
+//#include <nlohmann/json.hpp>
 
-//#include "../../nlohmann/json.hpp"
+#include "../../nlohmann/json.hpp"
 using namespace std;
 
 //VGMapLoader just needs to be able to read in a existing building board
@@ -63,7 +64,6 @@ private:
 			this->operator[]("5") = 5;
 			this->operator[]("6") = 6;
 		}
-
 		~buildingInt() {};
 	};
 

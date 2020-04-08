@@ -1,0 +1,288 @@
+{
+  "NumberOfPlayers": 4,
+  "board": [
+    [
+      {
+        "GBSquare": {
+          "status": "Unavailable"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Unavailable"
+        }
+      }
+    ],
+    [
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "resources": [
+            "Rock",
+            "Sheep",
+            "Lumber",
+            "Lumber"
+          ],
+          "status": "HarvestTile"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "resources": [
+            "Wheat",
+            "Sheep",
+            "Wheat",
+            "Lumber"
+          ],
+          "status": "HarvestTile"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      }
+    ],
+    [
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      }
+    ],
+    [
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      }
+    ],
+    [
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      }
+    ],
+    [
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "resources": [
+            "Rock",
+            "Rock",
+            "Lumber",
+            "Wheat"
+          ],
+          "status": "HarvestTile"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "resources": [
+            "Sheep",
+            "Rock",
+            "Sheep",
+            "Wheat"
+          ],
+          "status": "HarvestTile"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      }
+    ],
+    [
+      {
+        "GBSquare": {
+          "status": "Unavailable"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Empty"
+        }
+      },
+      {
+        "GBSquare": {
+          "status": "Unavailable"
+        }
+      }
+    ]
+  ]
+}

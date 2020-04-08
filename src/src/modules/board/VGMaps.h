@@ -1,19 +1,19 @@
 #pragma once
-
+#include <iomanip>
 #include <stdio.h>
 #include <vector>
+#include <string>
 #include "../tile/Resources.h"
 
 using std::vector;
 
-struct VGSquare { //why struct? 
-
-	VGSlotStatus VGstatus;
-	BuildingTile* building_ptr;
+struct VGSquare{ 
+	VGSlotStatus VGstatus; 
+	BuildingTile *building_ptr; 
 	BuildingColorType VGSquare_type;  //same as buildingtype 
-
+	int slotnum; //from 1 to 6 
 	//void deepCopy_square(const VGSquare & v); 
-};
+}; 
 
 
 class VGMaps {
@@ -26,11 +26,15 @@ private:
 	bool RedLumberPlaced = false;
 	bool YellowHayPlaced = false;
 
+	vector <string> village_names { "Guildford", "Stratford", "Fairfield", "Milford" };
+	
 public:
 
 	//is it the end of the world 
 	const int* rows = new int(6); //length of the row
 	const int* columns = new int(5); //length of the column
+
+	static int check_name;
 
 	VGMaps();
 
@@ -39,6 +43,7 @@ public:
 	VGSlotStatus getStatus(int row, int column);
 
 	VGSquare** village_board;
+	string village_name;
 
 	//useless?
 	bool getGreenSheepPlaced() { return GreenSheepPlaced; }
@@ -61,6 +66,7 @@ public:
 	BuildingTile getBuildingTile(int r, int c);
 	void printVGMap();
 
+	string getVillageName(); 
+
 
 };
-

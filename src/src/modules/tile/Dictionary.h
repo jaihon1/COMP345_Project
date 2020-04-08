@@ -1,9 +1,10 @@
-#pragma once
+#ifndef Dictionary_h
+#define Dictionary_h
 
 enum class ResourceName {
 	Lumber = 1,
 	Sheep = 2,
-  Wheat = 3,
+    Wheat = 3,
 	Rock = 4
 };
 
@@ -46,3 +47,6 @@ enum class VGSlotStatus {
     Taken, //int 1
     Unavailable //int 2 - any invalid slot (outside the actual map)
 };
+
+
+#endif /* Dictionary_h */

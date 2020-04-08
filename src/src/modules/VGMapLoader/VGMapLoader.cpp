@@ -1,5 +1,6 @@
 #include "VGMapLoader.h"
-#include <nlohmann/json.hpp>
+//#include <nlohmann/json.hpp>
+
 using namespace std;
 
 using json = nlohmann::json;
@@ -38,19 +39,49 @@ VGMapLoader::VGMapLoader(const char* inFile)
 	buildingInt bIMap;
 	cout << "Created the maps to check " << endl;
 
+	if (boardJson->size() != 6) {
+		cerr << "error: incorrect number of rows" << endl << endl;
+		delete board;
+		board = nullptr;
+		return;
+	}
 
 	for (auto const& row : *boardJson)
 	{
 		VG_row++;
+
+		if (row.size() != 5) {
+			cerr << "error: row " << row << " has an incorrect number of columns" << endl << endl;
+			delete board;
+			board = nullptr;
+			return;
+		}
+
 		int VG_col = -1;
 		for (auto const& column : row)
 		{
 			VG_col++;
 
 			auto const VGS = column.find("VGSquare");
+
+			if (VGS == column.end())
+			{
+				cerr << "VGSquare attribute not found";
+				delete board;
+				return;  //return back to where you were
+			}
+
 			cout << "Found VGSquare" << endl;
 
 			auto const VGstat = VGS->find("VGstatus"); //get value attached to VGStatus 
+
+
+			if (VGstat == VGS->end())
+			{
+				cerr << "VGstatus attribute not found";
+				delete board;
+				return;  //return back to where you were
+			}
 
 			if (sMap[*VGstat] == VGSlotStatus::Taken)
 			{
@@ -59,9 +90,41 @@ VGMapLoader::VGMapLoader(const char* inFile)
 
 				auto const b_ptr = VGS->find("*building_ptr");
 
+				if (b_ptr == VGS->end())
+				{
+					cerr << "*building_ptr attribute not found";
+					delete board;
+					return;  //return back to where you were
+				}
+
 				auto const b_type = b_ptr->find("BuildingColorType");
+
+				if (b_type == b_ptr->end())
+				{
+					cerr << "BuildingColorType attribute not found";
+					delete board;
+					return;  //return back to where you were
+				}
+
 				auto const b_side = b_ptr->find("BuildingSide");
+
+				if (b_side == b_ptr->end())
+				{
+					cerr << "BuildingSide attribute not found";
+					delete board;
+					return;  //return back to where you were
+				}
+
 				auto const b_num = b_ptr->find("BuildingNumber");
+
+				if (b_num == b_ptr->end())
+				{
+					cerr << "BuildingNumber attribute not found";
+					delete board;
+					return;  //return back to where you were
+				}
+
+
 				cout << "Found each building attribute" << endl;
 
 
@@ -76,7 +139,8 @@ VGMapLoader::VGMapLoader(const char* inFile)
 
 				//cout << "suspected crash" << endl;
 				int n = bIMap[*b_num];
-				cout << "Found num" << endl;
+				cout << "Found num" << endl; 
+
 
 				BuildingTile* temp = new BuildingTile(c, n, s);
 
@@ -113,17 +177,31 @@ VGMapLoader::VGMapLoader(const char* inFile)
 				board->village_board[VG_row][VG_col].building_ptr = NULL;
 
 				cout << "Set status to empty and color type to none" << endl;
+
 			}
-
-
 		}
 
+	}
+
+	//TO INITALIZE THE SLOW NUMBER 
+	//initialized the rest of the slot num - to double check 
+	int filler = 6; 
+	for (int i = 0; i < 6 ; i++)
+	{
+		for (int j = 0; i < 5; j++)
+		{
+			if (board->village_board[i][j].VGstatus == VGSlotStatus::Empty)
+			{
+				board->village_board[i][j].slotnum = filler; 
+			}
+		}
+		filler--;
 	}
 }
 
 VGMapLoader::~VGMapLoader()
 {
-	cout << "deleting board - make sure to get board assignment first" << endl;
+	cout << "deleting board - make sure to get board assignment first" << endl; 
 	delete board;
 }
 
@@ -133,7 +211,7 @@ VGMaps* VGMapLoader::getBoard()
 }
 
 //why VGMapsaver? 
-void VGMapSaver::save(VGMaps* inGame, const char* inFilePath)
+void VGMapSaver::save(VGMaps * inGame, const char* inFilePath)
 {
 	outFile.open(inFilePath);
 	cout << "Opening file path " << endl;
@@ -170,7 +248,7 @@ void VGMapSaver::save(VGMaps* inGame, const char* inFilePath)
 			{
 				//push back status 
 
-				BuildingTile* t = new BuildingTile(inGame->getBuildingTile(i, j));
+				BuildingTile *t = new BuildingTile(inGame->getBuildingTile(i, j));
 
 				nlohmann::basic_json <> building_stats =
 				{
@@ -198,8 +276,10 @@ void VGMapSaver::save(VGMaps* inGame, const char* inFilePath)
 				cout << "Pushed json object back" << endl;
 
 				//good practice 
-				delete t;
-				t = NULL;
+
+				delete t; 
+				t = NULL; 
+
 			}
 
 		}

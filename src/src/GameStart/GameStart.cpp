@@ -1,3 +1,4 @@
+
 #include <string>
 #include "../modules/GBMapLoader/GBMapLoader.h"
 #include "../modules/tile/Dictionary.h"
@@ -33,6 +34,11 @@ BuildingDeck* GameStart::getBuildingDeck()
 	return buildingDeck;
 }
 
+BuildingPool * GameStart::getBuildingPool()
+{
+	return buildingPool; 
+}
+
 Hand* GameStart::getHand()
 {
 	return hand;
@@ -58,8 +64,12 @@ void GameStart::setup(int inNumPlayers) {
 	/*******************************************
 	******* REMEMBER TO CHECK FILE PATHS *******
 	********************************************
-	*/
-	string root = "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\StartGameMaps\\";
+	*/ 
+
+	//DAMIAN CHECK PATH ON YOUR COMPUTER 
+
+	//string root = "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\StartGameMaps\\";
+	string root = "C:\\Users\\titi7\\source\\repos\\Comp345_Assignment2\\Comp345_Assignment2\\files\\data\\StartGameMaps\\"; 
 
 	switch (inNumPlayers) {
 	case 2:
@@ -82,13 +92,16 @@ void GameStart::setup(int inNumPlayers) {
 	// instantiate each player and initialize their harvest and building tiles
 	for (int i = 0; i < inNumPlayers; i++) {
 		playerArr[i] = new Player();
-		for (int j = 0; j < 5; j++) {
+		for (int j = 0; j < 6; j++) {
 			playerArr[i]->drawBuilding(*buildingDeck);
 		}
 		playerArr[i]->drawHarvestTile(*harvestDeck);
 		playerArr[i]->drawHarvestTile(*harvestDeck);
+		//HarvestTile *ship = playerArr[i]->drawHarvestTile(*harvestDeck); 
 
-		playerArr[i]->setShipmentTile(harvestDeck->draw());
+		playerArr[i]->setShipmentTile(harvestDeck->draw()); //he has a shipment tile 
+		//playerArr[i]->setShipmentTile(ship); //that harvest tile is not a shipment tile
+
 	}
 
 	hand = new Hand(sc);

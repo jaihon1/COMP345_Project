@@ -1,4 +1,5 @@
-#include "modules/VGMapLoader.h"
+/*
+#include "modules/VGMapLoader/VGMapLoader.h"
 #include "modules/board/VGMaps.h"
 #include "modules/tile/Resources.h"
 #include "nlohmann/json.hpp"
@@ -8,13 +9,14 @@
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
-
+*/ 
 
 //Methods to print out VGMap to see if it works in creating it 
 //Main for Map Loader part 3 
 
 //Test run for VGMap Loader
 
+/*
 int main()
 {
 	//create a new VGBoard
@@ -41,6 +43,7 @@ int main()
 	cout << BuildingTile::Building_typeToChar(t1->getBuildingColorType()) << endl; 
 	cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
 	*/
+/*
 	cout << BuildingTile::Building_intToChar(t1->getBuildingNum()) << endl;
 	
 
@@ -80,4 +83,6 @@ int main()
 
 
 	return 0; 
+
 }
+*/ 

@@ -45,7 +45,7 @@ void Scoring::add_res(int resv, int numv)
 void Scoring::update_help(int v, int w, int res) {
 	if (vertices.is_adjacent(v, w))
 		add_res(res, vertices.connected(v));
-	else {		
+	else {
 		add_res(res, vertices.connected(v));
 		add_res(res, vertices.connected(w));
 	}
@@ -54,7 +54,7 @@ void Scoring::update_help(int v, int w, int res) {
 void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 {
 	//std::cout << "Test" << vertices.connected(90) << std::endl;
-	
+
 	for (int i = 0; i < 4; i++)
 	{
 		if (res[i] == 0)
@@ -71,7 +71,7 @@ void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 		}
 		add_res(res[i], vertices.connected(pos[i]));
 	}
-		
+
 }
 
 void Scoring::connectedComponents()
@@ -224,20 +224,46 @@ int Scoring::get_winner(const VGMaps villages[4])
 	for (int i = 0; i < 4; i++) {
 		vil_score[i][0] = get_score(villages[i]);
 		vil_score[i][1] = get_density(villages[i]);
-		vil_score[i][2] = rand() % 100;
+		vil_score[i][2] = rand() % 50;
 		std::cout << "village score: " << vil_score[i][0] << std::endl;
 		std::cout << "village densi: " << vil_score[i][1] << std::endl;
 		std::cout << "village build: " << vil_score[i][2] << std::endl;
 	}
 
 	for (int i = 0; i < 4; i++)
-		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i;
+		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i + 1;
 
 	insertionSort(total_score, 4);
 
 	for (int i = 0; i < 4; i++)
 		if (total_score[i] / 10 == total_score[0] / 10)
-			cout << "The winner is player: " << total_score[i] % 10 << endl;
+			cout << "The winner is player at index: " << total_score[i] % 10 << endl;
+
+	return winner;
+}
+
+int Scoring::get_winner(VGMaps *villages[4])
+{
+	using namespace std;
+	int winner = 0;
+
+	for (int i = 0; i < 4; i++) {
+		vil_score[i][0] = get_score(*villages[i]);
+		vil_score[i][1] = get_density(*villages[i]);
+		vil_score[i][2] = rand() % 50;
+		std::cout << "village score: " << vil_score[i][0] << std::endl;
+		std::cout << "village densi: " << vil_score[i][1] << std::endl;
+		std::cout << "village build: " << vil_score[i][2] << std::endl;
+	}
+
+	for (int i = 0; i < 4; i++)
+		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i + 1;
+
+	insertionSort(total_score, 4);
+
+	for (int i = 0; i < 4; i++)
+		if (total_score[i] / 10 == total_score[0] / 10)
+			cout << "The winner is player at index: " << total_score[i] % 10 << endl;
 
 	return winner;
 }
@@ -354,16 +380,16 @@ void Scoring::Graph::connectedComponents()
 	int retval = []() -> int { return 1; }();
 	VER *visited = new VER[V]();
 
-	for (int v = 0; v<V; v++)
+	for (int v = 0; v < V; v++)
 	{
 		if (visited[v].visited == false)
 		{
 			// print all reachable vertices from v 			
 			DFSUtil(v, visited);
 
-			std::cout << "\n";				
+			std::cout << "\n";
 		}
-	}	
+	}
 
 	delete[] visited;
 }
