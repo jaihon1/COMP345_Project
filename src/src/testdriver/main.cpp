@@ -197,6 +197,7 @@ void scoringDriver() {
 	BuildingDeck* buildingDeck = new BuildingDeck();
 	Scoring *scobj = new Scoring();
 	BuildingPool *building_pool = new BuildingPool(buildingDeck);
+	srand(time(NULL));
 
 	Player p[4];
 	VGMaps* m[4];
@@ -207,9 +208,10 @@ void scoringDriver() {
 				p[k].placeBuildingTile(i, j, *testBuildingTile);
 			}
 		}
-		p[k].getVGBoard()->printVGMap();
 		m[k] = p[k].getVGBoard();
 	}
+	for (int k = 0; k < 4; k++)
+		p[k].getVGBoard()->printVGMap();
 
 	scobj->get_winner(m);
 }

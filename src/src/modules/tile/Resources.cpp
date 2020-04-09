@@ -171,7 +171,8 @@ int* BuildingTile::generateBuildingNumber() {
 		srand(time(NULL));  //set the seed first
 	}
 	//    cout << "Randomizing" << endl;
-	int* random = new int(rand() % 6 + 1); //generate a random number from 1 to 6                                                                              //srand and seed it...
+	int* random = new int(rand() % 6 + 1); //generate a random number from 1 to 6                                                                              
+										   //srand and seed it...
 										   //int rando = rand() % 6 + 1; //generate a random number from 1 to 6
 										   //int* random = &rando; //generate a random number from 1 to 6
 	return random;
