@@ -231,22 +231,26 @@ void observerDriver() {
 	VGMaps* m[2];
 	scobj->set_id(1, 1);
 	scobj->set_id(2, 2);
+	GameObservers o1(scobj);
+	GameObservers o2(scobj);
 	
-	scobj->notify();
 	std::cout << "notify 0 " << std::endl;
-	scobj->get_state();
-	GameObservers o1(scobj);	
-	ViewObserver o2(scobj);
+	//do something
 
-	scobj->notify();
+	scobj->get_state();
+
+
 	std::cout << "notify 1 " << std::endl;
+	//do something
+
 	scobj->get_state();
 
 	scobj->detach(&o1);
 	//scobj->detach(&o2);
 
-	scobj->notify();
 	std::cout << "notify 2 " << std::endl;
+	//do something
+
 	scobj->get_state();
 }
 
