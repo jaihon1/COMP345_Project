@@ -194,7 +194,7 @@ void turnSequenceDriver() {
 	printGameBoard(gameBoard);
 }
 
-void scoringDriver1() {
+void scoringDriver() {
 	// Setup
 	HarvestDeck* harvestDeck = new HarvestDeck();
 	BuildingDeck* buildingDeck = new BuildingDeck();
@@ -219,7 +219,7 @@ void scoringDriver1() {
 	scobj->get_winner(m);
 }
 
-void scoringDriver() {
+void observerDriver() {
 	// Setup
 	HarvestDeck* harvestDeck = new HarvestDeck();
 	BuildingDeck* buildingDeck = new BuildingDeck();
@@ -227,8 +227,10 @@ void scoringDriver() {
 	BuildingPool *building_pool = new BuildingPool(buildingDeck);
 	srand(time(NULL));
 
-	Player p[4];
-	VGMaps* m[4];
+	Player p[2];
+	VGMaps* m[2];
+	scobj->set_id(1, 1);
+	scobj->set_id(2, 2);
 	
 	scobj->notify();
 	std::cout << "notify 0 " << std::endl;
@@ -258,7 +260,7 @@ int main(int argc, const char * argv[]) {
 
 	//turnSequenceDriver();
 	//scoringDriver1();	
-	scoringDriver();
+	observerDriver();
 
 	system("pause");
 	return 0;

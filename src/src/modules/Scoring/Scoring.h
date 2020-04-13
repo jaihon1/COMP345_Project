@@ -79,10 +79,10 @@ public:
 	void update_res(ptrdiff_t pos[4], int res[4]);
 
 	void set_state(int i);
-	void set_id(int i, int id);
-	void set_score(int i, int score);
-	void add_density(int i, int number);
-	void set_avail_building(int i, int number);
+	void set_id(int index, int id);
+	void set_score(int index, int score);
+	void add_density(int index, int number);
+	void set_avail_building(int index, int number);
 	void get_state();
 	int get_state(int state[10][5]);
 

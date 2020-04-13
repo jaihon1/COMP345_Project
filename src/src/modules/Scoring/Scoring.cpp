@@ -5,6 +5,9 @@
 
 Scoring::Scoring()
 {
+	for (int i = 1; i < 5; i++)
+		statistic[i][0] = 1;
+	statistic[6][0] = 1;
 }
 
 Scoring::Scoring(const Scoring &sc) :vertices(sc.vertices)
@@ -14,9 +17,6 @@ Scoring::Scoring(const Scoring &sc) :vertices(sc.vertices)
 
 Scoring::~Scoring()
 {
-	for (int i = 1; i < 5; i++)
-		statistic[i][0] = 1;
-	statistic[6][0] = 1;
 }
 
 void Scoring::addEdge(int v, int w)
@@ -77,27 +77,28 @@ void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 
 }
 
-void Scoring::set_id(int i, int id)
+void Scoring::set_id(int index, int id)
 {
-	statistic[1][i] = id;
+	statistic[0][index] = 1;
+	statistic[1][index] = id;
 	notify();
 }
 
-void Scoring::set_score(int i, int score)
+void Scoring::set_score(int index, int score)
 {
-	statistic[2][i] = score;
+	statistic[2][index] = score;
 	notify();
 }
 
-void Scoring::add_density(int i, int number)
+void Scoring::add_density(int index, int number)
 {
-	statistic[3][i] += number;
+	statistic[3][index] += number;
 	notify();
 }
 
-void Scoring::set_avail_building(int i, int number)
+void Scoring::set_avail_building(int index, int number)
 {
-	statistic[4][i] = number;
+	statistic[4][index] = number;
 	notify();
 }
 
@@ -151,9 +152,8 @@ void Scoring::get_state()
 	}
 	std::cout << "Resource Marker " << std::endl;
 	for (int i = 1; i < 5; i++)
-	{
 		std::cout << "Res #" << i << ": " << statistic[6][i] << std::endl;
-	}
+	std::cout << std::endl;
 }
 
 int Scoring::get_state(int state[10][5])
