@@ -68,8 +68,8 @@ void GameStart::setup(int inNumPlayers) {
 
 	//DAMIAN CHECK PATH ON YOUR COMPUTER 
 
-	//string root = "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\StartGameMaps\\";
-	string root = "C:\\Users\\titi7\\source\\repos\\Comp345_Assignment2\\Comp345_Assignment2\\files\\data\\StartGameMaps\\"; 
+	string root = "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\StartGameMaps\\";
+	//string root = "C:\\Users\\titi7\\source\\repos\\Comp345_Assignment2\\Comp345_Assignment2\\files\\data\\StartGameMaps\\"; 
 
 	switch (inNumPlayers) {
 	case 2:
