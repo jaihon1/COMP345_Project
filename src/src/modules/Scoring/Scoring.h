@@ -2,6 +2,7 @@
 #include <iostream> 
 #include <list> 
 #include "../board/VGMaps.h"
+#include "../../GameObservers/Subject.h"
 
 class GBMaps;
 
@@ -10,7 +11,7 @@ class GBMaps;
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
 #endif
 
-class Scoring
+class Scoring : public Subject
 {
 private:
 	class Graph
@@ -62,6 +63,8 @@ private:
 	void insertionSort(int arr[], int n);
 
 	//friend void GBMap::add_tile(int xv, int yv, int res[4], Scoring &sc);
+
+	int statistic[10][5] = { 0 };//first column is row signature
 public:
 	Scoring();
 	Scoring(const Scoring &sc);
@@ -74,6 +77,14 @@ public:
 	void reset_res();
 	void set_res(int res[4]);
 	void update_res(ptrdiff_t pos[4], int res[4]);
+
+	void set_state(int i);
+	void set_id(int i, int id);
+	void set_score(int i, int score);
+	void add_density(int i, int number);
+	void set_avail_building(int i, int number);
+	void get_state();
+	int get_state(int state[10][5]);
 
 	int get_lumber();
 	int get_sheep();

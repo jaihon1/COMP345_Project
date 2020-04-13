@@ -7,7 +7,10 @@
 #include "../modules/Scoring/Scoring.h"
 #include "../modules/player/player.h"
 #include "../modules/board/VGMaps.h"
-
+#include "../GameObservers/GameObservers.h"
+#include "../GameObservers/ViewObserver.h"
+#include "../GameObservers/Foo.h"
+#include "../GameObservers/FooObserver.h"
 
 using namespace std;
 
@@ -191,7 +194,7 @@ void turnSequenceDriver() {
 	printGameBoard(gameBoard);
 }
 
-void scoringDriver() {
+void scoringDriver1() {
 	// Setup
 	HarvestDeck* harvestDeck = new HarvestDeck();
 	BuildingDeck* buildingDeck = new BuildingDeck();
@@ -216,10 +219,46 @@ void scoringDriver() {
 	scobj->get_winner(m);
 }
 
+void scoringDriver() {
+	// Setup
+	HarvestDeck* harvestDeck = new HarvestDeck();
+	BuildingDeck* buildingDeck = new BuildingDeck();
+	Scoring *scobj = new Scoring();
+	BuildingPool *building_pool = new BuildingPool(buildingDeck);
+	srand(time(NULL));
+
+	Player p[4];
+	VGMaps* m[4];
+	
+	scobj->notify();
+	std::cout << "notify 0 " << std::endl;
+	scobj->get_state();
+	GameObservers o1(scobj);	
+	ViewObserver o2(scobj);
+
+	scobj->notify();
+	std::cout << "notify 1 " << std::endl;
+	scobj->get_state();
+
+	scobj->detach(&o1);
+	//scobj->detach(&o2);
+
+	scobj->notify();
+	std::cout << "notify 2 " << std::endl;
+	scobj->get_state();
+}
+
+void observer() {
+	Foo* f = new Foo();
+	FooObserver o1(f);
+	f->notify();
+}
+
 int main(int argc, const char * argv[]) {
 
 	//turnSequenceDriver();
-	scoringDriver();	
+	//scoringDriver1();	
+	scoringDriver();
 
 	system("pause");
 	return 0;

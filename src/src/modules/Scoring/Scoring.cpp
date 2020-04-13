@@ -14,6 +14,9 @@ Scoring::Scoring(const Scoring &sc) :vertices(sc.vertices)
 
 Scoring::~Scoring()
 {
+	for (int i = 1; i < 5; i++)
+		statistic[i][0] = 1;
+	statistic[6][0] = 1;
 }
 
 void Scoring::addEdge(int v, int w)
@@ -74,6 +77,30 @@ void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 
 }
 
+void Scoring::set_id(int i, int id)
+{
+	statistic[1][i] = id;
+	notify();
+}
+
+void Scoring::set_score(int i, int score)
+{
+	statistic[2][i] = score;
+	notify();
+}
+
+void Scoring::add_density(int i, int number)
+{
+	statistic[3][i] += number;
+	notify();
+}
+
+void Scoring::set_avail_building(int i, int number)
+{
+	statistic[4][i] = number;
+	notify();
+}
+
 void Scoring::connectedComponents()
 {
 	vertices.connectedComponents();
@@ -87,6 +114,55 @@ int Scoring::adjacency(int v)
 int Scoring::connected(int v)
 {
 	return vertices.connected(v);
+}
+
+void Scoring::get_state()
+{
+	int total_player = 4;
+	for (int i = 1; i < 5; i++)
+	{
+		if (statistic[0][i] == 0)
+			total_player--;
+	}
+	for (int i = 1; i < 6; i++)
+	{
+		if (statistic[i][0] == 0)
+			continue;
+		switch (i)
+		{
+		case 1: std::cout << "Player # " << std::endl;
+			break;
+		case 2: std::cout << "Village score " << std::endl;
+			break;
+		case 3: std::cout << "Village density " << std::endl;
+			break;
+		case 4: std::cout << "Avail building " << std::endl;
+			break;
+		case 5: std::cout << "Turn remain " << std::endl;
+			break;
+		default: printf("N/A");
+			break;
+		}
+		for (int j = 1; j <= total_player; j++)
+		{
+			std::cout << "Player #" << i << ": " << statistic[i][j] << std::endl;
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "Resource Marker " << std::endl;
+	for (int i = 1; i < 5; i++)
+	{
+		std::cout << "Res #" << i << ": " << statistic[6][i] << std::endl;
+	}
+}
+
+int Scoring::get_state(int state[10][5])
+{
+	{
+
+		return 1;
+	}
+	return 0;
 }
 
 int Scoring::get_lumber()

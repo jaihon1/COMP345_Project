@@ -2,12 +2,12 @@
 #include "Observer.h"
 #include "../modules/Scoring/Scoring.h"
 
-class GameObservers : public Observer
+class ViewObserver : public Observer
 {
 public:
-	GameObservers();
-	GameObservers(Scoring* sc);
-	~GameObservers();
+	ViewObserver();
+	ViewObserver(Scoring* sc);
+	~ViewObserver();
 
 	void update() override;
 
