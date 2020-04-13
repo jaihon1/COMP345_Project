@@ -1,9 +1,13 @@
+
 #include "../tile/Resources.h"
 #include "../board/GBMaps.h"
 #include "Scoring.h"
 
 Scoring::Scoring()
 {
+	for (int i = 1; i < 5; i++)
+		statistic[i][0] = 1;
+	statistic[6][0] = 1;
 }
 
 Scoring::Scoring(const Scoring &sc) :vertices(sc.vertices)
@@ -73,6 +77,31 @@ void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 
 }
 
+void Scoring::set_id(int index, int id)
+{
+	statistic[0][index] = 1;
+	statistic[1][index] = id;
+	notify();
+}
+
+void Scoring::set_score(int index, int score)
+{
+	statistic[2][index] = score;
+	notify();
+}
+
+void Scoring::add_density(int index, int number)
+{
+	statistic[3][index] += number;
+	notify();
+}
+
+void Scoring::set_avail_building(int index, int number)
+{
+	statistic[4][index] = number;
+	notify();
+}
+
 void Scoring::connectedComponents()
 {
 	vertices.connectedComponents();
@@ -86,6 +115,54 @@ int Scoring::adjacency(int v)
 int Scoring::connected(int v)
 {
 	return vertices.connected(v);
+}
+
+void Scoring::get_state()
+{
+	int total_player = 4;
+	for (int i = 1; i < 5; i++)
+	{
+		if (statistic[0][i] == 0)
+			total_player--;
+	}
+	for (int i = 1; i < 6; i++)
+	{
+		if (statistic[i][0] == 0)
+			continue;
+		switch (i)
+		{
+		case 1: std::cout << "Player # " << std::endl;
+			break;
+		case 2: std::cout << "Village score " << std::endl;
+			break;
+		case 3: std::cout << "Village density " << std::endl;
+			break;
+		case 4: std::cout << "Avail building " << std::endl;
+			break;
+		case 5: std::cout << "Turn remain " << std::endl;
+			break;
+		default: printf("N/A");
+			break;
+		}
+		for (int j = 1; j <= total_player; j++)
+		{
+			std::cout << "Player #" << i << ": " << statistic[i][j] << std::endl;
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "Resource Marker " << std::endl;
+	for (int i = 1; i < 5; i++)
+		std::cout << "Res #" << i << ": " << statistic[6][i] << std::endl;
+	std::cout << std::endl;
+}
+
+int Scoring::get_state(int state[10][5])
+{
+	{
+
+		return 1;
+	}
+	return 0;
 }
 
 int Scoring::get_lumber()
@@ -223,20 +300,46 @@ int Scoring::get_winner(const VGMaps villages[4])
 	for (int i = 0; i < 4; i++) {
 		vil_score[i][0] = get_score(villages[i]);
 		vil_score[i][1] = get_density(villages[i]);
-		vil_score[i][2] = rand() % 100;
+		vil_score[i][2] = rand() % 50;
 		std::cout << "village score: " << vil_score[i][0] << std::endl;
 		std::cout << "village densi: " << vil_score[i][1] << std::endl;
 		std::cout << "village build: " << vil_score[i][2] << std::endl;
 	}
 
 	for (int i = 0; i < 4; i++)
-		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i;
+		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i + 1;
 
 	insertionSort(total_score, 4);
 
 	for (int i = 0; i < 4; i++)
 		if (total_score[i] / 10 == total_score[0] / 10)
-			cout << "The winner is player: " << total_score[i] % 10 << endl;
+			cout << "The winner is player at index: " << total_score[i] % 10 << endl;
+
+	return winner;
+}
+
+int Scoring::get_winner(VGMaps *villages[4])
+{
+	using namespace std;
+	int winner = 0;
+
+	for (int i = 0; i < 4; i++) {
+		vil_score[i][0] = get_score(*villages[i]);
+		vil_score[i][1] = get_density(*villages[i]);
+		vil_score[i][2] = rand() % 50;
+		std::cout << "village score: " << vil_score[i][0] << std::endl;
+		std::cout << "village densi: " << vil_score[i][1] << std::endl;
+		std::cout << "village build: " << vil_score[i][2] << std::endl;
+	}
+
+	for (int i = 0; i < 4; i++)
+		total_score[i] = vil_score[i][0] * 100000 + vil_score[i][1] * 1000 + (100 - vil_score[i][2]) * 10 + i + 1;
+
+	insertionSort(total_score, 4);
+
+	for (int i = 0; i < 4; i++)
+		if (total_score[i] / 10 == total_score[0] / 10)
+			cout << "The winner is player at index: " << total_score[i] % 10 << endl;
 
 	return winner;
 }
@@ -300,7 +403,7 @@ int Scoring::Graph::connected(int v)
 
 	DFS_count(v, visited, count);
 
-	delete visited;
+	delete[] visited;
 
 	return count;
 }
@@ -364,7 +467,7 @@ void Scoring::Graph::connectedComponents()
 		}
 	}
 
-	delete visited;
+	delete[] visited;
 }
 
 void Scoring::Graph::DFSUtil(int v, VER visited[])

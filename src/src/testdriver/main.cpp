@@ -7,7 +7,10 @@
 #include "../modules/Scoring/Scoring.h"
 #include "../modules/player/player.h"
 #include "../modules/board/VGMaps.h"
-
+#include "../GameObservers/GameObservers.h"
+#include "../GameObservers/ViewObserver.h"
+#include "../GameObservers/Foo.h"
+#include "../GameObservers/FooObserver.h"
 
 using namespace std;
 
@@ -169,15 +172,16 @@ void turnSequenceDriver() {
 	// 5. Player draws building tiles. 1) Pick from game pool, 2) Pick from pool or deck
 	/// Simulating player to select a buidling tile from pool and then select one more building tile from building deck
 	scobj->get_res(res);
-	int total_left = 0;
+	int total_building = 0;
 	for (int i = 0; i < 4; i++) {
-		total_left += res[i];
+		if( res[i]==0)
+			total_building++;
 	}
-	int pool_pick = total_left % 5;
+	int pool_pick = total_building % 3;
 	for (int i = 0; i < pool_pick; i++) {
 		player1.pickFromBuildingPool(*building_pool, i);
 	}
-	for (int i = 0; i < total_left - pool_pick; i++) {
+	for (int i = 0; i < total_building - pool_pick; i++) {
 		player1.drawBuilding(*buildingDeck);
 	}
 
@@ -190,18 +194,16 @@ void turnSequenceDriver() {
 	printGameBoard(gameBoard);
 }
 
-int main(int argc, const char * argv[]) {
-
-	//turnSequenceDriver();
-
+void scoringDriver() {
 	// Setup
 	HarvestDeck* harvestDeck = new HarvestDeck();
 	BuildingDeck* buildingDeck = new BuildingDeck();
 	Scoring *scobj = new Scoring();
 	BuildingPool *building_pool = new BuildingPool(buildingDeck);
+	srand(time(NULL));
 
 	Player p[4];
-	VGMaps m[4];
+	VGMaps* m[4];
 	for (int k = 0; k < 4; k++) {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -209,11 +211,60 @@ int main(int argc, const char * argv[]) {
 				p[k].placeBuildingTile(i, j, *testBuildingTile);
 			}
 		}
-		p[k].getVGBoard()->printVGMap();
-		m[k] = (*p[k].getVGBoard());
+		m[k] = p[k].getVGBoard();
 	}
+	for (int k = 0; k < 4; k++)
+		p[k].getVGBoard()->printVGMap();
 
 	scobj->get_winner(m);
+}
+
+void observerDriver() {
+	// Setup
+	HarvestDeck* harvestDeck = new HarvestDeck();
+	BuildingDeck* buildingDeck = new BuildingDeck();
+	Scoring *scobj = new Scoring();
+	BuildingPool *building_pool = new BuildingPool(buildingDeck);
+	srand(time(NULL));
+
+	Player p[2];
+	VGMaps* m[2];
+	scobj->set_id(1, 1);
+	scobj->set_id(2, 2);
+	GameObservers o1(scobj);
+	GameObservers o2(scobj);
+	
+	std::cout << "notify 0 " << std::endl;
+	//do something
+
+	scobj->get_state();
+
+
+	std::cout << "notify 1 " << std::endl;
+	//do something
+
+	scobj->get_state();
+
+	scobj->detach(&o1);
+	//scobj->detach(&o2);
+
+	std::cout << "notify 2 " << std::endl;
+	//do something
+
+	scobj->get_state();
+}
+
+void observer() {
+	Foo* f = new Foo();
+	FooObserver o1(f);
+	f->notify();
+}
+
+int main(int argc, const char * argv[]) {
+
+	//turnSequenceDriver();
+	//scoringDriver1();	
+	observerDriver();
 
 	system("pause");
 	return 0;
