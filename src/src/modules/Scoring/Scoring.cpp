@@ -159,7 +159,11 @@ void Scoring::get_state()
 int Scoring::get_state(int state[10][5])
 {
 	{
-
+		for (int i = 0; i < 10; i++)
+		{
+			for (int j = 0; j < 5; j++)
+				state[i][j] = statistic[i][j];
+		}
 		return 1;
 	}
 	return 0;

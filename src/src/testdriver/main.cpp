@@ -233,17 +233,17 @@ void observerDriver() {
 	scobj->set_id(2, 2);
 	GameObservers o1(scobj);
 	GameObservers o2(scobj);
+	scobj->notify();
 	
 	std::cout << "notify 0 " << std::endl;
 	//do something
 
-	scobj->get_state();
-
+	o1.display();
 
 	std::cout << "notify 1 " << std::endl;
 	//do something
 
-	scobj->get_state();
+	o1.display();
 
 	scobj->detach(&o1);
 	//scobj->detach(&o2);
@@ -251,13 +251,7 @@ void observerDriver() {
 	std::cout << "notify 2 " << std::endl;
 	//do something
 
-	scobj->get_state();
-}
-
-void observer() {
-	Foo* f = new Foo();
-	FooObserver o1(f);
-	f->notify();
+	o1.display();
 }
 
 int main(int argc, const char * argv[]) {
