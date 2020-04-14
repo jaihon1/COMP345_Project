@@ -245,9 +245,6 @@ void observerDriver() {
 
 	o1.display();
 
-	scobj->detach(&o1);
-	//scobj->detach(&o2);
-
 	std::cout << "notify 2 " << std::endl;
 	//do something
 
