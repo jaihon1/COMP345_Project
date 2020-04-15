@@ -6,7 +6,7 @@ GameObservers::GameObservers()
 {
 }
 
-GameObservers::GameObservers(Scoring * sc) : sc(sc)
+GameObservers::GameObservers(Scoring* sc) : sc(sc)
 {
 	sc->attach(this);
 }
@@ -31,13 +31,13 @@ void GameObservers::display()
 		if (statistic[0][i] == 0)
 			total_player--;
 	}
-	for (int i = 1; i < 6; i++)
+	for (int i = 1; i < 7; i++)
 	{
 		if (statistic[i][0] == 0)
 			continue;
 		switch (i)
 		{
-		case 1: std::cout << "Player # " << std::endl;
+		case 1: std::cout << "Player id " << std::endl;
 			break;
 		case 2: std::cout << "Village score " << std::endl;
 			break;
@@ -47,17 +47,22 @@ void GameObservers::display()
 			break;
 		case 5: std::cout << "Turn remain " << std::endl;
 			break;
+		case 6: std::cout << "Resource Marker " << std::endl;
+			for (int i = 1; i < 5; i++)
+				std::cout << "Res #" << i << ": " << statistic[6][i] << std::endl;
+			std::cout << std::endl;
+			break;
 		default: printf("N/A");
 			break;
 		}
-		for (int j = 1; j <= total_player; j++)
-		{
-			std::cout << "Player #" << i << ": " << statistic[i][j] << std::endl;
+		if (i < 6) {
+			for (int j = 1; j <= total_player; j++)
+			{
+				std::cout << "Player #" << j << ": " << statistic[i][j] << std::endl;
+			}
+			std::cout << std::endl;
 		}
-		std::cout << std::endl;
+
 	}
-	std::cout << "Resource Marker " << std::endl;
-	for (int i = 1; i < 5; i++)
-		std::cout << "Res #" << i << ": " << statistic[6][i] << std::endl;
-	std::cout << std::endl;
+
 }
