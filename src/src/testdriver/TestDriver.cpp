@@ -462,7 +462,7 @@ void menuOptions() {
 	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - GameStart Test" << endl << "0 - Exit" << endl << endl << "Which test would you like to run? ";
 }
 
-/*
+
 int main()
 {
 	//MemoryLeak
@@ -499,7 +499,7 @@ int main()
 	}
 	return 0; 
 }
-*/
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
