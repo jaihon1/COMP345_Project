@@ -1,8 +1,27 @@
+/*Esssentially this is part 1's observer and viewobserver is part 2*/
+
 #pragma once
-class GameObservers
+#include <iostream>
+#include "Observer.h"
+#include "files/modules/MainLoop/MainLoop.h"
+
+using namespace std; 
+
+class GameObservers: public Observer //inheriting from Observer 
 {
+private: 
+	MainLoop *_subject; //observing the turn
+	int *n_players; //number of players 
+
 public:
 	GameObservers();
+	GameObservers(MainLoop *s); 
+
 	~GameObservers();
+
+	void update() override; 
+
+	void turndisplay();
+
 };
 

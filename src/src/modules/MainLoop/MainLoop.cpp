@@ -7,8 +7,7 @@ MainLoop::MainLoop()
 
 MainLoop::MainLoop(int n)
 {
-	
-	
+	MainLoopSetup(n); 
 }
 
 
@@ -337,10 +336,13 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 	cout << "Player 4 has ID : " << player_order.at(3) << endl;
 	//keep looping while the number of tiles and game limits arent done 
 
+	GameEnded(false); 
+
 	cout << gameboard->getOccupiedTile() << endl; 
 
 	while (gameboard->getOccupiedTile() != 48)
 	{
+		
 		cout << "Number of occupied tiles right now: " << gameboard->getOccupiedTile() << endl; 
 		//cout << "Inside game loop" << endl; 
 		
@@ -362,6 +364,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			cout << "Enter 1 if you want to place a harvest tile or enter 2 if you want to place your shipment tile: " << endl; 
 			cin >> harvest_choice; 
 
+			hschoice(harvest_choice); //update functions 
 			int row = 0; 
 			int column = 0; 
 
@@ -388,7 +391,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 					{
 						h_placed = true;  //redundant 
 						cout << "Wrong placement of harvest tile" << endl; 
-						break; 
+						//break; 
 					}
 					else if (place_h_valid == 1)
 					{
@@ -756,7 +759,9 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 		}
 	}
 	cout << "Number of tiles inputed" << gameboard->getOccupiedTile() << endl;
+
 	cout << "End of the game" << endl; 
+	GameEnded(true); 
 }
 
 /*
@@ -769,6 +774,27 @@ void MainLoop::setGameLimit(int n)
 vector <Player*> *MainLoop::getPlayers()
 {
 	return players; 
+}
+
+Scoring* MainLoop::getScoringObject()
+{
+	return scobj; 
+}
+
+bool MainLoop::GameEnded(bool check)
+{
+	return check; 
+}
+
+Player* MainLoop::getCurrentPlayer(int index)
+{
+	//validity needed to check 
+	return players->at(index); 
+}
+
+int MainLoop::hschoice(int c)
+{
+	return c; 
 }
 
 
