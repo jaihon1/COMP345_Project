@@ -8,6 +8,7 @@
 #include "../modules/player/player.h"
 #include "../modules/board/VGMaps.h"
 #include "../GameObservers/GameObservers.h"
+#include "../GameObservers/ViewObserver.h"
 
 using namespace std;
 
@@ -228,8 +229,8 @@ void observerDriver() {
 	VGMaps* m[2];
 	scobj->set_id(1, 1);
 	scobj->set_id(2, 2);
-	GameObservers o1(scobj);
-	GameObservers o2(scobj);
+	ViewObserver o1(scobj);
+	ViewObserver o2(scobj);
 	scobj->notify();
 	
 	std::cout << "notify 0 " << std::endl;
