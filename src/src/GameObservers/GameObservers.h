@@ -10,8 +10,10 @@ public:
 	~GameObservers();
 
 	void update() override;
+	void display();
 
 private:
 	Scoring* sc;
+	int statistic[10][5] = { 0 };
 };
 
