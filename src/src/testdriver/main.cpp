@@ -8,9 +8,6 @@
 #include "../modules/player/player.h"
 #include "../modules/board/VGMaps.h"
 #include "../GameObservers/GameObservers.h"
-#include "../GameObservers/ViewObserver.h"
-#include "../GameObservers/Foo.h"
-#include "../GameObservers/FooObserver.h"
 
 using namespace std;
 
@@ -244,6 +241,9 @@ void observerDriver() {
 	//do something
 
 	o1.display();
+
+	//scobj->detach(&o1);
+	scobj->detach(&o2);
 
 	std::cout << "notify 2 " << std::endl;
 	//do something
