@@ -42,7 +42,7 @@ public:
     vector<BuildingTile*>* getBuildings();
     BuildingTile* addBuildingTile(BuildingTile &tile);
     BuildingTile* removeBuildingTile(BuildingTile &tile);
-    void placeBuildingTile(int row, int col, BuildingTile &tile);
+    int placeBuildingTile(int row, int col, BuildingTile &tile);
     BuildingTile* drawBuilding(BuildingDeck &deck);
     unsigned long getNumberOfBuildingTiles();
 	VGMaps* getVGMaps(); 

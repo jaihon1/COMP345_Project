@@ -248,7 +248,7 @@ void MainLoop::MainLoopSetup(int n)
 	//game_limit = new int(0);
 
 	gstart->setup(*num_players);
-	ViewObserver viewOb(gstart->getSc());
+	ViewObserver* vObs = new ViewObserver(gstart->getSc());
 	Player **players_fromGameStart = gstart->getPlayerArr(); 
 	players = new vector <Player*>;
 
@@ -392,7 +392,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 					{
 						h_placed = true;  //redundant 
 						cout << "Wrong placement of harvest tile" << endl; 
-						break; 
+						//break; 
 					}
 					else if (place_h_valid == 1)
 					{

@@ -19,7 +19,6 @@ ViewObserver::~ViewObserver()
 
 void ViewObserver::update()
 {
-	
  	sc->get_state(statistic);
 	display();
 }

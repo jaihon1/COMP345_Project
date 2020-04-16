@@ -86,8 +86,12 @@ void Scoring::set_id(int index, int id)
 
 void Scoring::set_score(int index, int score)
 {
-	statistic[2][index] = score;
-	notify();
+	// score is only updated when a row or column is completed
+	// if statement prevents the statistics table from being displayed everytime a building tile is placed
+	if (statistic[2][index] != score) {
+		statistic[2][index] = score;
+		notify();
+	}
 }
 
 void Scoring::add_density(int index, int number)
