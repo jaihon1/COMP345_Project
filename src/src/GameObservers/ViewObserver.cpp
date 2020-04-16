@@ -19,12 +19,16 @@ ViewObserver::~ViewObserver()
 
 void ViewObserver::update()
 {
-	std::cout << "ViewObserver updated" << std::endl;
-	sc->get_state(statistic);
+	
+ 	sc->get_state(statistic);
+	display();
 }
 
 void ViewObserver::display()
 {
+	std::cout << "*********************" << std::endl;
+	std::cout << "ViewObserver updated" << std::endl;
+	std::cout << std::endl;
 	int total_player = 4;
 	for (int i = 1; i < 5; i++)
 	{
@@ -52,12 +56,15 @@ void ViewObserver::display()
 		}
 		for (int j = 1; j <= total_player; j++)
 		{
-			std::cout << "Player #" << i << ": " << statistic[i][j] << std::endl;
+			std::cout << "Player #" << j << ": " << statistic[i][j] << std::endl;
 		}
 		std::cout << std::endl;
 	}
 	std::cout << "Resource Marker " << std::endl;
 	for (int i = 1; i < 5; i++)
 		std::cout << "Res #" << i << ": " << statistic[6][i] << std::endl;
+
 	std::cout << std::endl;
+	std::cout << "ViewObserver End update" << std::endl;
+	std::cout <<"*********************"<< std::endl;
 }

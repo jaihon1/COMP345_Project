@@ -1,4 +1,5 @@
 #include "MainLoop.h"
+#include "../../GameObservers/ViewObserver.h"
 
 MainLoop::MainLoop()
 {
@@ -192,6 +193,8 @@ void MainLoop::findPlayerOrder(int n)
 
 void MainLoop::MainLoopSetup(int n)
 {
+	
+
 	cout << "Inside main loop constructor" << endl;
 	//check for safety 
 	if ((n >= 2) && (n <= 4))
@@ -245,6 +248,7 @@ void MainLoop::MainLoopSetup(int n)
 	//game_limit = new int(0);
 
 	gstart->setup(*num_players);
+	ViewObserver viewOb(gstart->getSc());
 	Player **players_fromGameStart = gstart->getPlayerArr(); 
 	players = new vector <Player*>;
 
@@ -253,12 +257,12 @@ void MainLoop::MainLoopSetup(int n)
 	case 2:
 		//p1 = new Player();
 		p1 = players_fromGameStart[0]; 
-		p1->setID(player_order.at(0)); //double check this 
+		p1->setID(player_order.at(0), 1); //double check this 
 		players->push_back(p1);
 
 		//p2 = new Player();
 		p2 = players_fromGameStart[1]; 
-		p2->setID(player_order.at(1));
+		p2->setID(player_order.at(1), 2);
 		players->push_back(p2);
 
 		//game_limit = new int(game_limits.at(0)); 
@@ -269,16 +273,16 @@ void MainLoop::MainLoopSetup(int n)
 	case 3:
 		//p1 = new Player();
 		p1 = players_fromGameStart[0];
-		p1->setID(player_order.at(0));
+		p1->setID(player_order.at(0), 1);
 		players->push_back(p1);
 
 		//p2 = new Player();
 		p2 = players_fromGameStart[1];
-		p2->setID(player_order.at(1));
+		p2->setID(player_order.at(1), 2);
 		players->push_back(p2);
 
 		p3 = players_fromGameStart[2]; 
-		p3->setID(player_order.at(2));
+		p3->setID(player_order.at(2), 3);
 		players->push_back(p3);
 
 		//game_limit = new int(game_limits.at(1));
@@ -286,22 +290,22 @@ void MainLoop::MainLoopSetup(int n)
 	case 4:
 		//p1 = new Player();
 		p1 = players_fromGameStart[0];
-		p1->setID(player_order.at(0));
+		p1->setID(player_order.at(0), 1);
 		players->push_back(p1);
 
 		//p2 = new Player();
 		p2 = players_fromGameStart[1];
-		p2->setID(player_order.at(1));
+		p2->setID(player_order.at(1), 2);
 		players->push_back(p2);
 
 		//p3 = new Player();
 		p3 = players_fromGameStart[2];
-		p3->setID(player_order.at(2));
+		p3->setID(player_order.at(2), 3);
 		players->push_back(p3);
 
 		//p4 = new Player();
 		p4 = players_fromGameStart[3];
-		p4->setID(player_order.at(3));
+		p4->setID(player_order.at(3), 4);
 		players->push_back(p4);
 		//game_limit = new int(game_limits.at(2));
 		break;

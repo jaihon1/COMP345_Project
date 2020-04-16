@@ -1,6 +1,9 @@
 #include "player.h"
+#include "../Scoring/Scoring.h"
 #include <algorithm>
 
+/*
+***DO NOT USE BECAUSE PLAYER REQUIRES SCORING OBJECT***
 Player::Player() {
 //    cout << "Creating Player with Main: " << this << endl;
 
@@ -9,6 +12,17 @@ Player::Player() {
     _harvestTiles = new vector<HarvestTile*>;
     _buildingTiles = new vector<BuildingTile*>;
 	ID = new int(-1); //will be decided at runtime 
+}
+*/
+
+Player::Player(Scoring* inSc)
+{
+	_villageBoard = new VGMaps();
+	_harvestTiles = new vector<HarvestTile*>;
+	_buildingTiles = new vector<BuildingTile*>;
+	ID = new int(-1); //will be decided at runtime 
+	position = new int(-1);
+	sc = inSc;
 }
 
 Player::Player(const Player &player) {
@@ -154,9 +168,11 @@ int Player::getID()
 	return *ID;
 }
 
-void Player::setID(int n)
+void Player::setID(int n, int index)
 {
 	*ID = n; 
+	*position = index;
+	sc->set_id(index, n);
 }
 
 VGMaps* Player::getVGBoard() 
