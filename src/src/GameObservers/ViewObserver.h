@@ -14,6 +14,7 @@ public:
 
 private:
 	Scoring* sc;
+	CConsoleLoggerEx console;
 	int statistic[10][5] = { 0 };
 };
 

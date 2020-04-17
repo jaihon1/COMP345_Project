@@ -1,4 +1,5 @@
 #pragma once
+#include "../modules/ConsoleLogger/ConsoleLogger.h"
 
 class Observer
 {

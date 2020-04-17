@@ -9,6 +9,8 @@ ViewObserver::ViewObserver()
 ViewObserver::ViewObserver(Scoring * sc) : sc(sc)
 {
 	sc->attach(this);
+	console.Create("ViewObserver");
+	console.cprintf(CConsoleLoggerEx::COLOR_WHITE | CConsoleLoggerEx::COLOR_BACKGROUND_BLACK, "ViewObserver Start\n\n");
 }
 
 
@@ -37,27 +39,27 @@ void ViewObserver::display()
 			continue;
 		switch (i)
 		{
-		case 1: std::cout << "Player # " << std::endl;
+		case 1: console.cout("Player # \n");
 			break;
-		case 2: std::cout << "Village score " << std::endl;
+		case 2: console.cout("Village score \n");
 			break;
-		case 3: std::cout << "Village density " << std::endl;
+		case 3: console.cout("Village density \n");
 			break;
-		case 4: std::cout << "Avail building " << std::endl;
+		case 4: console.cout("Avail building \n");
 			break;
-		case 5: std::cout << "Turn remain " << std::endl;
+		case 5: console.cout("Turn remain \n");
 			break;
 		default: printf("N/A");
 			break;
 		}
 		for (int j = 1; j <= total_player; j++)
 		{
-			std::cout << "Player #" << i << ": " << statistic[i][j] << std::endl;
+			console.cout("Player #%d: %d \n", i, statistic[i][j]);
 		}
-		std::cout << std::endl;
+		console.cout("\n");
 	}
-	std::cout << "Resource Marker " << std::endl;
+	console.cout("Resource Marker \n");
 	for (int i = 1; i < 5; i++)
-		std::cout << "Res #" << i << ": " << statistic[6][i] << std::endl;
-	std::cout << std::endl;
+		console.cout("Res #%d: %d \n", i, statistic[6][i]);
+	console.cout("\n");
 }
