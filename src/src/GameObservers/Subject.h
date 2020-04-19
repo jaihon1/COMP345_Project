@@ -16,4 +16,6 @@ public:
 
 protected:
 	vector<Observer*>* observers;
+
 };
+

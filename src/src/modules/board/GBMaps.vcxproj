@@ -152,17 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GBMaps.cpp" />
-    <ClCompile Include="GBMapsDriver.cpp" />
-    <ClCompile Include="VGMaps.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GBMaps.h" />
-    <ClInclude Include="VGMaps.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\tile\Tile.vcxproj">
-      <Project>{19ba8cad-fb6f-4d1a-9f54-86696319dae5}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

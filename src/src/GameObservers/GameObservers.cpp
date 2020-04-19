@@ -16,6 +16,11 @@ GameObservers::GameObservers(MainLoop * s)
 	turnConsole.cprintf(CConsoleLoggerEx::COLOR_WHITE | CConsoleLoggerEx::COLOR_BACKGROUND_BLACK, "TurnObserver Start\n\n"); 
 }
 
+GameObservers::GameObservers(Scoring * sc) : sc(sc)
+{
+	sc->attach(this);
+}
+
 
 GameObservers::~GameObservers()
 {
@@ -77,5 +82,11 @@ void GameObservers::turndisplay()
 
 		}
 	}
+
+}
+
+void GameObservers::update()
+{
+	std::cout << "GameObservers updated" << std::endl;
 
 }

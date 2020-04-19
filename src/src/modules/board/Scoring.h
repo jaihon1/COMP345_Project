@@ -1,17 +1,12 @@
 #pragma once
-#include <iostream> 
+#include<iostream> 
 #include <list> 
-#include "../board/VGMaps.h"
-#include "../../GameObservers/Subject.h"
+//#include "GBMap.h"
+//#include "Test.h"
+class VGMap;
 
-class GBMaps;
 
-#define _DEBUG
-#ifdef _DEBUG
-#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-#endif
-
-class Scoring : public Subject
+class Scoring
 {
 private:
 	class Graph
@@ -22,12 +17,12 @@ private:
 			bool visited;
 			int adj;
 
-			VER() {
+			VER(){
 				visited = false;
 				adj = 0;
 			}
 		};
-
+				
 		int V; // No. of vertices		
 		std::list<int> *adj; // Pointer to an array containing adjacency lists 		
 
@@ -41,7 +36,9 @@ private:
 		Graph& operator= (const Graph &gr);
 		~Graph();
 
-		void addEdge(int v, int w);
+		//char name;
+
+		void addEdge(int v, int w);		
 		int adjacency(int v);
 		bool is_adjacent(int v, int w);
 		int connected(int v);
@@ -49,33 +46,32 @@ private:
 		void connectedComponents();
 	};
 
-	int village_row = 6;
-	int village_col = 5;
 	int ver_lim = 196;
 	Graph vertices{ ver_lim };
-
+	
 	int res_score[5] = { 0 , 0, 0, 0, 0 };//Lumber = 1, Sheep = 2, Wheat = 3, Rock = 4; 0 for buildings leftover	
 	int vil_score[4][3];//1st village score 2nd village density 3rd village build
 	int total_score[4];
 
 	void add_res(int resv, int numv);
+	void update_help(int v, int w, int res);
 	void insertionSort(int arr[], int n);
-	void update_res(ptrdiff_t pos[4], int res[4]);
-
+	
+	//friend class GBMap;
 	//friend void GBMap::add_tile(int xv, int yv, int res[4], Scoring &sc);
-
-	int statistic[10][5] = { 0 };//first column is row signature
+	//friend void Test::sum();
 public:
 	Scoring();
 	Scoring(const Scoring &sc);
-	~Scoring();
-
+	~Scoring();		
+	
 	void connectedComponents();
 	int adjacency(int v);
-	int connected(int v);
-	void addEdge(int v, int w);
+	int connected(int v);	
+	void addEdge(int v, int w);	
 	void reset_res();
 	void set_res(int res[4]);
+	void update_res(ptrdiff_t pos[4], int res[4]);
 
 	int get_lumber();
 	int get_sheep();
@@ -85,18 +81,9 @@ public:
 	int remove_res(int resv, int quantity);
 	void display_res();
 
-	int get_score(const VGMaps &vil);
-	int get_density(const VGMaps &vil);
-	int get_winner(const VGMaps villages[4]);
-	int get_winner(VGMaps *villages[4]);
-
-	int map(int index, GBMaps* inHarvestBoard);
-	void computeResources(int row, int column, HarvestTile* inHarvestTilePtr, GBMaps* inHarvestBoard);	
-
-	void set_id(int index, int id);
-	void set_score(int index, int score);
-	void add_density(int index, int number);
-	void set_avail_building(int index, int number);
-	void get_state();
-	int get_state(int state[10][5]);
+	int get_score(const VGMap &vil);
+	int get_density(const VGMap &vil);
+	int get_building(const VGMap &vil);
+	int get_winner(const VGMap villages[4]);
 };
+
