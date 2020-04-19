@@ -9,6 +9,7 @@
 #include "../modules/board/VGMaps.h"
 #include "../GameObservers/GameObservers.h"
 #include "../GameObservers/ViewObserver.h"
+#include "../modules/ConsoleLogger/ConsoleLogger.h"
 
 using namespace std;
 
@@ -217,6 +218,7 @@ void scoringDriver() {
 	scobj->get_winner(m);
 }
 
+//ConsoleLoggerHelper.exe must be in the same folder with main
 void observerDriver() {
 	// Setup
 	HarvestDeck* harvestDeck = new HarvestDeck();
@@ -230,7 +232,7 @@ void observerDriver() {
 	scobj->set_id(1, 1);
 	scobj->set_id(2, 2);
 	ViewObserver o1(scobj);
-	ViewObserver o2(scobj);
+	//ViewObserver o2(scobj);
 	scobj->notify();
 	
 	std::cout << "notify 0 " << std::endl;
@@ -244,7 +246,7 @@ void observerDriver() {
 	o1.display();
 
 	//scobj->detach(&o1);
-	scobj->detach(&o2);
+	//scobj->detach(&o2);
 
 	std::cout << "notify 2 " << std::endl;
 	//do something
@@ -252,11 +254,27 @@ void observerDriver() {
 	o1.display();
 }
 
+void consoleDriver() {
+	printf("Hi , i'm the main-process , and  i'm going to show you 2 more consoles...");
+	CConsoleLoggerEx console1;
+	console1.Create("Observer 1");
+	console1.cprintf(CConsoleLoggerEx::COLOR_WHITE | CConsoleLoggerEx::COLOR_BACKGROUND_BLACK, "Hello Damian");
+
+
+	CConsoleLoggerEx console2;
+	console2.Create("Observer 2");
+	console2.cprintf(CConsoleLoggerEx::COLOR_WHITE | CConsoleLoggerEx::COLOR_BACKGROUND_BLACK, "Hello Tiffany");
+}
+
 int main(int argc, const char * argv[]) {
 
 	//turnSequenceDriver();
 	//scoringDriver1();	
+	//consoleDriver();
 	observerDriver();
+
+	std::cout << "value of the new line character is " << int('\n') << '\n';
+
 
 	system("pause");
 	return 0;
