@@ -270,9 +270,10 @@ int main(int argc, const char * argv[]) {
 
 	//turnSequenceDriver();
 	//scoringDriver1();	
-	//consoleDriver;
+	//consoleDriver();
 	observerDriver();
 
+	std::cout << "value of the new line character is " << int('\n') << '\n';
 
 
 	system("pause");

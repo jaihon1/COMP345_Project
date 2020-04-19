@@ -61,6 +61,7 @@ public:
 	// play with the CRT output functions
 	int SetAsDefaultOutput(void);
 	static int ResetDefaultOutput(void);
+	CConsoleLogger& operator<<(const char* input);
 
 protected:
 	char	m_name[64];

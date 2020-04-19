@@ -59,8 +59,8 @@ private:
 	int total_score[4];
 
 	void add_res(int resv, int numv);
-	void update_help(int v, int w, int res);
 	void insertionSort(int arr[], int n);
+	void update_res(ptrdiff_t pos[4], int res[4]);
 
 	//friend void GBMap::add_tile(int xv, int yv, int res[4], Scoring &sc);
 
@@ -76,15 +76,6 @@ public:
 	void addEdge(int v, int w);
 	void reset_res();
 	void set_res(int res[4]);
-	void update_res(ptrdiff_t pos[4], int res[4]);
-
-	void set_state(int i);
-	void set_id(int index, int id);
-	void set_score(int index, int score);
-	void add_density(int index, int number);
-	void set_avail_building(int index, int number);
-	void get_state();
-	int get_state(int state[10][5]);
 
 	int get_lumber();
 	int get_sheep();
@@ -100,5 +91,12 @@ public:
 	int get_winner(VGMaps *villages[4]);
 
 	int map(int index, GBMaps* inHarvestBoard);
-	void computeResources(int row, int column, HarvestTile* inHarvestTilePtr, GBMaps* inHarvestBoard);
+	void computeResources(int row, int column, HarvestTile* inHarvestTilePtr, GBMaps* inHarvestBoard);	
+
+	void set_id(int index, int id);
+	void set_score(int index, int score);
+	void add_density(int index, int number);
+	void set_avail_building(int index, int number);
+	void get_state();
+	int get_state(int state[10][5]);
 };

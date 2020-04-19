@@ -242,6 +242,16 @@ int CConsoleLogger::printf(const char *format,...)
 
 }
 
+CConsoleLogger & CConsoleLogger::operator<<(const char* input)
+{
+	// TODO: insert return statement here
+	if (input[0] == 10) {
+		std::cout << "Yes" << std::endl;
+		printf(input);
+	}
+	return *this;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // printf: print a formatted string
 //////////////////////////////////////////////////////////////////////////

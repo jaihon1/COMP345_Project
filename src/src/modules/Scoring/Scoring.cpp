@@ -45,15 +45,6 @@ void Scoring::add_res(int resv, int numv)
 	res_score[resv] += numv;
 }
 
-void Scoring::update_help(int v, int w, int res) {
-	if (vertices.is_adjacent(v, w))
-		add_res(res, vertices.connected(v));
-	else {
-		add_res(res, vertices.connected(v));
-		add_res(res, vertices.connected(w));
-	}
-}
-
 void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 {
 	//std::cout << "Test" << vertices.connected(90) << std::endl;
@@ -75,6 +66,10 @@ void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 		add_res(res[i], vertices.connected(pos[i]));
 	}
 
+	//update resource maker
+	for (int i = 1; i < 5; i++)
+	statistic[6][i] = res_score[i];
+	notify();
 }
 
 void Scoring::set_id(int index, int id)
