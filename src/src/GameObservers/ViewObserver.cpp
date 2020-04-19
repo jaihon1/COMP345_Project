@@ -23,6 +23,7 @@ void ViewObserver::update()
 {
 	std::cout << "ViewObserver updated" << std::endl;
 	sc->get_state(statistic);
+	display();
 	console << "a" << "bc \n";
 }
 
@@ -55,7 +56,7 @@ void ViewObserver::display()
 		}
 		for (int j = 1; j <= total_player; j++)
 		{
-			console.cout("Player #%d: %d \n", i, statistic[i][j]);
+			console.cout("Player #%d: %d \n", j, statistic[i][j]);
 		}
 		console.cout("\n");
 	}

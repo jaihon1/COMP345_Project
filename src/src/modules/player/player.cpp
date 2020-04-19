@@ -117,11 +117,13 @@ vector<BuildingTile*>* Player::getBuildings() {
 
 BuildingTile* Player::addBuildingTile(BuildingTile& tile) {
 	_buildingTiles->push_back(&tile);
+	sc->set_avail_building(*position, getNumberOfBuildingTiles());
 	return &tile;
 }
 
 BuildingTile* Player::removeBuildingTile(BuildingTile& tile) {
 	_buildingTiles->erase(std::remove(_buildingTiles->begin(), _buildingTiles->end(), &tile), _buildingTiles->end());
+	sc->set_avail_building(*position, getNumberOfBuildingTiles());
 	return &tile;
 }
 
@@ -141,8 +143,6 @@ int Player::placeBuildingTile(int row, int col, BuildingTile& tile) {
 		// get the current score of the player from the scoring object in order to set the score in the statistics table of the scoring object which will then notify the observer
 		int score = sc->get_score(*_villageBoard);
 		sc->set_score(*position, score);
-		sc->set_avail_building(*position, getNumberOfBuildingTiles());
-
 	}
 
 	return status;

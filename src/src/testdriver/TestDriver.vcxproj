@@ -168,6 +168,9 @@
     <ProjectReference Include="..\modules\board\VGMaps.vcxproj">
       <Project>{eee9ee59-904f-4cfe-9fe1-ef0d7e7e4068}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\modules\ConsoleLogger\ConsoleLogger.vcxproj">
+      <Project>{17e6ff7f-00b6-4029-b6ae-8ae4d7a74b41}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\modules\GBMapLoader\GBMapLoader.vcxproj">
       <Project>{4806bad0-c1f3-45c0-9cff-fb7e2dacd3c4}</Project>
     </ProjectReference>

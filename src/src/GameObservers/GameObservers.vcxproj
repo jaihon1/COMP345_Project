@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Foo.h" />
-    <ClInclude Include="FooObserver.h" />
     <ClInclude Include="GameObservers.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Subject.h" />
