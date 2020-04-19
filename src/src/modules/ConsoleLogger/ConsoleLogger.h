@@ -17,6 +17,7 @@
 #include "io.h"
 #include "direct.h"
 #include <iostream>
+#include <string>
 
 
 #include "ntverp.h"
@@ -61,7 +62,8 @@ public:
 	// play with the CRT output functions
 	int SetAsDefaultOutput(void);
 	static int ResetDefaultOutput(void);
-	CConsoleLogger& operator<<(const char* input);
+	CConsoleLogger& operator<<(int input);
+	CConsoleLogger& operator<<(std::string input);
 
 protected:
 	char	m_name[64];

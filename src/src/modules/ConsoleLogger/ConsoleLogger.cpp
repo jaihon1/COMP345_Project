@@ -242,9 +242,15 @@ int CConsoleLogger::printf(const char *format,...)
 
 }
 
-CConsoleLogger & CConsoleLogger::operator<<(const Args& ... args)
+CConsoleLogger & CConsoleLogger::operator<<(int input)
 {
-	content.append(toString(args));
+	content.append(std::to_string(input));
+	return *this;
+}
+
+CConsoleLogger & CConsoleLogger::operator<<(std::string input)
+{
+	content.append(input);
 	if (input[0] == 10) {
 		printf(content.c_str());
 	}	
