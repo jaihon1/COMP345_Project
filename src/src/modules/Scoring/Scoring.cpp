@@ -66,7 +66,7 @@ void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 		add_res(res[i], vertices.connected(pos[i]));
 	}
 
-	//update resource maker
+	//update resource marker
 	for (int i = 1; i < 5; i++)
 	statistic[6][i] = res_score[i];
 	notify();
@@ -197,6 +197,8 @@ int Scoring::remove_res(int resv, int quantity)
 {
 	if (res_score[resv] > quantity) {
 		res_score[resv] = res_score[resv] - quantity;
+		statistic[6][resv] = statistic[6][resv] - quantity;
+		notify();
 		return quantity;
 	}
 	else
