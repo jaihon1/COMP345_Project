@@ -455,7 +455,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 
 			while (build_tile == 2)
 			{
-				 ressource_tracker = &(scobj->get_res(res));
+				scobj->get_res(res); 
 
 				//use notify to call instead of this? 
 				scobj->display_res();
