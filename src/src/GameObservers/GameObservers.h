@@ -3,7 +3,7 @@
 #pragma once
 #include <iostream>
 #include "Observer.h"
-#include "files/modules/MainLoop/MainLoop.h"
+#include "../modules/MainLoop/MainLoop.h"
 
 using namespace std; 
 
@@ -12,6 +12,7 @@ class GameObservers: public Observer //inheriting from Observer
 private: 
 	MainLoop *_subject; //observing the turn
 	int *n_players; //number of players 
+	CConsoleLoggerEx turnConsole;
 
 public:
 	GameObservers();

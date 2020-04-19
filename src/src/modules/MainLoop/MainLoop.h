@@ -10,7 +10,7 @@
 #include "../tile/Dictionary.h"
 #include "../Scoring/Scoring.h"
 #include "../../GameStart/GameStart.h"
-#include "../../../Subject.h"
+#include "../../GameObservers/Subject.h"
 using namespace std; 
 
 class MainLoop: public Subject
@@ -51,6 +51,9 @@ private:
 	Hand* hand;
 	bool shipment[4]{0};
 
+	int player_action; 
+
+
 public:
 	MainLoop();
 	MainLoop(int n); 
@@ -78,9 +81,10 @@ public:
 
 	Player* getCurrentPlayer(int index); 
 	
-	int hschoice(int c); //did the current player select to place a harvest tile or a shipment tile?
+	void hschoice(int c); //did the current player select to place a harvest tile or a shipment tile?
 
-
-
+	int getPlayerAction(); 
+	
+	
 };
 

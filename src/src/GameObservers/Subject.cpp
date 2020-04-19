@@ -24,6 +24,6 @@ void Subject::notify()
 	//notify all observers attached to this subject!
 	for (Observer* const& o : *observers)
 	{
-		o->update();
+		o->update(); //calls display
 	}
 }

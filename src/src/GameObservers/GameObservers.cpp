@@ -12,6 +12,8 @@ GameObservers::GameObservers(MainLoop * s)
 	_subject = s; 
 	n_players = _subject->getNumPlayers();
 	_subject->attach(this); 
+	turnConsole.Create("TurnObserver"); 
+	turnConsole.cprintf(CConsoleLoggerEx::COLOR_WHITE | CConsoleLoggerEx::COLOR_BACKGROUND_BLACK, "TurnObserver Start\n\n"); 
 }
 
 
@@ -29,6 +31,7 @@ void GameObservers::update()
 
 void GameObservers::turndisplay()
 {
+	//nothing to notify if the game ended 
 	while (_subject->GameEnded == false)
 	{
 		for (int i = 0; i < *n_players; i++)
@@ -36,28 +39,36 @@ void GameObservers::turndisplay()
 			//Check for if player is building harvest tile or building tile?
 
 			//Printing player id
-			cout << "Display current turn" << endl;
-			cout << "Current player ID: " << _subject->getCurrentPlayer(i)->getID() << endl; 
+			turnConsole.cout << "Display current turn" << endl;
+			turnConsole.cout << "Current player ID: " << _subject->getCurrentPlayer(i)->getID() << endl; 
 
-			//Display action for harvest/shipment tile 
-			if (_subject->hschoice == 1)
+			//Display action for harvest/shipment tile or building Tile? 
+			if (_subject->getPlayerAction() == 1)
 			{
-				cout << "Placed a harvest tile" << endl; 
+				turnConsole.cout << "Placed a harvest tile" << endl; 
 			}
-			else if (_subject->hschoice == 2)
+			else if (_subject->getPlayerAction() == 2)
 			{
-				cout << "Placed a shipment tile" << endl; 
+				turnConsole.cout << "Placed a shipment tile" << endl; 
+			}
+			else if (_subject->getPlayerAction() == 3)
+			{
+				turnConsole.cout << "Adding a building to village board" << endl;
+			}
+			else if (_subject->getPlayerAction() == 4)
+			{
+				turnConsole.cout << "Player is not building anything" << endl; 
 			}
 			else
 			{
-				cout << "Player misplaced" << endl;  
+				turnConsole.cout << "Player not doing the right thing" << endl;  
 			}
 
-			//show ressources
-			
+			//show ressources - but where is this going to print? to test 
+			_subject->getScoringObject()->display_res; 
 
+			//print number of building tiles - add code when merge with Nguyen's new scoring 
 
-			//show updated ressources - call notify from inside main loop?? 
 
 		}
 	}

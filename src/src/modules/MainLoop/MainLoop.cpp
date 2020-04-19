@@ -368,7 +368,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			int row = 0; 
 			int column = 0; 
 
-			if (harvest_choice == 1)
+			if (harvest_choice == 1) 
 			{
 				bool h_placed = true; 
 				while (h_placed)
@@ -444,6 +444,8 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			//PART 2. Determine ressources 
 			int res[4]; //store the current ressources here to display 
 
+
+
 			//scobj->get_res(res);
 			//scobj->display_res(); //print ressources 
 
@@ -453,7 +455,9 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 
 			while (build_tile == 2)
 			{
-				scobj->get_res(res);
+				 ressource_tracker = &(scobj->get_res(res));
+
+				//use notify to call instead of this? 
 				scobj->display_res();
 
 				cout << endl << "Here is your village board" << endl << endl;
@@ -468,6 +472,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 
 				if (choice == 1)
 				{
+					hschoice(3); 
 					//Checking ressources input 
 					int res_use[4]; //why 4 - does user input four type and how many they want to use right away?
 
@@ -565,8 +570,9 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 				}
 				else if(choice == 0) 
 				{
+					hschoice(4); 
 					cout << "DEBUG LOG: Breaking the current loop, player skipping turn." << endl; 
-					building_tile = 0; 
+					building_tile = 0;
 					break; 
 				}
 				else //for any other input 
@@ -792,9 +798,15 @@ Player* MainLoop::getCurrentPlayer(int index)
 	return players->at(index); 
 }
 
-int MainLoop::hschoice(int c)
+void MainLoop::hschoice(int c)
 {
-	return c; 
+	player_action = c; 
 }
+
+int MainLoop::getPlayerAction()
+{
+	return player_action; 
+}
+
 
 
