@@ -40,27 +40,27 @@ void ViewObserver::display()
 			continue;
 		switch (i)
 		{
-		case 1: console.cout("Player # \n");
+		case 1: console << "Player # " << "\n";
 			break;
-		case 2: console.cout("Village score \n");
+		case 2: console << "Village score " << "\n";
 			break;
-		case 3: console.cout("Village density \n");
+		case 3: console << "Village density " << "\n";
 			break;
-		case 4: console.cout("Avail building \n");
+		case 4: console << "Avail building " << "\n";
 			break;
-		case 5: console.cout("Turn remain \n");
+		case 5: console << "Turn remain " << "\n";
 			break;
 		default: printf("N/A");
 			break;
 		}
 		for (int j = 1; j <= total_player; j++)
 		{
-			console.cout("Player #%d: %d \n", j, statistic[i][j]);
+			console << "Player #" << j << ": " << statistic[i][j] << "\n";
 		}
-		console.cout("\n");
+		console << "\n";
 	}
-	console.cout("Resource Marker \n");
+	console << "Resource Marker " << "\n";
 	for (int i = 1; i < 5; i++)
-		console.cout("Res #%d: %d \n", i, statistic[6][i]);
-	console.cout("\n");
+		console << "Res #" << i << ": " << statistic[6][i] << "\n";
+	console << "\n";
 }

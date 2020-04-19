@@ -253,6 +253,7 @@ CConsoleLogger & CConsoleLogger::operator<<(std::string input)
 	content.append(input);
 	if (input[0] == 10) {
 		printf(content.c_str());
+		content = "";
 	}	
 	return *this;
 }
