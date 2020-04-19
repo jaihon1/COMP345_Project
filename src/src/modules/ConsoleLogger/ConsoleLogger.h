@@ -66,6 +66,7 @@ public:
 protected:
 	char	m_name[64];
 	HANDLE	m_hPipe;
+	std::string content;
 	
 #ifdef CONSOLE_LOGGER_USING_MS_SDK
 	// we'll use this DWORD as VERY fast critical-section . for more info:

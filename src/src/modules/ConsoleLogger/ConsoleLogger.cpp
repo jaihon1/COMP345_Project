@@ -242,18 +242,17 @@ int CConsoleLogger::printf(const char *format,...)
 
 }
 
-CConsoleLogger & CConsoleLogger::operator<<(const char* input)
+CConsoleLogger & CConsoleLogger::operator<<(const Args& ... args)
 {
-	// TODO: insert return statement here
+	content.append(toString(args));
 	if (input[0] == 10) {
-		std::cout << "Yes" << std::endl;
-		printf(input);
-	}
+		printf(content.c_str());
+	}	
 	return *this;
 }
 
 //////////////////////////////////////////////////////////////////////////
-// printf: print a formatted string
+// cout: print a formatted string ****************deprecated**************
 //////////////////////////////////////////////////////////////////////////
 int CConsoleLogger::cout(const char *format, ...)
 {

@@ -141,7 +141,7 @@ void Scoring::get_state()
 		}
 		for (int j = 1; j <= total_player; j++)
 		{
-			std::cout << "Player #" << i << ": " << statistic[i][j] << std::endl;
+			std::cout << "Player #" << j << ": " << statistic[i][j] << std::endl;
 		}
 		std::cout << std::endl;
 	}
