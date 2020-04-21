@@ -224,7 +224,7 @@ int main()
     cout << "Driver for MainLoop" << endl;
 
     MainLoop *m = new MainLoop(); //2 is the number of players
-    m->MainLoopSetup(2);
+    m->MainLoopSetup(4);
     
     /*
     vector <Player*> *temp = m->getPlayers();

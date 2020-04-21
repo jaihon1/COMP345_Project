@@ -363,11 +363,14 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			cout << endl << "You also have a shipment tile  that allows you to palce a tile with 4 of the same ressources!" << endl; 
 
 			int harvest_choice = 0;
-			cout << "Enter 1 if you want to place a harvest tile or enter 2 if you want to place your shipment tile: " << endl; 
-			cin >> harvest_choice; 
+    
+            while (harvest_choice < 1 || harvest_choice > 2) {
+                cout << "Enter 1 if you want to place a harvest tile or enter 2 if you want to place your shipment tile: " << endl;
+                cin >> harvest_choice;
+            }
 
-			int row = 0; 
-			int column = 0; 
+			int row = -1;
+			int column = -1;
 
 			if (harvest_choice == 1)
 			{
@@ -375,15 +378,22 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 				while (h_placed)
 				{
 					cout << "Choose where you want to place your harvest tile: " << endl;
-					cout << "Row: " << endl;
-					cin >> row;
-					cout << "Column: " << endl;
-					cin >> column;
+                    while (row < 0 || row >= gameboard->getRows()) {
+                        cout << "Row: " << endl;
+                        cin >> row;
+                    }
+                    
+                    while (column < 0 || column >= gameboard->getColumns()) {
+                        cout << "Column: " << endl;
+                        cin >> column;
+                    }
 
-					int h_index;
-
-					cout << "Enter index of which HarvestTile of your hand you want to use: " << endl;
-					cin >> h_index;
+					int h_index = -1;
+                    
+                    while (h_index < 0 || h_index >= temp->getNumberOfHarvestTiles()) {
+                        cout << "Enter index of which HarvestTile of your hand you want to use: " << endl;
+                        cin >> h_index;
+                    }
 
 					HarvestTile *select_h = harvest_tile->at(h_index);
 					int place_h_valid = temp->placeHarvestTile(row, column, *select_h, *gameboard);
@@ -410,15 +420,25 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 				HarvestTile *special = temp->getShipmentTile(); 
 				while (s_placed)
 				{
-					int type = 0; 
-					cout << "Enter what type you want: Lumber - 1, Sheep - 2, Wheat - 3, Rock - 4" << endl;
-					cin >> type;
+					int type = 0;
+                    while (type < 1 || type > 4) {
+                        cout << "Enter what type you want: Lumber - 1, Sheep - 2, Wheat - 3, Rock - 4" << endl;
+                        cin >> type;
+                    }
 
+                    row = -1;
+                    column = -1;
+                    
 					cout << "Choose where you want to place your shipment tile: " << endl;
-					cout << "Row: " << endl;
-					cin >> row;
-					cout << "Column: " << endl;
-					cin >> column; 
+                    while (row < 0 || row >= gameboard->getRows()) {
+                        cout << "Row: " << endl;
+                        cin >> row;
+                    }
+                    
+                    while (column < 0 || column >= gameboard->getColumns()) {
+                        cout << "Column: " << endl;
+                        cin >> column;
+                    }
 
 					//HarvestTile *special = new HarvestTile(); 
 
@@ -463,9 +483,11 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 				cout << endl <<"Here are the building tiles in your hand: " << endl; 
 				vector <BuildingTile*> *building_tile = temp->getBuildings();
 
-				cout << endl << "Enter 1 to build a building tile, 0 to skip" << endl;
-				int choice;
-				cin >> choice; 
+				int choice = -1;
+                while (choice < 0 || choice > 1) {
+                    cout << endl << "Enter 1 to build a building tile, 0 to skip" << endl;
+                    cin >> choice;
+                }
 
 				if (choice == 1)
 				{
