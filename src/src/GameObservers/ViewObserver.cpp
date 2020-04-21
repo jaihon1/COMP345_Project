@@ -21,7 +21,7 @@ ViewObserver::~ViewObserver()
 
 void ViewObserver::update()
 {
-	std::cout << "ViewObserver updated" << std::endl;
+	//std::cout << "ViewObserver updated" << std::endl;
 	sc->get_state(statistic);
 	console << "a" << "bc \n";
 }

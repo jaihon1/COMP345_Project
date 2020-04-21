@@ -44,8 +44,8 @@ private:
 	const int* const rows = new int(7);
 	const int* const columns = new int(7);
 	const int total_tile = 49;
-	int occupied_tile = 0;
-
+	
+	int occupied_tile = 0; 
 	//Game Board is a pointer to an array of pointers
 	GBSquare** board;
 
@@ -54,6 +54,7 @@ private:
 	void intializeBoardB();
 
 public:
+
 	//constructor takes number of players and whether the game is played on Side A or Side B
 	GBMaps(int numberOfPlayers, char boardSide, Scoring* sc);
 

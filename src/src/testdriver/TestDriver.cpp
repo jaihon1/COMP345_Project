@@ -1,4 +1,4 @@
-
+/*
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -333,7 +333,7 @@ void VGMapLoaderTest()
 	cout << BuildingTile::Building_typeToChar(t1->getBuildingColorType()) << endl;
 	cout << BuildingTile::Building_statusToChar(t1->getSide()) << endl;
 	*/
-
+/*
 	cout << BuildingTile::Building_intToChar(t1->getBuildingNum()) << endl;
 
 
@@ -357,7 +357,7 @@ void VGMapLoaderTest()
 	//s->save(va, "C:\json_test\VGMaptest.json");  -> BAD 
 
 	//s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
-
+/*
 	s->save(va, "C:\\json_test\VGMaptest5.json");
 
 	cout << "Saved va map" << endl;
@@ -499,7 +499,7 @@ int main()
 	}
 	return 0; 
 }
-
+*/
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

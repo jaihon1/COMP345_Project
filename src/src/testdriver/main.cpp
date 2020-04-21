@@ -1,3 +1,4 @@
+/*
 #include <iostream>
 #include <iomanip>
 
@@ -266,6 +267,7 @@ void consoleDriver() {
 	console2.cprintf(CConsoleLoggerEx::COLOR_WHITE | CConsoleLoggerEx::COLOR_BACKGROUND_BLACK, "Hello Tiffany");
 }
 
+
 int main(int argc, const char * argv[]) {
 
 	//turnSequenceDriver();
@@ -279,3 +281,4 @@ int main(int argc, const char * argv[]) {
 	system("pause");
 	return 0;
 }
+*/ 

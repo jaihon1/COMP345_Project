@@ -201,6 +201,8 @@ int Scoring::remove_res(int resv, int quantity)
 {
 	if (res_score[resv] > quantity) {
 		res_score[resv] = res_score[resv] - quantity;
+		statistic[6][resv] = statistic[6][resv] - quantity;
+		notify();
 		return quantity;
 	}
 	else
@@ -270,7 +272,7 @@ int Scoring::get_density(const VGMaps &vil)
 	for (int i = 0; i < village_row; i++)
 	{
 		for (int j = 0; j < village_col; j++) {
-			if (!vil.isEmpty(j, i))
+			if (!vil.isEmpty(i, j))
 				result++;
 		}
 	}

@@ -1,5 +1,6 @@
 #include "GameObservers.h"
-
+#include <iostream>
+using namespace std; 
 
 
 GameObservers::GameObservers()
@@ -14,11 +15,7 @@ GameObservers::GameObservers(MainLoop * s)
 	_subject->attach(this); 
 	turnConsole.Create("TurnObserver"); 
 	turnConsole.cprintf(CConsoleLoggerEx::COLOR_WHITE | CConsoleLoggerEx::COLOR_BACKGROUND_BLACK, "TurnObserver Start\n\n"); 
-}
-
-GameObservers::GameObservers(Scoring * sc) : sc(sc)
-{
-	sc->attach(this);
+	cout << "Created observer" << endl; 
 }
 
 
@@ -36,57 +33,112 @@ void GameObservers::update()
 
 void GameObservers::turndisplay()
 {
-	//nothing to notify if the game ended 
-	while (_subject->GameEnded == false)
+	turnConsole.cout("Current player ID: ", _subject->getCurrentPlayer()->getID(), " \n"); 
+
+
+	if (_subject->getPlayerAction() == 1)
 	{
-		for (int i = 0; i < *n_players; i++)
-		{
+		turnConsole.cout("Placed a harvest tile \n"); 
+
+
+		turnConsole.cout("Displaying current ressource tracker: \n"); 
+		turnConsole.cout("Lumber: ", _subject->getScoringObject()->get_lumber(), " \n");
+		turnConsole.cout("Sheep: ", _subject->getScoringObject()->get_sheep(), "\n"); 
+		turnConsole.cout("Wheat: ", _subject->getScoringObject()->get_wheat(), "\n"); 
+		turnConsole.cout("Rock: ", _subject->getScoringObject()->get_stone(), "\n"); 
+	}
+	else if (_subject->getPlayerAction() == 2)
+	{
+		turnConsole.cout("Placed a shipment tile \n"); 
+	}
+	else if (_subject->getPlayerAction() == 3)
+	{
+		turnConsole.cout("Added a building to village board \n"); 
+
+		//print out updated village count
+		VGMaps *ref = _subject->getCurrentPlayer()->getVGMaps();
+
+		turnConsole.cout("Number of buildings on player's VGMAP: ", _subject->getScoringObject()->get_density(*ref), "\n"); 
+
+		//display ressources left (always displayed below)
+		turnConsole.cout("Displaying current ressource tracker: \n");
+		turnConsole.cout("Lumber: ", _subject->getScoringObject()->get_lumber(), " \n");
+		turnConsole.cout("Sheep: ", _subject->getScoringObject()->get_sheep(), "\n");
+		turnConsole.cout("Wheat: ", _subject->getScoringObject()->get_wheat(), "\n");
+		turnConsole.cout("Rock: ", _subject->getScoringObject()->get_stone(), "\n");
+
+	}
+	else if (_subject->getPlayerAction() == 4)
+	{
+		turnConsole.cout("Player is not building anything \n"); 
+	}
+	else if (_subject->getPlayerAction() == 5)
+	{
+		turnConsole.cout("Player not doing the right thing \n"); 
+	}
+
+	//nothing to notify if the game ended 
+	//while (_subject->getGameEnd() == false)
+	//{
+		//for (int i = 0; i < *n_players; i++) -> don't need cause it will loop through for each player 
+		//{
 			//Check for if player is building harvest tile or building tile?
 
 			//Printing player id
-			turnConsole.cout("Display current turn \n"); 
-			turnConsole.cout("Current player ID: ", _subject->getCurrentPlayer(i)->getID(), "\n"); 
+			//turnConsole.cout("Display current turn \n"); 
 
-			//Display action for harvest/shipment tile or building Tile? 
+
+
+			//TO CHECL - print number of building tiles - add code when merge with Nguyen's new scoring 
+
+
+	//COUT CHECKING - COMMENTED OUT BELOW 
+			/*
+			cout << "Current player ID: " << _subject->getCurrentPlayer()->getID() << endl; 
+
+		
 			if (_subject->getPlayerAction() == 1)
 			{
-				turnConsole.cout("Placed a harvest tile \n"); 
+				cout << "Placed a harvest tile" << endl; 
+
+
+				cout << "Displaying current ressource tracker:" << endl;
+				cout << "Lumber: " << _subject->getScoringObject()->get_lumber() << endl;
+				cout << "Sheep: " << _subject->getScoringObject()->get_sheep() << endl;
+				cout << "Wheat: " << _subject->getScoringObject()->get_wheat() << endl;
+				cout << "Rock: " << _subject->getScoringObject()->get_stone() << endl;
 			}
 			else if (_subject->getPlayerAction() == 2)
 			{
-				turnConsole.cout("Placed a shipment tile \n"); 
+				cout << "Placed a shipment tile" << endl; 
 			}
 			else if (_subject->getPlayerAction() == 3)
 			{
-				turnConsole.cout("Adding a building to village board \n"); 
+				cout << "Added a building to village board" << endl; 
+
+				//print out updated village count
+				VGMaps *ref = _subject->getCurrentPlayer()->getVGMaps(); 
+
+				cout << "Number of buildings on player's VGMAP: " << _subject->getScoringObject()->get_density(*ref) << endl << endl; 
+
+				//display ressources left (always displayed below)
+				cout << "Displaying current ressource tracker:" << endl;
+				cout << "Lumber: " << _subject->getScoringObject()->get_lumber() << endl;
+				cout << "Sheep: " << _subject->getScoringObject()->get_sheep() << endl;
+				cout << "Wheat: " << _subject->getScoringObject()->get_wheat() << endl;
+				cout << "Rock: " << _subject->getScoringObject()->get_stone() << endl;
+
 			}
 			else if (_subject->getPlayerAction() == 4)
 			{
-				turnConsole.cout("Player is not building anything \n"); 
+				cout << "Player is not building anything" << endl; 
 			}
-			else
+			else if (_subject->getPlayerAction() == 5)
 			{
-				turnConsole.cout("Player not doing the right thing \n");  
+				cout << "Player not doing the right thing" << endl; 
 			}
+			*/ 
 
-			//show ressources - but where is this going to print? to test 
-			turnConsole.cout("Displaying current ressource tracker: \n"); 
-			turnConsole.cout("Lumber: ", _subject->getScoringObject()->get_lumber()); 
-			turnConsole.cout("Sheep: ", _subject->getScoringObject()->get_sheep());
-			turnConsole.cout("Wheat: ", _subject->getScoringObject()->get_wheat());
-			turnConsole.cout("Rock: ", _subject->getScoringObject()->get_stone());
-			
-			
-			//print number of building tiles - add code when merge with Nguyen's new scoring 
-
-
-		}
-	}
-
-}
-
-void GameObservers::update()
-{
-	std::cout << "GameObservers updated" << std::endl;
-
+		//}
+	//}
 }

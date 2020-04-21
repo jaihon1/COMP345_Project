@@ -43,7 +43,7 @@ private:
 	BuildingDeck* buildingDeck;
 	BuildingPool *building_pool;
 
-	GBMaps * gameboard; 
+	GBMaps *gameboard; 
 	Scoring *scobj; 
 
 	GameStart * gstart = new GameStart(); 
@@ -53,6 +53,9 @@ private:
 
 	int player_action; 
 
+	Player * current; //reference for observer to current player 
+
+	bool game_end; 
 
 public:
 	MainLoop();
@@ -77,10 +80,14 @@ public:
 
 	
 	//Observer functions - but how to integrate notify?  
-	bool GameEnded(bool check); 
+	void GameEnded(bool check); //checks if game ended 
 
-	Player* getCurrentPlayer(int index); 
-	
+	bool getGameEnd(); 
+
+	Player* getCurrentPlayer(); 
+
+	void setCurrentPlayer(int index); 
+
 	void hschoice(int c); //did the current player select to place a harvest tile or a shipment tile?
 
 	int getPlayerAction(); 
