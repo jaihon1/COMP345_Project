@@ -215,8 +215,6 @@ void scoringDriver() {
 */
 
 #include "modules/MainLoop/MainLoop.h"
-#include "modules/player/player.h"
-#include "modules/board/VGMaps.h"
 #include <vector>
 using namespace std;
 
