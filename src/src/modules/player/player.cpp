@@ -15,8 +15,7 @@ Player::Player() {
 }
 */
 
-Player::Player(Scoring* inSc)
-{
+Player::Player(Scoring* inSc) {
 	_villageBoard = new VGMaps();
 	_harvestTiles = new vector<HarvestTile*>;
 	_buildingTiles = new vector<BuildingTile*>;

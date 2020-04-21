@@ -1,7 +1,5 @@
 #include "ViewObserver.h"
 
-
-
 ViewObserver::ViewObserver()
 {
 }
@@ -12,7 +10,6 @@ ViewObserver::ViewObserver(Scoring * sc) : sc(sc)
 	console.Create("ViewObserver");
 	console.cprintf(CConsoleLoggerEx::COLOR_WHITE | CConsoleLoggerEx::COLOR_BACKGROUND_BLACK, "ViewObserver Start\n\n");
 }
-
 
 ViewObserver::~ViewObserver()
 {

@@ -8,10 +8,6 @@
 #include "Dictionary.h"
 #include "../player/player.h"
 #include "../Scoring/Scoring.h"
-#define _DEBUG
-#ifdef _DEBUG
-#define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
-#endif
 
 using namespace std;
 

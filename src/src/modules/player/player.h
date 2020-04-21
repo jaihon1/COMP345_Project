@@ -19,10 +19,9 @@ private:
     // Owns resources Gathering and Building Scoring facilities
 
 	int *ID;
-	int* position;
+	int *position;
     
 public:
-
 	Player(Scoring* inSc);
     Player(const Player &player);
     ~Player();
@@ -59,9 +58,6 @@ public:
 	int getID(); 
 	void setID(int n, int index); 
 	VGMaps* getVGBoard();
-
-	HarvestTile * getShipmentTile(); 
+	HarvestTile* getShipmentTile();
 
 };
-
-

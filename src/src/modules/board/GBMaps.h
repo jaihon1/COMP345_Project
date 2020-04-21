@@ -6,11 +6,6 @@
 #include "../tile/Resources.h"
 class Scoring;
 
-#define _DEBUG
-#ifdef _DEBUG
-#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-#endif
-
 //enumerated class to give name to the status that a square could have
 enum class GBSquareStatus {
 	Empty, //associated square holds nothing (empty)
