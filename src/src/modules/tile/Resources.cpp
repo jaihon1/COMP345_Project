@@ -686,6 +686,11 @@ void Hand::displayHand() {
 	}
 }
 
+int Hand::getResourceScore(int index)
+{
+	return resourceScoreArr[index];
+}
+
 int Hand::exchange(ExchangeToken* exchangeToken) {
 	Player* player = exchangeToken->getPlayer();
 	BuildingTile* buildingTile = exchangeToken->getBT();
@@ -693,10 +698,12 @@ int Hand::exchange(ExchangeToken* exchangeToken) {
 	int column = exchangeToken->getCol();
 	int index;
 
+	// LINES 703 to 727 SHOULD NOT BE NEEDED KEEPING JUST IN CASE I NEED TO REIMPLEMENT
+
 	// get index for resourceScoreArr
 	switch (buildingTile->getBuildingColorType()) {
 
-	case BuildingColorType::GreenSheep:
+		case BuildingColorType::GreenSheep:
 			index = static_cast<int>(ResourceName::Sheep);
 			break;
 		case BuildingColorType::GreyRock:

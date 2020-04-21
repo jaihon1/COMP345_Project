@@ -175,7 +175,7 @@ void gbMapsTest() {
 }
 
 void playerTest() {
-	
+
 	Scoring* sc = new Scoring();
 
 	// Initializing variables
@@ -249,7 +249,7 @@ void runGame(GBMaps* gameBoard, HarvestDeck* testDeck) {
 		}
 
 	}
-	
+
 	delete testSaver;
 
 }
@@ -285,17 +285,17 @@ void playGBMaps() {
 			break;
 
 		case 2: {
-				string filePath;
-				cout << "Please enter the file path of the game you wish to load: " << endl;
-				cin >> filePath;
-				// LOADER CONSTRUCTION
-				testLoader = new GBMapLoader(&filePath[0], sc);
-				gameBoard = testLoader->getBoard();
-				delete testLoader;
-				if (gameBoard != NULL) {
-					runGame(gameBoard, testDeck);
-				}
-				break;
+			string filePath;
+			cout << "Please enter the file path of the game you wish to load: " << endl;
+			cin >> filePath;
+			// LOADER CONSTRUCTION
+			testLoader = new GBMapLoader(&filePath[0], sc);
+			gameBoard = testLoader->getBoard();
+			delete testLoader;
+			if (gameBoard != NULL) {
+				runGame(gameBoard, testDeck);
+			}
+			break;
 		}
 		default:
 			cout << "Sorry invalid input, please choose again" << endl;
@@ -304,7 +304,7 @@ void playGBMaps() {
 
 		delete sc;
 		delete testDeck;
-		
+
 		delete gameBoard;
 
 	}
@@ -380,7 +380,7 @@ void VGMapLoaderTest()
 	cout << "Current MAP" << endl;
 
 	va->printVGMap();
-	
+
 	delete va;
 	delete type1;
 	delete status1;
@@ -390,6 +390,201 @@ void VGMapLoaderTest()
 	delete l;
 }
 
+BuildingTile* selectBT(vector<BuildingTile*>* btVector, Hand* hand) {
+	int btInput;
+	BuildingTile* btToAdd = nullptr;
+	while (true) {
+
+		// loop for building tile index
+		while (true) {
+			cout << "Which building tile would you like to use? " << endl;;
+			cin >> btInput;
+			if (btInput >= 0 && btInput < btVector->size()) {
+				break;
+			}
+			cout << "Incorrect index, please choose again." << endl;
+		}
+
+		btToAdd = btVector->at(btInput);
+		int index;
+		// get index for resourceScoreArr
+		switch (btToAdd->getBuildingColorType()) {
+
+		case BuildingColorType::GreenSheep:
+			index = static_cast<int>(ResourceName::Sheep);
+			break;
+		case BuildingColorType::GreyRock:
+			index = static_cast<int>(ResourceName::Rock);
+			break;
+		case BuildingColorType::RedLumber:
+			index = static_cast<int>(ResourceName::Lumber);
+			break;
+		case BuildingColorType::YellowHay:
+			index = static_cast<int>(ResourceName::Wheat);
+			break;
+		}
+
+		//enum goes from 1-4 but array is 0-3
+		index -= 1;
+
+		// verify there are enough resources to add the building tile
+		if (hand->getResourceScore(index) < btToAdd->getBuildingNum()) {
+			cout << "Insufficient resources for this building tile.  Please select again." << endl;
+		}
+		else {
+			break;
+		}
+	}
+	return btToAdd;
+}
+
+bool placeBT(BuildingTile* btToAdd, Player* player, Hand* hand) {
+	int vgRow;
+	int vgColumn;
+	cout << endl;
+	while (true) {
+		cout << "Where would you like to place the tile?\n" << "row: ";
+		cin >> vgRow;
+		cout << "column: ";
+		cin >> vgColumn;
+		cout << endl;
+
+		Hand::ExchangeToken* exToken = new Hand::ExchangeToken(player, btToAdd, vgRow, vgColumn);
+
+		switch (hand->exchange(exToken)) {
+		case 0:
+			return true;
+		case 2:
+			break;
+		default:
+			cout << "Rejected for unknown reason.  Please try again." << endl;
+			break;
+		}
+	}
+}
+
+void singlePlayerBTplacement(Player* player, Hand* hand) {
+	
+	bool donePlacingBT = false;
+
+	while (!donePlacingBT) {
+		vector<BuildingTile*>* btVector = player->getBuildings();
+		cout << "These are your building tiles: " << endl;
+		for (int i = 0; i < btVector->size(); i++) {
+			cout << "Tile " << i << ": ";
+			printBuildingTile(btVector->at(i));
+		}
+
+		cout << endl;
+		player->getVGBoard()->printVGMap();
+		cout << endl;
+
+		int btInput;
+
+		// BUILDING TILE PLACEMENT
+		BuildingTile* btToAdd = selectBT(btVector, hand);
+		if (!placeBT(btToAdd, player, hand)) {
+			cout << "error in placing building tile" << endl;
+		}
+
+		player->getVGBoard()->printVGMap();
+		cout << endl;
+		hand->displayHand();
+		cout << endl;
+
+		bool correctInputFlag = false;
+		while (!correctInputFlag) {
+			char keepPlacingBT;
+			cout << "Would you like place another building tile? y/n" << endl;
+			cin >> keepPlacingBT;
+			switch (keepPlacingBT) {
+			case 'y':
+				correctInputFlag = true;
+				break;
+			case 'n':
+				donePlacingBT = true;
+				correctInputFlag = true;
+				break;
+			default:
+				cout << "incorrect input" << endl;
+				break;
+			}
+		}
+	}
+	return;
+}
+
+
+void singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int turnIndex, int numPlayers) {
+	gameBoard->printGameBoard();
+
+
+	int htIndex;
+	vector<HarvestTile*>* htVector = nullptr;
+
+	while (true) {
+		cout << "These are your harvest tiles: " << endl;
+		// PLAY AS FIRST PLAYER FOR NOW
+		htVector = playerArr[turnIndex]->getHarvestTiles();
+		cout << endl << "0: " << endl;
+		printHarvestTile(htVector->at(0));
+		cout << endl << "1: " << endl;
+		printHarvestTile(htVector->at(1));
+		cout << endl << "Enter 0 or 1 to select tile: ";
+		cin >> htIndex;
+		if (htIndex == 0 || htIndex == 1) {
+			break;
+		}
+		cout << "Incorrect index, please choose again." << endl;
+	}
+	HarvestTile* harvestTile = htVector->at(htIndex);
+
+	int row;
+	int column;
+	int tilePlaced = 0;
+
+	while (tilePlaced == 0) {
+		cout << "Where would you like to place the tile?\n" << "row: ";
+		cin >> row;
+		cout << "column: ";
+		cin >> column;
+		tilePlaced = gameBoard->addHarvestTile(row, column, harvestTile);
+		if (tilePlaced == 0) {
+			cout << "Placement request rejected. Try again." << endl;
+		}
+	}
+
+	hand->intializeHand();
+	gameBoard->printGameBoard();
+	cout << endl << "Resources:" << endl;
+	hand->displayHand();
+	cout << endl << endl;
+
+	singlePlayerBTplacement(playerArr[turnIndex], hand);
+
+	// SHARE THE WEALTH LOOP (loops through each player allowing them to use remaining resources
+	for (int btRoundIndex = (turnIndex + 1) % numPlayers; btRoundIndex != turnIndex; btRoundIndex = (turnIndex + 1) % numPlayers) {
+		cout << "Player " << btRoundIndex << ": " << endl;
+		singlePlayerBTplacement(playerArr[btRoundIndex], hand);
+	}
+}
+
+int getID(Player** playerArr, int numPlayers) {
+	int id = 0;
+	int min = INT_MAX;
+	int startPlayer = 0;
+	for (int i = 0; i < numPlayers; i++) {
+		cout << "Please enter student ID: ";
+		cin >> id;
+		playerArr[i]->setID(id, i);
+		if (id < min) {
+			min = id;
+			startPlayer = i;
+		}
+	}
+	return startPlayer;
+
+}
 
 void gameStartTest() {
 	GameStart* gameStart = new GameStart();
@@ -398,67 +593,31 @@ void gameStartTest() {
 	cin >> numPlayers;
 	gameStart->setup(numPlayers);
 
-	cout << "Initial Game Board: \n";
-	gameStart->getGBoard()->printGameBoard();
+	// intialized Game Objects
+	GBMaps* gameBoard = gameStart->getGBoard();
+	Player** playerArr = gameStart->getPlayerArr();
+	Hand* hand = gameStart->getHand();
+	Scoring* sc = gameStart->getSc();
+	 
+	int startPlayer = getID(playerArr, numPlayers);
 
-	Player** player = gameStart->getPlayerArr();
-	cout << "These are your initial harvest tiles, which tile would you like to use (indexed 0 and 1): ";
-	// PLAY AS FIRST PLAYER FOR NOW
-	vector<HarvestTile*>* htVector = player[0]->getHarvestTiles();
-	printHarvestTile(htVector->at(0));
-	cout << endl;
-	printHarvestTile(htVector->at(1));
-	int htIndex;
-	cin >> htIndex;
-	HarvestTile* harvestTile = htVector->at(htIndex);
-
-	int row;
-	int column;
-
-	cout << "Where would you like to place the tile?\n" << "row: ";
-	cin >> row;
-	cout << "column: ";
-	cin >> column;
-	cout << endl;
-
-	gameStart->getGBoard()->addHarvestTile(row, column, harvestTile);
-	gameStart->getHand()->intializeHand();
-	gameStart->getGBoard()->printGameBoard();
-	cout << endl;
-	gameStart->getHand()->displayHand();
-	cout << endl;
-	
-	
-	vector<BuildingTile*>* btVector = player[0]->getBuildings();
-	for (int i = 0; i < btVector->size(); i++) {
-		cout << "Tile "<< i + 1 << ": ";
-		printBuildingTile(btVector->at(i));
+	for (int turnIndex = startPlayer; turnIndex < numPlayers; turnIndex = (turnIndex+1)%numPlayers) {
+		cout
+			<< "**************************************************" << endl
+			<< "Player " << playerArr[turnIndex]->getID() << endl;
+		singleTurn(gameBoard, playerArr, hand, turnIndex, numPlayers);
+		// check end game condition
+		if (gameBoard->getOccupiedTile() == 48) {
+			break;
+		}
 	}
-	
-	cout << endl;
-	player[0]->getVGBoard()->printVGMap();
-	cout << endl;
-	int btInput;
-	cout << "Which building tile would you like to use? ";
-	cin >> btInput;
-	BuildingTile* btToAdd = btVector->at(btInput-1);
-	int vgRow;
-	int vgColumn;
 
-	cout << endl;
-	cout << "Where would you like to place the tile?\n" << "row: ";
-	cin >> vgRow;
-	cout << "column: ";
-	cin >> vgColumn;
-	cout << endl;
-
-	Hand::ExchangeToken* exToken = new Hand::ExchangeToken(player[0], btToAdd, vgRow, vgColumn);
-	gameStart->getHand()->exchange(exToken);
-
-	player[0]->getVGBoard()->printVGMap();
-	cout << endl;
-	gameStart->getHand()->displayHand();
-	cout << endl;
+	// declare winner
+	VGMaps** vgMapArr = new VGMaps * [4];
+	for (int i = 0; i < 4; i++) {
+		vgMapArr[i] = i < numPlayers ? playerArr[i]->getVGMaps() : nullptr;
+	}
+	cout << "Winner is Player " << sc->get_winner(vgMapArr);
 }
 
 void menuOptions() {
@@ -500,7 +659,7 @@ int main()
 		menuOptions();
 		cin >> menuOption;
 	}
-	return 0; 
+	return 0;
 }
 
 

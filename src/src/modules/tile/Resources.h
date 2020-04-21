@@ -199,6 +199,7 @@ public:
 	Hand(Scoring* sc);
 	void intializeHand();
 	void displayHand();
+	int getResourceScore(int index);
 	int exchange(ExchangeToken* exchangeToken);
 };
 

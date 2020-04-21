@@ -70,10 +70,6 @@ HarvestTile* Player::removeHarvestTile(HarvestTile& tile) {
 }
 
 vector<HarvestTile*>* Player::getHarvestTiles() {
-	for (int i = 0; i < _harvestTiles->size(); i++) {
-		cout << "HarvestTile (index " << i << ")" << endl;
-		(*_harvestTiles)[i]->printHarvestTile();
-	}
 	return _harvestTiles;
 }
 
@@ -108,10 +104,6 @@ void Player::setShipmentTile(HarvestTile* harvestTile)
 
 
 vector<BuildingTile*>* Player::getBuildings() {
-	for (int i = 0; i < _buildingTiles->size(); i++) {
-		cout << "Index [" << i << "]  ";
-		(*_buildingTiles)[i]->printBuildingTile();
-	}
 	return _buildingTiles;
 }
 

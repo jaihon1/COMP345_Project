@@ -329,12 +329,19 @@ int Scoring::get_winner(VGMaps *villages[4])
 	int winner = 0;
 
 	for (int i = 0; i < 4; i++) {
-		vil_score[i][0] = get_score(*villages[i]);
-		vil_score[i][1] = get_density(*villages[i]);
-		vil_score[i][2] = rand() % 50;
-		std::cout << "village score: " << vil_score[i][0] << std::endl;
-		std::cout << "village densi: " << vil_score[i][1] << std::endl;
-		std::cout << "village build: " << vil_score[i][2] << std::endl;
+		if (villages[i] == nullptr) {
+			vil_score[i][0] = 0;
+			vil_score[i][1] = 0;
+			vil_score[i][2] = 0;
+		}
+		else {
+			vil_score[i][0] = get_score(*villages[i]);
+			vil_score[i][1] = get_density(*villages[i]);
+			vil_score[i][2] = rand() % 50;
+			std::cout << "village score: " << vil_score[i][0] << std::endl;
+			std::cout << "village densi: " << vil_score[i][1] << std::endl;
+			std::cout << "village build: " << vil_score[i][2] << std::endl;
+		}
 	}
 
 	for (int i = 0; i < 4; i++)
