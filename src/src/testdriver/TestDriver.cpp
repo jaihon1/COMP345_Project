@@ -175,8 +175,11 @@ void gbMapsTest() {
 }
 
 void playerTest() {
+	
+	Scoring* sc = new Scoring();
+
 	// Initializing variables
-	Player bob;
+	Player bob(sc);
 	//    GBMaps map(4, 'b');
 	BuildingDeck buildingDeck;
 	HarvestDeck harvestDeck;
@@ -358,7 +361,7 @@ void VGMapLoaderTest()
 
 	//s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
 
-	s->save(va, "C:\\json_test\VGMaptest5.json");
+	s->save(va, "C:\\json_test\\VGMaptest5.json");
 
 	cout << "Saved va map" << endl;
 
