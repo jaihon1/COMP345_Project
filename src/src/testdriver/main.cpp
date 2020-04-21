@@ -215,6 +215,9 @@ void scoringDriver() {
 	for (int k = 0; k < 4; k++)
 		p[k].getVGBoard()->printVGMap();
 
+	std::cout << "4th building number " << scobj->get_density(*m[3]) << std::endl;
+	system("pause");
+
 	scobj->get_winner(m);
 }
 
@@ -269,9 +272,9 @@ void consoleDriver() {
 int main(int argc, const char * argv[]) {
 
 	//turnSequenceDriver();
-	//scoringDriver1();	
+	scoringDriver();	
 	//consoleDriver();
-	observerDriver();
+	//observerDriver();
 
 	std::cout << "value of the new line character is " << int('\n') << '\n';
 
