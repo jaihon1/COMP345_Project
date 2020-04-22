@@ -23,7 +23,7 @@
     <ProjectGuid>{B5E2EEFF-04EE-48DA-BD50-ECFE578CE7A4}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TestDriver</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>zTestDriver</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -96,8 +96,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Admin\Documents\COMP345_Project\src\src\x64\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ConsoleLogger.lib;VGMaps.lib;Tile.lib;Scoring.lib;Player.lib;GBMaps.lib;GBMapLoader.lib;VGMapLoader.lib;GameObservers.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -154,18 +152,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\MainLoopDriver.cpp" />
+    <ClCompile Include="..\modules\MainLoop\MainLoop.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameObservers\GameObservers.vcxproj">
+      <Project>{f138ba08-1099-479c-aa93-ee2ca5024b58}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\GameStart\GameStart.vcxproj">
+      <Project>{e8945853-7fce-4445-bf82-9613084072b4}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\modules\board\GBMaps.vcxproj">
       <Project>{010c92c0-b377-49c9-b77e-8acb2aa08098}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\modules\board\VGMaps.vcxproj">
+      <Project>{eee9ee59-904f-4cfe-9fe1-ef0d7e7e4068}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\modules\ConsoleLogger\ConsoleLogger.vcxproj">
+      <Project>{17e6ff7f-00b6-4029-b6ae-8ae4d7a74b41}</Project>
     </ProjectReference>
     <ProjectReference Include="..\modules\GBMapLoader\GBMapLoader.vcxproj">
       <Project>{4806bad0-c1f3-45c0-9cff-fb7e2dacd3c4}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\modules\player\Player.vcxproj">
+      <Project>{88cd216e-d8d0-4b36-8c01-f22f58ebba64}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\modules\Scoring\Scoring.vcxproj">
+      <Project>{e07d55fc-ca78-4fd2-b494-1867f7276229}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\modules\tile\Tile.vcxproj">
       <Project>{19ba8cad-fb6f-4d1a-9f54-86696319dae5}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\modules\VGMapLoader\VGMapLoader.vcxproj">
+      <Project>{946f618b-8ef6-4d55-98b8-aca0a8234321}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClInclude Include="..\modules\MainLoop\MainLoop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
