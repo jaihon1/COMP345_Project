@@ -151,13 +151,39 @@ void GamePlay::singlePlayerBTplacement(Player* player, Hand* hand) {
 	return;
 }
 
+ResourceName GamePlay::getResourceName(const char* name) {
+	bool error = true;
+	int resource;
+	while (error) {
+		cout << name << ": ";
+		cin >> resource;
+		error = (resource < 1 || resource > 4);
+		if (error) {
+			cout << "Invalid input. Try again." << endl;
+		}
+	}
+	return static_cast<ResourceName>(resource);
+}
+
+HarvestTile* GamePlay::shipmentTile() {
+	ResourceName topLeft, topRight, bottomLeft, bottomRight;
+	cout << "Which resource would you like your shipmentTile to consist of? Lumber = 1, Sheep = 2, Wheat = 3, Rock = 4" << endl;
+	topLeft = getResourceName("Top Left");
+	topRight = getResourceName("Top Right");
+	bottomLeft = getResourceName("Bottom Left");
+	bottomRight = getResourceName("Bottom Right");
+
+	return new HarvestTile(topLeft, topRight, bottomLeft, bottomRight);
+}
+
 
 void GamePlay::singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int turnIndex, int numPlayers) {
 	gameBoard->printGameBoard();
 
-
 	int htIndex;
 	vector<HarvestTile*>* htVector = nullptr;
+	bool shipmentFlag = false;
+
 
 	while (true) {
 		cout << "These are your harvest tiles: " << endl;
@@ -166,14 +192,30 @@ void GamePlay::singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int
 		htVector->at(0)->printHarvestTile();
 		cout << endl << "1: " << endl;
 		htVector->at(1)->printHarvestTile();
-		cout << endl << "Enter 0 or 1 to select tile: ";
+		cout << endl << "Enter 0 or 1 to select tile "; 
+		if (playerArr[turnIndex]->getShipmentTile() != nullptr) {
+			cout << "(or 5 to place your shipment tile): ";
+		}
 		cin >> htIndex;
 		if (htIndex == 0 || htIndex == 1) {
 			break;
 		}
+		else if (htIndex == 5 && playerArr[turnIndex]->getShipmentTile() != nullptr) {
+			shipmentFlag = true;
+			break;
+		}
+
 		cout << "Incorrect index, please choose again." << endl;
 	}
-	HarvestTile* harvestTile = htVector->at(htIndex);
+	
+	HarvestTile* tile;
+
+	if (shipmentFlag == true) {
+		tile = shipmentTile();
+	}
+	else{
+		tile = htVector->at(htIndex);
+	}
 
 	int row;
 	int column;
@@ -184,7 +226,7 @@ void GamePlay::singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int
 		cin >> row;
 		cout << "column: ";
 		cin >> column;
-		tilePlaced = gameBoard->addHarvestTile(row, column, harvestTile);
+		tilePlaced = gameBoard->addHarvestTile(row, column, tile);
 		if (tilePlaced == 0) {
 			cout << "Placement request rejected. Try again." << endl;
 		}
@@ -203,6 +245,12 @@ void GamePlay::singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int
 	for (int btRoundIndex = (turnIndex + 1) % numPlayers; btRoundIndex != turnIndex; btRoundIndex = (btRoundIndex + 1) % numPlayers) {
 		cout << "Player " << playerArr[btRoundIndex]->getID() <<": " << endl;
 		singlePlayerBTplacement(playerArr[btRoundIndex], hand);
+	}
+
+	if (shipmentFlag == true) {
+		gameBoard->replaceHarvestTile(row, column, playerArr[turnIndex]->getShipmentTile());
+		playerArr[turnIndex]->setShipmentTile(nullptr);
+		delete tile;
 	}
 }
 

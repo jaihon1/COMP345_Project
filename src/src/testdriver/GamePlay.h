@@ -13,6 +13,9 @@ class GamePlay
 private:
 	BuildingTile* selectBT(vector<BuildingTile*>* btVector, Hand* hand);
 	bool placeBT(BuildingTile* btToAdd, Player* player, Hand* hand);
+	void placeHarvestTile(HarvestTile* harvestTile, GBMaps* gameBoard);
+	HarvestTile* shipmentTile();
+	ResourceName getResourceName(const char* name);
 	void singlePlayerBTplacement(Player* player, Hand* hand);
 	void singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int turnIndex, int numPlayers);
 	int getID(Player** playerArr, int numPlayers);
