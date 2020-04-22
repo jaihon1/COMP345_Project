@@ -758,18 +758,11 @@ int Hand::exchange(ExchangeToken* exchangeToken) {
 		return 1;
 	}
 
-	player->removeBuildingTile(*buildingTile);
-	VGMaps* playersVGBoard = player->getVGBoard();
-
 	// add buildingTile and decrement resource score
 	// SHOULD I HAVE THE BUILDING TILE AUTOMATICALLY BE REPLACED FROM THE DECK?????
-	if (playersVGBoard->addNewBuildingTile(*buildingTile, row, column) == 0) {
+	if (player->placeBuildingTile(row, column, *buildingTile) == 0) {
 			resourceScoreArr[index] -= buildingTile->getBuildingNum();
 			return 0;
-	}
-	else {
-		player->addBuildingTile(*buildingTile);
-		return 2;
 	}
 
 }
