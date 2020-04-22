@@ -23,7 +23,7 @@ private:
     
 public:
 
-	Player(Scoring* inSc);
+	Player(Scoring* inSc, int indexPosition);
     Player(const Player &player);
     ~Player();
         
