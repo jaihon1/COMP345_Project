@@ -8,8 +8,7 @@ MainLoop::MainLoop()
 
 MainLoop::MainLoop(int n)
 {
-	
-	
+	MainLoopSetup(n); 
 }
 
 
@@ -341,10 +340,18 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 	cout << "Player 4 has ID : " << player_order.at(3) << endl;
 	//keep looping while the number of tiles and game limits arent done 
 
-	cout << gameboard->getOccupiedTile() << endl; 
+	GameEnded(false); 
+
+	/*
+	if (gameboard == NULL)
+	{
+		cout << "Gameboard not created" << endl; 
+	}
+	*/ 
 
 	while (gameboard->getOccupiedTile() != 48)
 	{
+		
 		cout << "Number of occupied tiles right now: " << gameboard->getOccupiedTile() << endl; 
 		//cout << "Inside game loop" << endl; 
 		
@@ -353,6 +360,9 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			cout << "Player " << (i + 1) << " 's turn" << endl;
 			//PART 1. Player 1 Turn: Place harvest tile on board
 			Player *temp = players->at(i); 
+
+			//This is the main player 
+			setCurrentPlayer(i); 
 
 			cout << "Here is the current game board" << endl;
 			gameboard->printGameBoard(); 
@@ -365,12 +375,13 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			int harvest_choice = 0;
 			cout << "Enter 1 if you want to place a harvest tile or enter 2 if you want to place your shipment tile: " << endl; 
 			cin >> harvest_choice; 
-
+			
 			int row = 0; 
 			int column = 0; 
 
-			if (harvest_choice == 1)
+			if (harvest_choice == 1) 
 			{
+				
 				bool h_placed = true; 
 				while (h_placed)
 				{
@@ -392,11 +403,13 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 					{
 						h_placed = true;  //redundant 
 						cout << "Wrong placement of harvest tile" << endl; 
+						hschoice(5); 
 						//break; 
 					}
 					else if (place_h_valid == 1)
 					{
 						cout << "Success in placing harvest tile" << endl; 
+						hschoice(1); 
 						h_placed = false; 
 					}
 				}
@@ -432,6 +445,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 					else if (place_s_valid == 1)
 					{
 						cout << "Success in placing shipment tile" << endl;
+						hschoice(2); 
 						s_placed = false;
 					}
 				}
@@ -445,6 +459,8 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			//PART 2. Determine ressources 
 			int res[4]; //store the current ressources here to display 
 
+
+
 			//scobj->get_res(res);
 			//scobj->display_res(); //print ressources 
 
@@ -454,7 +470,9 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 
 			while (build_tile == 2)
 			{
-				scobj->get_res(res);
+				scobj->get_res(res); 
+
+				//use notify to call instead of this? 
 				scobj->display_res();
 
 				cout << endl << "Here is your village board" << endl << endl;
@@ -467,112 +485,161 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 				int choice;
 				cin >> choice; 
 
+				bool keep_building = true ; 
+
 				if (choice == 1)
 				{
-					//Checking ressources input 
-					int res_use[4]; //why 4 - does user input four type and how many they want to use right away?
-
-					cout << "For each type of ressources (Lumber - 0, Sheep - 1, Wheat - 2, Rock - 3), select how many you need" << endl;
-					for (int i = 0; i < 4; i++)
+					
+					while (keep_building)
 					{
-						//res_usage[i] = rand() % 10; 
-						cout << endl << "Type # " << i; 
-						switch (i)
+						int res_use[4];
+						cout << "For each type of ressources (Lumber - 0, Sheep - 1, Wheat - 2, Rock - 3), select how many you need (for one building)" << endl;
+						for (int i = 0; i < 4; i++)
 						{
-						case 0:
-							cout << " Lumber";
-							break;
-						case 1:
-							cout <<  " Sheep";
-							break;
-						case 2:
-							cout << " Wheat";
-							break;
-						case 3:
-							cout << " Rock";
-							break;
-						} 
-						cout << " and how many: " << endl;
-						cin >> res_use[i];
-					}
-
-					for (int i = 0; i < 4; i++)
-					{
-						if (res_use[i] > 0)
-						{
-							if (scobj->remove_res(1, res_use[i] == 0))
-							{
-								cout << endl << "Not enough resource type " << i << endl;
-							}
-							else{
-
-								cout << "For type ";  
-								switch (i)
-								{
-								case 0:
-									cout << "Lumber" << endl; 
-									break; 
-								case 1: 
-									cout << "Sheep" << endl; 
-									break; 
-								case 2:
-									cout << "Wheat" << endl; 
-									break;
-								case 3:
-									cout << "Rock" << endl; 
-									break; 
-								}
-
-								int b_index;
-								cout << "Enter index of which building tile you want to use" << endl;
-								cin >> b_index;
-								BuildingTile *select_b = building_tile->at(b_index);
-
-								int row_village;
-								int column_village;
-								cout << "Choose where you want to place your building tile: " << endl;
-								cout << "Row: " << endl;
-								cin >> row_village;
-								cout << "Column: " << endl;
-								cin >> column_village;
-
-								temp->placeBuildingTile(row_village, column_village, *select_b);
-								scobj->remove_res(static_cast<int>(select_b->getBuildingColorType()), row_village);//remove resource match the type of building??	
-							}
-						}
-						else
-						{
-							cout << "Player does not want to use ressource type " << i; 
-								
+							//res_usage[i] = rand() % 10; 
+							cout << endl << "Type # " << i;
 							switch (i)
 							{
 							case 0:
-								cout << "- Lumber" << endl;
+								cout << " Lumber";
 								break;
 							case 1:
+								cout << " Sheep";
+								break;
+							case 2:
+								cout << " Wheat";
+								break;
+							case 3:
+								cout << " Rock";
+								break;
+							}
+							cout << " and how many: " << endl;
+							cin >> res_use[i];
+						}
+
+						for (int i = 0; i < 4; i++)
+						{
+							if (res_use[i] > 0)
+							{
+								if (scobj->remove_res(1, res_use[i] == 0))
+								{
+									cout << endl << "Not enough resource type " << i << endl;
+								}
+								else {
+
+									cout << "For type ";
+									switch (i)
+									{
+									case 0:
+										cout << "Lumber" << endl;
+										break;
+									case 1:
+										cout << "Sheep" << endl;
+										break;
+									case 2:
+										cout << "Wheat" << endl;
+										break;
+									case 3:
+										cout << "Rock" << endl;
+										break;
+									}
+
+									int b_index;
+									cout << "Enter index of which building tile you want to use" << endl;
+									cin >> b_index;
+									BuildingTile *select_b = building_tile->at(b_index);
+
+									int row_village;
+									int column_village;
+									cout << "Choose where you want to place your building tile: " << endl;
+									cout << "Row: " << endl;
+									cin >> row_village;
+									cout << "Column: " << endl;
+									cin >> column_village;
+
+									int checking = temp->placeBuildingTile(row_village, column_village, *select_b);
+									if (checking == 1)
+									{
+										cout << "Failed to place building Tile! Try again" << endl; 
+										cout << endl << "Here is your village board" << endl << endl;
+										temp->getVGBoard()->printVGMap();
+
+										cout << endl << "Here are the building tiles in your hand: " << endl;
+										vector <BuildingTile*> *building_tile = temp->getBuildings();
+
+										keep_building = true; 
+										
+									}
+									else if (checking == 0)
+									{
+										scobj->remove_res(static_cast<int>(select_b->getBuildingColorType()), row_village);//remove resource match the type of building??
+
+										cout << "Success in building a building" << endl; 
+										int nchoice; 
+										cout << "Enter 1 to keep building, 0 to stop: " << endl;
+										cin >> nchoice;
+
+										if (nchoice == 1)
+										{
+											keep_building = true; 
+											cout << endl << "Here is your village board" << endl << endl;
+											temp->getVGBoard()->printVGMap();
+
+											cout << endl << "Here are the building tiles in your hand: " << endl;
+											vector <BuildingTile*> *building_tile = temp->getBuildings();
+											
+										}
+										else if (nchoice == 0)
+										{
+											keep_building = false; 
+											
+										}
+									}
+								}
+							}
+							else
+							{
+								cout << "Player does not want to use ressource type " << i;
+								switch (i)
+								{
+								case 0:
+									cout << "- Lumber" << endl;
+									break;
+								case 1:
 									cout << "- Sheep" << endl;
 									break;
-							case 2:
+								case 2:
 									cout << "- Wheat" << endl;
 									break;
-							case 3:
+								case 3:
 									cout << "- Rock" << endl;
 									break;
+								}
 							}
 						}
+						cout << "Player temp finished building" << endl << endl << endl;
+						hschoice(3);
+
+						building_tile = 0;
 					}
-					cout << "Player temp finished building. " << endl << endl << endl;
-					building_tile = 0;
 				}
 				else if(choice == 0) 
 				{
+					
+
 					cout << "DEBUG LOG: Breaking the current loop, player skipping turn." << endl; 
-					building_tile = 0; 
+					hschoice(4);
+					//notify();
+
+					building_tile = 0;
 					break; 
 				}
 				else //for any other input 
 				{
+
+					//notify();
 					cout << "Wrong input, try again" << endl; 
+					hschoice(5);
 					build_tile = 2; 
 				}
 			}
@@ -581,38 +648,16 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 			scobj->get_res(res);
 			cout << endl << "Sharing the Wealth" << endl << endl;
 
-			/**
-			switch (i)
-			{
-			case 0: 
-				remaining->push_back(players->at(1)); 
-				remaining->push_back(players->at(2)); 
-				remaining->push_back(players->at(3)); 
-				break; 
-			case 1:
-				remaining->push_back(players->at(2)); 
-				remaining->push_back(players->at(3));
-				remaining->push_back(players->at(0));
-				break; 
-			case 2:
-				remaining->push_back(players->at(3));
-				remaining->push_back(players->at(0));
-				remaining->push_back(players->at(1));
-				break;
-			case 3:
-				remaining->push_back(players->at(0));
-				remaining->push_back(players->at(1));
-				remaining->push_back(players->at(2));
-				break; 
-			}
-			cout << "Stored remaining players" << endl; 
-			*/ 
-
 			int current_position = i; 
 
 			for (int k = 0; k < *num_players - 1; k++) { //cuz this is for the remaining players 
 	
 				current_position++; 
+
+				//get new current player index 
+				//getCurrentPlayer(current_position); 
+				setCurrentPlayer(current_position); 
+
 				if (current_position == *num_players) //if current position is equal to the max of num players (restart)
 				{
 					current_position = 0; 
@@ -641,62 +686,111 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 					cin >> player_decision_pass; 
 
 					if (player_decision_pass == 1) {
-	
-						//Shouldnt I do this for the player at the start too? 
-						int res_usage[4]; //why 4 - does user input four type and how many they want to use right away?
-						for (int i = 0; i < 4; i++)
-						{
-							//res_usage[i] = rand() % 10; 
-							cout << "For each type of ressources (Lumber - enter 1, Sheep - enter 2, Wheat - enter 3, Rock - enter 4), select how many you need" << endl; 
-							cout << endl << "Type # " << i << " and how many: " << endl; 
-							cin >> res_usage[i]; 
-						}
 
-						//Use ressouces 
-						for (int i = 0; i < 4; i++)
+						bool keep_building2 = true; 
+
+						while (keep_building2)
 						{
-							if (res_usage[i] > 0)
+							//Shouldnt I do this for the player at the start too? 
+							int res_usage[4]; //why 4 - does user input four type and how many they want to use right away?
+							for (int i = 0; i < 4; i++)
 							{
-								if (scobj->remove_res(1, res_usage[i]) == 0)
+								//res_usage[i] = rand() % 10; 
+								cout << "For each type of ressources (Lumber - enter 1, Sheep - enter 2, Wheat - enter 3, Rock - enter 4), select how many you need" << endl;
+								cout << endl << "Type # " << i << " and how many: " << endl;
+								cin >> res_usage[i];
+							}
+
+							//Use ressouces 
+							for (int i = 0; i < 4; i++)
+							{
+								if (res_usage[i] > 0)
 								{
-									cout << endl << "Not enough resource type " << i << endl;
+									if (scobj->remove_res(1, res_usage[i] == 0))
+									{
+										cout << endl << "Not enough resource type " << i << endl;
+									}
+									else
+									{
+										cout << "For type " << i << endl; //Print which type it is?
+
+										int b_index2;
+										cout << "Enter index of which building tile you want to use" << endl;
+										cin >> b_index2;
+										BuildingTile *select_b2 = next_btiles->at(b_index2);
+
+										int row_village2;
+										int column_village2;
+										cout << "Choose where you want to place your building tile: " << endl;
+										cout << "Row: " << endl;
+										cin >> row_village2;
+										cout << "Column: " << endl;
+										cin >> column_village2;
+
+										int succeed = next->placeBuildingTile(row_village2, column_village2, *select_b2);
+
+										if (succeed == 1)
+										{
+											cout << "Failed to place building Tile! Try again" << endl;
+
+											cout << "Here is your current village board: " << endl;
+											next->getVGBoard()->printVGMap();
+											cout << endl << "Here are the building tiles in your hand (by index): " << endl << endl;
+											vector <BuildingTile*> *next_btiles = next->getBuildings();
+
+											keep_building2 = true; 
+										}
+										else if (succeed == 0)
+										{
+											scobj->remove_res(static_cast<int>(select_b2->getBuildingColorType()), row_village2);
+											cout << "Success in building a building" << endl;
+											int nchoice2;
+											cout << "Enter 1 to keep building, 0 to stop: " << endl;
+											cin >> nchoice2;
+
+											if (nchoice2 == 1)
+											{
+												keep_building2 = true;
+
+												cout << "Here is your current village board: " << endl;
+												next->getVGBoard()->printVGMap();
+												cout << endl << "Here are the building tiles in your hand (by index): " << endl << endl;
+												vector <BuildingTile*> *next_btiles = next->getBuildings();
+
+
+											}
+											else if (nchoice2 == 0)
+											{
+												keep_building2 = false;
+											}
+										}
+									}
 								}
 								else
 								{
-									cout << "For type " << i << endl; //Print which type it is?
-									
-									int b_index2;
-									cout << "Enter index of which building tile you want to use" << endl;
-									cin >> b_index2;
-									BuildingTile *select_b2 = next_btiles->at(b_index2);
-
-									int row_village2;
-									int column_village2;
-									cout << "Choose where you want to place your building tile: " << endl;
-									cout << "Row: " << endl;
-									cin >> row_village2;
-									cout << "Column: " << endl;
-									cin >> column_village2;
-
-									next->placeBuildingTile(row_village2, column_village2, *select_b2);
-									scobj->remove_res(static_cast<int>(select_b2->getBuildingColorType()), row_village2);
+									cout << "Player does not want to use ressource type " << i << endl;
 								}
 							}
-							else
-							{
-								cout << "Player does not want to use ressource type " << i << endl; 
-							}
+							cout << "Player next finished building. " << endl;
+							hschoice(3);
+
+							repeat = 0;
+
 						}
-						cout << "Player next finished building. " << endl; 
-						repeat = 0; 
+						
 					}
 					else if(player_decision_pass == 0)
 					{
 						cout << "Passing turn" << endl; 
+						hschoice(4); 
+						//notify();
 						repeat = 0; 
 					}
 					else
 					{
+						hschoice(5); 
+						//notify(); 
+
 						cout << "Wrong player decision input, retry" << endl;
 						repeat = 2; 
 					}
@@ -760,7 +854,9 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 		}
 	}
 	cout << "Number of tiles inputed" << gameboard->getOccupiedTile() << endl;
+
 	cout << "End of the game" << endl; 
+	GameEnded(true); 
 }
 
 /*
@@ -774,5 +870,43 @@ vector <Player*> *MainLoop::getPlayers()
 {
 	return players; 
 }
+
+Scoring* MainLoop::getScoringObject()
+{
+	return scobj; 
+}
+
+void MainLoop::GameEnded(bool check)
+{
+	game_end = check; 
+}
+
+bool MainLoop::getGameEnd()
+{
+	return game_end;
+}
+
+Player* MainLoop::getCurrentPlayer()
+{
+	return current; 
+}
+
+void MainLoop::setCurrentPlayer(int index)
+{
+	current = players->at(index);
+	//notify();
+}
+
+void MainLoop::hschoice(int c)
+{
+	player_action = c; 
+	notify();
+}
+
+int MainLoop::getPlayerAction()
+{
+	return player_action; 
+}
+
 
 

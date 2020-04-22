@@ -10,9 +10,10 @@
 #include "../tile/Dictionary.h"
 #include "../Scoring/Scoring.h"
 #include "../../GameStart/GameStart.h"
+#include "../../GameObservers/Subject.h"
 using namespace std; 
 
-class MainLoop
+class MainLoop: public Subject
 {
 private:
 
@@ -42,13 +43,19 @@ private:
 	BuildingDeck* buildingDeck;
 	BuildingPool *building_pool;
 
-	GBMaps * gameboard; 
+	GBMaps *gameboard; 
 	Scoring *scobj; 
 
 	GameStart * gstart = new GameStart(); 
 
 	Hand* hand;
 	bool shipment[4]{0};
+
+	int player_action; 
+
+	Player * current; //reference for observer to current player 
+
+	bool game_end; 
 
 public:
 	MainLoop();
@@ -69,7 +76,22 @@ public:
 
 	vector <Player*> * getPlayers(); 
 
+	Scoring* getScoringObject(); 
 
+	
+	//Observer functions - but how to integrate notify?  
+	void GameEnded(bool check); //checks if game ended 
 
+	bool getGameEnd(); 
+
+	Player* getCurrentPlayer(); 
+
+	void setCurrentPlayer(int index); 
+
+	void hschoice(int c); //did the current player select to place a harvest tile or a shipment tile?
+
+	int getPlayerAction(); 
+	
+	
 };
 

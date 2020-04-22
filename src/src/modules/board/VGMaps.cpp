@@ -126,6 +126,19 @@ VGSlotStatus VGMaps::getStatus(int row, int column)
 
 bool VGMaps::isEmpty(int row, int column) const
 {
+	/*
+	bool check;
+	if (village_board[row][column].VGstatus == VGSlotStatus::Empty)
+	{
+		check = true; 
+	}
+	else if (village_board[row][column].VGstatus == VGSlotStatus::Taken)
+	{
+		check = false; 
+	}
+
+	return check; 
+	*/ 
 	return (village_board[row][column].VGstatus == VGSlotStatus::Empty);
 }
 
