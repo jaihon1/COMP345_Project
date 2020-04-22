@@ -91,7 +91,7 @@ void GameStart::setup(int inNumPlayers) {
 
 	// instantiate each player and initialize their harvest and building tiles
 	for (int i = 0; i < inNumPlayers; i++) {
-		playerArr[i] = new Player(sc);
+		playerArr[i] = new Player(sc, i);
 		for (int j = 0; j < 6; j++) {
 			playerArr[i]->drawBuilding(*buildingDeck);
 		}

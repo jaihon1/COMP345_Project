@@ -183,7 +183,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GamePlay.cpp" />
     <ClCompile Include="TestDriver.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GamePlay.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

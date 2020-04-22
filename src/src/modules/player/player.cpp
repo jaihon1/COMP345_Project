@@ -15,13 +15,13 @@ Player::Player() {
 }
 */
 
-Player::Player(Scoring* inSc)
+Player::Player(Scoring* inSc, int indexPosition)
 {
 	_villageBoard = new VGMaps();
 	_harvestTiles = new vector<HarvestTile*>;
 	_buildingTiles = new vector<BuildingTile*>;
 	ID = new int(-1); //will be decided at runtime 
-	position = new int(-1);
+	position = new int(indexPosition+1);
 	sc = inSc;
 }
 
@@ -176,8 +176,7 @@ int Player::getID()
 void Player::setID(int n, int index)
 {
 	*ID = n;
-	*position = index;
-	sc->set_id(index, n);
+	sc->set_id(*position, n);
 }
 
 VGMaps* Player::getVGBoard()

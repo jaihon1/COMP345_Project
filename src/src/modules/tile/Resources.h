@@ -142,6 +142,8 @@ public:
 
 	void printHarvestTile(); 
 
+	HarvestTile* rotateHT(HarvestTile* inTile);
+
 	static const char* ResourceNameToString(ResourceName inResourceName) {
 		switch (inResourceName) {
 		case ResourceName::Lumber:

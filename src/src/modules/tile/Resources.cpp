@@ -84,6 +84,39 @@ void HarvestTile::printHarvestTile()
 		<< setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::bottomRight)) << endl;
 }
 
+HarvestTile* HarvestTile::rotateHT(HarvestTile* inTile) {
+
+	inTile->printHarvestTile();
+	cout << endl;
+	char yesNo;
+	char rotate;
+	cout << "Would you like to rotate the tile? y/n ";
+	cin >> yesNo;
+	//ROTATE METHODS TEST
+	while (yesNo == 'y') {
+		cout << "Right = r, Left = l: ";
+		cin >> rotate;
+		cout << endl;
+		switch (rotate) {
+		case 'r':
+			inTile->RotateRight();
+			break;
+		case 'l':
+			inTile->RotateLeft();
+			break;
+		default:
+			cout << "Invalid selection." << endl;
+			break;
+		}
+		inTile->printHarvestTile();
+		cout << endl << "Again? y/n ";
+		cin >> yesNo;
+	}
+
+	return inTile;
+
+}
+
 BuildingTile::BuildingTile()
 {
 
@@ -301,7 +334,7 @@ BuildingTile &BuildingTile:: operator = (const BuildingTile &b)
 
 void BuildingTile::printBuildingTile()
 {
-	cout << this->getBuildingNum() << " " << this->Building_typeToChar(this->getBuildingColorType()) << " " << this->Building_statusToChar(this->getSide()) << endl << endl;
+	cout << this->getBuildingNum() << " " << this->Building_typeToChar(this->getBuildingColorType()) << endl;
 }
 
 HarvestDeck::HarvestDeck()
