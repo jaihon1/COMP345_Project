@@ -76,23 +76,6 @@ void GameObservers::turndisplay()
 	{
 		turnConsole.cout("Player not doing the right thing \n"); 
 	}
-
-	//nothing to notify if the game ended 
-	//while (_subject->getGameEnd() == false)
-	//{
-		//for (int i = 0; i < *n_players; i++) -> don't need cause it will loop through for each player 
-		//{
-			//Check for if player is building harvest tile or building tile?
-
-			//Printing player id
-			//turnConsole.cout("Display current turn \n"); 
-
-
-
-			//TO CHECL - print number of building tiles - add code when merge with Nguyen's new scoring 
-
-
-	//COUT CHECKING - COMMENTED OUT BELOW 
 			/*
 			cout << "Current player ID: " << _subject->getCurrentPlayer()->getID() << endl; 
 
@@ -139,6 +122,5 @@ void GameObservers::turndisplay()
 			}
 			*/ 
 
-		//}
-	//}
+	
 }
