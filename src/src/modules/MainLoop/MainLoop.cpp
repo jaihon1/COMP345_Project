@@ -500,7 +500,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 					{
 						if (res_use[i] > 0)
 						{
-							if (scobj->remove_res(1, res_use[i] == 0))
+							if (scobj->remove_res(1, res_use[i]) == 0)
 							{
 								cout << endl << "Not enough resource type " << i << endl;
 							}
@@ -657,7 +657,7 @@ void MainLoop::MainLoopStart() //Function that the entire game relies upon
 						{
 							if (res_usage[i] > 0)
 							{
-								if (scobj->remove_res(1, res_usage[i] == 0))
+								if (scobj->remove_res(1, res_usage[i]) == 0)
 								{
 									cout << endl << "Not enough resource type " << i << endl;
 								}
