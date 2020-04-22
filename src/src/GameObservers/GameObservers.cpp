@@ -34,15 +34,14 @@ void GameObservers::update()
 void GameObservers::turndisplay()
 {
 	if (_subject->getCurrentPlayer() != NULL) {
-		turnConsole.cout("Current player ID: %d\n", _subject->getCurrentPlayer()->getID());
+		turnConsole.cout("\nCurrent player ID: %d\n", _subject->getCurrentPlayer()->getID());
 	}
 
 	if (_subject->getPlayerAction() == 1)
 	{
-		turnConsole.cout("Placed a harvest tile \n");
+		turnConsole.cout("\nPlaced a harvest tile \n");
 
-
-		turnConsole.cout("Displaying current ressource tracker: \n");
+		turnConsole.cout("\nDisplaying current ressource tracker: \n");
 		turnConsole.cout("Lumber: %d\n", _subject->getScoringObject()->get_lumber());
 		turnConsole.cout("Sheep: %d\n", _subject->getScoringObject()->get_sheep());
 		turnConsole.cout("Wheat: %d\n", _subject->getScoringObject()->get_wheat());
@@ -50,19 +49,25 @@ void GameObservers::turndisplay()
 	}
 	else if (_subject->getPlayerAction() == 2)
 	{
-		turnConsole.cout("Placed a shipment tile \n");
+		turnConsole.cout("\nPlaced a shipment tile \n");
+
+		turnConsole.cout("\nDisplaying current ressource tracker: \n");
+		turnConsole.cout("Lumber: %d\n", _subject->getScoringObject()->get_lumber());
+		turnConsole.cout("Sheep: %d\n", _subject->getScoringObject()->get_sheep());
+		turnConsole.cout("Wheat: %d\n", _subject->getScoringObject()->get_wheat());
+		turnConsole.cout("Rock: %d\n", _subject->getScoringObject()->get_stone());
 	}
 	else if (_subject->getPlayerAction() == 3)
 	{
-		turnConsole.cout("Added a building to village board \n");
+		turnConsole.cout("\nAdded a building to village board \n");
 
 		//print out updated village count
 		VGMaps* ref = _subject->getCurrentPlayer()->getVGMaps();
 
-		turnConsole.cout("Number of buildings on player's VGMAP: %d\n", _subject->getScoringObject()->get_density(*ref));
+		turnConsole.cout("\nNumber of buildings on player's VGMAP: %d\n", _subject->getScoringObject()->get_density(*ref));
 
 		//display ressources left (always displayed below)
-		turnConsole.cout("Displaying current ressource tracker: \n");
+		turnConsole.cout("\nDisplaying current ressource tracker: \n");
 		turnConsole.cout("Lumber: %d\n", _subject->getScoringObject()->get_lumber());
 		turnConsole.cout("Sheep: %d\n", _subject->getScoringObject()->get_sheep());
 		turnConsole.cout("Wheat: %d\n", _subject->getScoringObject()->get_wheat());
@@ -71,29 +76,29 @@ void GameObservers::turndisplay()
 	}
 	else if (_subject->getPlayerAction() == 4)
 	{
-		turnConsole.cout("Player is not building anything \n");
+		turnConsole.cout("\nPlayer is not building anything \n");
 	}
 	else if (_subject->getPlayerAction() == 5)
 	{
-		turnConsole.cout("Player not doing the right thing \n");
+		turnConsole.cout("\nPlayer not doing the right thing \n");
 	}
 	else if (_subject->getPlayerAction() == 6) {
-		turnConsole.cout("Entered SHARE THE WEALTH portion of Player %d's turn \n", _subject->getCurrentPlayer()->getID());
+		turnConsole.cout("\nEntered SHARE THE WEALTH portion of Player %d's turn \n", _subject->getCurrentPlayer()->getID());
 	}
 	else if (_subject->getPlayerAction() == 7) {
 		turnConsole.cout("START Player %d's turn \n", _subject->getCurrentPlayer()->getID());
 	}
 	else if (_subject->getPlayerAction() == 8) {
-		turnConsole.cout("END Player %d's turn \n", _subject->getCurrentPlayer()->getID());
+		turnConsole.cout("\nEND Player %d's turn \n", _subject->getCurrentPlayer()->getID());
 	}
 	else if (_subject->getPlayerAction() == 9) {
 		turnConsole.cout("GAME START");
 	}
 	else if (_subject->getPlayerAction() == 10) {
-		turnConsole.cout("GAME END");
+		turnConsole.cout("\nGAME END");
 	}
 	else {
-		turnConsole.cout("Unknown Player Action \n");
+		turnConsole.cout("\nUnknown Player Action \n");
 	}
 
 }
