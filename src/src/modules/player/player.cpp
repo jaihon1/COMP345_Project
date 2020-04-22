@@ -130,6 +130,7 @@ int Player::placeBuildingTile(int row, int col, BuildingTile& tile) {
 
 	if (status == 0) {
 		removeBuildingTile(tile);
+		sc->remove_res(static_cast<int>(tile.getBuildingColorType()), tile.getBuildingNum());
 		sc->add_density(*position, 1);
 
 		// get the current score of the player from the scoring object in order to set the score in the statistics table of the scoring object which will then notify the observer

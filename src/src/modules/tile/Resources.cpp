@@ -310,8 +310,6 @@ void BuildingTile::deepCopy(const BuildingTile& t)
 		_buildingStatus = nullptr;
 	}
 
-	cout << "Success in deep copying" << endl; 
-
 }
 
 BuildingTile::BuildingTile(const BuildingTile& t) : _buildingColorType{ nullptr }, _buildingNum{ nullptr }, _buildingStatus{ nullptr }
