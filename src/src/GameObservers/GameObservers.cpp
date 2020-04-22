@@ -38,11 +38,11 @@ void GameObservers::turndisplay()
 
 	if (_subject->getPlayerAction() == 1)
 	{
-		turnConsole.cout("Placed a harvest tile \n"); 
+		turnConsole.cout("Placed a harvest tile\n\n"); 
 
 
 		turnConsole.cout("Displaying current ressource tracker: \n"); 
-		turnConsole.cout("Lumber: ", _subject->getScoringObject()->get_lumber(), " \n");
+		turnConsole.cout("Lumber: ", _subject->getScoringObject()->get_lumber(),"\n");
 		turnConsole.cout("Sheep: ", _subject->getScoringObject()->get_sheep(), "\n"); 
 		turnConsole.cout("Wheat: ", _subject->getScoringObject()->get_wheat(), "\n"); 
 		turnConsole.cout("Rock: ", _subject->getScoringObject()->get_stone(), "\n"); 
@@ -50,6 +50,13 @@ void GameObservers::turndisplay()
 	else if (_subject->getPlayerAction() == 2)
 	{
 		turnConsole.cout("Placed a shipment tile \n"); 
+
+		turnConsole.cout("Displaying current ressource tracker: \n");
+		turnConsole.cout("Lumber: ", _subject->getScoringObject()->get_lumber(), "\n");
+		turnConsole.cout("Sheep: ", _subject->getScoringObject()->get_sheep(), "\n");
+		turnConsole.cout("Wheat: ", _subject->getScoringObject()->get_wheat(), "\n");
+		turnConsole.cout("Rock: ", _subject->getScoringObject()->get_stone(), "\n");
+
 	}
 	else if (_subject->getPlayerAction() == 3)
 	{
