@@ -13,7 +13,7 @@
 #include "../modules/VGMapLoader/VGMapLoader.h"
 #include "../GameStart/GameStart.h"
 #include "GamePlay.h"
-
+#include "../GameObservers/GameObservers.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -349,9 +349,9 @@ int main()
 {
 	//MemoryLeak
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
-	cout << "Welcome to New Haven!" << endl << endl;
 	GamePlay gamePlay;
+	GameObservers* gameObs = new GameObservers(&gamePlay);
+	cout << "Welcome to New Haven!" << endl << endl;
 	gamePlay.playGame();
 	return 0;
 }

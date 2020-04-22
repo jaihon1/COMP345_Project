@@ -729,8 +729,8 @@ int Hand::exchange(ExchangeToken* exchangeToken) {
 	int column = exchangeToken->getCol();
 	int index;
 
-	// LINES 703 to 727 SHOULD NOT BE NEEDED KEEPING JUST IN CASE I NEED TO REIMPLEMENT
-
+	// THE FOLLOWING (until stars) NOt NEEDED KEEPING JUST IN CASE I NEED TO REIMPLEMENT
+	
 	// get index for resourceScoreArr
 	switch (buildingTile->getBuildingColorType()) {
 
@@ -755,12 +755,17 @@ int Hand::exchange(ExchangeToken* exchangeToken) {
 	if (resourceScoreArr[index] < buildingTile->getBuildingNum()) {
 		return 1;
 	}
+	
+	// *************************************************************
 
 	// add buildingTile and decrement resource score
 	// SHOULD I HAVE THE BUILDING TILE AUTOMATICALLY BE REPLACED FROM THE DECK?????
 	if (player->placeBuildingTile(row, column, *buildingTile) == 0) {
 			resourceScoreArr[index] -= buildingTile->getBuildingNum();
 			return 0;
+	}
+	else {
+		return 2;
 	}
 
 }

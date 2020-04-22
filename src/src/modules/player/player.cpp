@@ -171,7 +171,8 @@ void Player::ressourceTracker() {
 
 int Player::getID()
 {
-	return *ID;
+		return *ID;
+
 }
 
 void Player::setID(int n, int index)

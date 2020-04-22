@@ -20,6 +20,7 @@ BuildingTile* GamePlay::selectBT(vector<BuildingTile*>* btVector, Hand* hand) {
 				break;
 			}
 			cout << "Incorrect index, please choose again." << endl;
+			notifyStateChange(5);
 		}
 
 		btToAdd = btVector->at(btInput);
@@ -47,6 +48,7 @@ BuildingTile* GamePlay::selectBT(vector<BuildingTile*>* btVector, Hand* hand) {
 		// verify there are enough resources to add the building tile
 		if (hand->getResourceScore(index) < btToAdd->getBuildingNum()) {
 			cout << "Insufficient resources for this building tile.  Please select again." << endl;
+			notifyStateChange(5);
 		}
 		else {
 			break;
@@ -72,19 +74,20 @@ bool GamePlay::placeBT(BuildingTile* btToAdd, Player* player, Hand* hand) {
 		case 0:
 			return true;
 		case 2:
-			break;
+			notifyStateChange(5);
+			continue;
 		default:
 			cout << "Rejected for unknown reason.  Please try again." << endl;
+			notifyStateChange(5);
 			break;
 		}
 	}
 }
 
 // parameter used to select initial prompt
-bool exitBT(bool placeAnother) {
+bool GamePlay::exitBT(bool placeAnother) {
 
-	bool correctInputFlag = false;
-	while (!correctInputFlag) {
+	while (true) {
 		char keepPlacingBT;
 
 		if (placeAnother) {
@@ -97,13 +100,12 @@ bool exitBT(bool placeAnother) {
 		switch (keepPlacingBT) {
 		case 'y':
 			return false;
-			break;
 		case 'n':
+			notifyStateChange(4);
 			return true;
-			correctInputFlag = true;
-			break;
 		default:
 			cout << "incorrect input" << endl;
+			notifyStateChange(5);
 			break;
 		}
 	}
@@ -136,8 +138,9 @@ void GamePlay::singlePlayerBTplacement(Player* player, Hand* hand) {
 		BuildingTile* btToAdd = selectBT(btVector, hand);
 		if (!placeBT(btToAdd, player, hand)) {
 			cout << "error in placing building tile" << endl;
+			notifyStateChange(5);
 		}
-
+		notifyStateChange(3);
 		player->getVGBoard()->printVGMap();
 		cout << endl;
 		hand->displayHand();
@@ -160,6 +163,7 @@ ResourceName GamePlay::getResourceName(const char* name) {
 		error = (resource < 1 || resource > 4);
 		if (error) {
 			cout << "Invalid input. Try again." << endl;
+			notifyStateChange(5);
 		}
 	}
 	return static_cast<ResourceName>(resource);
@@ -192,7 +196,7 @@ void GamePlay::singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int
 		htVector->at(0)->printHarvestTile();
 		cout << endl << "1: " << endl;
 		htVector->at(1)->printHarvestTile();
-		cout << endl << "Enter 0 or 1 to select tile "; 
+		cout << endl << "Enter 0 or 1 to select tile ";
 		if (playerArr[turnIndex]->getShipmentTile() != nullptr) {
 			cout << "(or 5 to place your shipment tile): ";
 		}
@@ -206,14 +210,15 @@ void GamePlay::singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int
 		}
 
 		cout << "Incorrect index, please choose again." << endl;
+		notifyStateChange(5);
 	}
-	
+
 	HarvestTile* tile;
 
 	if (shipmentFlag == true) {
 		tile = shipmentTile();
 	}
-	else{
+	else {
 		tile = htVector->at(htIndex);
 	}
 
@@ -229,7 +234,14 @@ void GamePlay::singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int
 		tilePlaced = gameBoard->addHarvestTile(row, column, tile);
 		if (tilePlaced == 0) {
 			cout << "Placement request rejected. Try again." << endl;
+			notifyStateChange(5);
 		}
+	}
+	if (shipmentFlag == true) {
+		notifyStateChange(2);
+	}
+	else {
+		notifyStateChange(1);
 	}
 
 	hand->intializeHand();
@@ -242,11 +254,13 @@ void GamePlay::singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int
 
 	// SHARE THE WEALTH LOOP (loops through each player allowing them to use remaining resources
 	cout << "Share the wealth!" << endl;
+	notifyStateChange(6);
 	for (int btRoundIndex = (turnIndex + 1) % numPlayers; btRoundIndex != turnIndex; btRoundIndex = (btRoundIndex + 1) % numPlayers) {
-		cout << "Player " << playerArr[btRoundIndex]->getID() <<": " << endl;
+		cout << "Player " << playerArr[btRoundIndex]->getID() << ": " << endl;
+		currentPlayer = playerArr[btRoundIndex];
 		singlePlayerBTplacement(playerArr[btRoundIndex], hand);
 	}
-
+	currentPlayer = playerArr[turnIndex];
 	if (shipmentFlag == true) {
 		gameBoard->replaceHarvestTile(row, column, playerArr[turnIndex]->getShipmentTile());
 		playerArr[turnIndex]->setShipmentTile(nullptr);
@@ -282,15 +296,18 @@ void GamePlay::playGame() {
 	GBMaps* gameBoard = gameStart->getGBoard();
 	Player** playerArr = gameStart->getPlayerArr();
 	Hand* hand = gameStart->getHand();
-	Scoring* sc = gameStart->getSc();
+	sc = gameStart->getSc();
 	ViewObserver* viewObs = new ViewObserver(sc);
+	notifyStateChange(9);
 	int startPlayer = getID(playerArr, numPlayers);
-
 	for (int turnIndex = startPlayer; turnIndex < numPlayers; turnIndex = (turnIndex + 1) % numPlayers) {
 		cout
 			<< "**************************************************" << endl
 			<< "Player " << playerArr[turnIndex]->getID() << endl;
+		currentPlayer = playerArr[turnIndex];
+		notifyStateChange(7);
 		singleTurn(gameBoard, playerArr, hand, turnIndex, numPlayers);
+		notifyStateChange(8);
 		// check end game condition
 		if (gameBoard->getOccupiedTile() == 48) {
 			break;
@@ -303,4 +320,23 @@ void GamePlay::playGame() {
 		vgMapArr[i] = i < numPlayers ? playerArr[i]->getVGMaps() : nullptr;
 	}
 	cout << "Winner is Player " << sc->get_winner(vgMapArr);
+	notifyStateChange(10);
+}
+
+// METHODS FOR TIFF's GAME OBSERVER
+Player* GamePlay::getCurrentPlayer() {
+	return currentPlayer;
+}
+
+int GamePlay::getPlayerAction() {
+	return player_action;
+}
+
+Scoring* GamePlay::getScoringObject() {
+	return sc;
+}
+
+void GamePlay::notifyStateChange(int action) {
+	player_action = action;
+	notify();
 }
