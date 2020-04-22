@@ -49,7 +49,7 @@ void GameObservers::turndisplay()
 	}
 	else if (_subject->getPlayerAction() == 2)
 	{
-		turnConsole.cout("Placed a shipment tile \n"); 
+		turnConsole.cout("Placed a shipment tile \n\n"); 
 
 		turnConsole.cout("Displaying current ressource tracker: \n");
 		turnConsole.cout("Lumber: ", _subject->getScoringObject()->get_lumber(), "\n");
@@ -60,7 +60,7 @@ void GameObservers::turndisplay()
 	}
 	else if (_subject->getPlayerAction() == 3)
 	{
-		turnConsole.cout("Added a building to village board \n"); 
+		turnConsole.cout("Added a building to village board \n\n"); 
 
 		//print out updated village count
 		VGMaps *ref = _subject->getCurrentPlayer()->getVGMaps();
@@ -77,11 +77,11 @@ void GameObservers::turndisplay()
 	}
 	else if (_subject->getPlayerAction() == 4)
 	{
-		turnConsole.cout("Player is not building anything \n"); 
+		turnConsole.cout("Player is not building anything \n\n"); 
 	}
 	else if (_subject->getPlayerAction() == 5)
 	{
-		turnConsole.cout("Player not doing the right thing \n"); 
+		turnConsole.cout("Player not doing the right thing \n\n"); 
 	}
 			/*
 			cout << "Current player ID: " << _subject->getCurrentPlayer()->getID() << endl; 
