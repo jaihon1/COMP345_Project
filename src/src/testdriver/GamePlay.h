@@ -22,6 +22,8 @@ private:
 	bool exitBT(bool placeAnother);
 	void singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int turnIndex, int numPlayers);
 	int getID(Player** playerArr, int numPlayers);
+	void showResources(Hand* hand);
+	bool enoughResourcesToPlayBT(vector<BuildingTile*>* btVector, Hand* hand);
 
 	// ATTRIBUTES FOR TIFF's GAME OBSERVER
 	Player* currentPlayer;

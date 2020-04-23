@@ -715,6 +715,7 @@ void Hand::displayHand() {
 	for (int i = 1; i < 5; i++) {
 		cout << HarvestTile::ResourceNameToString(static_cast<ResourceName>(i)) << ": " << resourceScoreArr[i-1]<<"   ";
 	}
+	cout<<endl;
 }
 
 int Hand::getResourceScore(int index)

@@ -278,6 +278,7 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 {
+	
 	//assume successful add (only change return status if there is an error)
 	int returnStatus = 0;
 
@@ -290,9 +291,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 	else
 	{
 
-		cout << BuildingTile::Building_typeToChar(t.getBuildingColorType()) << endl; 
-
-		BuildingTile *to_add = new BuildingTile(t); //deep copy constructor, prepare to add tile 
+		BuildingTile* to_add = new BuildingTile(t); //deep copy constructor, prepare to add tile 
 
 		BuildingColorType t_type = t.getBuildingColorType();
 		//int t_num = t.getBuildingNum(); 

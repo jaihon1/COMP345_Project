@@ -7,15 +7,53 @@
 
 using namespace std;
 
+bool GamePlay::enoughResourcesToPlayBT(vector<BuildingTile*>* btVector, Hand* hand){
+
+	for (int btVectIndex = 0; btVectIndex < btVector->size(); btVectIndex++) {
+
+		int resNum = btVector->at(btVectIndex)->getBuildingNum();
+
+		switch(btVector->at(btVectIndex)->getBuildingColorType()){
+		case BuildingColorType::RedLumber:
+			if (hand->getResourceScore(0) >= resNum) {
+				return true;
+			}
+			break;
+		case BuildingColorType::GreenSheep:
+			if (hand->getResourceScore(1) >= resNum) {
+				return true;
+			}
+			break;
+		case BuildingColorType::YellowHay:
+			if (hand->getResourceScore(2) >= resNum) {
+				return true;
+			}
+			break;
+		case BuildingColorType::GreyRock:
+			if (hand->getResourceScore(3) >= resNum) {
+				return true;
+			}
+			break;
+		}
+	}
+	return false;
+}
+
 BuildingTile* GamePlay::selectBT(vector<BuildingTile*>* btVector, Hand* hand) {
 	int btInput;
 	BuildingTile* btToAdd = nullptr;
 	while (true) {
 
+		if (!enoughResourcesToPlayBT(btVector, hand)) {
+			cout<<"Sorry you have insufficient resources to play a building tile."<<endl;
+			return nullptr;
+		}
+
 		// loop for building tile index
 		while (true) {
-			cout << "Which building tile would you like to use? " << endl;;
+			cout << "Which building tile would you like to use?" << endl;;
 			cin >> btInput;
+
 			if (btInput >= 0 && btInput < btVector->size()) {
 				break;
 			}
@@ -24,6 +62,7 @@ BuildingTile* GamePlay::selectBT(vector<BuildingTile*>* btVector, Hand* hand) {
 		}
 
 		btToAdd = btVector->at(btInput);
+
 		int index;
 		// get index for resourceScoreArr
 		switch (btToAdd->getBuildingColorType()) {
@@ -54,14 +93,16 @@ BuildingTile* GamePlay::selectBT(vector<BuildingTile*>* btVector, Hand* hand) {
 			break;
 		}
 	}
+
 	return btToAdd;
 }
 
 bool GamePlay::placeBT(BuildingTile* btToAdd, Player* player, Hand* hand) {
 	int vgRow;
 	int vgColumn;
-	cout << endl;
+
 	while (true) {
+
 		cout << "Where would you like to place the tile?\n" << "row: ";
 		cin >> vgRow;
 		cout << "column: ";
@@ -115,13 +156,13 @@ bool GamePlay::exitBT(bool placeAnother) {
 void GamePlay::singlePlayerBTplacement(Player* player, Hand* hand) {
 
 	while (true) {
+		showResources(hand);
 		vector<BuildingTile*>* btVector = player->getBuildings();
 		cout << "These are your building tiles: " << endl;
 		for (int i = 0; i < btVector->size(); i++) {
 			cout << "Tile " << i << ": ";
 			btVector->at(i)->printBuildingTile();
 		}
-
 
 		cout << endl;
 		player->getVGBoard()->printVGMap();
@@ -136,6 +177,11 @@ void GamePlay::singlePlayerBTplacement(Player* player, Hand* hand) {
 
 		// BUILDING TILE PLACEMENT
 		BuildingTile* btToAdd = selectBT(btVector, hand);
+
+		if (btToAdd == nullptr) {
+			break;
+		}
+
 		if (!placeBT(btToAdd, player, hand)) {
 			cout << "error in placing building tile" << endl;
 			notifyStateChange(5);
@@ -178,6 +224,12 @@ HarvestTile* GamePlay::shipmentTile() {
 	bottomRight = getResourceName("Bottom Right");
 
 	return new HarvestTile(topLeft, topRight, bottomLeft, bottomRight);
+}
+
+void GamePlay::showResources(Hand* hand) {
+	cout << endl << "Resources:" << endl;
+	hand->displayHand();
+	cout << endl;
 }
 
 
@@ -246,9 +298,6 @@ void GamePlay::singleTurn(GBMaps* gameBoard, Player** playerArr, Hand* hand, int
 
 	hand->intializeHand();
 	gameBoard->printGameBoard();
-	cout << endl << "Resources:" << endl;
-	hand->displayHand();
-	cout << endl << endl;
 
 	singlePlayerBTplacement(playerArr[turnIndex], hand);
 
@@ -298,7 +347,6 @@ void GamePlay::playGame() {
 	Hand* hand = gameStart->getHand();
 	sc = gameStart->getSc();
 	ViewObserver* viewObs = new ViewObserver(sc);
-	notifyStateChange(9);
 	int startPlayer = getID(playerArr, numPlayers);
 	for (int turnIndex = startPlayer; turnIndex < numPlayers; turnIndex = (turnIndex + 1) % numPlayers) {
 		cout
@@ -320,7 +368,7 @@ void GamePlay::playGame() {
 		vgMapArr[i] = i < numPlayers ? playerArr[i]->getVGMaps() : nullptr;
 	}
 	cout << "Winner is Player " << sc->get_winner(vgMapArr);
-	notifyStateChange(10);
+	notifyStateChange(9);
 }
 
 // METHODS FOR TIFF's GAME OBSERVER

@@ -15,7 +15,7 @@ GameObservers::GameObservers(GamePlay* const gp)
 	_subject->attach(this);
 	turnConsole.Create("TurnObserver");
 	turnConsole.cprintf(CConsoleLoggerEx::COLOR_WHITE | CConsoleLoggerEx::COLOR_BACKGROUND_BLACK, "TurnObserver Start\n\n");
-	cout << "Created observer" << endl;
+	turnConsole.cout("GAME START\n");
 }
 
 
@@ -27,7 +27,6 @@ GameObservers::~GameObservers()
 
 void GameObservers::update()
 {
-	cout << "Inside GameOberservers update" << endl;
 	turndisplay();
 }
 
@@ -92,9 +91,6 @@ void GameObservers::turndisplay()
 		turnConsole.cout("\nEND Player %d's turn \n", _subject->getCurrentPlayer()->getID());
 	}
 	else if (_subject->getPlayerAction() == 9) {
-		turnConsole.cout("GAME START");
-	}
-	else if (_subject->getPlayerAction() == 10) {
 		turnConsole.cout("\nGAME END");
 	}
 	else {
