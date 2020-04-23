@@ -62,6 +62,8 @@ public:
 
 	HarvestTile * getShipmentTile(); 
 
+	int getScore();
+	int getPosition();
 };
 
 

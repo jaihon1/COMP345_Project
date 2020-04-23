@@ -191,3 +191,13 @@ HarvestTile* Player::getShipmentTile()
 {
 	return shipmentTile;
 }
+
+int Player::getScore()
+{ 
+	return _villageBoard->getScore();
+}
+
+int Player::getPosition()
+{
+	return *position;
+}

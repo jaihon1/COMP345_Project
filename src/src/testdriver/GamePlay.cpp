@@ -363,12 +363,49 @@ void GamePlay::playGame() {
 	}
 
 	// declare winner
-	VGMaps** vgMapArr = new VGMaps * [4];
-	for (int i = 0; i < 4; i++) {
-		vgMapArr[i] = i < numPlayers ? playerArr[i]->getVGMaps() : nullptr;
-	}
-	cout << "Winner is Player " << sc->get_winner(vgMapArr);
+	declareWinner(playerArr, numPlayers);
+	
 	notifyStateChange(9);
+}
+
+void GamePlay::declareWinner(Player** playerArr, int numPlayers) {
+	int winner = -1;
+	int maxScore = -1;
+	int availBuild = -1;
+	for (int i = 0; i < numPlayers; i++) {
+		int score = playerArr[i]->getScore();
+		if (score > maxScore) {
+			winner = i;
+			maxScore = score;
+		}
+		else if (score == maxScore) {
+			winner = tieBreaker(playerArr[winner], playerArr[i]);
+		}
+		cout << "Player " << playerArr[i]->getID() << " score " << score << endl;
+	}
+	if (winner == -1) {
+		cout << "WOW! It's a tie!" << endl;
+	}
+	else {
+		cout << endl << "And the winner is... Player " << playerArr[winner]->getID() << endl;
+	}
+}
+
+int GamePlay::tieBreaker(Player* winner, Player* contender) {
+	if (winner->getVGMaps()->getEmptySpaces() > contender->getVGMaps()->getEmptySpaces()) {
+		return winner->getPosition();
+	}
+	else if (winner->getVGMaps()->getEmptySpaces() < contender->getVGMaps()->getEmptySpaces()) {
+		return contender->getPosition();
+	}
+	else if (winner->getNumberOfBuildingTiles()>contender->getNumberOfBuildingTiles()){
+		return winner->getPosition();
+	}
+	else if (winner->getNumberOfBuildingTiles() < contender->getNumberOfBuildingTiles()) {
+		return contender->getPosition();
+	}
+	return -1;
+
 }
 
 // METHODS FOR TIFF's GAME OBSERVER

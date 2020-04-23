@@ -73,7 +73,7 @@ void GameStart::setup(int inNumPlayers) {
 
 	switch (inNumPlayers) {
 	case 2:
-		gBLoader = new GBMapLoader((root+"2-PlayerGameStart.txt").c_str(), sc);
+		gBLoader = new GBMapLoader((root+"ALT-2-PlayerGameStart.txt").c_str(), sc);
 		break;
 	case 3:
 		gBLoader = new GBMapLoader((root+"3-PlayerGameStart.txt").c_str(), sc);
