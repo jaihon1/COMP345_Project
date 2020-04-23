@@ -15,7 +15,6 @@ GameObservers::GameObservers(GamePlay* const gp)
 	_subject->attach(this);
 	turnConsole.Create("TurnObserver");
 	turnConsole.cprintf(CConsoleLoggerEx::COLOR_WHITE | CConsoleLoggerEx::COLOR_BACKGROUND_BLACK, "TurnObserver Start\n\n");
-	turnConsole.cout("GAME START\n");
 }
 
 

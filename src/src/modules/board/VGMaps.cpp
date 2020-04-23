@@ -589,3 +589,67 @@ string VGMaps::getVillageName()
 {
 	return village_name; 
 }
+
+int VGMaps::getScore()
+{
+	int rowScore = 0;
+	int colScore = 0;
+	emptySpaces = 0;
+	for (int row = 0; row < 6; row++) {
+		bool filled = true;
+		bool allSameType = village_board[row][0].VGstatus != VGSlotStatus::Empty;
+		BuildingColorType rowType = BuildingColorType::None;
+		if (allSameType) {
+			rowType = village_board[row][0].building_ptr->getBuildingColorType();
+			}
+		for (int col = 0; col < 5; col++) {
+			if (village_board[row][col].VGstatus == VGSlotStatus::Empty) {
+				filled = false;
+				emptySpaces += 1;
+			}
+			else if (village_board[row][col].building_ptr->getBuildingColorType() != rowType){
+				allSameType = false;
+			}
+		}
+		if (filled) {
+			rowScore += allSameType ? row*2 : row;
+		}		
+	}
+
+	for (int col = 0; col < 5; col++) {
+		bool filled = true;
+		bool allSameType = true;
+		BuildingColorType colType = village_board[0][col].building_ptr->getBuildingColorType();
+		for (int row = 0; row < 6; row++) {
+			if (village_board[row][col].VGstatus == VGSlotStatus::Empty) {
+				filled = false;
+				break;
+			}
+			else if (village_board[row][col].building_ptr->getBuildingColorType() != colType) {
+				allSameType = false;
+			}
+		}
+		if (filled) {
+			switch (col) {
+			case 0:
+			case 4:
+				colScore += allSameType ? 5 *2 : 5;
+				break;
+			case 1:
+			case 3:
+				colScore += allSameType ? 4 * 2 : 4;
+				break;
+			case 2:
+				colScore += allSameType ? 3 * 2 : 4;
+				break;
+			}
+		}
+	}
+
+	return rowScore + colScore;
+		
+}
+
+int VGMaps::getEmptySpaces() {
+	return emptySpaces;
+}

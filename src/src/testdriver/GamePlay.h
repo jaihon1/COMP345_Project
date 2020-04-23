@@ -24,6 +24,8 @@ private:
 	int getID(Player** playerArr, int numPlayers);
 	void showResources(Hand* hand);
 	bool enoughResourcesToPlayBT(vector<BuildingTile*>* btVector, Hand* hand);
+	int tieBreaker(Player* winner, Player* contender);
+	void declareWinner(Player** playerArr, int numPlayer);
 
 	// ATTRIBUTES FOR TIFF's GAME OBSERVER
 	Player* currentPlayer;
