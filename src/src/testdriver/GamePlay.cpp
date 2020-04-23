@@ -379,7 +379,7 @@ void GamePlay::declareWinner(Player** playerArr, int numPlayers) {
 			maxScore = score;
 		}
 		else if (score == maxScore) {
-			winner = tieBreaker(playerArr[winner], playerArr[i]);
+			winner = tieBreaker(playerArr[winner], playerArr[i])-1;
 		}
 		cout << "Player " << playerArr[i]->getID() << " score " << score << endl;
 	}

@@ -618,8 +618,11 @@ int VGMaps::getScore()
 
 	for (int col = 0; col < 5; col++) {
 		bool filled = true;
-		bool allSameType = true;
-		BuildingColorType colType = village_board[0][col].building_ptr->getBuildingColorType();
+		bool allSameType = village_board[0][col].VGstatus != VGSlotStatus::Empty;
+		BuildingColorType colType = BuildingColorType::None;
+		if (allSameType) {
+			colType = village_board[0][col].building_ptr->getBuildingColorType();
+		}
 		for (int row = 0; row < 6; row++) {
 			if (village_board[row][col].VGstatus == VGSlotStatus::Empty) {
 				filled = false;
