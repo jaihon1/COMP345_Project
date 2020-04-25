@@ -42,8 +42,7 @@ string colortype_to_string(BuildingColorType c)
 }
 
 VGMaps::VGMaps()
-{
-	cout << "Inside VGMAps constructor" << endl; 
+{ 
 
 	village_board = new VGSquare * [*rows]; //on the heap
 
@@ -61,12 +60,9 @@ VGMaps::VGMaps()
 	}
 
 	//set VGMAP name
-	cout << check_name << endl; 
-
 	if ((check_name >= 0) && (check_name <= 3))
 	{
 		this->village_name = village_names.at(check_name);
-		cout << this->village_name << endl;
 		check_name++;
 	}
 	else if (check_name >= 4)
@@ -282,6 +278,7 @@ vector<VGSquare> VGMaps::checkConnectionsOfSlot(BuildingTile t, int r, int c)
 
 int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 {
+	
 	//assume successful add (only change return status if there is an error)
 	int returnStatus = 0;
 
@@ -293,14 +290,8 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 	}
 	else
 	{
-		cout << "Adding building Tile" << endl;
-		cout << "Copy constructor Tile" << endl;
 
-		cout << BuildingTile::Building_typeToChar(t.getBuildingColorType()) << endl; 
-
-		BuildingTile *to_add = new BuildingTile(t); //deep copy constructor, prepare to add tile 
-		
-		cout << "Checking to add: " << BuildingTile::Building_typeToChar(to_add->getBuildingColorType()) << endl;
+		BuildingTile* to_add = new BuildingTile(t); //deep copy constructor, prepare to add tile 
 
 		BuildingColorType t_type = t.getBuildingColorType();
 		//int t_num = t.getBuildingNum(); 
@@ -314,7 +305,6 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			if (getGreenSheepPlaced()) //is this code right
 								  // true, this means that there already exist a tile of that type on the board, check connections!
 			{
-				cout << "INSIDE GREENSHEEP (already on board)" << endl;
 				vector <VGSquare> find_green = checkConnectionsOfSlot(t, r, c);
 
 				//cout << "Going through iterator" << endl;
@@ -339,6 +329,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 						else
 						{
 							cout << "Error in placing GreenSheep - Building Number do not match slot number!" << endl;
+							returnStatus = 2;
 						}
 					}
 				}
@@ -347,12 +338,11 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//failed to 
 					cout << "Error in placing tile: existing type (GREEN SHEEP) is already on village board, player has to place it next to it" << endl;
-					returnStatus = 2;
+					returnStatus = 3;
 				}
 			}
 			else
 			{
-				cout << "Inside GREEN SHEEP NEW" << endl;
 				//placing new tile
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 				{
@@ -367,6 +357,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 					else
 					{
 						cout << "Error in placing GreenSheep - Building Number do not match slot number!" << endl;
+						returnStatus = 2;
 					}
 				}
 			}
@@ -375,7 +366,6 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			if (getGreyRockPlaced()) // true, this means that there already exist a tile of that type on the board, check connections!
 			{
-				cout << "INSIDE GREY ROCK (already on board)" << endl;
 
 				vector <VGSquare> find_grey = checkConnectionsOfSlot(t, r, c);
 				it = find_grey.begin();
@@ -398,6 +388,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 						else
 						{
 							cout << "Error in placing GreyRock - Building Number do not match slot number!" << endl;
+							returnStatus = 2;
 						}
 					}
 				}
@@ -406,12 +397,11 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//failed to 
 					cout << "Error in placing tile: existing type (GREY ROCK) is already on village board, player has to place it next to it" << endl;
-					returnStatus = 2;
+					returnStatus = 3;
 				}
 			}
 			else
 			{
-				cout << "Inside GREY ROCK NEW" << endl;
 
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 				{
@@ -426,6 +416,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 					else
 					{
 						cout << "Error in placing GreyRock - Building Number do not match slot number!" << endl;
+						returnStatus = 2;
 					}
 				}
 			}
@@ -434,7 +425,6 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			if (getRedLumberPlaced()) // true, this means that there already exist a tile of that type on the board, check connections!
 			{
-				cout << "INSIDE RED LUMBER (true)" << endl;
 				vector <VGSquare> find_red = checkConnectionsOfSlot(t, r, c);
 				it = find_red.begin();
 
@@ -455,6 +445,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 						else
 						{
 							cout << "Error in placing RedLumber - Building Number do not match slot number!" << endl;
+							returnStatus = 2;
 						}
 					}
 				}
@@ -469,7 +460,6 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 			}
 			else
 			{
-				cout << "Inside RED LUMBER NEW" << endl;
 
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
 				{
@@ -484,6 +474,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 					else
 					{
 						cout << "Error in placing RedLumber - Building Number do not match slot number!" << endl;
+						returnStatus = 2;
 					}
 					
 				}
@@ -493,7 +484,6 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 		{
 			if (getYellowHayPlaced()) // true, this means that there already exist a tile of that type on the board, check connections!
 			{
-				cout << "INSIDE YELLOW HAY (true)" << endl;
 				vector <VGSquare> find_yellow = checkConnectionsOfSlot(t, r, c);
 				it = find_yellow.begin();
 
@@ -513,6 +503,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 						else
 						{
 							cout << "Error in placing YellowHay - Building Number do not match slot number!" << endl;
+							returnStatus = 2;
 						}
 					}
 				}
@@ -520,12 +511,11 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 				{
 					//failed to 
 					cout << "Error in placing tile: existing type (YELLOW HAY) is already on village board, player has to place it next to it" << endl;
-					returnStatus = 4;
+					returnStatus = 3;
 				}
 			}
 			else
 			{
-				cout << "Inside YELLOW HAY NEW" << endl;
 
 				//empty slot
 				if (village_board[r][c].VGstatus == VGSlotStatus::Empty)
@@ -541,6 +531,7 @@ int VGMaps::addNewBuildingTile(BuildingTile t, int r, int c)
 					else
 					{
 						cout << "Error in placing YellowHay - Building Number do not match slot number!" << endl;
+						returnStatus = 3;
 					}
 				}
 			}
@@ -597,4 +588,71 @@ void VGMaps::printVGMap()
 string VGMaps::getVillageName()
 {
 	return village_name; 
+}
+
+int VGMaps::getScore()
+{
+	int rowScore = 0;
+	int colScore = 0;
+	emptySpaces = 0;
+	for (int row = 0; row < 6; row++) {
+		bool filled = true;
+		bool allSameType = village_board[row][0].VGstatus != VGSlotStatus::Empty;
+		BuildingColorType rowType = BuildingColorType::None;
+		if (allSameType) {
+			rowType = village_board[row][0].building_ptr->getBuildingColorType();
+			}
+		for (int col = 0; col < 5; col++) {
+			if (village_board[row][col].VGstatus == VGSlotStatus::Empty) {
+				filled = false;
+				emptySpaces += 1;
+			}
+			else if (village_board[row][col].building_ptr->getBuildingColorType() != rowType){
+				allSameType = false;
+			}
+		}
+		if (filled) {
+			rowScore += allSameType ? row*2 : row;
+		}		
+	}
+
+	for (int col = 0; col < 5; col++) {
+		bool filled = true;
+		bool allSameType = village_board[0][col].VGstatus != VGSlotStatus::Empty;
+		BuildingColorType colType = BuildingColorType::None;
+		if (allSameType) {
+			colType = village_board[0][col].building_ptr->getBuildingColorType();
+		}
+		for (int row = 0; row < 6; row++) {
+			if (village_board[row][col].VGstatus == VGSlotStatus::Empty) {
+				filled = false;
+				break;
+			}
+			else if (village_board[row][col].building_ptr->getBuildingColorType() != colType) {
+				allSameType = false;
+			}
+		}
+		if (filled) {
+			switch (col) {
+			case 0:
+			case 4:
+				colScore += allSameType ? 5 *2 : 5;
+				break;
+			case 1:
+			case 3:
+				colScore += allSameType ? 4 * 2 : 4;
+				break;
+			case 2:
+				colScore += allSameType ? 3 * 2 : 4;
+				break;
+			}
+		}
+	}
+
+	return rowScore + colScore;
+		
+}
+
+int VGMaps::getEmptySpaces() {
+	return emptySpaces;
 }

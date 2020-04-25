@@ -84,6 +84,39 @@ void HarvestTile::printHarvestTile()
 		<< setw(8) << HarvestTile::ResourceNameToString(getResource(ResourceLocation::bottomRight)) << endl;
 }
 
+HarvestTile* HarvestTile::rotateHT(HarvestTile* inTile) {
+
+	inTile->printHarvestTile();
+	cout << endl;
+	char yesNo;
+	char rotate;
+	cout << "Would you like to rotate the tile? y/n ";
+	cin >> yesNo;
+	//ROTATE METHODS TEST
+	while (yesNo == 'y') {
+		cout << "Right = r, Left = l: ";
+		cin >> rotate;
+		cout << endl;
+		switch (rotate) {
+		case 'r':
+			inTile->RotateRight();
+			break;
+		case 'l':
+			inTile->RotateLeft();
+			break;
+		default:
+			cout << "Invalid selection." << endl;
+			break;
+		}
+		inTile->printHarvestTile();
+		cout << endl << "Again? y/n ";
+		cin >> yesNo;
+	}
+
+	return inTile;
+
+}
+
 BuildingTile::BuildingTile()
 {
 
@@ -277,8 +310,6 @@ void BuildingTile::deepCopy(const BuildingTile& t)
 		_buildingStatus = nullptr;
 	}
 
-	cout << "Success in deep copying" << endl; 
-
 }
 
 BuildingTile::BuildingTile(const BuildingTile& t) : _buildingColorType{ nullptr }, _buildingNum{ nullptr }, _buildingStatus{ nullptr }
@@ -301,7 +332,7 @@ BuildingTile &BuildingTile:: operator = (const BuildingTile &b)
 
 void BuildingTile::printBuildingTile()
 {
-	cout << this->getBuildingNum() << " " << this->Building_typeToChar(this->getBuildingColorType()) << " " << this->Building_statusToChar(this->getSide()) << endl << endl;
+	cout << this->getBuildingNum() << " " << this->Building_typeToChar(this->getBuildingColorType()) << endl;
 }
 
 HarvestDeck::HarvestDeck()
@@ -682,8 +713,14 @@ void Hand::intializeHand()
 void Hand::displayHand() {
 
 	for (int i = 1; i < 5; i++) {
-		cout << HarvestTile::ResourceNameToString(static_cast<ResourceName>(i)) << ": " << resourceScoreArr[i-1]<<" ";
+		cout << HarvestTile::ResourceNameToString(static_cast<ResourceName>(i)) << ": " << resourceScoreArr[i-1]<<"   ";
 	}
+	cout<<endl;
+}
+
+int Hand::getResourceScore(int index)
+{
+	return resourceScoreArr[index];
 }
 
 int Hand::exchange(ExchangeToken* exchangeToken) {
@@ -693,10 +730,12 @@ int Hand::exchange(ExchangeToken* exchangeToken) {
 	int column = exchangeToken->getCol();
 	int index;
 
+	// THE FOLLOWING (until stars) NOt NEEDED KEEPING JUST IN CASE I NEED TO REIMPLEMENT
+	
 	// get index for resourceScoreArr
 	switch (buildingTile->getBuildingColorType()) {
 
-	case BuildingColorType::GreenSheep:
+		case BuildingColorType::GreenSheep:
 			index = static_cast<int>(ResourceName::Sheep);
 			break;
 		case BuildingColorType::GreyRock:
@@ -717,18 +756,16 @@ int Hand::exchange(ExchangeToken* exchangeToken) {
 	if (resourceScoreArr[index] < buildingTile->getBuildingNum()) {
 		return 1;
 	}
-
-	player->removeBuildingTile(*buildingTile);
-	VGMaps* playersVGBoard = player->getVGBoard();
+	
+	// *************************************************************
 
 	// add buildingTile and decrement resource score
 	// SHOULD I HAVE THE BUILDING TILE AUTOMATICALLY BE REPLACED FROM THE DECK?????
-	if (playersVGBoard->addNewBuildingTile(*buildingTile, row, column) == 0) {
+	if (player->placeBuildingTile(row, column, *buildingTile) == 0) {
 			resourceScoreArr[index] -= buildingTile->getBuildingNum();
 			return 0;
 	}
 	else {
-		player->addBuildingTile(*buildingTile);
 		return 2;
 	}
 

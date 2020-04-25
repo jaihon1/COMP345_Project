@@ -1,5 +1,5 @@
 #pragma once
-#define _DEBUG
+// #define _DEBUG
 #ifdef _DEBUG
 #define new new (_NORMAL_BLOCK, __FILE__, __LINE__)
 #endif
@@ -128,7 +128,7 @@ private:
 
 public:
 	//parameters are the resources intended for the various locations on the tile
-	HarvestTile(ResourceName topRightRes, ResourceName topLeftRes, ResourceName bottomLeftRes, ResourceName bottomRightRes);
+	HarvestTile(ResourceName topLeftRes, ResourceName topRightRes, ResourceName bottomLeftRes, ResourceName bottomRightRes);
 	HarvestTile(const HarvestTile &harvestTile);
 	HarvestTile();
 
@@ -141,6 +141,8 @@ public:
 	ResourceName getResource(ResourceLocation inLocation);
 
 	void printHarvestTile(); 
+
+	HarvestTile* rotateHT(HarvestTile* inTile);
 
 	static const char* ResourceNameToString(ResourceName inResourceName) {
 		switch (inResourceName) {
@@ -199,6 +201,7 @@ public:
 	Hand(Scoring* sc);
 	void intializeHand();
 	void displayHand();
+	int getResourceScore(int index);
 	int exchange(ExchangeToken* exchangeToken);
 };
 

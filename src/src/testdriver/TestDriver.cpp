@@ -12,93 +12,14 @@
 #include "../modules/board/VGMaps.h"
 #include "../modules/VGMapLoader/VGMapLoader.h"
 #include "../GameStart/GameStart.h"
-
+#include "GamePlay.h"
+#include "../GameObservers/GameObservers.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
 
 using namespace std;
-
-void printHarvestTile(HarvestTile* inHarvestTile) {
-
-	cout << setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topLeft))
-		<< setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::topRight)) << endl
-		<< setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::bottomLeft))
-		<< setw(8) << HarvestTile::ResourceNameToString(inHarvestTile->getResource(ResourceLocation::bottomRight)) << endl;
-
-}
-
-void printBuildingTile(BuildingTile* inBT) {
-	cout << inBT->getBuildingNum() << " " << inBT->Building_typeToChar(inBT->getBuildingColorType()) << endl;
-}
-
-void harvestTileTest() {
-
-	HarvestDeck* testDeck = new HarvestDeck();
-	HarvestTile* testHarvestTile = testDeck->draw();
-	printHarvestTile(testHarvestTile);
-	cout << endl;
-	char yesNo;
-	char rotate;
-	cout << "Would you like to rotate the tile? y/n ";
-	cin >> yesNo;
-	//ROTATE METHODS TEST
-	while (yesNo == 'y') {
-		cout << "Right = r, Left = l: ";
-		cin >> rotate;
-		cout << endl;
-		switch (rotate) {
-		case 'r':
-			testHarvestTile->RotateRight();
-			break;
-		case 'l':
-			testHarvestTile->RotateLeft();
-			break;
-		default:
-			cout << "Invalid selection." << endl;
-			break;
-		}
-		printHarvestTile(testHarvestTile);
-		cout << endl << "Again? y/n ";
-		cin >> yesNo;
-	}
-	delete testDeck;
-
-}
-
-HarvestTile* rotateHT(HarvestTile* inTile) {
-
-	printHarvestTile(inTile);
-	cout << endl;
-	char yesNo;
-	char rotate;
-	cout << "Would you like to rotate the tile? y/n ";
-	cin >> yesNo;
-	//ROTATE METHODS TEST
-	while (yesNo == 'y') {
-		cout << "Right = r, Left = l: ";
-		cin >> rotate;
-		cout << endl;
-		switch (rotate) {
-		case 'r':
-			inTile->RotateRight();
-			break;
-		case 'l':
-			inTile->RotateLeft();
-			break;
-		default:
-			cout << "Invalid selection." << endl;
-			break;
-		}
-		printHarvestTile(inTile);
-		cout << endl << "Again? y/n ";
-		cin >> yesNo;
-	}
-
-	return inTile;
-
-}
 
 void gbMapsTest() {
 
@@ -175,8 +96,11 @@ void gbMapsTest() {
 }
 
 void playerTest() {
+
+	Scoring* sc = new Scoring();
+
 	// Initializing variables
-	Player bob;
+	Player bob(sc, 0);
 	//    GBMaps map(4, 'b');
 	BuildingDeck buildingDeck;
 	HarvestDeck harvestDeck;
@@ -246,7 +170,7 @@ void runGame(GBMaps* gameBoard, HarvestDeck* testDeck) {
 		}
 
 	}
-	
+
 	delete testSaver;
 
 }
@@ -282,17 +206,17 @@ void playGBMaps() {
 			break;
 
 		case 2: {
-				string filePath;
-				cout << "Please enter the file path of the game you wish to load: " << endl;
-				cin >> filePath;
-				// LOADER CONSTRUCTION
-				testLoader = new GBMapLoader(&filePath[0], sc);
-				gameBoard = testLoader->getBoard();
-				delete testLoader;
-				if (gameBoard != NULL) {
-					runGame(gameBoard, testDeck);
-				}
-				break;
+			string filePath;
+			cout << "Please enter the file path of the game you wish to load: " << endl;
+			cin >> filePath;
+			// LOADER CONSTRUCTION
+			testLoader = new GBMapLoader(&filePath[0], sc);
+			gameBoard = testLoader->getBoard();
+			delete testLoader;
+			if (gameBoard != NULL) {
+				runGame(gameBoard, testDeck);
+			}
+			break;
 		}
 		default:
 			cout << "Sorry invalid input, please choose again" << endl;
@@ -301,7 +225,7 @@ void playGBMaps() {
 
 		delete sc;
 		delete testDeck;
-		
+
 		delete gameBoard;
 
 	}
@@ -358,7 +282,7 @@ void VGMapLoaderTest()
 
 	//s->save(va, "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\VGMaptest5.json");
 
-	s->save(va, "C:\\json_test\VGMaptest5.json");
+	s->save(va, "C:\\json_test\\VGMaptest5.json");
 
 	cout << "Saved va map" << endl;
 
@@ -377,7 +301,7 @@ void VGMapLoaderTest()
 	cout << "Current MAP" << endl;
 
 	va->printVGMap();
-	
+
 	delete va;
 	delete type1;
 	delete status1;
@@ -388,89 +312,10 @@ void VGMapLoaderTest()
 }
 
 
-void gameStartTest() {
-	GameStart* gameStart = new GameStart();
-	cout << "How many players: 2, 3, or 4? ";
-	int numPlayers;
-	cin >> numPlayers;
-	gameStart->setup(numPlayers);
-
-	cout << "Initial Game Board: \n";
-	gameStart->getGBoard()->printGameBoard();
-
-	Player** player = gameStart->getPlayerArr();
-	cout << "These are your initial harvest tiles, which tile would you like to use (indexed 0 and 1): ";
-	// PLAY AS FIRST PLAYER FOR NOW
-	vector<HarvestTile*>* htVector = player[0]->getHarvestTiles();
-	printHarvestTile(htVector->at(0));
-	cout << endl;
-	printHarvestTile(htVector->at(1));
-	int htIndex;
-	cin >> htIndex;
-	HarvestTile* harvestTile = htVector->at(htIndex);
-
-	int row;
-	int column;
-
-	cout << "Where would you like to place the tile?\n" << "row: ";
-	cin >> row;
-	cout << "column: ";
-	cin >> column;
-	cout << endl;
-
-	gameStart->getGBoard()->addHarvestTile(row, column, harvestTile);
-	gameStart->getHand()->intializeHand();
-	gameStart->getGBoard()->printGameBoard();
-	cout << endl;
-	gameStart->getHand()->displayHand();
-	cout << endl;
-	
-	
-	vector<BuildingTile*>* btVector = player[0]->getBuildings();
-	for (int i = 0; i < btVector->size(); i++) {
-		cout << "Tile "<< i + 1 << ": ";
-		printBuildingTile(btVector->at(i));
-	}
-	
-	cout << endl;
-	player[0]->getVGBoard()->printVGMap();
-	cout << endl;
-	int btInput;
-	cout << "Which building tile would you like to use? ";
-	cin >> btInput;
-	BuildingTile* btToAdd = btVector->at(btInput-1);
-	int vgRow;
-	int vgColumn;
-
-	cout << endl;
-	cout << "Where would you like to place the tile?\n" << "row: ";
-	cin >> vgRow;
-	cout << "column: ";
-	cin >> vgColumn;
-	cout << endl;
-
-	Hand::ExchangeToken* exToken = new Hand::ExchangeToken(player[0], btToAdd, vgRow, vgColumn);
-	gameStart->getHand()->exchange(exToken);
-
-	player[0]->getVGBoard()->printVGMap();
-	cout << endl;
-	gameStart->getHand()->displayHand();
-	cout << endl;
-}
-
 void menuOptions() {
 	cout << "1 - GBMaps and Scoring Test" << endl << "2 - Harvest Tile Test" << endl << "3 - GBMapLoader Test" << endl << "4 - Player Test" << endl << "5 - GameStart Test" << endl << "0 - Exit" << endl << endl << "Which test would you like to run? ";
-}
-
-
-int main()
-{
-	//MemoryLeak
-
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
 	int menuOption;
-	menuOptions();
+
 	cin >> menuOption;
 
 
@@ -481,7 +326,7 @@ int main()
 			gbMapsTest();
 			break;
 		case 2:
-			harvestTileTest();
+			cout << "Test Deprecated" << endl;
 			break;
 		case 3:
 			playGBMaps();
@@ -490,14 +335,25 @@ int main()
 			playerTest();
 			break;
 		case 5:
-			gameStartTest();
+			// gameStartTest();
 			break;
 		}
 		cout << endl;
 		menuOptions();
 		cin >> menuOption;
 	}
-	return 0; 
+}
+
+
+int main()
+{
+	//MemoryLeak
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	GamePlay gamePlay;
+	GameObservers* gameObs = new GameObservers(&gamePlay);
+	cout << "Welcome to New Haven!" << endl << endl;
+	gamePlay.playGame();
+	return 0;
 }
 
 

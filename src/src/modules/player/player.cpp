@@ -15,13 +15,13 @@ Player::Player() {
 }
 */
 
-Player::Player(Scoring* inSc)
+Player::Player(Scoring* inSc, int indexPosition)
 {
 	_villageBoard = new VGMaps();
 	_harvestTiles = new vector<HarvestTile*>;
 	_buildingTiles = new vector<BuildingTile*>;
 	ID = new int(-1); //will be decided at runtime 
-	position = new int(-1);
+	position = new int(indexPosition+1);
 	sc = inSc;
 }
 
@@ -70,10 +70,6 @@ HarvestTile* Player::removeHarvestTile(HarvestTile& tile) {
 }
 
 vector<HarvestTile*>* Player::getHarvestTiles() {
-	for (int i = 0; i < _harvestTiles->size(); i++) {
-		cout << "HarvestTile (index " << i << ")" << endl;
-		(*_harvestTiles)[i]->printHarvestTile();
-	}
 	return _harvestTiles;
 }
 
@@ -108,10 +104,6 @@ void Player::setShipmentTile(HarvestTile* harvestTile)
 
 
 vector<BuildingTile*>* Player::getBuildings() {
-	for (int i = 0; i < _buildingTiles->size(); i++) {
-		cout << "Index [" << i << "]  ";
-		(*_buildingTiles)[i]->printBuildingTile();
-	}
 	return _buildingTiles;
 }
 
@@ -138,6 +130,7 @@ int Player::placeBuildingTile(int row, int col, BuildingTile& tile) {
 
 	if (status == 0) {
 		removeBuildingTile(tile);
+		sc->remove_res(static_cast<int>(tile.getBuildingColorType()), tile.getBuildingNum());
 		sc->add_density(*position, 1);
 
 		// get the current score of the player from the scoring object in order to set the score in the statistics table of the scoring object which will then notify the observer
@@ -178,14 +171,14 @@ void Player::ressourceTracker() {
 
 int Player::getID()
 {
-	return *ID;
+		return *ID;
+
 }
 
 void Player::setID(int n, int index)
 {
 	*ID = n;
-	*position = index;
-	sc->set_id(index, n);
+	sc->set_id(*position, n);
 }
 
 VGMaps* Player::getVGBoard()
@@ -197,4 +190,14 @@ VGMaps* Player::getVGBoard()
 HarvestTile* Player::getShipmentTile()
 {
 	return shipmentTile;
+}
+
+int Player::getScore()
+{ 
+	return _villageBoard->getScore();
+}
+
+int Player::getPosition()
+{
+	return *position;
 }

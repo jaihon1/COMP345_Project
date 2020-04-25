@@ -68,7 +68,7 @@ void GameStart::setup(int inNumPlayers) {
 
 	//DAMIAN CHECK PATH ON YOUR COMPUTER 
 
-	string root = "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\data\\StartGameMaps\\";
+	string root = "C:\\Users\\Damian\\Documents\\Repos\\COMP345_Project\\src\\src\\data\\StartGameMaps\\";
 	//string root = "C:\\Users\\titi7\\source\\repos\\Comp345_Assignment2\\Comp345_Assignment2\\files\\data\\StartGameMaps\\"; 
 
 	switch (inNumPlayers) {
@@ -91,7 +91,7 @@ void GameStart::setup(int inNumPlayers) {
 
 	// instantiate each player and initialize their harvest and building tiles
 	for (int i = 0; i < inNumPlayers; i++) {
-		playerArr[i] = new Player(sc);
+		playerArr[i] = new Player(sc, i);
 		for (int j = 0; j < 6; j++) {
 			playerArr[i]->drawBuilding(*buildingDeck);
 		}

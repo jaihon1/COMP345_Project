@@ -85,8 +85,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -152,10 +151,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\MainLoopDriver.cpp" />
-    <ClCompile Include="..\modules\MainLoop\MainLoop.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\GameObservers\GameObservers.vcxproj">
       <Project>{f138ba08-1099-479c-aa93-ee2ca5024b58}</Project>
     </ProjectReference>
@@ -188,7 +183,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\modules\MainLoop\MainLoop.h" />
+    <ClCompile Include="GamePlay.cpp" />
+    <ClCompile Include="TestDriver.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GamePlay.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

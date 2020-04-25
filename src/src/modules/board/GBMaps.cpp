@@ -170,6 +170,14 @@ int GBMaps::addHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr)
 	return 0;
 }
 
+int GBMaps::replaceHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr) {
+	if (board[row][column].status == GBSquareStatus::HarvestTile) {
+		board[row][column].status = GBSquareStatus::Empty;
+		return addHarvestTile(row, column, inHarvestTilePtr);
+	}
+	return 0;
+}
+
 int GBMaps::addShipmentTile(int row, int column, HarvestTile * inHarvestTilePtr, int type)
 {
 	//cout << "Inside add shipmentile of GBMaps " << endl; 
