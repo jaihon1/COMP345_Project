@@ -67,6 +67,8 @@ public:
 	int addHarvestTile(int row, int column, HarvestTile * inHarvestTilePtr);
 	int addShipmentTile(int row, int column, HarvestTile * inHarvestTilePtr, int type);
 
+	int replaceHarvestTile(int row, int column, HarvestTile* inHarvestTilePtr);
+
 	HarvestTile* getHarvestTile(int row, int column);
 
 	//return boolean: true = tile successfully added, false = tile not added (probably because square is unavailable)

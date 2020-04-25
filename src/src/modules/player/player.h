@@ -12,15 +12,18 @@ private:
     VGMaps *_villageBoard;
     vector<HarvestTile*> *_harvestTiles;
     vector<BuildingTile*> *_buildingTiles;
+	HarvestTile* shipmentTile;
+	Scoring* sc;
     
     // Owns/Give up Ressource Markers
     // Owns resources Gathering and Building Scoring facilities
 
-	int *ID; 
-    HarvestTile* shipmentTile;
+	int *ID;
+	int* position;
     
 public:
-    Player();
+
+	Player(Scoring* inSc, int indexPosition);
     Player(const Player &player);
     ~Player();
         
@@ -39,7 +42,7 @@ public:
     vector<BuildingTile*>* getBuildings();
     BuildingTile* addBuildingTile(BuildingTile &tile);
     BuildingTile* removeBuildingTile(BuildingTile &tile);
-    void placeBuildingTile(int row, int col, BuildingTile &tile);
+    int placeBuildingTile(int row, int col, BuildingTile &tile);
     BuildingTile* drawBuilding(BuildingDeck &deck);
     unsigned long getNumberOfBuildingTiles();
 	VGMaps* getVGMaps(); 
@@ -54,12 +57,13 @@ public:
 
 	//for MainLoop
 	int getID(); 
-	void setID(int n); 
+	void setID(int n, int index); 
 	VGMaps* getVGBoard();
 
 	HarvestTile * getShipmentTile(); 
 
-
+	int getScore();
+	int getPosition();
 };
 
 

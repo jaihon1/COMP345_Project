@@ -5,6 +5,9 @@
 
 Scoring::Scoring()
 {
+	for (int i = 1; i < 5; i++)
+		statistic[i][0] = 1;
+	statistic[6][0] = 1;
 }
 
 Scoring::Scoring(const Scoring &sc) :vertices(sc.vertices)
@@ -42,15 +45,6 @@ void Scoring::add_res(int resv, int numv)
 	res_score[resv] += numv;
 }
 
-void Scoring::update_help(int v, int w, int res) {
-	if (vertices.is_adjacent(v, w))
-		add_res(res, vertices.connected(v));
-	else {
-		add_res(res, vertices.connected(v));
-		add_res(res, vertices.connected(w));
-	}
-}
-
 void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 {
 	//std::cout << "Test" << vertices.connected(90) << std::endl;
@@ -72,6 +66,39 @@ void Scoring::update_res(ptrdiff_t pos[4], int res[4])
 		add_res(res[i], vertices.connected(pos[i]));
 	}
 
+	//update resource maker
+	for (int i = 1; i < 5; i++)
+	statistic[6][i] = res_score[i];
+	notify();
+}
+
+void Scoring::set_id(int index, int id)
+{
+	statistic[0][index] = 1;
+	statistic[1][index] = id;
+	notify();
+}
+
+void Scoring::set_score(int index, int score)
+{
+	// score is only updated when a row or column is completed
+	// if statement prevents the statistics table from being displayed everytime a building tile is placed
+	if (statistic[2][index] != score) {
+		statistic[2][index] = score;
+		notify();
+	}
+}
+
+void Scoring::add_density(int index, int number)
+{
+	statistic[3][index] += number;
+	notify();
+}
+
+void Scoring::set_avail_building(int index, int number)
+{
+	statistic[4][index] = number;
+	notify();
 }
 
 void Scoring::connectedComponents()
@@ -87,6 +114,58 @@ int Scoring::adjacency(int v)
 int Scoring::connected(int v)
 {
 	return vertices.connected(v);
+}
+
+void Scoring::get_state()
+{
+	int total_player = 4;
+	for (int i = 1; i < 5; i++)
+	{
+		if (statistic[0][i] == 0)
+			total_player--;
+	}
+	for (int i = 1; i < 6; i++)
+	{
+		if (statistic[i][0] == 0)
+			continue;
+		switch (i)
+		{
+		case 1: std::cout << "Player # " << std::endl;
+			break;
+		case 2: std::cout << "Village score " << std::endl;
+			break;
+		case 3: std::cout << "Village density " << std::endl;
+			break;
+		case 4: std::cout << "Avail building " << std::endl;
+			break;
+		case 5: std::cout << "Turn remain " << std::endl;
+			break;
+		default: printf("N/A");
+			break;
+		}
+		for (int j = 1; j <= total_player; j++)
+		{
+			std::cout << "Player #" << i << ": " << statistic[i][j] << std::endl;
+		}
+		std::cout << std::endl;
+	}
+	std::cout << "Resource Marker " << std::endl;
+	for (int i = 1; i < 5; i++)
+		std::cout << "Res #" << i << ": " << statistic[6][i] << std::endl;
+	std::cout << std::endl;
+}
+
+int Scoring::get_state(int state[10][5])
+{
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			for (int j = 0; j < 5; j++)
+				state[i][j] = statistic[i][j];
+		}
+		return 1;
+	}
+	return 0;
 }
 
 int Scoring::get_lumber()
@@ -122,6 +201,8 @@ int Scoring::remove_res(int resv, int quantity)
 {
 	if (res_score[resv] > quantity) {
 		res_score[resv] = res_score[resv] - quantity;
+		statistic[6][resv] = statistic[6][resv] - quantity;
+		notify();
 		return quantity;
 	}
 	else
@@ -191,7 +272,7 @@ int Scoring::get_density(const VGMaps &vil)
 	for (int i = 0; i < village_row; i++)
 	{
 		for (int j = 0; j < village_col; j++) {
-			if (!vil.isEmpty(j, i))
+			if (!vil.isEmpty(i, j))
 				result++;
 		}
 	}
@@ -248,12 +329,19 @@ int Scoring::get_winner(VGMaps *villages[4])
 	int winner = 0;
 
 	for (int i = 0; i < 4; i++) {
-		vil_score[i][0] = get_score(*villages[i]);
-		vil_score[i][1] = get_density(*villages[i]);
-		vil_score[i][2] = rand() % 50;
-		std::cout << "village score: " << vil_score[i][0] << std::endl;
-		std::cout << "village densi: " << vil_score[i][1] << std::endl;
-		std::cout << "village build: " << vil_score[i][2] << std::endl;
+		if (villages[i] == nullptr) {
+			vil_score[i][0] = 0;
+			vil_score[i][1] = 0;
+			vil_score[i][2] = 0;
+		}
+		else {
+			vil_score[i][0] = get_score(*villages[i]);
+			vil_score[i][1] = get_density(*villages[i]);
+			vil_score[i][2] = rand() % 50;
+			std::cout << "village score: " << vil_score[i][0] << std::endl;
+			std::cout << "village densi: " << vil_score[i][1] << std::endl;
+			std::cout << "village build: " << vil_score[i][2] << std::endl;
+		}
 	}
 
 	for (int i = 0; i < 4; i++)

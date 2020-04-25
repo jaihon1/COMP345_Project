@@ -25,6 +25,7 @@ private:
 	bool GreyRockPlaced = false;
 	bool RedLumberPlaced = false;
 	bool YellowHayPlaced = false;
+	int emptySpaces;
 
 	vector <string> village_names { "Guildford", "Stratford", "Fairfield", "Milford" };
 	
@@ -66,7 +67,11 @@ public:
 	BuildingTile getBuildingTile(int r, int c);
 	void printVGMap();
 
-	string getVillageName(); 
+	string getVillageName();
+
+	int getEmptySpaces();
+
+	int getScore();
 
 
 };
