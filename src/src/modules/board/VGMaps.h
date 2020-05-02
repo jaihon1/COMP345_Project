@@ -18,13 +18,7 @@ struct VGSquare{
 
 class VGMaps {
 private:
-	//const int* const rows = new int(6); //length of the row
-	//const int* const columns = new int(5); //length of the column
-	//start off with flags that indicate false, meaning that no tile of that type has been placed yet. 
-	bool GreenSheepPlaced = false;
-	bool GreyRockPlaced = false;
-	bool RedLumberPlaced = false;
-	bool YellowHayPlaced = false;
+	bool firstTileArr[4] = { true, true, true, true };
 	int emptySpaces;
 
 	vector <string> village_names { "Guildford", "Stratford", "Fairfield", "Milford" };
@@ -46,11 +40,6 @@ public:
 	VGSquare** village_board;
 	string village_name;
 
-	//useless?
-	bool getGreenSheepPlaced() { return GreenSheepPlaced; }
-	bool getGreyRockPlaced() { return GreyRockPlaced; }
-	bool getRedLumberPlaced() { return RedLumberPlaced; }
-	bool getYellowHayPlaced() { return YellowHayPlaced; }
 	bool isEmpty(int row, int column) const;
 	bool isFlipped(int row, int column) const;
 
@@ -60,9 +49,11 @@ public:
 
 	//void flipIndexes(); //function you call to flip the indexes inside the village board -> update: dont need cuz it doesnt affect the game
 
-	vector <VGSquare> checkConnectionsOfSlot(BuildingTile t, int r, int c);
+	bool checkConnections(BuildingColorType bct, int r, int c);
 
-	int addNewBuildingTile(BuildingTile t, int r, int c);
+	//vector <VGSquare> checkConnectionsOfSlot(BuildingTile t, int r, int c);
+
+	int addNewBuildingTile(BuildingTile &t, int r, int c);
 
 	BuildingTile getBuildingTile(int r, int c);
 	void printVGMap();

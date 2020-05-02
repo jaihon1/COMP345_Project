@@ -116,6 +116,7 @@ bool GamePlay::placeBT(BuildingTile* btToAdd, Player* player, Hand* hand) {
 			return true;
 		case 2:
 			notifyStateChange(5);
+			cout << "Incorrect Index.  Check that the building number matches the row number." << endl;
 			continue;
 		default:
 			cout << "Rejected for unknown reason.  Please try again." << endl;
